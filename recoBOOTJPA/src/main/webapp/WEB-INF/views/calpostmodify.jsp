@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.Date" %>
-<%@page import="com.my.calendar.dao.CalendarDAOOracle" %>
-<%@page import="com.my.calendar.vo.CalPost" %>
+<%@page import="com.reco.calendar.dao.CalendarDAOOracle" %>
+<%@page import="com.reco.calendar.vo.CalPost" %>
 
 <!DOCTYPE html>
 <html>

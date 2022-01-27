@@ -1,5 +1,5 @@
 <%@page import="java.util.Date"%>
-<%@page import="com.my.board.vo.Board"%>
+<%@page import="com.reco.board.vo.Board"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>

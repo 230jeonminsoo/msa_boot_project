@@ -1,4 +1,4 @@
-<%@page import="com.my.customer.vo.Customer"%>
+<%@page import="com.reco.customer.vo.Customer"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 

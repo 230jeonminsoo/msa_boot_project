@@ -1,6 +1,6 @@
-<%@page import="com.my.calendar.vo.CalInfo"%>
+<%@page import="com.reco.calendar.vo.CalInfo"%>
 <%@page import="java.util.List"%>
-<%@page import="com.my.customer.vo.Customer"%>
+<%@page import="com.reco.customer.vo.Customer"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="./css/tab.css">

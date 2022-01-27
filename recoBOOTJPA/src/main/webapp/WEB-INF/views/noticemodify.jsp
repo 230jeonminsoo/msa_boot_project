@@ -1,4 +1,4 @@
-<%@page import="com.my.notice.vo.Notice"%>
+<%@page import="com.reco.notice.vo.Notice"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.Date" %>

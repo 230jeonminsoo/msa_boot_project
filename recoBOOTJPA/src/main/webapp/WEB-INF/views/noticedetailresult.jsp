@@ -1,10 +1,10 @@
 
 
-<%@page import="com.my.customer.vo.Customer"%>
+<%@page import="com.reco.customer.vo.Customer"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>
-<%@page import="com.my.notice.vo.Notice"%>
+<%@page import="com.reco.notice.vo.Notice"%>
 <%
 Notice n= (Notice)request.getAttribute("n");
 int ntcIdx = n.getNtcIdx();

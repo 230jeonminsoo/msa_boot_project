@@ -1,7 +1,7 @@
-<%@page import="com.my.customer.vo.Customer"%>
+<%@page import="com.reco.customer.vo.Customer"%>
 <%@page import="java.util.List"%>
-<%@page import="com.my.board.vo.Comment"%>
-<%@page import="com.my.board.vo.Board"%>
+<%@page import="com.reco.board.vo.Comment"%>
+<%@page import="com.reco.board.vo.Board"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>

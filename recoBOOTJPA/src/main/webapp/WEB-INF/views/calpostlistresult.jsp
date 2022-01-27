@@ -1,6 +1,6 @@
-<%@page import="com.my.calendar.vo.CalPost"%>
+<%@page import="com.reco.calendar.vo.CalPost"%>
 <%@page import="java.util.List"%>
-<%@page import="com.my.customer.vo.Customer"%>
+<%@page import="com.reco.customer.vo.Customer"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>
