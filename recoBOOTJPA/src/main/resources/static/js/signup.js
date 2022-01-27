@@ -101,7 +101,7 @@ function signupSubmit($formObj){
 //회원가입의 로그인 버튼 클릭되었을때
 function beforeLoginClick(){
 	$('button.beforeLogin').click(function(){
-		let url = 'login.html';
+		let url = './html/login.html';
         let target = 'login';
         let features = 'top=300, left=600, width=600px, height=500px';
         window.open(url, target, features);

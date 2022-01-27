@@ -2,7 +2,7 @@
 function loginClick(){
 	$('header>nav>ul>li>a[id=login]').click(function(){
 		
-        let url = 'login.html';
+        let url = './html/login.html';
         let target = 'login';
         let features = 'top=300, left=600, width=600px, height=400px';
         window.open(url, target, features);
@@ -12,7 +12,7 @@ function loginClick(){
 //회원가입이 클릭되었을때
 function signupClick(){
 	$('header>nav>ul>li>a[id=signup]').click(function(){
-        let url = 'signup.html';
+        let url = './html/signup.html';
         let target = 'signup';
         let features = 'top=300, left=600,width=600px, height=300px';
         window.open(url, target, features);
@@ -22,7 +22,7 @@ function signupClick(){
 
 function communityClick(){
 	$('header>nav>ul>li>a[id=community]').click(function(){
-	 let url = 'login.html';
+	 let url = './html/login.html';
         let target = 'login';
         let features = 'top=300, left=600, width=600px, height=500px';
         window.open(url, target, features);

@@ -4,7 +4,7 @@ function loadBeforeAfter(){
 	console.log(loginFont);
 	if( loginFont != null){
 		
-		ajaxUrl = 'before.html';
+		ajaxUrl = './html/before.html';
 	    ajaxMethod = "GET";
 	    $('section>div.articles0').empty();
 	    $('section>div.articles0').load(ajaxUrl,function(responseText, textStatus, jqXHR){

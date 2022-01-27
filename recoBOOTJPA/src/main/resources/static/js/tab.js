@@ -1,7 +1,7 @@
 //탭메뉴에서 add 클릭했을때 
 function tabaddClick(){
 	$('div.tab>ul>li>a[id=clickadd]').click(function(){
-		let url = 'calwrite.html';
+		let url = './html/calwrite.html';
         let target = 'category+Thbumbnail';
         let features = 'top=300, left=500, width=500px, height=500px';
         window.open(url, target, features);
@@ -67,7 +67,7 @@ function tabMenuClick(){
 				return false;
 				
 			//tab에서 faq가 클릭되었을때
-			case 'faqlist.html':
+			case './html/faqlist.html':
 				ajaxUrl = menuHref;
 				
                 $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){

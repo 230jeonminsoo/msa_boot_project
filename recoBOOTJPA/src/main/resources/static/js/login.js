@@ -35,7 +35,7 @@ function loginClick(){
 function beforeSignupClick(){
 	$('button.beforeSignup').click(function(){
 		
-		let url = 'signup.html';
+		let url = './html/signup.html';
         let target = 'signup';
         let features = 'top=300, left=600,width=600px, height=300px';
         window.open(url, target, features);
