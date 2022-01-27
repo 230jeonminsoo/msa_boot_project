@@ -1,0 +1,255 @@
+@charset "UTF-8";
+
+
+/* 헤더부분 reco이름부분 */
+header{
+  font-family: "나눔고딕", NanumGothic,Dotum,"돋음",sans-serif;
+}
+/* reco부분 감싸고 있는 박스와 메뉴바부분*/
+.headerbox,.menu,.menu_item{
+  margin:0;
+  padding:0;
+  display: block; margin: 0 auto;
+}
+.a{
+  color: inherit;
+  text-decoration: none;
+}
+
+/* reco있는 오렌지색 박스 */
+.headerbox{
+  background-color: orange;
+  height:120px;
+ 
+}
+
+/* reco 글자 있는 부분 */
+.headertext
+{
+  width:1080px;
+
+  font-weight: bold;
+  font-size: 85px;
+  color: #fff;
+  margin: 0 auto;
+  text-align: center;
+  
+}
+/* RECO클릭시 메인으로 링크 */
+.link{
+  text-decoration: none;
+  color: #000;
+}
+/* 로그인 고객센터 버튼 있는 곳 감싸는 태그 */
+.login_item{
+  position: absolute;
+  display: block;
+  margin-top: -108px ; 
+  margin-left: 1221.5px;
+  padding-right: 0.05px;
+}
+
+/* 로그인 회원 가입 버튼 있는 곳 감싸는 ul태그  */
+.login{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display: table;
+  text-decoration: none;
+}
+/* 로그인 회원 가입 각 버튼  */
+.log_link{
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+  
+}
+.log_link1{
+  text-decoration: none;
+  
+  /* color: aqua; */
+  color: rgb(78, 67, 67);
+  font-weight: bold;
+
+}
+
+.login li{
+  display: table-cell;
+  padding-right: 30px;
+  
+  
+}
+
+/* 로그인 회원가입 부분 커서 갖다대면 효과 */
+.log_li:hover .log_link{
+  background-color: skyblue;
+  font-weight: bolder;
+  
+}
+
+
+.log_li:hover .log_link1 {
+  
+  background-color: aqua;
+  font-weight: bolder;
+  
+}
+
+
+
+/* movie food 등 메뉴바  */
+
+/* 메뉴바 회색부분  */
+.wrap{
+  max-width:2000px;
+  margin:14px;
+  margin:0 auto;
+  background-color: lightgray;
+  display: block;
+
+}
+.menu{
+  display: table;
+  table-layout:fixed;
+ 
+  list-style:none;
+  width:1080px;
+
+}
+
+.menu_item{
+  display: table-cell;
+  list-style:none;
+ 
+}
+.menu_link {
+  display: block;
+  
+  border: 1px none;
+  font-size: 100px
+  color#000;
+  text-align:center;
+  line-height:36px;
+  margin-left:40px;
+  margin-right:40px;
+  text-decoration:none;
+}
+
+
+
+
+/* 메뉴와 관련 */
+.menu_item + .menu_item .menu_link {
+    margin-left: 14px;
+}
+
+
+/* 메뉴바 커서 대면 효과 */
+.menu_item:hover .menu_link {
+    font-weight: bold;
+    border-color: #454545;
+
+}
+
+
+/* 메뉴바 커서 대면 효과 */
+.menu_item:hover .yellow {
+    background-color: gray;
+
+}
+
+section{
+  margin: 0 auto;
+}
+/* 컨텐츠 감싸는 부분   */
+.container{
+   
+  display: block;
+  width: 90%;
+  
+  margin: 0 auto;
+  
+  position: relative;
+  height: 180vh;
+ /* border-left: 5px dotted orange;*/
+/* border-right: 5px dotted orange;*/
+  padding-top: 40px ;
+  
+    
+}
+.container:after{
+    display: block;
+    clear: both;
+    content: '';
+    /* width: 100%; */
+    position: absolute;
+    top: 100px;
+    bottom: 100px;
+    right: 100px;
+}
+/* 컨텐츠 부분  */
+
+
+fieldset{
+ 
+  width: 1000px;
+  /* margin: 0 auto; */
+  margin-top: 40;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  
+  
+}
+textarea{
+  resize: none;
+}
+
+/* 이미지업로드 버튼 부분 */
+.file_button{
+  border: solid 1px black;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+/* 파일선택한 것 나오는 부분 */
+#file_route{
+  margin-bottom: 15px;
+  margin-top: 15px;
+
+}
+
+/* 이미지 업로드하는 부분 */
+#img_section{
+  width: 400px; height: 400px;
+}
+
+/* 이미지 업로드하는 부분 */
+.upload{
+  text-align: center;
+  
+}
+
+
+/* 등록버튼 */
+.upload button{
+  font-size: 30px;
+}
+/* 리뷰/메모 적는 란 */
+#text_area{
+  font-size: 40px;
+}
+
+/* footer부분  */
+footer{
+  position: relative;
+  width:100%;
+  text-align:center;
+  margin-bottom:30px;
+  margin-top: 30px;
+}
+address{
+  color:gray;
+  font-style: normal;
+}
+
+

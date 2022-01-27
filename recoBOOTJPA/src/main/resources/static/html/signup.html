@@ -1,0 +1,65 @@
+<!-- 회원가입페이지입니다. -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>RECO</title>
+    <link href="./css/signup.css" rel=stylesheet>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./js/signup.js"></script>
+    <script>
+   
+      $(function(){
+    	 let $emailObj = $('div.signup>form>input[name=email]');
+    	 let $nicknameObj = $('div.signup>form>input[name=nickname]');
+    	 let $submitBtObj = $('div.signup>form>button[type=submit]');
+    	 let $formObj = $('div.signup>form');
+    	
+    	//닉네임 중복확인 할떄 START
+   			nickDupchk($nicknameObj, $submitBtObj);	
+   		//닉네임 중복확인 할때 END
+   	
+    	//이메일 중복확인 할떄 START
+      		emailDupchk($emailObj, $submitBtObj);
+      	//이메일 중복확인 할떄 END
+    	  
+    	//가입클릭했을때 SRART  		
+        	signupSubmit($formObj);
+        //가입클릭했을때 END
+        
+        //로그인 버튼 클릭시 START
+        	beforeLoginClick();
+        //로그인 버튼 클릭시 END
+        
+      });
+    </script>
+    
+  </head>
+  <body>
+    
+  <div class="signup"> 
+	<form method="post" action="./signup" autocomplete="off">       
+		<h3>회원가입</h3>
+		<input type="text" name="name" id="name" required placeholder="이름">
+		<br>
+		<input type="text" name="nickname" id="nickname" required placeholder="닉네임">
+		<br>
+		<input type="text" name="email" id="email" required placeholder="이메일">
+		<br>
+		<input type="password" name="pwd" id="pwd" required placeholder="비밀번호"> 
+		<br>
+		<input type="password" name="pwd1" id="pwd1" required placeholder="비밀번호 확인">
+		<br>
+		
+		<button type="submit">가입</button>
+		<button type="reset">CLEAR</button>
+	</form>             
+   </div>
+              
+   <button class="beforeLogin">이미 가입하셨나요? 로그인</button><br>
+   <a href="#"><img src="./images/kakao_login_medium_narrow.png"></a>
+                              
+  </body>
+  </html>

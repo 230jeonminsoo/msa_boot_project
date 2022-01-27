@@ -1,0 +1,106 @@
+/* 앨범 5개 전체 감싸는 태그 */
+.title_list{
+  width:980px;
+  margin: 0 auto;
+ height: 780px;
+  text-align: center;
+}
+
+/* 각각의 앨범 전체를 감싸는 태그 */
+.title_list{
+  margin-top: 90px;
+}
+
+/* 각각의 앨범 전체를 감싸는 태그의 li */
+.title_list li{
+  list-style: none;
+  float:left;
+  /* margin-right: 30px; */
+  padding-right: 90px;
+  margin-bottom: 140px;
+  width:230px;
+  height:230px;
+  border-radius: 50%;
+
+}
+
+
+/* 각 앨범 그림 있는 부분을 감싸는 링크 */
+.title_wrap{
+  position: relative;
+}
+
+
+
+
+#title5{
+ float: initial;
+} 
+
+
+
+.title_list li:nth-child(4n) {
+  margin-right: 0;
+
+}
+
+/* 앞에 보여지는 앨범 이름 */
+.title_front{
+  font-size: 25px;
+  width:250px;
+  margin:0 auto;
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-bottom: -30px;
+  display:inline-block;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  text-align: center;
+
+}
+/* 그림 */
+img{
+  width: 300px;
+  height: 200px;
+  display: block; margin: 0 auto;
+}
+
+/* 그림에 커서가 놓일 때 hover되는 것 */
+.title_wrap:hover .hidden_title{
+  position: absolute;
+  display: block;
+  /* color: white; */
+}
+
+
+
+/* 앨범 커서 놓았을 때 보이는 앨범 이름 감싸는 부분*/
+.hidden_title{
+  text-decoration:none;
+  position: absolute;
+  background: mediumseagreen;
+  /* color: #fff; */
+  width:132%;
+  height:100%;
+  top:0;
+  left:0;
+  display: none;
+  z-index: 6;
+}
+/* 앨범 커서 놓았을 때 보이는 앨범 이름 감싸는 부분*/
+.title_detail{
+  text-decoration: none;
+  /* color: white; */
+}
+
+
+
+/* 앨범 커서 놓았을 때 보이는 앨범 이름 부분*/
+.title_name{
+  position: relative;
+  font-size: 50px;
+  text-align: center;
+  color: whitesmoke;
+  
+}

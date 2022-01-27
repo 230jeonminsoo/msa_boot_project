@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+
+div.tab{
+	background-color: rgb(240, 225, 204);
+    display:block;
+}
+
+div.tab>ul{
+	width:100%;
+	height:35px;
+	margin-top:0px;
+    display: table;
+  	table-layout:fixed;
+ 	list-style:none;
+}
+
+div.tab>ul>li{
+    display: table-cell;
+    text-align: center;
+}
+div.tab>ul>li:hover{
+	background-color: gray;
+}
+
+div.tab>ul>li>a{
+	height:100%;
+	display: block;
+  	border: 1px none;
+  	font-size: 30px;
+    text-decoration: none;
+}
+div.tab>ul>li>a:hover{
+    font-weight:bolder;
+}
+
+div.tab>ul.communitytab{
+   display:none;
+}

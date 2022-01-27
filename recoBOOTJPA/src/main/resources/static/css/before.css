@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+/* 소개하는 부분 fieldset */
+div.container>fieldset.main{
+    /* width: 700px; */
+    height:100%;
+    margin: 20px auto;
+    border-color: gold;
+    margin-bottom: 20px;
+    background-color: whitesmoke;
+}
+
+
+div.container>fieldset.main>div{
+	width:100%
+}

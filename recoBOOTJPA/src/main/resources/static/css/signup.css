@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+div.signup>form>button[type=submit]{
+     display:none; 
+   /* visibility: hidden; */
+}
+
+body{
+	background-color: #f2f2f2;
+}

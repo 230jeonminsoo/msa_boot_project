@@ -1,0 +1,168 @@
+@charset "UTF-8";
+
+.container{
+   
+  display: block;
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+ 
+  position: relative;
+  /* height: 140vh; */
+  /* border-left: 5px dotted orange;
+  border-right: 5px dotted orange; */
+      
+}
+
+/* 자유게시판 이라고 글자*/
+div.container>h1{
+  text-align: center;
+  margin: 30px;
+  font-size: 30px;
+}
+
+/* 자유게시판 글 성격 설명하는 곳 */
+.brd_info{
+  border:1px solid gray;
+  margin:0 auto;
+  text-align: center;
+  width: 100%;
+  font-size: 20px;
+  text-align: center;
+
+}
+.search{
+  margin-top: 3px;
+  margin-bottom: 30px;
+  margin-left: 950px;
+}
+
+/*자유게시판 리스트 전체*/
+.brd_list{
+	width:90%;
+	/* margin-left: 15%; */
+	margin-top: 5px;
+  margin: 0 auto;
+}
+
+/*글쓰기 버튼*/
+.board_write_button{
+	border:1px black solid;
+	width:10%;
+	height:3%;
+	margin-left:0;
+	margin-top: 10px;
+	text-align:center;
+	
+}
+
+a{
+	text-decoration:none;
+	font-weight:bold;
+}
+
+/* 자유게시판 상단 */
+.brd_list>ul.brd_top{
+ border:1px solid gray;
+  list-style-type:none;  
+  padding-top:10px;
+  padding-bottom:10px;
+  padding-left:0px;
+  margin:0 auto;
+  width: 100%;
+  font-size: 20px;
+}
+
+/* 자유게시판 상단 내부*/
+.brd_list>ul.brd_top>li span{
+	margin-left:13px;
+	margin-right:10px;
+	text-align:center;
+	display: inline-block;
+	width:135px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	font-weight: bold;
+}
+
+/*자유게시판 각 리스트*/
+.brd_list>div>ul{
+  border:1px solid gray;
+  list-style-type:none;  
+  padding-top:10px;
+  padding-bottom:10px;
+  padding-left:0px;
+  margin:0 auto;
+  width: 100%;
+  font-size: 20px;
+}
+
+
+/*자유게시판 각 리스트의 글자*/
+.brd_list>div>ul>li span{
+	margin-left:13px;
+	margin-right:10px;
+	text-align:center;
+	display: inline-block;
+	width:135px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+
+
+
+
+/**분류 버튼 */
+.dropbtn {
+  background-color: black;
+  color: white;
+  /* padding: 10px; */
+  /* padding-top: 20px; */
+  position: relative;
+  top: 20px;
+  left: 83px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  height:  50px;
+}
+/**분류 버튼 */
+.dropdown {
+  
+  padding-top: 10px;
+  position: relative;
+  display: inline-block;
+  
+}
+/**분류 버튼 마우스 올리면 밑으로 내려오는 내용들*/
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+/**분류 버튼  마우스 올리면 밑으로 내려오는 내용들*/
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+/**분류 버튼 마우스 올리면 밑으로 내려오는 내용들*/
+.dropdown-content a:active, a:hover {background-color: #f1f1f1}
+
+/**분류 버튼 마우스 올리면 밑으로 내려오는 내용들*/
+.dropdown:active,.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/**분류 버튼 마우스 올리면 밑으로 내려오는 내용들*/
+.dropdown:active .dropdown:hover .dropbtn {
+  background-color: grey;
+}
+

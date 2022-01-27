@@ -1,0 +1,128 @@
+@charset "UTF-8";
+
+/* .wrap{
+  height: 100%;
+  border-left: 5px dotted orange;
+  border-right: 5px dotted orange;
+  width: 90%;
+  margin: 0 auto;
+
+} */
+.container{
+   
+  height: 100%;
+  /* border-left: 5px dotted orange;
+  border-right: 5px dotted orange; */
+  width: 90%;
+  margin: 0 auto;
+  
+      
+}
+
+/* 공지사항 이라고 글자*/
+div.container>h1{
+  text-align: center;
+  margin: 30px;
+  font-size: 30px;
+}
+
+/* 공지사항 글 성격 설명하는 곳 */
+.ntc_info{
+  border:1px solid gray;
+  /* margin:0 auto; */
+  text-align: center;
+  width: 100%;
+  font-size: 20px;
+  /* margin: 0 auto; */
+  
+
+}
+
+/* 검색창  */
+.search{
+  position: relative;
+  right: 130px;
+  top: 17px;
+
+}
+
+
+/*공지사항 리스트 전체*/
+.ntc_list{
+	width:80%;
+	/* margin-left: 15%;
+	margin-top: 5%; */
+  padding-top: 60px;
+  margin: 0 auto;
+}
+
+/*글쓰기 버튼*/
+div.container>div.write_button{
+	border:1px black solid;
+	width:6%;
+	height:3%;
+	margin-left:80%;
+	margin-top: 3%;
+	text-align:center;
+	
+}
+
+a{
+	text-decoration:none;
+	font-weight:bold;
+}
+/* 공지사항 상단 */
+div.container>div.ntc_list>ul.ntc_top{
+ border:1px solid gray;
+  list-style-type:none;  
+  padding-top:10px;
+  padding-bottom:10px;
+  padding-left:0px;
+  margin:0 auto;
+  width: 100%;
+  font-size: 20px;
+}
+
+/* 공지사항 상단 내부*/
+div.container>div.ntc_list>ul.ntc_top>li>span{
+	margin-left:13px;
+	margin-right:10px;
+	text-align:center;
+	display: inline-block;
+	width:200px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	font-weight: bold;
+}
+/*공지사항 각 리스트*/
+div.container>div.ntc_list>div>ul{
+  border:1px solid gray;
+  list-style-type:none;  
+  padding-top:10px;
+  padding-bottom:10px;
+  padding-left:0px;
+  margin:0 auto;
+  width: 100%;
+  font-size: 20px;
+}
+
+/*공지사항 각 리스트의 글자*/
+div.container>div.ntc_list>div>ul>li span{
+	margin-left:13px;
+	margin-right:10px;
+	text-align:center;
+	display: inline-block;
+	width:200px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+div.container>div.ntc_list>div.notice_write_button{
+	margin-top:30px;
+
+}
+div.container>div.ntc_list>div.notice_write_button>label{
+	border:1px solid black;
+}

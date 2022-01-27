@@ -1,0 +1,47 @@
+header{
+    font-family: "나눔고딕", NanumGothic,Dotum,"돋음",sans-serif;
+  }
+  /* reco부분 감싸고 있는 박스와 메뉴바부분*/
+  .headerbox,.menu,.menu_item{
+    margin:0;
+    padding:0;
+    display: block; 
+    margin: 0 auto;
+  }
+  .a{
+    color: inherit;
+    text-decoration: none;
+  }
+  /* reco있는 오렌지색 박스 */
+  .headerbox{
+    background-color: orange;
+    height:120px;
+    
+    
+  }
+  
+  
+  /* reco 글자 있는 부분 */
+  .headertext
+  {
+    width:1080px;
+  
+    font-weight: bold;
+    font-size: 85px;
+    color: #fff;
+    margin: 0 auto;
+    text-align: center;
+    /* position: absolute; */
+  }
+  
+  /* RECO클릭시 메인으로 링크 */
+  .link{
+    text-decoration: none;
+    color: #000;
+  }
+  
+  section>div.articles0{
+  height:80%;
+  }
+  
+ 

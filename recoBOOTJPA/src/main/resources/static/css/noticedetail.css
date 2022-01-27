@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+div.ntcDetail{
+	/* margin:40px; */
+	margin: 0 auto;
+	
+	width: 1400px;
+	display: block;
+	/* border-left: 5px dotted orange;
+  	border-right: 5px dotted orange;	 */
+	height: 100%;
+}
+h1{
+	font-size: 30px;
+	margin-left: 205px;
+	margin-top: 40px;
+}
+ul.ntcDetail{
+     list-style-type: none;
+     /* padding-left: 0px; */
+     border:1px #77af9c solid;
+     width:70%;
+	 margin: 0 auto;
+	
+ }
+ /* 글번호 */
+ .ntcIdx{
+	margin-top: 10px;
+ }
+ /* 작성자 작성일 조회수 */
+.ntcUNickname, .ntcCreateA, .ntcViews{
+	float: left;
+	padding-right: 10px;
+
+}
+ 
+
+
+div.ntcDetail>ul.ntcDetail>li>div.ntcTitle{
+	font-size: 20px;
+}
+
+div.ntcDetail>ul.ntcDetail>li>div.ntcContent{
+	
+	height:400px;
+	font-size: 30px;
+	position: relative;
+	top: 30px;
+	
+	
+}
+
+div.ntcDetail>div.NoticeDetailButton{
+	margin-left: 55%;
+}
+div.ntcDetail>div.NoticeDetailButton>button{
+	background-color:white;
+	 border: 2px solid #77af9c;
+	 padding:10px;
+	 margin:10px;
+	 position: relative;
+	 left: 153px;
+}
+
+div.ntcDetail>div.NoticeDetailButton>button:hover{
+     color: black;
+     letter-spacing: 2px;
+     transform: scale(1.2);
+     cursor: pointer;
+     font-weight: bold;
+}

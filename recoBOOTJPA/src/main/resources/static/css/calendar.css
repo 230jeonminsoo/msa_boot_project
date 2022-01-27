@@ -1,0 +1,145 @@
+@charset "UTF-8";
+
+
+/* 캘린더 부분  start*/
+.container{
+ 
+    display: block;
+    width: 90%;
+    padding-top: 60px;
+    margin: 0 auto;
+   
+    position: relative;
+    height: 150vh; /*수정*/
+   
+  }
+  
+  .container:after{
+      display: block;
+      clear: both;
+      content: '';
+      
+      position: absolute;
+      top: 100px;
+      bottom: 100px;
+      right: 100px;
+  }  
+
+* {
+    /*margin-top: 100px;*/
+    margin: auto;
+    padding: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+  }
+
+ 
+ body {
+    /*display: flex;*/
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+  }
+ 
+ 
+.coltaday{
+	 background-color: #e4b758;
+}   
+.custom_calendar_table td {
+    padding: 5px;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #333333;
+    cursor: pointer;
+}
+
+.custom_calendar_table thead.cal_date th {
+    font-size: 2.5rem;
+}
+
+.custom_calendar_table thead.cal_date th button {
+    font-size: 3.0rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    
+}
+.custom_calendar_table thead.cal_date1 th button {
+
+    border-top-left-radius: 5px; 
+    border-bottom-left-radius: 5px; 
+    margin: 0;
+    border-top-right-radius: 5px; border-bottom-right-radius: 5px;
+    font-size: 1.5rem;    
+    border: 1px solid skyblue;
+    cursor: pointer;
+    background-color: rgba(0,0,0,0); 
+    color: skyblue; 
+    
+
+}
+.custom_calendar_table thead.cal_date1 th button:hover{ 
+    color:white; background-color: skyblue; 
+}
+
+
+.custom_calendar_table thead.cal_week th {
+    background-color: #e4b758;
+    color: #fff;
+}
+
+.custom_calendar_table tbody td {
+    
+    cursor: pointer;
+    height: 200px;
+    border-top: 1px solid #333333;
+    border-right: 1px solid #333333;
+}
+
+.custom_calendar_table tbody td:nth-child(1) {
+    color: red;
+}
+
+.custom_calendar_table tbody td:nth-child(7) {
+    color: #288CFF;
+}
+
+.custom_calendar_table tbody td.select_day {
+    background-color: #acd3ff;
+    color: #fff;
+}
+
+.custom_calendar_table tbody td.coltoday{
+    background-color: #FFA07A;
+}
+/* .today {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    display: block;
+    width: 30px;
+    height: 30px;
+    background-color: burlywood;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    content: '';
+  } */
+
+/* 캘린더 부분  end*/
+
+
+footer{
+    position: relative;
+    width:100%;
+    text-align:center;
+    /* margin-bottom:30px;
+    margin-top: 30px; */
+    /* margin: 0 auto; */
+    margin-top: 100px;
+    margin-bottom: 40px;
+  }
+  address{
+    color:gray;
+    font-style: normal;
+  }

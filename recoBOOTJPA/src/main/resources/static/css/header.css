@@ -1,0 +1,58 @@
+@charset "UTF-8";
+@import url("base.css");
+
+header{
+   background-color:orange; 
+   border-bottom: 1px solid #e5e5e5;
+   height: 150px;
+}
+
+header>h1{
+    width: 200px;
+    height: 100px;
+    float:left;
+    display:block;
+    margin-left: 45%;
+}
+
+header>h1.logo>a{
+	background-image: url(../images/logo-removebg-preview.png);
+	background-repeat: no-repeat;
+	display:block;
+	width: 100%;
+    height: 100%;
+    overflow: hidden;  
+    text-indent: -20000px;
+}
+  
+  
+header>nav{
+    margin: 0px auto;
+    padding-right:1%;
+    float:right;
+    font-weight: bolder;
+}
+
+
+header>nav>ul{
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+header>nav>ul>li{
+    display: inline-block;
+   /*  width:100px; */
+    text-align: center;
+}
+
+header>nav>ul>li>a{
+    text-decoration: none;
+    font-size: 20px;
+    padding:5px;
+}
+  
+
+
+  
+  
+ 
