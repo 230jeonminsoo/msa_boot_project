@@ -8,10 +8,11 @@
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
 	<typeAliases>
-		<typeAlias type="com.my.board.vo.Board" alias="Board"/>
-		<typeAlias type="com.my.calendar.vo.Calendar" alias="Calendar"/>
-		<typeAlias type="com.my.customer.vo.Customer" alias="Customer"/>
-		<typeAlias type="com.my.notice.vo.Notice" alias="Notice"/>		
+		<typeAlias type="com.reco.board.vo.Board" alias="Board"/>
+		<typeAlias type="com.reco.calendar.vo.CalInfo" alias="CalInfo"/>
+		<typeAlias type="com.reco.calendar.vo.CalPost" alias="CalPost"/>
+		<typeAlias type="com.reco.customer.vo.Customer" alias="Customer"/>
+		<typeAlias type="com.reco.notice.vo.Notice" alias="Notice"/>		
 	</typeAliases>
   <environments default="development">
     <environment id="development">
@@ -19,15 +20,15 @@
       <dataSource type="POOLED">
 		<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
         <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
-        <property name="username" value="hr"/>
-        <property name="password" value="hr"/>
+        <property name="username" value="cal"/>
+        <property name="password" value="cal"/>
       </dataSource>
     </environment>
   </environments>
   <mappers>
-    <mapper resource="recobatisConfig/BoardMapper.xml"/>
+    <!--<mapper resource="recobatisConfig/BoardMapper.xml"/>-->
 	<mapper resource="recobatisConfig/CustomerMapper.xml"/>
-	<mapper resource="recobatisConfig/CalendarMapper.xml"/>	
+	<!--<mapper resource="recobatisConfig/CalendarMapper.xml"/>-->	
 	<mapper resource="recobatisConfig/NoticeMapper.xml"/>
   </mappers>
 </configuration>
