@@ -40,7 +40,7 @@ public class DatabaseConfiguration {
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		sqlSessionFactoryBean.setDataSource(dataSource);
 
-		sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:/mybatisConfig/mybatis-config.xml"));
+		sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:/recobatisConfig/recobatis-config.xml"));
 		return sqlSessionFactoryBean.getObject();
 	}
 

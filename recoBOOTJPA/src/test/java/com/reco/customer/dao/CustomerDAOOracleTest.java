@@ -15,7 +15,7 @@ class CustomerDAOOracleTest {
 	
 	@Test
 	void testFindByEmail() {
-		String email = "";
+		String email = "d@naver.com";
 		try {
 			dao.findByEmail(email);
 		} catch (FindException e) {
@@ -25,7 +25,7 @@ class CustomerDAOOracleTest {
 	
 	@Test
 	void testFindByNick() {
-		String nick = "";
+		String nick = "치형(관리자)";
 		try {
 			dao.findByNick(nick);
 		} catch (FindException e) {
