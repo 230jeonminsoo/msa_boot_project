@@ -1,0 +1,30 @@
+server:
+  port: 9998
+  servlet:
+    context-path: /recoBOOTJPA
+spring:
+  datasource:
+    hikari:
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      jdbc-url: jdbc:log4jdbc:oracle:thin:@localhost:1521:xe
+      username: hr
+      password: hr
+      maximum-pool-size: 10
+      minimum-idle: 2
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+#     suffix: .jsp
+  jpa:
+    database: oracle
+    generate-ddl: true
+    show-sql: true
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+    
+logging:
+  level:
+    root: info
+    org.hibernate: info
+  charset:
+    console: UTF-8 
+    file: UTF-8  
