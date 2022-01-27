@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.reco.customer.CustomerMapper">
+	<select id="findByEmail" 
+			parameterType="string" 
+			resultType="Customer">
+		select u_idx,u_name,u_nickname,u_email,u_pwd,u_authcode from customer where u_email=#{uEmail}		
+	</select>
+	
+	<insert id="add" 
+			parameterType="Customer">
+		INSERT INTO customer(u_idx,u_name,u_nickname,u_email,u_pwd,u_authcode,u_status) 
+		VALUES (u_idx.nextval,?,?,?,?,1,1)
+	</insert>
+	
+	<select id="findByNick" parameterType="string" resultType="Customer">
+		select u_idx,u_name,u_nickname,u_email,u_pwd from customer where u_nickname=#{uNickName}
+	</select>
+	
+
+</mapper>
+

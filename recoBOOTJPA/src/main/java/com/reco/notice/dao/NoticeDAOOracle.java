@@ -1,11 +1,5 @@
 package com.reco.notice.dao;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -13,6 +7,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.reco.exception.AddException;
 import com.reco.exception.FindException;
@@ -22,7 +17,7 @@ import com.reco.notice.vo.Notice;
 
 
 
-
+@Repository
 public class NoticeDAOOracle implements NoticeDAOInteface {
 	
 
