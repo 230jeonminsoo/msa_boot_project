@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.reco.notice.NoticeMapper">
+
+
+	<select id="findNtcAll" resultType="Notice">
+		select ntc_idx,ntc_title,ntc_createat,ntc_unickname,ntc_views 
+		from notice order by ntc_idx desc
+	</select>
+	
+	<insert id="addNtc" parameterType="Notice">
+		insert into notice(ntc_idx,ntc_title,ntc_content,ntc_attachment,ntc_unickname) 
+		values(#{ntcIdx},#{ntcTitle},#{ntcContent},#{ntcAttachment},#{ntcUnickname})
+		
+		<selectKey keyProperty="ntcIdx" resultType="int" order="AFTER">
+			select ntc_idx.nextval FROM dual
+		</selectKey>
+	</insert> 
+	
+	<select id="findNtcByIdx" parameterType="int" resultType="Notice">
+		select * from notice where ntc_idx=#{ntcIdx}
+	</select>
+	<select id="findNtcByTitle" parameterType="string" resultType="Notice">
+		select ntc_idx,ntc_unickname,ntc_title,ntc_createat 
+		from notice where ntc_title like '%${word}%' 
+	</select>
+	
+	<select id="findNtcByWord" parameterType="string" resultType="Notice">
+		select ntc_idx,ntc_unickname,ntc_title,ntc_createat 
+		from notice where ntc_title like '%${word}%' or ntc_content like '%${word}%'
+	</select>
+	
+	<update id="modifyNtc" parameterType="Notice">
+		update notice set ntc_title=#{ntcTitle} where ntc_idx=#{ntcIdx}
+		update notice set ntc_content=#{ntcTitle} where ntc_idx=#{ntcIdx}
+		update notice set ntc_attachment=#{ntcAttachment} where ntc_idx=#{ntcIdx}
+	</update>
+	
+	<delete id="removeNtc" parameterType="int">
+		delete from notice where ntc_idx=#{ntcIdx}
+	</delete>
+
+	<update id="plusViewCount" parameterType="int">
+		UPDATE notice set NTC_views = NTC_VIEWS+1 where ntc_Idx=#{ntcIdx}
+	</update>
+</mapper>
+
