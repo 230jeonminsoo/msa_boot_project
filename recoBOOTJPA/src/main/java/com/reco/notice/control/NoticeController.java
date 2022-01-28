@@ -55,7 +55,7 @@ public class NoticeController {
 	}
 	
 	//공지사항을 자세히 보는 컨트롤러
-	@GetMapping
+	@GetMapping("ntcdetail")
 	public String noticeDetail(int ntcIdx, Model model) {
 		try {
 			Notice n = service.findNtcByIdx(ntcIdx);
