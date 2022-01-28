@@ -77,7 +77,7 @@ function signupClick(){
 			//menu에서 커뮤니티가 클릭되었을때
             case 'ntclist':
                 ajaxUrl = menuHref;
-                $('section>div.articles').load(ajaxUrl, function(responseText, textStatus, jqXHR){
+                $('section>div.articles0').load(ajaxUrl, function(responseText, textStatus, jqXHR){
                     if(jqXHR.status != 200){
                         alert('응답실패:' + jqXHR.status);            
                     }    
