@@ -1,4 +1,4 @@
-//로그인이 클릭되었을 떄
+/*//로그인이 클릭되었을 떄
 function loginClick(){
 	$('header>nav>ul>li>a[id=login]').click(function(){
 		
@@ -8,8 +8,8 @@ function loginClick(){
         window.open(url, target, features);
 		return false;
     });
-}
-//회원가입이 클릭되었을때
+}*/
+/*//회원가입이 클릭되었을때
 function signupClick(){
 	$('header>nav>ul>li>a[id=signup]').click(function(){
         let url = './html/signup.html';
@@ -18,9 +18,9 @@ function signupClick(){
         window.open(url, target, features);
 		return false;
     });
-}
+}*/
 
-function communityClick(){
+/*function communityClick(){
 	$('header>nav>ul>li>a[id=community]').click(function(){
 	 let url = './html/login.html';
         let target = 'login';
@@ -28,7 +28,9 @@ function communityClick(){
         window.open(url, target, features);
 		return false;
 	});	
-}
+}*/
+
+
 /**
  * 메뉴가 클릭되었을때
  */
@@ -42,14 +44,29 @@ function communityClick(){
         let ajaxUrl = ""; //요청할URL
         //let ajaxMethod = ""; //요청방식
         switch(menuHref){
-
+	
+		    case 'login.html':
+	            ajaxurl ='./html/login.html';
+	            ajaxmethod = "get";
+	            $('section>div.articles0').empty();
+	            $('section>div.articles0').load(ajaxurl,function(responsetext,textstatus,jqxhr){
+	            });
+	            return false;
+			
+            case 'signup.html':
+	            ajaxurl = './html/signup.html';
+	            ajaxmethod = "get";	
+	            $('section>div.articles0').empty();
+	            $('section>div.articles0').load(ajaxurl,function(responsetext,textstatus,jqxhr){
+	            });
+	            return false;					
 			//로그아웃
 			case 'logout':
 				ajaxUrl = menuHref;
                 $.ajax({
                     url: ajaxUrl,
                     success:function(){
-                        location.href="./index.jsp";
+                        location.href="./";
                     },
                     error:function(xhr){
                         alert('응답실패:' + xhr.status);

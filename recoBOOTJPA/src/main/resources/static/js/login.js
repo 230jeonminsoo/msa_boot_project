@@ -19,8 +19,7 @@ function loginClick(){
 						alert(responseObj.msg);
 						$('div.login>form>div.login_form>input[id=pwd]').focus();
 					}else{
-						opener.parent.location.reload();
-						window.self.close();	
+						location.href="./";
 					}
 				},
 				error: function(xhr){

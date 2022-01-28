@@ -31,12 +31,12 @@ Customer c = (Customer)session.getAttribute("loginInfo");%>
 		loadBeforeAfter();
 
 		//로그인메뉴버튼클릭시
-		loginClick();
+		//loginClick();
 
 		//회원가입메뉴버튼시클릭
-		signupClick();
+		//signupClick();
 
-		communityClick();
+		//communityClick();
 		//로그인,회원가입 제외 각메뉴 클릭시 발생하는 이벤트
 	    menuClick();
 
