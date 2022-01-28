@@ -70,7 +70,7 @@ public class CustomerController {
 	
 	@RequestMapping("/logout")
 	public ResponseEntity logout(HttpSession session) {
-		session.removeAttribute("logininfo");
+		session.removeAttribute("loginInfo");
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
