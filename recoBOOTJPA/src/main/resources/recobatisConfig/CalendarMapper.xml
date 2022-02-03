@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.reco.calendar.CalendarMapper">
+
+
+	<select id="findCalsByUIdx" resultType="CalInfo" parameterType="int">
+		select u_idx, cal_idx, cal_Category, cal_Thumbnail 
+		from cal_info
+		where u_idx = #{uIdx}
+		order by cal_idx ASC
+	</select>
+	
+	     
+	
+	<insert id="addCal"  parameterType="CalInfo">
+		<selectKey resultType="int" keyProperty="calIdx" order="BEFORE">
+			SELECT NVL(MAX(cal_Idx), 0)+1
+			FROM cal_info
+			WHERE u_Idx = #{uIdx}
+		</selectKey>
+
+		INSERT INTO cal_info (u_Idx, cal_Idx, cal_Category, cal_Thumbnail) 
+		values (#{uIdx}, #{calIdx}, #{calCategory}, #{calThumbnail})
+	</insert>
+	
+	<select id="CreateTable" parameterType="HashMap">
+		${createCalPostSQL}
+	</select>
+	
+</mapper>
+

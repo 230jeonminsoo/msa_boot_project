@@ -28,7 +28,7 @@
   <mappers>
     <!--<mapper resource="recobatisConfig/BoardMapper.xml"/>-->
 	<mapper resource="recobatisConfig/CustomerMapper.xml"/>
-	<!--<mapper resource="recobatisConfig/CalendarMapper.xml"/>-->	
+	<mapper resource="recobatisConfig/CalendarMapper.xml"/>	
 	<mapper resource="recobatisConfig/NoticeMapper.xml"/>
   </mappers>
 </configuration>
