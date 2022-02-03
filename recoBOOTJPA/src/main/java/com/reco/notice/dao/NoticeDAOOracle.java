@@ -1,6 +1,8 @@
 package com.reco.notice.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -18,7 +20,7 @@ import com.reco.notice.vo.Notice;
 
 
 @Repository
-public class NoticeDAOOracle implements NoticeDAOInteface {
+public class NoticeDAOOracle implements NoticeDAOInterface {
 	
 
 	@Autowired
@@ -27,12 +29,52 @@ public class NoticeDAOOracle implements NoticeDAOInteface {
 	private Logger logger = LoggerFactory.getLogger(NoticeDAOOracle.class.getName());
 	
 	@Override
+	public int findCount() throws FindException{
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			return session.selectOne("com.reco.notice.NoticeMapper.findCount");
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new FindException(e.getMessage());
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}
+	}
+	
+	@Override
+	public int findCount(String word) throws FindException {
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			return session.selectOne("com.reco.notice.NoticeMapper.findCounts",word);
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new FindException(e.getMessage());
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}		
+	}
+	
+	@Override
 	public List<Notice> findNtcAll() throws FindException{
+		return findNtcAll(1,5);
+	}
+	
+	@Override
+	public List<Notice> findNtcAll(int currentPage, int cntperpage) throws FindException{
 
 		SqlSession session = null;
 		try {
 			session = sqlSessionFactory.openSession();
-			List<Notice> list = session.selectList("com.reco.notice.NoticeMapper.findNtcAll");
+			Map<String,Integer> map= new HashMap<>();
+			map.put("currentPage", currentPage);//현재페이지
+			map.put("cntperpage", cntperpage);//페이지당 글 개수
+			List<Notice> list = session.selectList("com.reco.notice.NoticeMapper.findNtcAll", map);
 			
 			if(list.size() == 0) {
 				throw new FindException("저장된 글이 없습니다");
@@ -85,11 +127,17 @@ public class NoticeDAOOracle implements NoticeDAOInteface {
 	}
 
 	@Override
-	public List<Notice> findNtcByTitle(String word) throws FindException{
+	public List<Notice> findNtcByTitle(String word, int currentPage, int cntperpage) throws FindException{
 		SqlSession session =null;
 		try {
 			session = sqlSessionFactory.openSession();
-			List<Notice> list = session.selectList("com.reco.notice.NoticeMapper.findNtcByTitle",word);
+			Map<String,String> map= new HashMap<>();
+			map.put("word", word);
+			String cp = Integer.toString(currentPage);
+			String cpp = Integer.toString(cntperpage);
+			map.put("currentPage", cp);//현재페이지
+			map.put("cntperpage", cpp);//페이지당 글개수
+			List<Notice> list = session.selectList("com.reco.notice.NoticeMapper.findNtcByTitle",map);
 			if(list.size() == 0) {
 				throw new FindException("단어를 포함하는 글이 없습니다.");
 			}
@@ -105,12 +153,18 @@ public class NoticeDAOOracle implements NoticeDAOInteface {
 	}
 
 	@Override
-	public List<Notice> findNtcByWord(String word) throws FindException{
+	public List<Notice> findNtcByWord(String word, int currentPage, int cntperpage) throws FindException{
 		SqlSession session =null;
 		
 		try {
 			session = sqlSessionFactory.openSession();
-			List<Notice> list = session.selectList("com.reco.notice.NoticeMapper.findNtcByWord",word);
+			Map<String,String> map= new HashMap<>();
+			map.put("word", word);
+			String cp = Integer.toString(currentPage);
+			String cpp = Integer.toString(cntperpage);
+			map.put("currentPage", cp);//현재페이지
+			map.put("cntperpage", cpp);//페이지당 글개수
+			List<Notice> list = session.selectList("com.reco.notice.NoticeMapper.findNtcByWord",map);
 			if(list.size() == 0) {
 				throw new FindException("단어를 포함하는 글이 없습니다.");
 			}

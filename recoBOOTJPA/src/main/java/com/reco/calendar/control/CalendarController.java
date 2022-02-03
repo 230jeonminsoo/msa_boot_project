@@ -12,7 +12,8 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class CalendarController {
 	@Autowired
 	private CalendarService service;
 	
-	private Logger logger = Logger.getLogger(this.getClass());
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	 
 	//캘린서 제목과 썸네일을 추가하는 컨트롤러 
 	@PostMapping("caladd")

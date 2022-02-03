@@ -90,6 +90,54 @@ function signupClick(){
     });
  }
 
+//--게시글 목록 보여주기 함수 시작
+function showList(jsonData){	
+	let pageDTO = jsonData;
+	
+	let url = pageDTO.url
+	let currentPage = pageDTO.currentPage;
+	let totalCnt = pageDTO.totalCnt;
+	let totalPage = pageDTO.totalPage; 
+	let startPage = pageDTO.startPage;
+	let endPage = pageDTO.endPage;
+	
+	let list = pageDTO.list;
+	$(list).each(function(index, element){
+	 let $pageGroup = $('div.pagegroup');
+		let pageGroupHtml = "";
+		if(startPage > 1){
+			pageGroupHtml +='<span';
+			pageGroupHtml +=' class="'+url+"/"+(startPage-1);
+			pageGroupHtml +=' active';
+			pageGroupHtml +='">';
+			pageGroupHtml +='prev';
+			pageGroupHtml +='</span>&nbsp&nbsp';
+		}
+		for(let i = startPage ; i<=endPage ; i++){
+			//pageGroupHtml += '<button class="page">'+[i]+'</button>';
+			pageGroupHtml +='<span';
+			pageGroupHtml +=' class="'+url+"/"+(i);
+			if(i != currentPage){
+					pageGroupHtml +=' active';
+			}
+			pageGroupHtml +='">';
+			pageGroupHtml +=i;
+			pageGroupHtml +='</span>&nbsp&nbsp';
+		}
+		if(endPage < totalPage){
+			pageGroupHtml +='<span';
+			pageGroupHtml +=' class="'+url+"/"+(endPage+1);
+			pageGroupHtml +=' active';
+			pageGroupHtml +='">';
+			pageGroupHtml +='next';
+			pageGroupHtml +='</span>&nbsp&nbsp';
+		}
+		$pageGroup.html(pageGroupHtml);
+	});
+}
+
+//--게시글 목록 보여주기 함수 끝
+
 
 
 

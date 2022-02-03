@@ -1,6 +1,9 @@
 package com.reco.notice.control;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,10 +13,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.reco.customer.vo.Customer;
+import com.reco.dto.PageDTO;
 import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.RemoveException;
@@ -68,12 +73,18 @@ public class NoticeController {
 	}
 	
 	//공지사항리스트를 보는 컨트롤러
-	@GetMapping("ntclist")
-	public ModelAndView noticeList() {
+	@GetMapping(value = {"ntclist", "ntclist/{currentpage}"})
+	public Object noticeList(@PathVariable Optional<Integer> currentPage) {
 		ModelAndView mnv = new ModelAndView();
 		try {
-			List<Notice> list=service.findNtcAll();
-			mnv.addObject("list", list);
+			PageDTO<Notice> pageDTO;
+			if(currentPage.isPresent()) {
+				int cp = currentPage.get();
+				pageDTO = service.findNtcAll(cp);
+			}else {
+				pageDTO = service.findNtcAll();
+			}
+			mnv.addObject("list", pageDTO);
 			mnv.setViewName("noticelistresult.jsp");
 		} catch (FindException e) {
 			e.printStackTrace();
@@ -99,12 +110,21 @@ public class NoticeController {
 	}
 	
 	//공지사항을 검색하는 컨트롤러
-	@GetMapping("ntcsearch")
-	public String noticeSearch(String f, String q, Model model) {
+	@GetMapping(value = {"ntcsearch/{word}","ntcsearch/{word}/{currentPage}"})
+	public String noticeSearch(@PathVariable Optional<String> word, String f,@PathVariable Optional<Integer> currentPage ,Model model) {
+		PageDTO<Notice> pageDTO;
 		if(f.equals("ntc_title")) {
 			try {
-				List<Notice> list = service.findNtcByTitle(q); 
-				model.addAttribute("list", list);
+				String w = "";
+				if(word.isPresent()) { 
+					w = word.get();
+				}
+				int cp = 1;
+				if(currentPage.isPresent()) { //currentPage
+					cp = currentPage.get();
+				}
+				pageDTO = service.findNtcByTitle(w,cp); 
+				model.addAttribute("list", pageDTO);
 				return "noticelistresult.jsp";
 			} catch (FindException e) {
 				e.printStackTrace();
@@ -114,8 +134,16 @@ public class NoticeController {
 		}else {
 			f = "ntc_content"; 		
 			try {
-				List<Notice> list = service.findNtcByWord(q); 
-				model.addAttribute("list", list);
+				String w = "";
+				if(word.isPresent()) { 
+					w = word.get();
+				}
+				int cp = 1;
+				if(currentPage.isPresent()) { //currentPage
+					cp = currentPage.get();
+				}
+				pageDTO = service.findNtcByWord(w,cp); 
+				model.addAttribute("list", pageDTO);
 				return "noticelistresult.jsp";
 			} catch (FindException e) {
 				e.printStackTrace();

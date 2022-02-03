@@ -1,3 +1,5 @@
+
+
 /**
  * 공지사항 목록에서 글쓰기 버튼이 클릭되었을때
  */
@@ -60,7 +62,7 @@ function noticeDetail(){
     var $searchButtonObj = $('div.search>button.searchButton'); //버튼 객체 찾음
 	
 	$searchButtonObj.click(function(){					
-		let $searchWordObj = $('div.search>input[name=q]'); /**검색창 입력값 가져옴*/	
+		let $searchWordObj = $('div.search>input[name=word]'); /**검색창 입력값 가져옴*/	
 		let searchWord = $searchWordObj.val().trim();
 		if(searchWord == ''){
             alert('검색어를 입력하세요');
@@ -73,7 +75,7 @@ function noticeDetail(){
 		$.ajax({
 			url: ajaxUrl,
 			method: "get",
-			data : {f:f, q:searchWord},     
+			data : {f:f, word:searchWord},     
 			success:function(responseData){
                 let $articlesObj = $('section>div.articles');
                 $articlesObj.empty();
@@ -85,8 +87,7 @@ function noticeDetail(){
 			}
 		});
 
-		return false;        
-           
+		return false;           
  });
 		    
 }

@@ -10,18 +10,26 @@ import com.reco.notice.vo.Notice;
 
 
 
-public interface NoticeDAOInteface {
+public interface NoticeDAOInterface {
 	
 
 	
 	/**
-	 * 공지사항 글들을 모두 불러온다.
+	 * 공지사항 첫 페이지를 불러온다.
 	 * @param ntcidx
 	 * @return
 	 */
 	public List<Notice> findNtcAll() throws FindException;  
 	
 	
+	/**
+	 * 각페이지의 공지사항을 불러온다.
+	 * @param currentPage
+	 * @param cntperpage
+	 * @return
+	 * @throws FindException
+	 */
+	public List<Notice> findNtcAll(int currentPage, int cntperpage) throws FindException;
 	
 	/**
 	 * 공지사항 상세보기를 한다.
@@ -37,7 +45,7 @@ public interface NoticeDAOInteface {
 	 * @return  제목에 해당하는 공지사항 글목록 반환
 	 * @throws FindException
 	 */
-	public List<Notice> findNtcByTitle(String word) throws FindException;
+	public List<Notice> findNtcByTitle(String word, int currentPage, int cntperpage) throws FindException;
 	
 	/**
 	 * 단어를 포함한 제목이나 내용을 갖는 글을 반환한다. 
@@ -45,7 +53,7 @@ public interface NoticeDAOInteface {
 	 * @return
 	 * @throws FindException
 	 */
-	public List<Notice> findNtcByWord(String word) throws FindException; 
+	public List<Notice> findNtcByWord(String word, int currentPage, int cntperpage) throws FindException; 
 	
 	
 	
@@ -74,5 +82,21 @@ public interface NoticeDAOInteface {
 	 */
 	public void removeNtc(int ntcIdx) throws RemoveException;
 	
+	
+	/**
+	 * 전체 게시글 개수를 반환한다.
+	 * @return
+	 * @throws FindException
+	 */
+	public int findCount() throws FindException;
+	
+	
+	/**
+	 * 검색한 글의 게시글 개수를 반환한다.
+	 * @param word
+	 * @return
+	 * @throws FindException
+	 */
+	public int findCount(String word) throws FindException;
 	
 }

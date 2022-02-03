@@ -57,7 +57,7 @@ List<Notice> list = (List)request.getAttribute("list");
 			<option ${(param.f == "ntc_content")? "selected" : "" } value="ntc_content">제목+내용</option>
 		</select>
 		
-		<input type="text" name="q" value="${param.q}" placeholder="검색어를 입력하세요" > <!-- ${param.word}은 쿼리스트링에 있는word를 검색바에 출력해달라 -->
+		<input type="text" name="word" value="${param.word}" placeholder="검색어를 입력하세요" > <!-- ${param.word}은 쿼리스트링에 있는word를 검색바에 출력해달라 -->
 		
 		<button class="searchButton">검색</button>             
 	</div>
@@ -100,6 +100,9 @@ List<Notice> list = (List)request.getAttribute("list");
 
 <%} %>
 
+<div class="pagegroup">
+  
+</div>
 
 <%
 Customer c = (Customer) session.getAttribute("loginInfo"); 
@@ -132,7 +135,6 @@ int uAuthCode = c.getUAuthCode();
 <%} else {  %>
 <script>location.href="index.jsp";</script>
 <%} %>
-
 
 
 </div> 
