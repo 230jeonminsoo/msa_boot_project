@@ -4,10 +4,21 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.reco.notice.NoticeMapper">
 
-
-	<select id="findNtcAll" resultType="Notice">
-		select ntc_idx,ntc_title,ntc_createat,ntc_unickname,ntc_views 
-		from notice order by ntc_idx desc
+	<select id="findCount" resultType="int">
+	select COUNT(*) from notice
+	</select>
+	
+	<select id="findCounts"  resultType="int" parameterType="string">
+		SELECT COUNT(*) FROM repboard where board_title like '%${word}%' or board_content like '%${word}%'
+	</select>
+	
+	<select id="findNtcAll" resultType="Notice" parameterType="map">
+	select *
+	from (select rownum r, a.*
+     	 from (select ntc_idx,ntc_title,ntc_createat,ntc_unickname,ntc_views 
+		from notice order by ntc_idx desc) a
+    )
+    where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
 	</select>
 	
 	<insert id="addNtc" parameterType="Notice">
