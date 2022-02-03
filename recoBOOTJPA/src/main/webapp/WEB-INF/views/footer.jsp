@@ -4,6 +4,6 @@
 <title>footer</title>
 
   <div>
-      <address>주소: 경기도 성남시 분당구, E-MAIL: j69230@naver.com</address>
-      <p>Copyright © coding. All Rights Reserved.</p>
+      <address>주소: 경기도 성남시 분당구, E-MAIL: reconice@reco.com</address>
+      <p>Copyright © reco . All Rights Reserved.</p>
   </div>
