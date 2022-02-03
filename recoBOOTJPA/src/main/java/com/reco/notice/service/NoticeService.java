@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.reco.dto.PageDTO;
 import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
 import com.reco.exception.RemoveException;
-import com.reco.notice.dao.NoticeDAOInteface;
+import com.reco.notice.dao.NoticeDAOInterface;
 import com.reco.notice.vo.Notice;
 
 
@@ -17,14 +18,14 @@ import com.reco.notice.vo.Notice;
 public class NoticeService {
 
 	@Autowired
-	private NoticeDAOInteface dao;
+	private NoticeDAOInterface dao;
 	
 	
-	public NoticeService(NoticeDAOInteface dao) {
+	public NoticeService(NoticeDAOInterface dao) {
 		this.dao = dao;
 	}
 	
-	public void setDao(NoticeDAOInteface dao) {
+	public void setDao(NoticeDAOInterface dao) {
 		this.dao = dao;
 	}
 	
@@ -32,9 +33,18 @@ public class NoticeService {
 	public Notice addNtc(Notice n) throws FindException,AddException{
 		return(dao.addNtc(n));
 	}
+
 	
-	public List<Notice> findNtcAll() throws FindException {
-		return dao.findNtcAll();
+	public PageDTO<Notice> findNtcAll() throws FindException {
+		return findNtcAll(1);
+	}
+	
+	public PageDTO<Notice> findNtcAll(int currentPage) throws FindException {
+		String url= "/ntclist";
+		int totalCnt = dao.findCount();
+		List<Notice> list = dao.findNtcAll(currentPage, PageDTO.CNT_PER_PAGE);
+		PageDTO<Notice> pageDTO= new PageDTO<>(url, currentPage, totalCnt, list);
+		return pageDTO;
 	}
 	
 	public Notice findNtcByIdx(int ntcIdx) throws FindException {
@@ -47,13 +57,21 @@ public class NoticeService {
 	}
 	
 	//공지사항 제목 검색
-	public List<Notice> findNtcByTitle(String word) throws FindException{
-		return dao.findNtcByTitle(word);
+	public  PageDTO<Notice> findNtcByTitle(String word, int currentPage) throws FindException{
+		String url = "ntcsearch/"+word;
+		List<Notice> list = dao.findNtcByTitle(word, currentPage, PageDTO.CNT_PER_PAGE);
+		int totalCnt = dao.findCount(word);
+		PageDTO<Notice> pageDTO = new PageDTO<>(url, currentPage, totalCnt, list);
+		return pageDTO;
 	}
 	
 	//공지사항 제목+내용 검색
-	public List<Notice> findNtcByWord(String word) throws FindException{
-		return dao.findNtcByWord(word);
+	public  PageDTO<Notice> findNtcByWord(String word, int currentPage) throws FindException{
+		String url = "ntcsearch/"+word;
+		List<Notice> list = dao.findNtcByTitle(word, currentPage, PageDTO.CNT_PER_PAGE);
+		int totalCnt = dao.findCount(word);
+		PageDTO<Notice> pageDTO = new PageDTO<>(url, currentPage, totalCnt, list);
+		return pageDTO;
 	}
 	
 	public Notice modifyNtc(Notice n) throws ModifyException, FindException{
