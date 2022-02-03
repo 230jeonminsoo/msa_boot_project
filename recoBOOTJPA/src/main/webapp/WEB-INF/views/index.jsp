@@ -51,7 +51,7 @@ Customer c = (Customer)session.getAttribute("loginInfo");%>
 <body>
 	 <header>
 	      <h1 class="logo">
-	      	<a href="./index.jsp">RECO</a>
+	      	<a href="./">RECO</a>
 		  </h1>
 
 	      <nav>
