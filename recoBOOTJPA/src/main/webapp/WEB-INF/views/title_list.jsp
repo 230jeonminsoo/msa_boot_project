@@ -46,9 +46,9 @@ if(c == null){ //로그인 안된 경우
 <%
 if(c != null){
 
-	/* String saveDirectory = "d:\\files";
+	String saveDirectory = "d:\\files";
 	File dir = new File(saveDirectory);
-	File[] files = dir.listFiles(); */
+	File[] files = dir.listFiles(); 
 	
 	List<CalInfo> list = (List)request.getAttribute("list");
 	int uIdx = c.getUIdx();

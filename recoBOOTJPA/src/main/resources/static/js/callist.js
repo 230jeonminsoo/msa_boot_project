@@ -34,7 +34,7 @@ function calThumbnailClick(){
 
 function caladdClick(){
 	$('section>div.articles>ul>li>div.title_add>a>img').click(function(){
-		let url = 'calwrite.html';
+		let url = './html/calwrite.html';
         let target = 'category+Thbumbnail';
         let features = 'top=300, left=500, width=500px, height=500px';
         window.open(url, target, features);
