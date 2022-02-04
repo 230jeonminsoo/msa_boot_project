@@ -80,11 +80,11 @@ public class NoticeController {
 			PageDTO<Notice> pageDTO;
 			if(currentPage.isPresent()) {
 				int cp = currentPage.get();
-				pageDTO = service.findNtcAll(cp);
+				pageDTO= service.findNtcAll(cp);
 			}else {
-				pageDTO = service.findNtcAll();
+				pageDTO= service.findNtcAll();
 			}
-			mnv.addObject("list", pageDTO);
+			mnv.addObject("list", pageDTO.getList());
 			mnv.setViewName("noticelistresult.jsp");
 		} catch (FindException e) {
 			e.printStackTrace();

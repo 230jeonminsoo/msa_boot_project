@@ -27,7 +27,7 @@ for(CalInfo ci : list){
 </ul> 
     <ul class="communitytab">
 	    <li><a href="ntclist">공지사항</a></li>
-		<li><a href="/html/faqlist.html">FAQ</a></li>
+		<li><a href="./html/faqlist.html">FAQ</a></li>
 		<li><a href="brdlist">자유게시판</a></li>
 </ul>
 <%
