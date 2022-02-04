@@ -46,9 +46,9 @@ if(c == null){ //로그인 안된 경우
 <%
 if(c != null){
 
-	String saveDirectory = "d:\\files";
+	/* String saveDirectory = "d:\\files";
 	File dir = new File(saveDirectory);
-	File[] files = dir.listFiles();
+	File[] files = dir.listFiles(); */
 	
 	List<CalInfo> list = (List)request.getAttribute("list");
 	int uIdx = c.getUIdx();
@@ -56,16 +56,6 @@ if(c != null){
 	for(CalInfo ci : list){
 		int calIdx = ci.getCalIdx();
 		String thumbFileName = "cal_post_" + uIdx +"_" + calIdx + "." + ci.getCalThumbnail();
-	/*	boolean isExist = false;		
-		for(File f: files){
-			String name = f.getName(); //파일이름
-			if(name.equals(thumbFileName)){
-				isExist = true;
-				break;
-			}
-	*/			//Path path = f.toPath();
-				//String contentType = Files.probeContentType(path); //파일형식 text/html, image/jpeg
-	//			if(!contentType.contains("image")){
 %> 	
 
 <li>
@@ -88,7 +78,6 @@ if(c != null){
 <li>
 	  <div class="title_add" id="title">
 	    <a href="#"> <!-- 캘린더 생성안된 add -->
-	    <!-- <a href="calwrite.jsp" onclick="window.open(this.href, '_blank','top=300, left=600, width=500px, height=500px');return false;"> -->
 		      <img src="./images/add.png" alt="ADD" title="ADD">
 		      <div class="hidden_title">
 			      <div class="title_detail">

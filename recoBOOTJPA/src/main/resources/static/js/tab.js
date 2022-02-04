@@ -1,3 +1,5 @@
+//callistresult.jsp -> tab.jsp
+
 //탭메뉴에서 add 클릭했을때 
 function tabaddClick(){
 	$('div.tab>ul>li>a[id=clickadd]').click(function(){
