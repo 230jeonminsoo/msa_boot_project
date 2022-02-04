@@ -58,18 +58,18 @@ public class NoticeService {
 	
 	//공지사항 제목 검색
 	public  PageDTO<Notice> findNtcByTitle(String word, int currentPage) throws FindException{
-		String url = "ntcsearch/"+word;
+		String url = "/ntcsearch/"+word;
 		List<Notice> list = dao.findNtcByTitle(word, currentPage, PageDTO.CNT_PER_PAGE);
-		int totalCnt = dao.findCount(word);
+		int totalCnt = dao.findCountTitle(word);
 		PageDTO<Notice> pageDTO = new PageDTO<>(url, currentPage, totalCnt, list);
 		return pageDTO;
 	}
 	
 	//공지사항 제목+내용 검색
 	public  PageDTO<Notice> findNtcByWord(String word, int currentPage) throws FindException{
-		String url = "ntcsearch/"+word;
-		List<Notice> list = dao.findNtcByTitle(word, currentPage, PageDTO.CNT_PER_PAGE);
-		int totalCnt = dao.findCount(word);
+		String url = "/ntcsearch/"+word;
+		List<Notice> list = dao.findNtcByWord(word, currentPage, PageDTO.CNT_PER_PAGE);
+		int totalCnt = dao.findCountWord(word);
 		PageDTO<Notice> pageDTO = new PageDTO<>(url, currentPage, totalCnt, list);
 		return pageDTO;
 	}

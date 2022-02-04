@@ -8,17 +8,21 @@
 	select COUNT(*) from notice
 	</select>
 	
-	<select id="findCounts"  resultType="int" parameterType="string">
-		SELECT COUNT(*) FROM repboard where board_title like '%${word}%' or board_content like '%${word}%'
+	<select id="findCountWord"  resultType="int" parameterType="string">
+		SELECT COUNT(*) FROM notice where ntc_title like '%${word}%' or ntc_content like '%${word}%'
+	</select>
+	
+	<select id="findCountTitle"  resultType="int" parameterType="string">
+		SELECT COUNT(*) FROM notice where ntc_title like '%${word}%'
 	</select>
 	
 	<select id="findNtcAll" resultType="Notice" parameterType="map">
-	select *
-	from (select rownum r, a.*
-     	 from (select ntc_idx,ntc_title,ntc_createat,ntc_unickname,ntc_views 
-		from notice order by ntc_idx desc) a
-    )
-    where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
+		select *
+		from (select rownum r, a.*
+	     	 from (select ntc_idx,ntc_title,ntc_createat,ntc_unickname,ntc_views 
+					from notice order by ntc_idx desc) a
+	    )
+	    where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
 	</select>
 	
 	<insert id="addNtc" parameterType="Notice">
@@ -33,14 +37,23 @@
 	<select id="findNtcByIdx" parameterType="int" resultType="Notice">
 		select * from notice where ntc_idx=#{ntcIdx}
 	</select>
-	<select id="findNtcByTitle" parameterType="string" resultType="Notice">
-		select ntc_idx,ntc_unickname,ntc_title,ntc_createat 
-		from notice where ntc_title like '%${word}%' 
+	
+	<select id="findNtcByTitle" parameterType="map" resultType="Notice">
+		select *
+		from (select rownum r, a.*
+	     	  from (select ntc_idx,ntc_unickname,ntc_title,ntc_createat 
+					from notice where ntc_title like '%${word}%' ) a
+	    )
+	    where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
 	</select>
 	
-	<select id="findNtcByWord" parameterType="string" resultType="Notice">
-		select ntc_idx,ntc_unickname,ntc_title,ntc_createat 
-		from notice where ntc_title like '%${word}%' or ntc_content like '%${word}%'
+	<select id="findNtcByWord" parameterType="map" resultType="Notice">
+		select *
+		from (select rownum r, a.*
+	     	  from (select ntc_idx,ntc_unickname,ntc_title,ntc_createat 
+					from notice where ntc_title like '%${word}%' or ntc_content like '%${word}%' ) a
+	    )
+	    where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
 	</select>
 	
 	<update id="modifyNtc" parameterType="Notice">

@@ -92,11 +92,20 @@ public interface NoticeDAOInterface {
 	
 	
 	/**
-	 * 검색한 글의 게시글 개수를 반환한다.
+	 * 제목과 내용을 검색한 글의 게시글 개수를 반환한다.
 	 * @param word
 	 * @return
 	 * @throws FindException
 	 */
-	public int findCount(String word) throws FindException;
+	public int findCountWord(String word) throws FindException;
+	
+	/**
+	 * 제목과 내용을 검색한 글의 게시글 개수를 반환한다.
+	 * @param word
+	 * @return
+	 * @throws FindException
+	 */
+	public int findCountTitle(String word) throws FindException;
+	
 	
 }

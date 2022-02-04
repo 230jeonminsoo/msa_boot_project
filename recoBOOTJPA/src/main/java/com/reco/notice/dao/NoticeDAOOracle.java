@@ -47,11 +47,27 @@ public class NoticeDAOOracle implements NoticeDAOInterface {
 	}
 	
 	@Override
-	public int findCount(String word) throws FindException {
+	public int findCountWord(String word) throws FindException {
 		SqlSession session = null;
 		try {
 			session = sqlSessionFactory.openSession();
-			return session.selectOne("com.reco.notice.NoticeMapper.findCounts",word);
+			return session.selectOne("com.reco.notice.NoticeMapper.findCountWord",word);
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new FindException(e.getMessage());
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}		
+	}
+	
+	@Override
+	public int findCountTitle(String word) throws FindException {
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			return session.selectOne("com.reco.notice.NoticeMapper.findCountTitle",word);
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw new FindException(e.getMessage());

@@ -132,7 +132,7 @@ public class NoticeController {
 					cp = currentPage.get();
 				}
 				pageDTO = service.findNtcByTitle(w,cp); 
-				model.addAttribute("list", pageDTO);
+				model.addAttribute("pageDTO", pageDTO);
 				return "noticelistresult.jsp";
 			} catch (FindException e) {
 				e.printStackTrace();
@@ -151,7 +151,7 @@ public class NoticeController {
 					cp = currentPage.get();
 				}
 				pageDTO = service.findNtcByWord(w,cp); 
-				model.addAttribute("list", pageDTO);
+				model.addAttribute("pageDTO", pageDTO);
 				return "noticelistresult.jsp";
 			} catch (FindException e) {
 				e.printStackTrace();
