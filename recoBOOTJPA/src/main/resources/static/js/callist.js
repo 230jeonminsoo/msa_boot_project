@@ -1,3 +1,4 @@
+//callistresult.jsp - title_list.jsp
 //섹션 
 /*-callistresult화면에서 캘린더 썸네일 클릭했을때-*/
 function calThumbnailClick(){
