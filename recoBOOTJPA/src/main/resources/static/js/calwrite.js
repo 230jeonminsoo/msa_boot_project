@@ -2,30 +2,6 @@
 
   /*--캘린더 등록버튼이 클릭되었을때 START--*/
 function addCalSubmit($formObj){
-		//let $addCalObj = $('fieldset>form>button>input');
-		/*$formObj.submit(function(){
-			let ajaxUrl = $(this).attr('action');
-       		let ajaxMethod = $(this).attr('method');
-			let sendData = $(this).serialize();
-			console.log(sendData); //calCategory=aaaa
-
-			$.ajax({ //파일업로드는 ajax (X)
-				url:ajaxUrl,
-	            method:ajaxMethod,
-	            data:sendData,
-				success:function(responseData){
-					console.log(responseData);
-					let $articlesObj = $('section>div.articles');
-               		$articlesObj.empty();
-                 	$articlesObj.html(responseData);
-
-					opener.parent.location.reload();
-					//window.self.close();
-			}
-		});
-		return false;
-    });*/
-		//formData.append( "file1", $("#file1")[0].files[0] );
 	//	alert("in addCalSubmit");
     $formObj.submit(function(){
 	//	alert("calwrite.js-1");
