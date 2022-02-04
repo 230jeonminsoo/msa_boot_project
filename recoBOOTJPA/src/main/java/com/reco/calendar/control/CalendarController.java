@@ -1,6 +1,6 @@
 package com.reco.calendar.control;
 
-import java.io.File; 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,12 +46,16 @@ public class CalendarController {
 	@PostMapping("caladd")
 	public ResponseEntity<?> calAdd(@RequestPart(required=false) List<MultipartFile> letterFiles
 								   ,@RequestPart(required=false) MultipartFile imageFile
+								   ,CalInfo calInfo
 								   ,HttpSession session, Model model)  {
+		logger.info("요청전달데이터 Category=" + calInfo.getCalCategory() + ", Thumbnail=" + calInfo.getCalThumbnail());
+		logger.info("imageFile.getSize()=" + imageFile.getSize() + ", imageFile.getOriginalFileName()=" + imageFile.getOriginalFilename());
+		
+		
 		Customer c = (Customer)session.getAttribute("loginInfo");
 		int uIdx = c.getUIdx();
-		return null;
 		
-/*		
+		
 		//파일 경로생성
 				String saveDirectory = "d:\\files";
 				if ( ! new File(saveDirectory).exists()) {
@@ -143,7 +147,7 @@ public class CalendarController {
 						}
 			
 				}return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-	*/		
+			
 	}
 	
 	
