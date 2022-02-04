@@ -1,4 +1,5 @@
 
+<%@page import="com.reco.dto.PageDTO"%>
 <%@page import="com.reco.customer.vo.Customer"%>
 <%@page import="java.util.Date"%>
 <%@page import="com.reco.notice.vo.Notice"%>
@@ -14,7 +15,10 @@
 
 <!--noticelist서블릿에서 결과값 setting해서 noticelistresult.jsp로 보낸값 받아옴-->
 <%
-List<Notice> list = (List)request.getAttribute("list");
+//List<Notice> list = (List)request.getAttribute("pageDTO");
+
+PageDTO<Notice> pageDTO = (PageDTO)request.getAttribute("pageDTO");
+List<Notice> list = pageDTO.getList();
 %>
 <!--END-->
 
@@ -22,6 +26,7 @@ List<Notice> list = (List)request.getAttribute("list");
 <script src="./js/noticelist.js"></script>
 <script>
 	$(function(){
+		
 		<!--공지사항 목록에서 글 쓰기 버튼 클릭되었을때 START-->
 			noticeWriteClick();
 		<!--공지사항 목록에서 글 쓰기 버튼 클릭되었을때 END-->
@@ -100,9 +105,7 @@ List<Notice> list = (List)request.getAttribute("list");
 
 <%} %>
 
-<div class="pagegroup">
-  
-</div>
+
 
 <%
 Customer c = (Customer) session.getAttribute("loginInfo"); 
@@ -138,6 +141,23 @@ int uAuthCode = c.getUAuthCode();
 
 
 </div> 
+<div class="pagegroup">
+		 <%  
+		 String backContextPath = request.getContextPath();
+		 if(pageDTO.getStartPage() > 1){%>			
+		 	<span class="<%=pageDTO.getUrl()%>/<%=pageDTO.getEndPage()-1%>">prev</span>;
+		 <%} %>
+ 
+ 		<%	for(int i = pageDTO.getStartPage() ; i<=pageDTO.getEndPage() ; i++){ %>
+ 		<%--오문정 --%>
+			<span class="<%= backContextPath%><%=pageDTO.getUrl() %>/<%=i%> <%if(i != pageDTO.getCurrentPage()){ %>active<%}%>"><%=i%></span>
+		<%}%>
+		
+		<% 
+		if(pageDTO.getEndPage() < pageDTO.getTotalPage()){%>
+			<span class="<%=pageDTO.getUrl()%>/<%=pageDTO.getEndPage()+1%> active">next</span>;
+		<%} %>
+</div>
 </div>
 
 

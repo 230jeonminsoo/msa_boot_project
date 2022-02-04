@@ -1,5 +1,4 @@
 
-
 /**
  * 공지사항 목록에서 글쓰기 버튼이 클릭되었을때
  */
@@ -88,6 +87,26 @@ function noticeDetail(){
 		});
 
 		return false;           
- });
-		    
+	});	    
 }
+
+//--다른페이지 클릭했을때 시작
+$('div.pagegroup').on('click','span.active',function(){
+//$('div.pagegroup>span.active').click(function(){	
+	let url = $(this).attr("class").split(/\s+/)[0];//정규표현식, \s는 공백
+	console.log(url);
+	$.ajax({
+		url: url,
+		method: 'get',
+		success: function(responseData){
+			    let $articlesObj = $('section>div.articles');
+                $articlesObj.empty();
+                $articlesObj.html(responseData);
+		},
+		error: function(xhr){
+			alert(xhr.status);
+		}
+	});
+	return false;
+});
+//--다른페이지 클릭했을때 끝

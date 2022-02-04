@@ -8,6 +8,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,9 @@ public class NoticeController {
 
 	@Autowired
 	private NoticeService service;
+	
+
+	private Logger log = LoggerFactory.getLogger(NoticeService.class.getName());
 	
 	//공지사항을 추가하는 컨트롤러
 	@PostMapping("ntcadd")
@@ -73,18 +78,21 @@ public class NoticeController {
 	}
 	
 	//공지사항리스트를 보는 컨트롤러
-	@GetMapping(value = {"ntclist", "ntclist/{currentpage}"})
+	@GetMapping(value = {"ntclist", "ntclist/{currentPage}"})
 	public Object noticeList(@PathVariable Optional<Integer> currentPage) {
 		ModelAndView mnv = new ModelAndView();
 		try {
 			PageDTO<Notice> pageDTO;
 			if(currentPage.isPresent()) {
+				log.info("컨트롤러 현재페이지"+currentPage);
 				int cp = currentPage.get();
 				pageDTO= service.findNtcAll(cp);
+				log.info("리스트"+pageDTO.getList()+"현제페이지"+pageDTO.getCurrentPage());
+				
 			}else {
 				pageDTO= service.findNtcAll();
 			}
-			mnv.addObject("list", pageDTO.getList());
+			mnv.addObject("pageDTO", pageDTO);
 			mnv.setViewName("noticelistresult.jsp");
 		} catch (FindException e) {
 			e.printStackTrace();

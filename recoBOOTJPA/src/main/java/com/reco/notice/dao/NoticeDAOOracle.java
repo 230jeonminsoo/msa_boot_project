@@ -15,6 +15,7 @@ import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
 import com.reco.exception.RemoveException;
+import com.reco.notice.service.NoticeService;
 import com.reco.notice.vo.Notice;
 
 
@@ -26,7 +27,8 @@ public class NoticeDAOOracle implements NoticeDAOInterface {
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	
-	private Logger logger = LoggerFactory.getLogger(NoticeDAOOracle.class.getName());
+	//@Autowired
+	private Logger logger = LoggerFactory.getLogger(NoticeService.class.getName());
 	
 	@Override
 	public int findCount() throws FindException{
@@ -70,6 +72,7 @@ public class NoticeDAOOracle implements NoticeDAOInterface {
 
 		SqlSession session = null;
 		try {
+			logger.info("dao현재페이지"+currentPage);
 			session = sqlSessionFactory.openSession();
 			Map<String,Integer> map= new HashMap<>();
 			map.put("currentPage", currentPage);//현재페이지
@@ -81,6 +84,7 @@ public class NoticeDAOOracle implements NoticeDAOInterface {
 			}
 			return list;
 		}catch (Exception e) {
+			e.printStackTrace();
 			throw new FindException(e.getMessage());
 		}finally {
 			if(session != null) {

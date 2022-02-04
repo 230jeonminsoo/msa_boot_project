@@ -126,3 +126,24 @@ div.container>div.ntc_list>div.notice_write_button{
 div.container>div.ntc_list>div.notice_write_button>label{
 	border:1px solid black;
 }
+
+div.pagegroup{
+	margin:15px;
+	text-align: center;
+	height:50px;
+}
+
+div.pagegroup>span{
+	border: 1px solid black;
+	cursor: pointer;
+	margin:5px;
+	padding:5px;
+}
+
+div.pagegroup>span:hover {
+	font-size:150%;
+}
+/*�럹�씠吏�洹몃９ �닽�옄 */
+div.pagegroup>span.active{
+	text-decoration: underline;
+}

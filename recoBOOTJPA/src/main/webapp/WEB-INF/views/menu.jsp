@@ -13,7 +13,14 @@ if(c == null){ //로그인 안된 경우
     <li><a href="login.html" id="community">커뮤니티</a></li>
 <%
 }else{
-%>  <li><%=c.getUNickName()%>님 반갑습니다.</li>
+%>  <% if(c.getUAuthCode() == 1){
+	%><li><%=c.getUNickName()%>님 반갑습니다.</li>
+	<% 
+	}else{
+	%><li><%=c.getUNickName()%>(관리자)님 반갑습니다.</li>
+	<%
+	} 
+	%>
 <%
 }
 %> 
