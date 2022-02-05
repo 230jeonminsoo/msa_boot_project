@@ -104,11 +104,11 @@ public class NoticeController {
 	//공지사항을 수정하는 컨트롤러
 	
 	//공지사항을 삭제하는 컨트롤러
-	@DeleteMapping("ntcremove")
+	@GetMapping("ntcremove")
 	public String noticeRemove(int ntcIdx, Model model) {
 		try {
 			service.removeNtc(ntcIdx);
-			return "./ntclist";
+			return "/ntclist";
 		} catch (RemoveException e) {
 			System.out.println(e.getMessage());
 			model.addAttribute("status", 0);
