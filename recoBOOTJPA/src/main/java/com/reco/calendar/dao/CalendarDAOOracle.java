@@ -183,8 +183,8 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 			
 		try {
 			session = sqlSessionFactory.openSession();
-			int uIdx = calpost.getCalinfo().getCustomer().getUIdx();
-			int calIdx = calpost.getCalinfo().getCalIdx();
+			int uIdx = calpost.getCalInfo().getCustomer().getUIdx();
+			int calIdx = calpost.getCalInfo().getCalIdx();
 			CalPost cp = session.selectOne("com.reco.calendar.CalendarMapper.calIdxByUIdx",calpost);
 			if(cp == null) {
 				throw new AddException("고객번호에 해당하는 cal_info행이 없습니다");
@@ -198,7 +198,7 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 		
 		}catch(Exception e) {
 			e.printStackTrace();
-			throw new AddException(e.getMessage());
+			//throw new AddException(e.getMessage());
 		}finally {
 			if(session != null) {
 				session.close();

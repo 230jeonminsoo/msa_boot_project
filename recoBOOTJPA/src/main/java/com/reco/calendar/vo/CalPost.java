@@ -36,12 +36,12 @@ public class CalPost {
 
 
 
-	public CalInfo getCalinfo() {
+	public CalInfo getCalInfo() {
 		return calinfo;
 	}
 
 
-	public void setCalinfo(CalInfo calinfo) {
+	public void setCalInfo(CalInfo calinfo) {
 		this.calinfo = calinfo;
 	}
 
