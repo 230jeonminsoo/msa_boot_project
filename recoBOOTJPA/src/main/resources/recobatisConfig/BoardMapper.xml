@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.reco.board.BoardMapper">
+	
+	<select id="findCount" resultType="int">
+	select COUNT(*) from board
+	</select>
+	
+	<select id="findCountWord"  resultType="int" parameterType="string">
+		SELECT COUNT(*) FROM Board where brd_title like '%${word}%' or brd_content like '%${word}%'
+	</select>
+	
+	<select id="findCountTitle"  resultType="int" parameterType="string">
+		SELECT COUNT(*) FROM notice where ntc_title like '%${word}%'
+	</select>
+	
+	<select id="findCountType" resultType="int" parameterType="int">
+		SELECT COUNT(*) FROM board WHERE brd_type=#{intBrdType}
+	</select>
+	
+	<select id="findCountUNickName" resultType="int" parameterType="String">
+		SELECT COUNT(*) FROM board WHERE brd_UNickName like '%${word}%'
+	</select>
+	<select id="findBrdAll" parameterType="map" resultType="Board">
+		select *
+	   FROM (SELECT rownum r, d.*
+	    FROM(SELECT b.brd_Idx, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_count
+	    FROM board b ORDER BY b.brd_Idx DESC) d
+	  )    
+	   where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
+	</select>
+	
+	<select id="findBrdByType" parameterType="int" resultType="map">
+		select *
+    FROM(SELECT rownum r, d.*
+        FROM(SELECT b.brd_Idx, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_count
+		FROM board b WHERE brd_type=#{intBrdType} ORDER BY b.brd_Idx DESC) d
+  )
+  where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
+	</select>
+	
+	<select id="findBrdByIdx" parameterType="int" resultType="Board">
+		SELECT * FROM (SELECT c.brd_idx,cmt_idx, cmt_content, nvl(c.cmt_parentidx, 0) cmt_parentidx,  cmt_createat, cmt_unickname,
+		brd_type, brd_title, brd_content, brd_attachment, brd_createat, brd_thumbup, brd_unickname, brd_views
+		FROM comments c RIGHT JOIN  board b ON b.brd_Idx = c.brd_Idx
+		WHERE  b.brd_idx=#{intBrdIdx})
+		START WITH  cmt_parentidx = 0
+		CONNECT BY PRIOR cmt_idx = cmt_parentidx
+	</select>
+	
+	<update id="plusViewCount" parameterType="int">
+		UPDATE board set brd_views = BRD_VIEWS+1 where brd_Idx=#{intBrdIdx}
+	</update>
+	
+	<select id="findBrdByTitle" parameterType="String" resultType="map">
+		select *
+    FROM(SELECT rownum r, d.*
+        FROM(SELECT b.brd_Idx, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_comment
+		FROM board b WHERE brd_title like '%${word}%' ORDER BY b.brd_Idx DESC) d
+  )
+  where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
+	</select>
+	
+	<select id="findBrdByWord" parameterType="String" resultType="Board">
+		select *
+		FROM(SELECT rownum r, d.*
+		    FROM(SELECT b.brd_Idx, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_comment
+		        FROM board b WHERE brd_content like '%${word}%'  or brd_content like '%${word}%' ORDER BY b.brd_Idx DESC) d
+		    )
+		where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
+	</select>
+	
+	<select id="findBrdByUNickName" parameterType="String" resultType="Board">
+		select *
+    FROM(SELECT rownum r, d.*  
+  FROM(SELECT b.brd_Idx, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_comment
+		FROM board b WHERE brd_UNickName like '%${word}%' ORDER BY b.brd_Idx DESC) d
+   )
+   where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
+	</select>
+	
+	<insert id="addBrd" parameterType="Board">
+		insert into board(brd_idx,brd_type,brd_title,brd_content,brd_attachment,brd_UNickName) 
+		values(brd_idx.NEXTVAL,#{brdType},#{brdTitle},#{brdContent},#{brdAttachment},#{brdUNickName})
+		
+		<selectKey keyProperty="brdIdx" resultType="int" order="AFTER">
+			select brd_idx.CURRVAL FROM dual
+		</selectKey>
+	</insert>
+	
+	<insert id="addCmt" parameterType="Comment">
+		<selectKey keyProperty="cmtIdx" resultType="int" order="BEFORE">
+			select NVL(MAX(c.cmt_idx),0)+1 from comments c join board b on c.brd_idx=b.brd_idx where b.brd_idx=#{brdIdx}
+		</selectKey>
+		insert into comments(brd_idx,cmt_idx,cmt_content,cmt_parentidx,cmt_UNickName) 
+		values(#{brdIdx},#{cmtIdx},#{cmtContent},#{cmtParentidx},#{cmtUNickName})		
+	</insert>
+	
+	<update id="modifyBrd" parameterType="Board">
+		UPDATE board SET brd_title = #{brdTitle}, brd_content=#{brdContent}, brd_attachment=#{brdAttachment}, brd_type=#{brdType} WHERE brd_idx=#{brdIdx}
+	</update>
+	
+	<update id="modifyCmt" parameterType="Comment">
+		update comments set cmt_content=? where brd_idx=? and cmt_idx=#{cmtIdx}
+	</update>
+	
+	<delete id="removeCmtAll"  parameterType="int">
+			delete from comments where brd_idx=#{brdIdx}			
+	</delete>
+	
+	<delete  id="removeBrd"  parameterType="int">
+		delete from board where brd_idx=#{brdIdx}	
+	</delete>
+	
+	<delete id="removeCmt" parameterType="map">
+		delete from comments where brd_idx=#{brdIdx} and cmt_idx=#{cmtIdx}
+	</delete>
+	
+	<select id="nullprotection" parameterType="int" resultType="int">
+		select count(*) from comments where brd_idx=#{brdIdx} and cmt_parentidx=0		
+	</select>
+	
+	<delete id="deleteRestCmt" parameterType="int">
+		delete from comments where brd_idx=#{brdIdx}
+	</delete>
+	
+	<!-- <select id="findCmtByIdx" parameterType="map" resultType="Comment">
+		select * from Comment where brd_idx=#{brdIdx} and cmt_idx=#{cmtIdx}
+	</select> -->
+</mapper>
+
