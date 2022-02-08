@@ -11,4 +11,14 @@ public class IndexController {
 		public String index() {
 			return "index.jsp";
 		}
+		
+		@GetMapping("/noticewritePage")
+		public String noticewrite() {
+			return "noticewrite.jsp";
+		}
+		
+		@GetMapping("/noticemodifyPage")
+		public String noticemodify() {
+			return "noticemodify.jsp";
+		}
 }

@@ -23,6 +23,7 @@ import com.reco.customer.vo.Customer;
 import com.reco.dto.PageDTO;
 import com.reco.exception.AddException;
 import com.reco.exception.FindException;
+import com.reco.exception.ModifyException;
 import com.reco.exception.RemoveException;
 import com.reco.notice.service.NoticeService;
 import com.reco.notice.vo.Notice;
@@ -157,6 +158,26 @@ public class NoticeController {
 				e.printStackTrace();
 				return "failresult.jsp";
 			}	
+		}
+	}
+	
+	@GetMapping("ntcmodify")
+	public String noticeModify(int ntcIdx,String ntcTitle, String ntcContent, String ntcAttachment, Model model) {
+		Notice n = new Notice();
+		n.setNtcIdx(ntcIdx);
+		n.setNtcTitle(ntcTitle);
+		n.setNtcContent(ntcContent);
+		n.setNtcAttachment(ntcAttachment);
+		try {
+			Notice notice = service.modifyNtc(n);
+			model.addAttribute("n", notice);
+			return "noticedetailresult.jsp";
+		} catch (ModifyException e) {
+			e.printStackTrace();
+			return "failresult.jsp";
+		} catch (FindException e) {
+			e.printStackTrace();
+			return "failresult.jsp";
 		}
 	}
 }
