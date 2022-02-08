@@ -27,10 +27,10 @@
 	
 	<insert id="addNtc" parameterType="Notice">
 		insert into notice(ntc_idx,ntc_title,ntc_content,ntc_attachment,ntc_unickname) 
-		values(#{ntcIdx},#{ntcTitle},#{ntcContent},#{ntcAttachment},#{ntcUnickname})
+		values(ntc_idx.nextval,#{ntcTitle},#{ntcContent},#{ntcAttachment},#{ntcUNickName})
 		
 		<selectKey keyProperty="ntcIdx" resultType="int" order="AFTER">
-			select ntc_idx.nextval FROM dual
+			select ntc_idx.currval FROM dual
 		</selectKey>
 	</insert> 
 	
