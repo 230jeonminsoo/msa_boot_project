@@ -91,7 +91,7 @@ List<Notice> list = pageDTO.getList();
   int ntcViews = n.getNtcViews();
   Date ntcCreatAt = n.getNtcCreateAt();
 %>
-<div id="<%=ntcIdx%>"> 
+<div class ="noticelist" id="<%=ntcIdx%>"> 
 	 <ul>
 	    <li>
 		 <span><%=ntcIdx%></span>
@@ -149,7 +149,6 @@ int uAuthCode = c.getUAuthCode();
 		 <%} %>
  
  		<%	for(int i = pageDTO.getStartPage() ; i<=pageDTO.getEndPage() ; i++){ %>
- 		<%--오문정 --%>
 			<span class="<%= backContextPath%><%=pageDTO.getUrl() %>/<%=i%> <%if(i != pageDTO.getCurrentPage()){ %>active<%}%>"><%=i%></span>
 		<%}%>
 		

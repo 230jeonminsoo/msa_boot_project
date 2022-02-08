@@ -1,5 +1,4 @@
 
-
 //저장버튼 클릭되었을때
 function noticeSubmit($formObj){
 	$formObj.submit(function(){
@@ -23,6 +22,7 @@ function noticeSubmit($formObj){
 	});
 }
 
+//저장취소 버큰 클릭되었을때
 function modifyCancelBtClick(){
 	let $modifyCancelBt = $('fieldset>form>button.addcancel');
 	$modifyCancelBt.click(function(){
