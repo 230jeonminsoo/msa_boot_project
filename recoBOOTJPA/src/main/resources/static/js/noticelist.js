@@ -11,7 +11,6 @@ function noticeWriteClick(){
         let ajaxUrl = 'noticewrite.jsp';
         $.ajax({
             url: ajaxUrl,
-            method : 'get',
             success:function(responseData){
                 let $articlesObj = $('section>div.articles');
                 $articlesObj.empty();
@@ -30,7 +29,7 @@ function noticeWriteClick(){
 
 
 function noticeDetail(){
-    let $noticeObj = $('div.ntc_list>div');
+    let $noticeObj = $('div.ntc_list>div.noticelist');
 
     $noticeObj.click(function(){
         let $ntcIdx = $(this).attr('id');

@@ -87,7 +87,7 @@ public class NoticeController {
 				log.info("컨트롤러 현재페이지"+currentPage);
 				int cp = currentPage.get();
 				pageDTO= service.findNtcAll(cp);
-				log.info("리스트"+pageDTO.getList()+"현제페이지"+pageDTO.getCurrentPage());
+				log.info("리스트"+pageDTO.getList()+"현재페이지"+pageDTO.getCurrentPage());
 				
 			}else {
 				pageDTO= service.findNtcAll();
