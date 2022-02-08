@@ -10,7 +10,7 @@ function noticeModifyClick(){
 		
 		
 		$.ajax({
-			url:'noticemodify.jsp',
+			url:'noticemodifypage',
 			method:'get',
 			data:{ntcIdx:$ntcIdx, ntcTitle:$ntcTitle, ntcContent: $ntcContent,ntcAttachment:$ntcAttachment},
 			success:function(responseData){				

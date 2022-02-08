@@ -8,10 +8,10 @@ function noticeWriteClick(){
 	let $noticeWriteBt = $('div.container div.notice_write_button>label');	
 	console.log($noticeWriteBt);
 	    $noticeWriteBt.click(function(){
-        let ajaxUrl = 'noticewrite.jsp';
+		//let ajaxUrl = 'noticewritepage';
+        let ajaxUrl = './html/noticewrite.html'; 
         $.ajax({
             url: ajaxUrl,
-            method : 'get',
             success:function(responseData){
                 let $articlesObj = $('section>div.articles');
                 $articlesObj.empty();
@@ -30,7 +30,7 @@ function noticeWriteClick(){
 
 
 function noticeDetail(){
-    let $noticeObj = $('div.ntc_list>div');
+    let $noticeObj = $('div.ntc_list>div.noticelist');
 
     $noticeObj.click(function(){
         let $ntcIdx = $(this).attr('id');

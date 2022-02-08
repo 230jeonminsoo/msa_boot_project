@@ -32,14 +32,12 @@ function loginClick(){
 
 //로그인화면에서 회원가입 버튼 클릭할때
 function beforeSignupClick(){
-	$('button.beforeSignup').click(function(){
-		
-		let url = './html/signup.html';
-        let target = 'signup';
-        let features = 'top=300, left=600,width=600px, height=300px';
-        window.open(url, target, features);
-		window.close();
-		return false;
-	
+	$('button.beforeSignup').click(function(){		
+		ajaxurl ='./html/signup.html';
+		ajaxmethod = "get";
+	    $('section>div.articles0').empty();
+	    $('section>div.articles0').load(ajaxurl,function(responsetext,textstatus,jqxhr){
+	    });
+	    return false;	
 	});
 }
