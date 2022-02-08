@@ -5,7 +5,7 @@ function boardWriteClick(){
 	let $boardWriteBt = $('div.board_write_button>label');
 	
 	$boardWriteBt.click(function(){
-	    let ajaxUrl = 'boardwrite.jsp';
+	    let ajaxUrl = 'boardwritepage';
         $.ajax({
             url: ajaxUrl,
             method : 'get',

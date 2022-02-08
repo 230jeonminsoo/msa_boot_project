@@ -109,7 +109,7 @@ public class NoticeController {
 	public String noticeRemove(int ntcIdx, Model model) {
 		try {
 			service.removeNtc(ntcIdx);
-			return "/ntclist";
+			return "noticelistresult.jsp";
 		} catch (RemoveException e) {
 			System.out.println(e.getMessage());
 			model.addAttribute("status", 0);
@@ -161,7 +161,7 @@ public class NoticeController {
 		}
 	}
 	
-	@GetMapping("ntcmodify")
+	@PostMapping("ntcmodify")
 	public String noticeModify(int ntcIdx,String ntcTitle, String ntcContent, String ntcAttachment, Model model) {
 		Notice n = new Notice();
 		n.setNtcIdx(ntcIdx);

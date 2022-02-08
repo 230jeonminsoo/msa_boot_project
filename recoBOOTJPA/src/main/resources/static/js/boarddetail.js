@@ -14,7 +14,7 @@ function boardModifyClick(){
 		
 		
 		$.ajax({
-			url:'boardmodify.jsp',
+			url:'boardmodifypage',
 			method:'get',
 			data:{brdIdx:$brdIdx, brdType:$brdType, brdTitle: $brdTitle,brdContent:$brdContent,brdAttachment:$brdAttachment},
 			success:function(responseData){				

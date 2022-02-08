@@ -8,7 +8,7 @@ function noticeWriteClick(){
 	let $noticeWriteBt = $('div.container div.notice_write_button>label');	
 	console.log($noticeWriteBt);
 	    $noticeWriteBt.click(function(){
-        let ajaxUrl = 'noticewritePage';
+        let ajaxUrl = 'noticewritepage'; 
         $.ajax({
             url: ajaxUrl,
             success:function(responseData){
