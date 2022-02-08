@@ -58,6 +58,39 @@ public class CalendarController {
 		Customer c = (Customer)session.getAttribute("loginInfo");
 		int uIdx = c.getUIdx();
 		
+		//등록
+		String calCategory = calInfo.getCalCategory();
+		String calThumbnail = calInfo.getCalThumbnail();
+		
+		CalInfo ci = new CalInfo();
+		ci.setCustomer(c); //calinfo의 고객정보는 로그인된 Customer타입의 c로 채워줌
+		ci.setCalCategory(calCategory);
+		ci.setCalThumbnail(calThumbnail);
+	
+		try {
+			CalInfo calInfo1 = service.addCal(ci); //calInfo를 service의 add()메소드 인자로 사용
+			System.out.println(calInfo1);
+			
+//			/*--파일 업로드작업 --*/
+//			String saveFileName = "cal_post_" + uIdx + "_" + calinfo.getCalIdx() + "." + extension;
+//			part.write(saveDirectory+"\\" + saveFileName); //파일 저장하기 
+//			
+			//request.setAttribute("ci", calinfo);
+			List<CalInfo> list = service.findCalsByUIdx(uIdx);	
+			model.addAttribute("list", list);
+			service.addCal(calInfo1);
+		} catch (AddException e) {
+			//resultmsg = "캘린더 생성 실패:" + e.getMessage();
+			e.printStackTrace();
+			model.addAttribute("msg", e.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}	catch (FindException e ) {
+			//resultmsg = "캘린더 생성 실패:" + e.getMessage();
+			e.printStackTrace();
+			model.addAttribute("msg", e.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 		
 		//파일 경로생성
 				String saveDirectory = "d:\\files";
@@ -66,7 +99,6 @@ public class CalendarController {
 					new File(saveDirectory).mkdirs();
 				}
 				
-//				int calThumbnailNo = c.getBoardNo(); //저장된 글의 글번호
 				
 				File thumbnailFile = null;
 				long imageFileSize = imageFile.getSize();
@@ -76,8 +108,8 @@ public class CalendarController {
 					String imageOriginFileName = imageFile.getOriginalFilename(); //이미지파일원본이름얻기
 					logger.info("이미지 파일이름:" + imageOriginFileName +", 파일크기: " + imageFile.getSize());
 					
-					//저장할 파일이름을 지정한다 ex) 글번호_image_XXXX_원본이름
-					String imageFileName = "cal_post_" + uIdx  + "_image_" + UUID.randomUUID() + "_" + imageOriginFileName;
+					//저장할 파일이름을 지정한다 ex) 테이블이름_uIdx_calIdx
+					String imageFileName = "cal_post_" + uIdx  + "_" + calInfo.getCalIdx();
 					
 					//이미지 파일생성
 					File savedImagefile = new File(saveDirectory, imageFileName);
@@ -112,7 +144,6 @@ public class CalendarController {
 					}
 				} //end if(imageFileSize > 0 )
 					
-
 					if(thumbnailFile != null) {
 						//ResponseEntity 응답상태(200번, 404번 등), 응답헤더설정(쿠키, 컨텐트 LENGTH등 ), 응답내용설정 
 						try {
@@ -268,87 +299,86 @@ public class CalendarController {
 //}
 
 
-@PostMapping("/calpostAdd") //calpost작성url
-public ResponseEntity<?> calpostAdd(
-	    @RequestPart(required = false) MultipartFile imageFile,
-	    CalPost calPost,CalInfo calInfo,HttpSession session, Model model){
+	@PostMapping("/calpostAdd") //calpost작성url
+	public ResponseEntity<?> calpostAdd(
+		    @RequestPart(required = false) MultipartFile imageFile,
+		    CalPost calPost,CalInfo calInfo,HttpSession session, Model model){
 
-	//logger.info("요청전달데이터 title=" + calPost.getBoardTitle() + ", content=" + calpost.getBoardContent());
-	logger.info("imageFile.getSize()=" + imageFile.getSize() + ", imageFile.getOriginalFileName()=" + imageFile.getOriginalFilename());
-	
-	//게시글내용 DB에 저장
-	try {
-		Customer c = (Customer)session.getAttribute("loginInfo");
-		CalInfo calinfo = new CalInfo();
-		calinfo.setCustomer(c);
-		service.addCalPost(calPost);
-	} catch (AddException e1) {
-		e1.printStackTrace();
-		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	
-	//파일 경로 생성
-	String saveDirectory = "d:\\files";
-	if ( ! new File(saveDirectory).exists()) {
-		logger.info("업로드 실제경로생성");
-		new File(saveDirectory).mkdirs(); // 상위디렉토리생성
-	}
-
-	
-	File thumbnailFile = null;
-	long imageFileSize = imageFile.getSize();
-	if(imageFileSize > 0) {
-		//이미지파일 저장하기
-		String imageOrignFileName = imageFile.getOriginalFilename(); //이미지파일원본이름얻기
-		logger.info("이미지 파일이름:" + imageOrignFileName +", 파일크기: " + imageFile.getSize());
 		
-		//저장할 파일이름을 지정한다 ex) 저장파일명 : cal_(UIdx)_(CalIdx)_(CalDate)
-		String imageFileName = "cal_"+ calInfo.getCustomer().getUIdx() + "_" + calInfo.getCalIdx() + "_" + calPost.getCalDate() ; //파일이름("선택날짜.확장자")
-		//이미지파일생성
-		File savedImageFile = new File(saveDirectory, imageFileName);	
+		logger.info("imageFile.getSize()=" + imageFile.getSize() + ", imageFile.getOriginalFileName()=" + imageFile.getOriginalFilename());
+		
+		//게시글내용 DB에 저장
 		try {
-			FileCopyUtils.copy(imageFile.getBytes(), savedImageFile);
-			logger.info("이미지 파일저장:" + savedImageFile.getAbsolutePath());
+			Customer c = (Customer)session.getAttribute("loginInfo");
+			CalInfo calinfo = new CalInfo();
+			calinfo.setCustomer(c);
+			service.addCalPost(calPost);
+		} catch (AddException e1) {
+			e1.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		//파일 경로 생성
+		String saveDirectory = "d:\\files";
+		if ( ! new File(saveDirectory).exists()) {
+			logger.info("업로드 실제경로생성");
+			new File(saveDirectory).mkdirs(); // 상위디렉토리생성
+		}
+
+		
+		File thumbnailFile = null;
+		long imageFileSize = imageFile.getSize();
+		if(imageFileSize > 0) {
+			//이미지파일 저장하기
+			String imageOrignFileName = imageFile.getOriginalFilename(); //이미지파일원본이름얻기
+			logger.info("이미지 파일이름:" + imageOrignFileName +", 파일크기: " + imageFile.getSize());
 			
-			//파일형식 확인
-			String contentType = imageFile.getContentType();
-			if(!contentType.contains("image/")) { //이미지파일형식이 아닌 경우
+			//저장할 파일이름을 지정한다 ex) 저장파일명 : cal_(UIdx)_(CalIdx)_(CalDate)
+			String imageFileName = "cal_"+ calInfo.getCustomer().getUIdx() + "_" + calInfo.getCalIdx() + "_" + calPost.getCalDate() ; //파일이름("선택날짜.확장자")
+			//이미지파일생성
+			File savedImageFile = new File(saveDirectory, imageFileName);	
+			try {
+				FileCopyUtils.copy(imageFile.getBytes(), savedImageFile);
+				logger.info("이미지 파일저장:" + savedImageFile.getAbsolutePath());
+				
+				//파일형식 확인
+				String contentType = imageFile.getContentType();
+				if(!contentType.contains("image/")) { //이미지파일형식이 아닌 경우
+					return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+				
+				//이미지파일인 경우 섬네일파일을 만듦
+				String thumbnailName =  "s_"+imageFileName; //섬네일 파일명은 s_글번호_XXXX_원본이름
+				thumbnailFile = new File(saveDirectory,thumbnailName);
+				FileOutputStream thumbnailOS;
+				thumbnailOS = new FileOutputStream(thumbnailFile);
+				InputStream imageFileIS = imageFile.getInputStream();
+				int width = 100;
+				int height = 100;
+				Thumbnailator.createThumbnail(imageFileIS, thumbnailOS, width, height);
+				logger.info("섬네일파일 저장:" + thumbnailFile.getAbsolutePath() + ", 섬네일파일 크기:" + thumbnailFile.length());
+
+			} catch (IOException e2) {
+				e2.printStackTrace();
 				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-			
-			//이미지파일인 경우 섬네일파일을 만듦
-			String thumbnailName =  "s_"+imageFileName; //섬네일 파일명은 s_글번호_XXXX_원본이름
-			thumbnailFile = new File(saveDirectory,thumbnailName);
-			FileOutputStream thumbnailOS;
-			thumbnailOS = new FileOutputStream(thumbnailFile);
-			InputStream imageFileIS = imageFile.getInputStream();
-			int width = 100;
-			int height = 100;
-			Thumbnailator.createThumbnail(imageFileIS, thumbnailOS, width, height);
-			logger.info("섬네일파일 저장:" + thumbnailFile.getAbsolutePath() + ", 섬네일파일 크기:" + thumbnailFile.length());
+		}	
 
-		} catch (IOException e2) {
-			e2.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}	
+		if(thumbnailFile != null) {
+			try {
+				//이미지 썸네일다운로드하기
+				HttpHeaders responseHeaders = new HttpHeaders();
+				responseHeaders.set(HttpHeaders.CONTENT_LENGTH, thumbnailFile.length()+"");
+		    	responseHeaders.set(HttpHeaders.CONTENT_TYPE, Files.probeContentType(thumbnailFile.toPath()));
+			   	responseHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename="+ URLEncoder.encode("a", "UTF-8"));
+				logger.info("섬네일파일 다운로드");
+		    	return new ResponseEntity<>(FileCopyUtils.copyToByteArray(thumbnailFile), responseHeaders, HttpStatus.OK);
+			}catch (IOException e) {
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 
-	if(thumbnailFile != null) {
-		//ResponseEntity 응답상태(200번, 404번 등), 응답헤더설정(쿠키, 컨텐트 LENGTH등 ), 응답내용설정 
-		try {
-			//이미지 썸네일다운로드하기
-			HttpHeaders responseHeaders = new HttpHeaders();
-			responseHeaders.set(HttpHeaders.CONTENT_LENGTH, thumbnailFile.length()+"");
-	    	responseHeaders.set(HttpHeaders.CONTENT_TYPE, Files.probeContentType(thumbnailFile.toPath()));
-		   	responseHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename="+ URLEncoder.encode("a", "UTF-8"));
-			logger.info("섬네일파일 다운로드");
-	    	return new ResponseEntity<>(FileCopyUtils.copyToByteArray(thumbnailFile), responseHeaders, HttpStatus.OK);
-		}catch (IOException e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	}return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
-}return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-
-}
-  }
+	}
+	  }
 

@@ -28,11 +28,11 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 
 	@Override
 	public List<CalInfo> findCalsByUIdx(int uIdx) throws FindException {
-		
 		SqlSession session = null;
 		try {
 			session = sqlSessionFactory.openSession();
 			List<CalInfo> list = session.selectList("com.reco.calendar.CalendarMapper.findCalsByUIdx", uIdx);
+			logger.warn("list.size=" + list.size());
 			
 			/*
 			 3	1	운동	ex.jpg
@@ -45,6 +45,7 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 			}
 			return list;
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new FindException(e.getMessage());
 		}finally {
 			if(session != null) {

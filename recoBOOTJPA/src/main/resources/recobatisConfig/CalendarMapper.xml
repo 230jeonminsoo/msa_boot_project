@@ -6,10 +6,10 @@
 
 
 	<select id="findCalsByUIdx" resultType="CalInfo" parameterType="int">
-		select u_idx, cal_idx, cal_Category, cal_Thumbnail 
-		from cal_info
-		where u_idx = #{uIdx}
-		order by cal_idx ASC
+		SELECT u_Idx, cal_Idx, cal_Category, cal_Thumbnail 
+		FROM cal_info
+		WHERE u_Idx = #{uIdx}
+		ORDER BY cal_Idx ASC
 	</select>
 	
 	     
