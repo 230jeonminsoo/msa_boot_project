@@ -36,4 +36,11 @@ public interface CustomerDAOInterface {
 	 * @throws ModifyException
 	 */
 	public void modifyStatus(int uIdx) throws ModifyException;
+	
+	/**
+	 * 회원의 비밀번호를 변경한다.
+	 * @param c
+	 * @throws ModifyException
+	 */
+	public void modifyPwd(Customer c) throws ModifyException;
 }

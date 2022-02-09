@@ -94,11 +94,20 @@ function tabMenuClick(){
 }
 
 
-function tabChange(){
+function tabChange1(){
 	let $communityBtObj = $('header>nav>ul>li>a[href=ntclist]');
 	$communityBtObj.click(function(){
 		$('div.tab>ul.communitytab').css('display','table');
 		$('div.tab>ul.caltab').css('display','none');
 	});
-
 }
+
+function tabChange2(){
+	let $myPageBtObj = $('header>nav>ul>li>a[href=mypage]');
+	$myPageBtObj.click(function(){
+		$('div.tab>ul.myinfotab').css('display','table');
+		$('div.tab>ul.communitytab').css('display','none');
+	});
+}
+
+

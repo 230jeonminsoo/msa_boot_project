@@ -29,7 +29,13 @@ for(CalInfo ci : list){
 	    <li><a href="ntclist">공지사항</a></li>
 		<li><a href="./html/faqlist.html">FAQ</a></li>
 		<li><a href="brdlist">자유게시판</a></li>
-</ul>
+	</ul>
+	
+	<ul class="myinfotab">
+		<li><a href="mycallist">캘린더 관리</a></li>
+		<li><a href="mycommunity">커뮤니티 글관리</a></li>
+		<li><a href="myprivate">개인정보 관리</a></li>
+	</ul>
 <%
 }
 %>

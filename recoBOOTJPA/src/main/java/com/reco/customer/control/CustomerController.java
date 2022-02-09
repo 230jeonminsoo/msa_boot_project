@@ -18,6 +18,7 @@ import com.reco.customer.service.CustomerService;
 import com.reco.customer.vo.Customer;
 import com.reco.exception.AddException;
 import com.reco.exception.FindException;
+import com.reco.exception.ModifyException;
 
 @Controller
 public class CustomerController {
@@ -111,5 +112,41 @@ public class CustomerController {
 		returnMap.put("status",status);
 		returnMap.put("resultMsg",resultMsg);
 		return returnMap;
+	}
+	
+	@GetMapping("/withdraw")
+	public Map<String,Object> withdraw(int uIdx) {
+		String resultMsg = "";
+		int status = 0;
+		try {
+			service.withdraw(uIdx);
+			status = 1;
+			resultMsg = "탈퇴성공";	
+		}catch (ModifyException e) {
+			e.printStackTrace();
+			resultMsg = e.getMessage();
+		}
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("status",status);
+		returnMap.put("resultMsg",resultMsg);
+		return returnMap;		
+	}
+	
+	@GetMapping("/modifypwd")
+	public Map<String,Object> modifypwd(Customer c) {
+		String resultMsg = "";
+		int status = 0;
+		try {
+			service.modifypwd(c);
+			status = 1;
+			resultMsg = "탈퇴성공";	
+		}catch (ModifyException e) {
+			e.printStackTrace();
+			resultMsg = e.getMessage();
+		}
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("status",status);
+		returnMap.put("resultMsg",resultMsg);
+		return returnMap;		
 	}
 }

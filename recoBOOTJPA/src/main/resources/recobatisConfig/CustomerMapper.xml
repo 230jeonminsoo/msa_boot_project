@@ -19,6 +19,12 @@
 		select u_idx,u_name,u_nickname,u_email,u_pwd from customer where u_nickname=#{uNickName}
 	</select>
 	
-
+	<update id="modifyStatus" parameterType="int">
+		update customer set u_status = 0 where u_idx=#{uIdx}
+	</update>
+	
+	<update id="modifyPwd" parameterType="Customer">
+		update customer set u_pwd=#{uPwd} where u_idx=#{uIdx}
+	</update>
 </mapper>
 

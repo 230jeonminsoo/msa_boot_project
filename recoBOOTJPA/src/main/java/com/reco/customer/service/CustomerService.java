@@ -7,6 +7,7 @@ import com.reco.customer.dao.CustomerDAOInterface;
 import com.reco.customer.vo.Customer;
 import com.reco.exception.AddException;
 import com.reco.exception.FindException;
+import com.reco.exception.ModifyException;
 
 @Service
 public class CustomerService {
@@ -39,6 +40,14 @@ public class CustomerService {
 	public void nickdupchk(String uNickName) throws FindException{
 		dao.findByNick(uNickName);
 	}
+	
+	public void withdraw(int uIdx) throws ModifyException{
+		dao.modifyStatus(uIdx);
+	}
+	
+	public void modifypwd(Customer c) throws ModifyException{
+		dao.modifyPwd(c);
+	} 
 }
 
 

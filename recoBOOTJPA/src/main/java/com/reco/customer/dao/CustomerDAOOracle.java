@@ -87,8 +87,35 @@ public class CustomerDAOOracle implements CustomerDAOInterface {
 	@Override
 	public void modifyStatus(int uIdx) throws ModifyException {
 		
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			session.update("com.reco.customer.CustomerMapper.modifyStatus",uIdx);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ModifyException(e.getMessage());
+		}finally {
+			if(session !=null) {
+				session.close();
+			}
+		}
+	}
+	
+	@Override
+	public void modifyPwd(Customer c) throws ModifyException {
 		
-
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			session.update("com.reco.customer.CustomerMapper.modifyPwd",c);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ModifyException(e.getMessage());
+		}finally {
+			if(session !=null) {
+				session.close();
+			}
+		}
 	}
 
 }
