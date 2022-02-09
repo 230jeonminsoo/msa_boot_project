@@ -1,0 +1,21 @@
+/* 버튼부분 */
+button{
+  border-radius:20%;
+  width: 210px;
+  height: 30px;
+  font-size: 15px;
+  color: white;
+  background-color: rgb(14, 135, 235);
+  margin-top: 20px;
+
+}
+
+
+/* 입력란 */
+input{
+    margin-top: 30px;
+    text-align: center;
+    
+    height: 30px;
+    font-size: 15px;
+}

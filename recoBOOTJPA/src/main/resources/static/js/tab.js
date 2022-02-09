@@ -88,8 +88,41 @@ function tabMenuClick(){
                         alert('응답실패:' + jqXHR.status);
                     }
                 });
-                return false;				
-          }
+                return false;
+
+			//tab에서 캘린더 관리이 클릭되었을때
+			case 'mycallist':
+				ajaxUrl = menuHref;
+               	$('section>div.articles').empty();
+                $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){
+                    if(jqXHR.status != 200){
+                        alert('응답실패:' + jqXHR.status);
+                    }
+                });
+                return false;	
+				
+			//tab에서 커뮤니티 글관리이 클릭되었을때
+			case 'mycommunity':
+				ajaxUrl = menuHref;
+               	$('section>div.articles').empty();
+                $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){
+                    if(jqXHR.status != 200){
+                        alert('응답실패:' + jqXHR.status);
+                    }
+                });
+                return false;	 
+
+			//tab에서 개인정보 관리를 클릭되었을때
+			case 'mycommunity':
+				ajaxUrl = menuHref;
+               	$('section>div.articles').empty();
+                $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){
+                    if(jqXHR.status != 200){
+                        alert('응답실패:' + jqXHR.status);
+                    }
+                });
+                return false;
+         }
 	});
 }
 
@@ -99,6 +132,7 @@ function tabChange1(){
 	$communityBtObj.click(function(){
 		$('div.tab>ul.communitytab').css('display','table');
 		$('div.tab>ul.caltab').css('display','none');
+		$('div.tab>ul.myinfotab').css('display','none');
 	});
 }
 
@@ -107,6 +141,7 @@ function tabChange2(){
 	$myPageBtObj.click(function(){
 		$('div.tab>ul.myinfotab').css('display','table');
 		$('div.tab>ul.communitytab').css('display','none');
+		$('div.tab>ul.caltab').css('display','none');
 	});
 }
 

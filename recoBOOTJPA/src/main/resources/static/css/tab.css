@@ -37,3 +37,7 @@ div.tab>ul>li>a:hover{
 div.tab>ul.communitytab{
    display:none;
 }
+
+div.tab>ul.myinfotab{
+   display:none;
+}

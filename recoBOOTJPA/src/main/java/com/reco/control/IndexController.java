@@ -32,4 +32,20 @@ public class IndexController {
 			return "boardmodify.jsp";
 		}
 		
+		
+		@GetMapping(value={"/mycallist", "/mypage"})
+		public String mycallist() {
+			return "mycallist.jsp";
+		}		
+		
+		@GetMapping("/mycommunity")
+		public String mycommunity() {
+			return "mycommunity.jsp";
+		}
+		
+		@GetMapping("/myprivate")
+		public String myprivate() {
+			return "myprivate.jsp";
+		}
+		
 }

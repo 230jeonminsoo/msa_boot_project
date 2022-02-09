@@ -85,7 +85,14 @@ function signupClick(){
                 return false;
 
             //menu에서 마이페이지가 클릭되었을때
-			
+			case 'pwdcheck.html':
+                ajaxUrl = './html/pwdcheck.html';
+                $('section>div.articles').load(ajaxUrl, function(responseText, textStatus, jqXHR){
+                    if(jqXHR.status != 200){
+                        alert('응답실패:' + jqXHR.status);            
+                    }    
+                }); 
+                return false;
           }
     });
  }
