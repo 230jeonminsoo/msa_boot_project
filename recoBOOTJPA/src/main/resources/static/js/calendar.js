@@ -84,7 +84,7 @@ const goToday = () => {
 
 function dateClick(){
 	$('div.body>div.calendar>div.main>a.dates').click(function(){
-		let ajaxUrl = "calpostwrite.jsp"; 
+		let ajaxUrl = './html/calpostwrite.html'; 
 			         
 				$.ajax({
 	            url: ajaxUrl,
