@@ -3,7 +3,7 @@
 //탭메뉴에서 add 클릭했을때 
 function tabaddClick(){
 	$('div.tab>ul>li>a[id=clickadd]').click(function(){
-		let url = './html/calwrite.html';
+		let url = './html/calInfowrite.html';
         let target = 'category+Thbumbnail';
         let features = 'top=300, left=500, width=500px, height=500px';
         window.open(url, target, features);
@@ -17,7 +17,7 @@ function tabaddClick(){
 //캘린더 생성 후 캘린더 메뉴탭 클릭했을때 
 function calMenuClick(){ //callistresult.jsp
 	//alert("calMenuClick()");
-	let $calMenuObj = $('div.tab>ul>li>a');
+	let $calMenuObj = $('div.tab>ul.caltab>li>a');
 	/*console.log('$calMenuObj = '); 
 	console.log($calMenuObj);
 	console.log('-------------');*/
@@ -48,8 +48,9 @@ function calMenuClick(){ //callistresult.jsp
 }
 
 
+
 function tabMenuClick(){
-	let $tabMenuObj = $('div.tab>ul>li>a');
+	let $tabMenuObj = $('div.tab>ul.communitytab>li>a');
 	 $tabMenuObj.click(function(){
         let menuHref = $(this).attr('href'); 
         console.log("메뉴 href=" + menuHref);

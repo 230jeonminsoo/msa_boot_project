@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.file.Files;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,9 +24,9 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.reco.calendar.service.CalendarService;
 import com.reco.calendar.vo.CalInfo;
@@ -162,142 +162,216 @@ public class CalendarController {
 			
 	}
 	
-	
+	//CalAddServlet
+
+	//protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	//	
+//		HttpSession session = request.getSession();
+//		Customer c = (Customer)session.getAttribute("loginInfo");		
+//		String path = "";
+	//	
+//		int uIdx = c.getUIdx();
+	//	
+//		/*--파일 업로드가능한 파일(확장자가 존재)인가 확인 작업 --*/		
+//		String saveDirectory = "d:\\files"; //파일이 저장될 경로 
+	//	
+//		//이미지가 저장될 경로가 현재배포된 프로젝트내부의 경로로 설정되면
+//		//프로젝트가 리로드(코드변경,새로고침 )될때마다 배포된 기존프로젝트는 제거되었다가 이클립스폴더내용이 붙여넣기 되는것이다.
+//		ServletContext sc = getServletContext();
+////		String saveDirectory = sc.getRealPath("images\\calimages");
+////		String saveDirectory = "D:\\230\\myWeb\\msa_project\\src\\main\\webapp\\images\\calimages"; //"D:\\files"
+//		System.out.println("in CalAddservlet saveDirectory:" + saveDirectory);
+	//	
+//		Collection<Part> parts = request.getParts(); //업로드된 파일들 얻기 
+//		System.out.println("in CallAddServlet parts.size()=" + parts.size());
+//		String extension = null; //확장자
+//		Part part = null;
+//		for(Part p: parts) {
+//			if("calThumbnail".equals(p.getName())) { //name이 calThumbnail인 파일인 경우                              
+//				String fileName = p.getSubmittedFileName(); //실제 업로드된 파일이름
+//				int extensionIndex = fileName.lastIndexOf('.');
+//				if(extensionIndex != -1) { //확장자가 존재하면					
+//					extension = fileName.substring(extensionIndex+1); //확장자 
+//					System.out.println("확장자:" + extension);
+//					part = p;
+//					break;					
+//				}
+//			}
+//		}
+	//	
+//		if(part == null) {
+//			request.setAttribute("msg", "첨부할 파일이 없거나 확장자가 없습니다");
+//			path="failresult.jsp";
+//		}else {
+//			String calCategory = request.getParameter("calCategory");
+//			String calThumbnail =extension; //request.getParameter("calThumbnail");
+//			
+//			CalInfo ci = new CalInfo();
+//			ci.setCustomer(c); //calinfo의 고객정보는 로그인된 Customer타입의 c로 채워줌
+//			ci.setCalCategory(calCategory);
+//			ci.setCalThumbnail(calThumbnail);
+	//	
+//			try {
+//				CalInfo calinfo = service.addCal(ci); //calInfo를 service의 add()메소드 인자로 사용
+//				System.out.println(calinfo);
+//				
+//				/*--파일 업로드작업 --*/
+//				String saveFileName = "cal_post_" + uIdx + "_" + calinfo.getCalIdx() + "." + extension;
+//				part.write(saveDirectory+"\\" + saveFileName); //파일 저장하기 
+//				
+//				//request.setAttribute("ci", calinfo);
+//				List<CalInfo> list = service.findCalsByUIdx(uIdx);	
+//				request.setAttribute("list", list);
+//				path="index.jsp";
+//			} catch (AddException | FindException e ) {
+//				System.out.println(e.getMessage());
+//				//resultmsg = "캘린더 생성 실패:" + e.getMessage();
+//				e.printStackTrace();
+//				request.setAttribute("msg", e.getMessage());
+//				path="failresult.jsp";
+//			}
+//		}		
+	//	
+//		RequestDispatcher rd = request.getRequestDispatcher(path);
+//		rd.forward(request, response);
+//			
+//			
+	//}
+
 	
 	
 	
 	//캘린더 썸네일리스트를 보는 컨트롤러 
 	@GetMapping("callist")
-	public ModelAndView calInfoList(HttpSession session, Model model) {
+	public String calInfoList(HttpSession session, Model model) {
 		Customer c = (Customer)session.getAttribute("loginInfo");
 		int uIdx = c.getUIdx();
-		
-		ModelAndView mnv = new ModelAndView();
+
 		try {
 			//비지니스로직호출
 				List<CalInfo> list = service.findCalsByUIdx(uIdx);
 				//응답할 결과 요청속성에 설정
-				mnv.addObject("list", list);		
-				mnv.setViewName("callistresult.jsp");
+				model.addAttribute("list", list);		
+				return "callistresult.jsp";
 			} catch (FindException e) {
 				e.printStackTrace();
-				mnv.addObject("msg", e.getMessage());
-				mnv.addObject("list", new ArrayList<CalInfo>());		
+				model.addAttribute("msg", e.getMessage());
+				model.addAttribute("list", new ArrayList<CalInfo>());		
 			}
-			return mnv;
+		return "index.jsp";
 		
 	 }
 
-
-//CalAddServlet
-
-//protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//	
-//	HttpSession session = request.getSession();
-//	Customer c = (Customer)session.getAttribute("loginInfo");		
-//	String path = "";
-//	
-//	int uIdx = c.getUIdx();
-//	
-//	/*--파일 업로드가능한 파일(확장자가 존재)인가 확인 작업 --*/		
-//	String saveDirectory = "d:\\files"; //파일이 저장될 경로 
-//	
-//	//이미지가 저장될 경로가 현재배포된 프로젝트내부의 경로로 설정되면
-//	//프로젝트가 리로드(코드변경,새로고침 )될때마다 배포된 기존프로젝트는 제거되었다가 이클립스폴더내용이 붙여넣기 되는것이다.
-//	ServletContext sc = getServletContext();
-////	String saveDirectory = sc.getRealPath("images\\calimages");
-////	String saveDirectory = "D:\\230\\myWeb\\msa_project\\src\\main\\webapp\\images\\calimages"; //"D:\\files"
-//	System.out.println("in CalAddservlet saveDirectory:" + saveDirectory);
-//	
-//	Collection<Part> parts = request.getParts(); //업로드된 파일들 얻기 
-//	System.out.println("in CallAddServlet parts.size()=" + parts.size());
-//	String extension = null; //확장자
-//	Part part = null;
-//	for(Part p: parts) {
-//		if("calThumbnail".equals(p.getName())) { //name이 calThumbnail인 파일인 경우                              
-//			String fileName = p.getSubmittedFileName(); //실제 업로드된 파일이름
-//			int extensionIndex = fileName.lastIndexOf('.');
-//			if(extensionIndex != -1) { //확장자가 존재하면					
-//				extension = fileName.substring(extensionIndex+1); //확장자 
-//				System.out.println("확장자:" + extension);
-//				part = p;
-//				break;					
-//			}
-//		}
-//	}
-//	
-//	if(part == null) {
-//		request.setAttribute("msg", "첨부할 파일이 없거나 확장자가 없습니다");
-//		path="failresult.jsp";
-//	}else {
-//		String calCategory = request.getParameter("calCategory");
-//		String calThumbnail =extension; //request.getParameter("calThumbnail");
-//		
-//		CalInfo ci = new CalInfo();
-//		ci.setCustomer(c); //calinfo의 고객정보는 로그인된 Customer타입의 c로 채워줌
-//		ci.setCalCategory(calCategory);
-//		ci.setCalThumbnail(calThumbnail);
-//	
-//		try {
-//			CalInfo calinfo = service.addCal(ci); //calInfo를 service의 add()메소드 인자로 사용
-//			System.out.println(calinfo);
-//			
-//			/*--파일 업로드작업 --*/
-//			String saveFileName = "cal_post_" + uIdx + "_" + calinfo.getCalIdx() + "." + extension;
-//			part.write(saveDirectory+"\\" + saveFileName); //파일 저장하기 
-//			
-//			//request.setAttribute("ci", calinfo);
-//			List<CalInfo> list = service.findCalsByUIdx(uIdx);	
-//			request.setAttribute("list", list);
-//			path="index.jsp";
-//		} catch (AddException | FindException e ) {
-//			System.out.println(e.getMessage());
-//			//resultmsg = "캘린더 생성 실패:" + e.getMessage();
-//			e.printStackTrace();
-//			request.setAttribute("msg", e.getMessage());
-//			path="failresult.jsp";
-//		}
-//	}		
-//	
-//	RequestDispatcher rd = request.getRequestDispatcher(path);
-//	rd.forward(request, response);
-//		
-//		
-//}
-
-
 //CalInfoListServlet
 //protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//	HttpSession session = request.getSession();
-//	/*--샘플 로그인된 정보 -- */
-////	Customer sampleCustomer = new Customer();
-////	sampleCustomer.setuIdx(3);
-////	session.setAttribute("loginInfo", sampleCustomer);
-//	/*-------------------*/
-//	
-//	Customer c = (Customer)session.getAttribute("loginInfo");
-//	int uIdx = c.getUIdx();
-//	String path = "";
-//	
-//	try {
-//	
-//	//비지니스로직호출
-//		List<CalInfo> list = service.findCalsByUIdx(uIdx);
-//		
-//		//응답할 결과 요청속성에 설정
-//		request.setAttribute("list", list);			
-//	} catch (FindException e) {
-//		e.printStackTrace();
-//		//path = "failresult.jsp";
-//		request.setAttribute("list", new ArrayList<CalInfo>());		
-////		request.setAttribute("msg", e.getMessage());
-//	}
-//	path="callistresult.jsp";
-//	//VIEWER로 이동
-//	RequestDispatcher rd = request.getRequestDispatcher(path);
-//	rd.forward(request, response);
-//}
+//		HttpSession session = request.getSession();
+//		/*--샘플 로그인된 정보 -- */
+////		Customer sampleCustomer = new Customer();
+////		sampleCustomer.setuIdx(3);
+////		session.setAttribute("loginInfo", sampleCustomer);
+//		/*-------------------*/
+	//	
+//		Customer c = (Customer)session.getAttribute("loginInfo");
+//		int uIdx = c.getUIdx();
+//		String path = "";
+	//	
+//		try {
+	//	
+//		//비지니스로직호출
+//			List<CalInfo> list = service.findCalsByUIdx(uIdx);
+//			
+//			//응답할 결과 요청속성에 설정
+//			request.setAttribute("list", list);			
+//		} catch (FindException e) {
+//			e.printStackTrace();
+//			//path = "failresult.jsp";
+//			request.setAttribute("list", new ArrayList<CalInfo>());		
+////			request.setAttribute("msg", e.getMessage());
+//		}
+//		path="callistresult.jsp";
+//		//VIEWER로 이동
+//		RequestDispatcher rd = request.getRequestDispatcher(path);
+//		rd.forward(request, response);
+	//}
 
+	//캘린더 달력을 보는 컨트롤러 
+	@GetMapping("calpostlist")
+	public String CalPostList (@RequestParam(value = "calIdx")int calIdx, String calDate,
+				 			   //@RequestParam(value = "dateValue")String calDate,
+			                   HttpSession session, Model model) {
+		Customer c = (Customer)session.getAttribute("loginInfo");
+		
+		CalInfo calinfo = new CalInfo();
+		calinfo.setCustomer(c);
+		
+		//String calIdx =  request.getParameter("calIdx");
+		calinfo.setCalIdx(calIdx);
+		
+		//요청전달데이터로 년/월정보가 없으면 오늘날짜기준의 년/월값으로 설정한다
+		//String calDate = request.getParameter("dateValue");  
+		if(calDate == null ||calDate.equals("")) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM");
+			calDate = sdf.format(new Date());
+		}
+		
+		
+		System.out.println("in CalPostListServlet calIdx = " + calIdx +", calDate=" + calDate );
+		
+		try {
+			List<CalPost> list = service.findCalsByDate(calinfo,calDate);
+			model.addAttribute("list", list);			
+			return "calpostlistresult.jsp";
+		} catch (FindException e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.getMessage());
+			return "calpostlistresult.jsp";	
+		}
+		
+	}
+	
+	
+//  CalPostListServlet
+//	@WebServlet("/calpost")  //서블릿url 경로
+//	public class CalPostListServlet extends HttpServlet {
+//		private static final long serialVersionUID = 1L;
+//		private CalendarService service = CalendarService.getInstance();
+//
+//		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+//			HttpSession session = request.getSession();
+//			Customer c = (Customer)session.getAttribute("loginInfo"); // 세션에 저장되어있는 로그인정보를 가져오기
+////			int uIdx = c.getUIdx();
+//			CalInfo calinfo = new CalInfo();
+//			calinfo.setCustomer(c);
+//			
+//			String calIdx = request.getParameter("calIdx");
+//			calinfo.setCalIdx(Integer.parseInt(calIdx));
+//			
+//			String calDate = request.getParameter("dateValue"); //요청전달데이터로 년/월정보가 없으면 오늘날짜기준의 년/월값으로 설정한다 
+//			if(calDate == null ||calDate.equals("")) {
+//				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM");
+//				calDate = sdf.format(new Date());
+//			}
+//			
+//			String path = "";
+//			System.out.println("in CalPostListServlet calIdx = " + calIdx +", calDate=" + calDate );
+//			try {
+//				List<CalPost> list = service.findCalsByDate(calinfo,calDate);
+//				request.setAttribute("list", list);			
+//				path="calpostlistresult.jsp";
+//			} catch (FindException e) {
+//				e.printStackTrace();
+//				path="calpostlistresult.jsp";	
+//			}
+//			
+//			RequestDispatcher rd = request.getRequestDispatcher(path);
+//			rd.forward(request, response);
+//			
+//		}
+//
+//		
+//	}
+	
+	
 
 	@PostMapping("/calpostAdd") //calpost작성url
 	public ResponseEntity<?> calpostAdd(

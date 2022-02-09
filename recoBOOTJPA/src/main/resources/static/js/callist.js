@@ -7,22 +7,22 @@ function calThumbnailClick(){
 		$calThumbnailObj.click(function(){
 			let $dateValue = $('section>div.articles>div.nowdate').html();
 			let calIdx = $(this).parents('.calIdx').attr('id');
-	        
-			let ajaxUrl = "./calpost";	 
+	        console.log("calIdx=" + calIdx);
+			let ajaxUrl = "./calpostlist";	 
 			    
-				$.ajax({
+			$.ajax({
 	            url: ajaxUrl,
 	            method : 'get',
 				//data: {dateValue:$dateValue},
 				data:{calIdx:calIdx},  //{dateValue:'2021/12'},
 	            success:function(responseData){
-					 let $articlesObj = $('section>div.articles');
+					let $articlesObj = $('section>div.articles');
 	                $articlesObj.empty();
 	                $articlesObj.html(responseData);
-
+			     	window.scrollTo(0, 0);
 			    }
-		        }); 
-		        return false;
+	        }); 
+	        return false;
 				
 		});
 	}
@@ -34,7 +34,7 @@ function calThumbnailClick(){
 
 function caladdClick(){
 	$('section>div.articles>ul>li>div.title_add>a>img').click(function(){
-		let url = './html/calwrite.html';
+		let url = './html/calInfowrite.html';
         let target = 'category+Thbumbnail';
         let features = 'top=300, left=500, width=500px, height=500px';
         window.open(url, target, features);

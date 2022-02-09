@@ -17,18 +17,22 @@
 <%
 Customer c = (Customer)session.getAttribute("loginInfo"); 
 	List<CalPost> list = (List)request.getAttribute("list");
+	int uIdx = c.getUIdx();
 %>
 <section>
-<%	for(CalPost cp : list){
-	//int uIdx = cp.getCalinfo().getCustomer().getUIdx();
+<%-- <%	for(CalPost cp : list){
+	/* int calIdx = cp.getCalInfo().getCalIdx();
+	String calDate = cp.getCalDate();  */
+	String calCategory = cp.getCalInfo().getCalCategory();
+	/* String calMainImg = cp.getCalMainImg(); */
 %>
-<div> 
+<div class="calCategory"> 
 	<ul>
-		<span><%= cp.getCalinfo().getCalCategory() %></span>
+		<span><%= calCategory %></span>
 	</ul>
 </div>
 
-<% } %>
+<% } %> --%>
 
 <div class="container">
       <div class="body">
@@ -49,7 +53,7 @@ Customer c = (Customer)session.getAttribute("loginInfo");
             text_input.value = date_input.value;
             };
      </script>
-        <input type="date" id="date" onchange="dateChange();" />
+        <!-- <input type="date" id="date" onchange="dateChange();" /> -->
         <!-- <input type="text" id="text" /> -->
 
           <div class="main">
@@ -69,15 +73,6 @@ Customer c = (Customer)session.getAttribute("loginInfo");
   </div>
 </section>	  
 
- <%-- <%	for(CalPost cp :list){ 
-	/* int calIdx = cp.getCalinfo().getCalIdx(); */
-	String calCategory = cp.getCalinfo().getCalCategory();
-	String calMainImg = cp.getCalMainImg();
-	
-%>	
-	<div class="calpost">
-		<%=calCategory%>
-	</div>
- <%    
+
     
- }%> --%>
+ 
