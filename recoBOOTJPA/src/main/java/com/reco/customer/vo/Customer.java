@@ -11,7 +11,9 @@ public class Customer{
 	private String uEmail;
 	private String uPwd;
 	private int uAuthCode;
+	private int uStatus;
 	
+
 	public Customer(){}
 	
 	/**
@@ -22,8 +24,9 @@ public class Customer{
 	 * @param email
 	 * @param pwd
 	 * @param uAuthCode
+	 * @param uStatus
 	 */
-	public Customer(int uIdx, String uName, String uNickName, String uEmail, String uPwd, int uAuthCode) {
+	public Customer(int uIdx, String uName, String uNickName, String uEmail, String uPwd, int uAuthCode, int uStatus) {
 		super();
 		this.uIdx = uIdx;
 		this.uName = uName;
@@ -31,6 +34,7 @@ public class Customer{
 		this.uEmail = uEmail;
 		this.uPwd = uPwd;
 		this.uAuthCode = uAuthCode;
+		this.uStatus = uStatus;
 	}
 
 	/**
@@ -38,7 +42,7 @@ public class Customer{
 	 */
 	@Override
 	public String toString() {
-		return "Customer [uIdx=" + uIdx + ", uName=" + uName + ", uNickName=" + uNickName + ", uEmail=" + uEmail + ", uPwd=" + uPwd + ", uAuthCode=" + uAuthCode +"]";
+		return "Customer [uIdx=" + uIdx + ", uName=" + uName + ", uNickName=" + uNickName + ", uEmail=" + uEmail + ", uPwd=" + uPwd + ", uAuthCode=" + uAuthCode +", uStatus="+uStatus+"]";
 	}
 
 	public int getUIdx() {
@@ -87,5 +91,13 @@ public class Customer{
 	
 	public void setUAuthCode(int uAuthCode) {
 		this.uAuthCode = uAuthCode;
+	}
+	
+	public int getuStatus() {
+		return uStatus;
+	}
+
+	public void setuStatus(int uStatus) {
+		this.uStatus = uStatus;
 	}
 }
