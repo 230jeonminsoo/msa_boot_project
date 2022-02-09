@@ -55,7 +55,7 @@ public class CustomerController {
 		try {
 			c = service.login(email, pwd);
 			if(c.getuStatus() == 0) {
-				throw new FindException();				
+				resultMsg = "탈퇴한 사용자입니다.";			
 			}else {
 			session.setAttribute("loginInfo", c);
 			resultMsg = "로그인 성공";
