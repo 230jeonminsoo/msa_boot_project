@@ -28,7 +28,7 @@ if(c == null){ //로그인 안된 경우
 if(c != null){
 %>    
     <li><a href="logout" id="logout">로그아웃</a></li>
-    <li><a href="pwdcheck.html">마이페이지</a></li>
+    <li><a href="pwdcheck">마이페이지</a></li>
     <li><a href="ntclist">커뮤니티</a></li>
 <%
 }

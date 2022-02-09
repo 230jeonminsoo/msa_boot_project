@@ -32,8 +32,12 @@ public class IndexController {
 			return "boardmodify.jsp";
 		}
 		
+		@GetMapping("/pwdcheck")
+		public String pwdcheck() {
+			return "pwdcheck.jsp";
+		}
 		
-		@GetMapping(value={"/mycallist", "/mypage"})
+		@GetMapping("/mycallist")
 		public String mycallist() {
 			return "mycallist.jsp";
 		}		
