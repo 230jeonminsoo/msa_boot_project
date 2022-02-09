@@ -41,6 +41,7 @@ int ntcViews = n.getNtcViews();
 			<div class="ntcCreateA">작성일: <span> <%=ntcCreateAt %></span></div>
 			<div class="ntcViews">조회수:<span id="ntcViews"> <%=ntcViews %></span></div><br>
 			<hr>
+			<div class="image"><img></div>
 			<div class="ntcContent"><span id="ntcContent"> 
 				<%=ntcContent %></span></div>
 			<hr>

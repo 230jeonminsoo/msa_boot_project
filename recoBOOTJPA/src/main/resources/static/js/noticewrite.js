@@ -9,7 +9,14 @@ function noticeSubmit($formObj){
 		$.ajax({
 			url:ajaxUrl,
             method:ajaxMethod,
+			processData: false, //파일업로드용 설정
+			contentType: false, //파일업로드용 설정
             data:sendData,
+
+			cache:false, //이미지 다운로드용 설정
+	        xhrFields:{  //이미지 다운로드용 설정
+	            responseType: 'blob'
+	        }, 
 			success:function(responseData){
 				console.log(responseData);
 					let $articlesObj = $('section>div.articles');
@@ -39,6 +46,4 @@ function modifyCancelBtClick(){
 	});
 }
 
-function uploadNoticeFile(){
-	
-}
+

@@ -64,4 +64,14 @@ function noticeListClick(){
         });
         return false;
 	});
+	
+	//--첨부파일 클릭시작--
+	$('div.data>span.letters').on('click','span', function(){
+		let fileName = $(this).attr('class');
+		let href = backContextPath+"/board/download?fileName="+fileName;
+		window.location.href=href;
+		return false;
+	});
+	//--첨부파일 클릭 끝--	
+	
 }
