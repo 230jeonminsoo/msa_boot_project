@@ -102,10 +102,13 @@ public class CustomerDAOOracle implements CustomerDAOInterface {
 	}
 	
 	@Override
-	public void modifyPwd(Customer c) throws ModifyException {
+	public void modifyPwd(int uIdx, String pwd) throws ModifyException {
 		
 		SqlSession session = null;
 		try {
+			Customer c = new Customer();
+			c.setUIdx(uIdx);
+			c.setUPwd(pwd);
 			session = sqlSessionFactory.openSession();
 			session.update("com.reco.customer.CustomerMapper.modifyPwd",c);
 		} catch (Exception e) {

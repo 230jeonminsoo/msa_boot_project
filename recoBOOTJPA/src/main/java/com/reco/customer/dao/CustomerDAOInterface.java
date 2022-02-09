@@ -42,5 +42,5 @@ public interface CustomerDAOInterface {
 	 * @param c
 	 * @throws ModifyException
 	 */
-	public void modifyPwd(Customer c) throws ModifyException;
+	public void modifyPwd(int uIdx, String pwd) throws ModifyException;
 }

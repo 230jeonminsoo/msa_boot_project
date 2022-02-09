@@ -51,13 +51,15 @@ public class CustomerController {
 		session.removeAttribute("loginInfo"); 
 		String resultMsg = "";
 		int status = 0;
+		Customer c = new Customer();
 		try {
-			Customer c = service.login(email, pwd);
+			c = service.login(email, pwd);
+			if(c.getuStatus() == 0) {
+				throw new FindException();				
+			}else {
 			session.setAttribute("loginInfo", c);
 			resultMsg = "로그인 성공";
 			status = 1;
-			if(c.getuStatus() == 0) {
-				throw new FindException("탈퇴한 사용자입니다.");
 			}
 		}catch (FindException e) {
 			resultMsg = "로그인 실패";
@@ -113,15 +115,35 @@ public class CustomerController {
 		returnMap.put("resultMsg",resultMsg);
 		return returnMap;
 	}
+
+	@GetMapping("/modifypwd")
+	@ResponseBody
+	public Map<String,Object> modifypwd(int uIdx, String pwd) {
+		String resultMsg = "";
+		int status = 0;
+		try {
+			service.modifypwd(uIdx,pwd);
+			status = 1;
+			resultMsg = "변경성공";	
+		}catch (ModifyException e) {
+			e.printStackTrace();
+			resultMsg = e.getMessage();
+		}
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("status",status);
+		returnMap.put("resultMsg",resultMsg);
+		return returnMap;		
+	}
 	
 	@GetMapping("/withdraw")
+	@ResponseBody
 	public Map<String,Object> withdraw(int uIdx) {
 		String resultMsg = "";
 		int status = 0;
 		try {
 			service.withdraw(uIdx);
 			status = 1;
-			resultMsg = "탈퇴성공";	
+			resultMsg = "탈퇴성공";
 		}catch (ModifyException e) {
 			e.printStackTrace();
 			resultMsg = e.getMessage();
@@ -132,21 +154,5 @@ public class CustomerController {
 		return returnMap;		
 	}
 	
-	@GetMapping("/modifypwd")
-	public Map<String,Object> modifypwd(Customer c) {
-		String resultMsg = "";
-		int status = 0;
-		try {
-			service.modifypwd(c);
-			status = 1;
-			resultMsg = "탈퇴성공";	
-		}catch (ModifyException e) {
-			e.printStackTrace();
-			resultMsg = e.getMessage();
-		}
-		Map<String, Object> returnMap = new HashMap<>();
-		returnMap.put("status",status);
-		returnMap.put("resultMsg",resultMsg);
-		return returnMap;		
-	}
+
 }

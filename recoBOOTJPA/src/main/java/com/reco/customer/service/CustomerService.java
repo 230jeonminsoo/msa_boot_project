@@ -45,8 +45,8 @@ public class CustomerService {
 		dao.modifyStatus(uIdx);
 	}
 	
-	public void modifypwd(Customer c) throws ModifyException{
-		dao.modifyPwd(c);
+	public void modifypwd(int uIdx, String pwd) throws ModifyException{
+		dao.modifyPwd(uIdx,pwd);
 	} 
 }
 

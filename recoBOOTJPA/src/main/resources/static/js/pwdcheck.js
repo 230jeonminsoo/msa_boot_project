@@ -1,7 +1,7 @@
 /** 확인 버튼 클릭되었을 떄*/
 function checkBtClick(pwd){
 	console.log(pwd);
-	let $pwd = $("input[name=pwd0]").val();
+	let $pwd = $('div.pwdcheck>input[type=password]').val();
 	let $checkBtObj = $('button.pwdcheck');
 	$checkBtObj.click(function(){
 		console.log($pwd);
@@ -32,3 +32,4 @@ function cancelBtClick(){
 		location.href="./";
 	});
 }	
+

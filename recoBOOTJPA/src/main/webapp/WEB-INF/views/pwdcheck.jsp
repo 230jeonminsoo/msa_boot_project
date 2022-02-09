@@ -20,8 +20,10 @@ String pwd = c.getUPwd();%>
 </script>
 
 
-<h1 class="info">비밀번호 확인</h1>    
-기존 비밀번호 확인 : <input type="password" name="pwd0" value="pwd4"><br>
-<button class="pwdcheck" type="submit">확인</button>
-<button class="cancel" class="button_cancel">취소</button>
+	<div class="pwdcheck">
+		<h1 class="info">비밀번호 확인</h1>  
+		기존 비밀번호 확인 : <input type="password" name="pwd0" value="1"><br>
+		<button class="pwdcheck" type="submit">확인</button>
+		<button class="cancel" class="button_cancel">취소</button>
+	</div>
 

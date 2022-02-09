@@ -84,9 +84,8 @@ function signupSubmit($formObj){
             data:sendData,//{id:idValue, pwd:pwdValue, name:nameValue},
             success:function(responseObj){
                 alert(responseObj.msg);
-                if(responseObj.status == 1){ //가입성공                
-					opener.parent.location.reload();
-					window.self.close();	
+                if(responseObj.status == 1){ //가입성공       
+						location.href="./html/login.html";	
                 }
             },error:function(xhr){
                 alert("응답실패:" + xhr.status);
