@@ -23,16 +23,20 @@ function boardSubmit($formObj){
 function modifyCancelBtClick(){
 	let $modifyCancelBt = $('fieldset>form>button.addcancel');
 	$modifyCancelBt.click(function(){
-		$.ajax({
-			url: './ntclist',
-			method:'get',
-			success:function(responseData){
-				let $articlesObj = $('section>div.articles');
-               	 $articlesObj.empty();
-                 $articlesObj.html(responseData);
-				
-			} 	
-		});
+		if (confirm("작성한 내용은 저장되지 않습니다. 취소하시겠습니까??") == true){
+			$.ajax({
+				url: './brdlist',
+				method:'get',
+				success:function(responseData){
+					let $articlesObj = $('section>div.articles');
+	               	 $articlesObj.empty();
+	                 $articlesObj.html(responseData);
+					
+				} 	
+			});
+		}else{   //취소
+			return false;
+		}
 		return false;
 	});
 }
