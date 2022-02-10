@@ -5,7 +5,14 @@ function tabaddClick(){
 	$('div.tab>ul>li>a[id=clickadd]').click(function(){
 		let url = './html/calInfowrite.html';
         let target = 'category+Thbumbnail';
-        let features = 'top=300, left=500, width=500px, height=500px';
+
+		let _width = '400';
+		let _height = '200';
+		
+		let _top = Math.ceil((window.screen.height - _height)/2);
+		let _left = Math.ceil((window.screen.width - _width)/2);
+		
+		let features = ('width='+ _width + ',height='+ _height +',left='+ _left + ',top='+ _top);
         window.open(url, target, features);
 		return false;
 	});
