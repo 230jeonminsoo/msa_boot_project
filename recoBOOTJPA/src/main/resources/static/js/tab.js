@@ -116,7 +116,6 @@ function tabMenuClick(){
 			//tab에서 개인정보 관리를 클릭되었을때
 			case 'myprivate':
 				ajaxUrl = menuHref;
-				alert(ajaxUrl);
 	            $('section>div.articles').empty();
 	            $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){
 	                if(jqXHR.status != 200){
@@ -124,10 +123,6 @@ function tabMenuClick(){
 	                }
 	            });
 	            return false;
-			
-			default:
-			   alert("menu-" + menuHref);
-				break;
          }
 	});
 }
