@@ -88,9 +88,11 @@ public class NoticeController {
 				
 				try {
 					//이미지파일의 타입가져와서 image가 아니면 실패
-					String contentType = imageFile.getContentType();
-					if(!contentType.contains("image/")) { 
-						return "failresult.jsp";
+					if(imageFile !=null) {
+						String contentType = imageFile.getContentType();
+						if(!contentType.contains("image/")) { 
+							return "failresult.jsp";
+						}
 					}
 				
 					//이미지파일 저장

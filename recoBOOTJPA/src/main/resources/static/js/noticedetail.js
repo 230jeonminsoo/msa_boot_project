@@ -30,20 +30,23 @@ function noticeModifyClick(){
 function noticeRemoveClick(){
 	let $removeBtObj=$('button.notice_remove');
 	$removeBtObj.click(function(){
-		let $ntcIdxValue = $(this).attr("id");
-		let ajaxUrl = "./ntcremove";
-        $.ajax({
-            url: ajaxUrl,
-			method: ajaxMethod,
-			data: {ntcIdx:$ntcIdxValue},
-            success:function(responseData){
-				alert("게시글을 삭제하시겠습니까?");
-				 let $articlesObj = $('section>div.articles');
-               	 $articlesObj.empty();
-                 $articlesObj.html(responseData);
-		         window.scrollTo(0, 0);
-            }
-        });
+		if (confirm("작성한 내용은 저장되지 않습니다. 취소하시겠습니까??") == true){
+			let $ntcIdxValue = $(this).attr("id");
+			let ajaxUrl = "./ntcremove";
+	        $.ajax({
+	            url: ajaxUrl,
+				method: ajaxMethod,
+				data: {ntcIdx:$ntcIdxValue},
+	            success:function(responseData){
+					 let $articlesObj = $('section>div.articles');
+	               	 $articlesObj.empty();
+	                 $articlesObj.html(responseData);
+			         window.scrollTo(0, 0);
+	            }
+	        });
+		}else{   //취소
+			return false;
+		}
         return false;
 	});
 }
