@@ -114,7 +114,7 @@ function tabMenuClick(){
                 return false;	 
 
 			//tab에서 개인정보 관리를 클릭되었을때
-			case 'mycommunity':
+			case 'myprivate':
 				ajaxUrl = menuHref;
                	$('section>div.articles').empty();
                 $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){
