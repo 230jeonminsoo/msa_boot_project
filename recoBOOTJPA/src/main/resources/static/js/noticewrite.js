@@ -42,7 +42,7 @@ function noticeSubmit($formObj){
 function modifyCancelBtClick(){
 	let $modifyCancelBt = $('fieldset>form>button.addcancel');
 	$modifyCancelBt.click(function(){
-		if (confirm("정말 삭제하시겠습니까??") == true){
+		if (confirm("작성한 내용은 저장되지 않습니다. 취소하시겠습니까??") == true){
 			$.ajax({
 				url: './ntclist',
 				method:'get',
