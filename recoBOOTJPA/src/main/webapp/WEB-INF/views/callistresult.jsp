@@ -18,8 +18,8 @@
 			tabMenuClick();
 
 			//메뉴에서 커뮤니티 클릭시 탭바뀌는 이벤트
-			tabChange1();//커뮤니티용 탭 변화
-			tabChange2();//마이페이지용 탭 변화
+			tabChange();//커뮤니티용 탭 변화
+			//tabChange2();//마이페이지용 탭 변화
 
 			//탭에서 생성된 캘린더 카테고리 클릭시 발생하는 이벤트
 			calMenuClick();

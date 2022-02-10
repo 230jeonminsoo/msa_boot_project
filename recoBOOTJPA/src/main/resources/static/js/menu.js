@@ -1,4 +1,4 @@
-/*//로그인이 클릭되었을 떄
+/*//로그인이 클릭되었을 떄 -- 팝업대신 ajax처리로 주석처리됨.
 function loginClick(){
 	$('header>nav>ul>li>a[id=login]').click(function(){
 		
@@ -9,7 +9,7 @@ function loginClick(){
 		return false;
     });
 }*/
-/*//회원가입이 클릭되었을때
+/*//회원가입이 클릭되었을때 -- 팝업대신 ajax처리로 주석처리됨.
 function signupClick(){
 	$('header>nav>ul>li>a[id=signup]').click(function(){
         let url = './html/signup.html';
@@ -88,7 +88,10 @@ function signupClick(){
 			case 'pwdcheck':
                 ajaxUrl = menuHref;
                 $('section>div.articles').load(ajaxUrl, function(responseText, textStatus, jqXHR){
-                    if(jqXHR.status != 200){
+                    $('div.tab>ul.communitytab').css('display','none');
+					$('div.tab>ul.caltab').css('display','none');
+					$('div.tab>ul.myinfotab').css('display','none');
+					if(jqXHR.status != 200){
                         alert('응답실패:' + jqXHR.status);            
                     }    
                 }); 

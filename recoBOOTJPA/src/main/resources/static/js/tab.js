@@ -128,7 +128,7 @@ function tabMenuClick(){
 }
 
 
-function tabChange1(){
+function tabChange(){
 	let $communityBtObj = $('header>nav>ul>li>a[href=ntclist]');
 	$communityBtObj.click(function(){
 		$('div.tab>ul.communitytab').css('display','table');
@@ -137,13 +137,14 @@ function tabChange1(){
 	});
 }
 
-function tabChange2(){
+//마이페이지 누를시 비번확인으로인해 주석처리됨.
+/*function tabChange2(){
 	let $myPageBtObj = $('header>nav>ul>li>a[href=mypage]');
 	$myPageBtObj.click(function(){
 		$('div.tab>ul.myinfotab').css('display','table');
 		$('div.tab>ul.communitytab').css('display','none');
 		$('div.tab>ul.caltab').css('display','none');
 	});
-}
+}*/
 
 

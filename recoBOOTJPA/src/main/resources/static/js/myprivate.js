@@ -57,29 +57,32 @@ function withdrawBtClick(uIdx){
             $pwd1.focus();
             return false;
 		}			
-			
-		$.ajax({
-			url:"withdraw",
-	        data:{uIdx:uIdx},
-	        success:function(responseObj){
-	            if(responseObj.status == 1){ //탈퇴성공 
-					ajaxUrl = 'logout';
-	                $.ajax({
-	                    url: ajaxUrl,
-	                    success:function(){
-							alert("정말 탈퇴하시겠습니다?");
-	                        location.href="./";
-	                    },
-	                    error:function(xhr){
-	                        alert('응답실패:' + xhr.status);
-	                    }
-	                });
-	                return false;	
-	            }
-	        },error:function(xhr){
-	            alert("응답실패:" + xhr.status);
-	        }           
-	    });	
+		
+		if (confirm("정말 삭제하시겠습니까??") == true){    //확인
+			$.ajax({
+				url:"withdraw",
+		        data:{uIdx:uIdx},
+		        success:function(responseObj){
+		            if(responseObj.status == 1){ //탈퇴성공 
+						ajaxUrl = 'logout';
+		                $.ajax({
+		                    url: ajaxUrl,
+		                    success:function(){
+		                        location.href="./";
+		                    },
+		                    error:function(xhr){
+		                        alert('응답실패:' + xhr.status);
+		                    }
+		                });
+		                return false;	
+		            }
+		        },error:function(xhr){
+		            alert("응답실패:" + xhr.status);
+		        }           
+		    });	
+		}else{   //취소
+			return false;
+		}
 		return false;
 	});	
 }
