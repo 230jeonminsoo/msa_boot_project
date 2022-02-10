@@ -69,3 +69,11 @@ div.ntcDetail>div.NoticeDetailButton>button:hover{
      cursor: pointer;
      font-weight: bold;
 }
+
+div.ntcDetail>ul.ntcDetail>li>div.ntcAttachment{
+	padding:10px;
+}
+
+div.ntcDetail>ul.ntcDetail>li>div.ntcAttachment:hover{
+	cursor:pointer;
+}

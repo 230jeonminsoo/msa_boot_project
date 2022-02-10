@@ -20,12 +20,15 @@ int ntcViews = n.getNtcViews();
  	<script src="./js/noticedetail.js"></script>
 	<script>
 	$(function(){
+
 		//수정버튼 클릭시
 			noticeModifyClick();
 		//삭제버튼 클릭시
 			noticeRemoveClick();	
 		//목록버튼 클릭시
 			noticeListClick();
+		//첨부파일 다운로드 시
+			noticeDownloadClick();
 	});
 	</script>
 	<div class="ntcDetail">

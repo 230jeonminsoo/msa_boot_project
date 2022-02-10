@@ -60,7 +60,7 @@ public class NoticeController {
 	
 	//공지사항을 추가하는 컨트롤러
 	@PostMapping("ntcadd")
-	public String noticeAdd( @RequestPart (required = false) List<MultipartFile> letterFiles
+	public String noticeAdd( @RequestPart (required = false) MultipartFile letterFiles
 							,@RequestPart (required = false) MultipartFile imageFile
 							,String ntcTitle,String ntcContent,String ntcAttachment,HttpSession session, Model model) {
 		Customer c = (Customer)session.getAttribute("loginInfo");
@@ -69,8 +69,11 @@ public class NoticeController {
 		Notice n = new Notice();
 		n.setNtcTitle(ntcTitle);
 		n.setNtcContent(ntcContent);
-		n.setNtcAttachment(ntcAttachment);
-		
+		if(letterFiles != null) {
+			n.setNtcAttachment(letterFiles.getOriginalFilename());
+		}else {
+			n.setNtcAttachment(ntcAttachment);
+		}
 		n.setNtcUNickName(ntcUNickName);
 		
 		try{
@@ -125,25 +128,25 @@ public class NoticeController {
 					
 			    	//letterFiles도 저장
 					if(letterFiles != null) {
-						for(int i = 0; i<letterFiles.size();i++) {
+						//for(int i = 0; i<letterFiles.size();i++) {
 							
-						long letterFileSize = letterFiles.size();
+						long letterFileSize = letterFiles.getSize();
 							if(letterFileSize > 0) {
-								String letterOriginalFileName = letterFiles.get(i).getOriginalFilename();//letter파일 원본이름 얻기
-								logger.info("레터 파일이름:" + letterFiles.get(i).getOriginalFilename()+" 파일크기: " + letterFiles.get(i).getSize());
+								String letterOriginalFileName = letterFiles.getOriginalFilename();//letter파일 원본이름 얻기
+								logger.info("레터 파일이름:" + letterFiles.getOriginalFilename()+" 파일크기: " + letterFiles.getSize());
 								//저장할 파일 이름 지정한다 ex) reco_notice_글번호_letter_XXXX_원본이름
-								String letterName = "reco_notice_"+wroteBoardNo + "_letter_" + UUID.randomUUID() + "_" + letterOriginalFileName;
+								String letterName = /*"reco_notice_"+wroteBoardNo + "_letter_" + UUID.randomUUID() + "_" + */letterOriginalFileName;
 								//letter파일 생성
 								File file2 = new File(saveDirectory, letterName);
 									try {
-										FileCopyUtils.copy(letterFiles.get(i).getBytes(), file2);
+										FileCopyUtils.copy(letterFiles.getBytes(), file2);
 									} catch (IOException e2) {
 										e2.printStackTrace();		
 										return "failresult.jsp";
 									}
 							}//end if(letterFileSize > 0) 
 						}//end for
-					}//end if(letterFiles != null)						
+					//}//end if(letterFiles != null)						
 						
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -170,19 +173,19 @@ public class NoticeController {
 			model.addAttribute("n", n);
 			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
 			File dir = new File(saveDirectory);
-			
-			//첨부파일 저장소에서 letters이름 가져와서 returnMap에 넣기
-			String[] letterFileNames = dir.list(new FilenameFilter() {
-				
-				@Override
-				public boolean accept(File dir, String name) {
-					return name.contains("reco_notice_"+ntcIdx+"_letter_");
+			if(n.getNtcAttachment() !=null) {
+				//첨부파일 저장소에서 letters이름 가져와서 returnMap에 넣기
+				String[] letterFileNames = dir.list(new FilenameFilter() {
+					
+					@Override
+					public boolean accept(File dir, String name) {
+						return name.contains(/*"reco_notice_"+ntcIdx+"_letter_"*/n.getNtcAttachment());
+					}
+				});
+				if(letterFileNames.length>0) {
+					model.addAttribute("letters", letterFileNames);
 				}
-			});
-			if(letterFileNames.length>0) {
-				model.addAttribute("letters", letterFileNames);
 			}
-			
 			//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
 			String[] imageFiles = dir.list(new FilenameFilter() {		
 				@Override
@@ -311,7 +314,7 @@ public class NoticeController {
 		}
 	}
 	
-	@GetMapping("/download")
+	@GetMapping("/noticedownload")
 	public ResponseEntity<Resource>  download(String fileName) throws UnsupportedEncodingException {
 		logger.info("첨부파일 다운로드");
 		//파일 경로생성
@@ -340,7 +343,7 @@ public class NoticeController {
 	
 	
 	
-	 @GetMapping("/downloadimage") 
+	 @GetMapping("/noticedownloadimage") 
 	 public ResponseEntity<?> downloadImage(String imageFileName) throws UnsupportedEncodingException{
 		 String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
 		 File thumbnailFile = new File(saveDirectory,imageFileName);
