@@ -25,16 +25,20 @@ function modifyCancelBtClick(){
 	let $ntcIdx = $('fieldset>form>input[id=ntcIdx]').val().trim();
 	console.log($ntcIdx);
 	$modifyCancelBt.click(function(){
-		$.ajax({
-			url: './ntcdetail',
-			method:'get',
-			data:{ntcIdx: $ntcIdx},
-			success:function(responseData){
-				let $articlesObj = $('section>div.articles');
-               	 $articlesObj.empty();
-                 $articlesObj.html(responseData);
-			} 	
-		});
+		if (confirm("작성한 내용은 저장되지 않습니다. 취소하시겠습니까??") == true){
+			$.ajax({
+				url: './ntcdetail',
+				method:'get',
+				data:{ntcIdx: $ntcIdx},
+				success:function(responseData){
+					let $articlesObj = $('section>div.articles');
+	               	 $articlesObj.empty();
+	                 $articlesObj.html(responseData);
+				} 	
+			});
+		}else{   //취소
+			return false;
+		}
 		return false;
 	});
 }
