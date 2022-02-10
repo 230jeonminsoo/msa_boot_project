@@ -1,8 +1,13 @@
 $(function(){
 	//--이미지첨부파일 변경될때  미리보기 시작--
 	$('fieldset>form>div.data>input[name=imageFile]').change(function(){
-		let file = this.files[0];
-		$("div.image>img.preview").attr('src',URL.createObjectURL(file));
+		console.log(this.files[0]);
+		if(this.files[0] != undefined){
+			let file = this.files[0];
+			$("div.image>img.preview").attr('src',URL.createObjectURL(file));
+		}else{
+			$("div.image>img.preview").attr('src',"");
+		}		
 	});
 	//--이미지첨부파일 변경될때  미리보기 끝--
 });
