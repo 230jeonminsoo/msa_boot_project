@@ -57,7 +57,7 @@ function calMenuClick(){ //callistresult.jsp
 
 
 function tabMenuClick(){
-	let $tabMenuObj = $('div.tab>ul.communitytab>li>a');
+	let $tabMenuObj = $('div.tab>ul>li>a');
 	 $tabMenuObj.click(function(){
         let menuHref = $(this).attr('href'); 
         console.log("메뉴 href=" + menuHref);
@@ -123,19 +123,19 @@ function tabMenuClick(){
 			//tab에서 개인정보 관리를 클릭되었을때
 			case 'myprivate':
 				ajaxUrl = menuHref;
-                $('section>div.articles').empty();
-                $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){
-                    if(jqXHR.status != 200){
-                        alert('응답실패:' + jqXHR.status);
-                    }
-                });
-                return false;
+	            $('section>div.articles').empty();
+	            $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){
+	                if(jqXHR.status != 200){
+	                    alert('응답실패:' + jqXHR.status);
+	                }
+	            });
+	            return false;
          }
 	});
 }
 
 
-function tabChange1(){
+function tabChange(){
 	let $communityBtObj = $('header>nav>ul>li>a[href=ntclist]');
 	$communityBtObj.click(function(){
 		$('div.tab>ul.communitytab').css('display','table');
@@ -144,13 +144,14 @@ function tabChange1(){
 	});
 }
 
-function tabChange2(){
+//마이페이지 누를시 비번확인으로인해 주석처리됨.
+/*function tabChange2(){
 	let $myPageBtObj = $('header>nav>ul>li>a[href=mypage]');
 	$myPageBtObj.click(function(){
 		$('div.tab>ul.myinfotab').css('display','table');
 		$('div.tab>ul.communitytab').css('display','none');
 		$('div.tab>ul.caltab').css('display','none');
 	});
-}
+}*/
 
 
