@@ -72,14 +72,15 @@ function noticeDetail(){
 		let f = $("select[name=f]").val(); /**f는 select 옵션값 */
 		let ajaxUrl = "./ntcsearch";
 		$.ajax({
-			url: ajaxUrl,
+			url: ajaxUrl+'/'+searchWord,
 			method: "get",
-			data : {f:f, word:searchWord},     
+			data : {f:f},     
 			success:function(responseData){
-                let $articlesObj = $('section>div.articles');
+				let $articlesObj = $('section>div.articles');
                 $articlesObj.empty();
                 $articlesObj.html(responseData);
 				window.scrollTo(0, 0);
+					
             },
 			error:function(xhr){
 				alert("응답실패"+xhr.status);

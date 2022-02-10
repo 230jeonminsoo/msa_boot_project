@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -76,7 +77,7 @@ public class NoticeController {
 			model.addAttribute("n", notice);
 			
 			//파일을 저장할 폴더가 없다면 만들기. 있다면 만들지 않음
-			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\noticeimages";
+			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
 			if ( ! new File(saveDirectory).exists()) {
 				logger.info("업로드 실제경로생성");
 				new File(saveDirectory).mkdirs();
@@ -140,8 +141,8 @@ public class NoticeController {
 						}//end for
 					}//end if(letterFiles != null)						
 						
-				} catch (IOException e2) {
-					e2.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
 					//return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 			}
@@ -165,7 +166,7 @@ public class NoticeController {
 		try {
 			Notice n = service.findNtcByIdx(ntcIdx);
 			model.addAttribute("n", n);
-			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\noticeimages";
+			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
 			File dir = new File(saveDirectory);
 			
 			//첨부파일 저장소에서 letters이름 가져와서 returnMap에 넣기
@@ -229,8 +230,11 @@ public class NoticeController {
 	public String noticeRemove(int ntcIdx, Model model) {
 		try {
 			service.removeNtc(ntcIdx);
+			PageDTO<Notice> pageDTO;
+			pageDTO = service.findNtcAll();
+			model.addAttribute("pageDTO", pageDTO);
 			return "noticelistresult.jsp";
-		} catch (RemoveException e) {
+		} catch (RemoveException | FindException e) {
 			System.out.println(e.getMessage());
 			model.addAttribute("status", 0);
 			model.addAttribute("msg", e.getMessage());
@@ -240,7 +244,8 @@ public class NoticeController {
 	
 	//공지사항을 검색하는 컨트롤러
 	@GetMapping(value = {"ntcsearch/{word}","ntcsearch/{word}/{currentPage}"})
-	public String noticeSearch(@PathVariable Optional<String> word, String f,@PathVariable Optional<Integer> currentPage ,Model model) {
+	public Object noticeSearch(@PathVariable Optional<String> word, String f,@PathVariable Optional<Integer> currentPage ,Model model) {
+		ModelAndView mnv = new ModelAndView();
 		PageDTO<Notice> pageDTO;
 		if(f.equals("ntc_title")) {
 			try {
@@ -253,11 +258,12 @@ public class NoticeController {
 					cp = currentPage.get();
 				}
 				pageDTO = service.findNtcByTitle(w,cp); 
-				model.addAttribute("pageDTO", pageDTO);
-				return "noticelistresult.jsp";
+				mnv.addObject("pageDTO", pageDTO);
+				mnv.setViewName("noticelistresult.jsp");
 			} catch (FindException e) {
 				e.printStackTrace();
-				return "failresult.jsp";
+				mnv.addObject("msg", e.getMessage());
+				mnv.setViewName("failresult.jsp");
 			}
 			
 		}else {
@@ -272,13 +278,15 @@ public class NoticeController {
 					cp = currentPage.get();
 				}
 				pageDTO = service.findNtcByWord(w,cp); 
-				model.addAttribute("pageDTO", pageDTO);
-				return "noticelistresult.jsp";
+				mnv.addObject("pageDTO", pageDTO);
+				mnv.setViewName("noticelistresult.jsp");
 			} catch (FindException e) {
 				e.printStackTrace();
-				return "failresult.jsp";
+				mnv.addObject("msg", e.getMessage());
+				mnv.setViewName("failresult.jsp");
 			}	
 		}
+		return mnv;
 	}
 	
 	@PostMapping("ntcmodify")
@@ -305,7 +313,7 @@ public class NoticeController {
 	public ResponseEntity<Resource>  download(String fileName) throws UnsupportedEncodingException {
 		logger.info("첨부파일 다운로드");
 		//파일 경로생성
-		String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\noticeimages";
+		String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
 		
 		//HttpHeaders : 요청/응답헤더용 API
 		HttpHeaders headers = new HttpHeaders();	
@@ -332,7 +340,7 @@ public class NoticeController {
 	
 	 @GetMapping("/downloadimage") 
 	 public ResponseEntity<?> downloadImage(String imageFileName) throws UnsupportedEncodingException{
-		 String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\noticeimages";
+		 String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
 		 File thumbnailFile = new File(saveDirectory,imageFileName);
 		 HttpHeaders responseHeaders = new HttpHeaders();
 		 try {
