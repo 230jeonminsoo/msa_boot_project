@@ -143,7 +143,7 @@ div.pagegroup>span{
 div.pagegroup>span:hover {
 	font-size:150%;
 }
-/*�럹�씠吏�洹몃９ �닽�옄 */
+
 div.pagegroup>span.active{
 	text-decoration: underline;
 }

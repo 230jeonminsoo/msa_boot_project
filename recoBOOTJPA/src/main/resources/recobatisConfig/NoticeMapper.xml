@@ -19,7 +19,7 @@
 	<select id="findNtcAll" resultType="Notice" parameterType="map">
 		select *
 		from (select rownum r, a.*
-	     	 from (select ntc_idx,ntc_title,ntc_createat,ntc_unickname,ntc_views 
+	     	 from (select ntc_idx,ntc_title,ntc_attachment,ntc_createat,ntc_unickname,ntc_views 
 					from notice order by ntc_idx desc) a
 	    )
 	    where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})

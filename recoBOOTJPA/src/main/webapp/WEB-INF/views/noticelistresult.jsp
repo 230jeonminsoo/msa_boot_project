@@ -88,6 +88,7 @@ List<Notice> list = pageDTO.getList();
   
   String ntcTitle = n.getNtcTitle();
   String ntcuNickName = n.getNtcUNickName();
+  String ntcAttachment = n.getNtcAttachment();
   int ntcViews = n.getNtcViews();
   Date ntcCreatAt = n.getNtcCreateAt();
 %>
@@ -95,10 +96,11 @@ List<Notice> list = pageDTO.getList();
 	 <ul>
 	    <li>
 		 <span><%=ntcIdx%></span>
-		 <span><%=ntcTitle%></span>
+		 <span><%=ntcTitle%><%if(ntcAttachment != null){ %><img src="./images/클립.png"><%} %></span>
 		 <span><%=ntcuNickName%></span>
 		 <span><%=ntcViews%></span>
 		 <span><%=ntcCreatAt%></span>
+		 
 		 </li> 
 	  </ul>
 </div>
