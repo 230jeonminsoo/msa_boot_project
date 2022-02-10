@@ -20,7 +20,18 @@ function modifypwdBtClick(uIdx){
 	        data:{uIdx:uIdx, pwd:$newpwd.val()},
 	        success:function(responseObj){
 	            if(responseObj.status == 1){ //비번변경성공       
-					location.href = "./";
+					ajaxUrl = 'logout';
+	                $.ajax({
+	                    url: ajaxUrl,
+	                    success:function(){							
+	                        location.href="./";
+							alert("비밀번호가 변경되었습니다. 다시 로그인 해주세요!");
+	                    },
+	                    error:function(xhr){
+	                        alert('응답실패:' + xhr.status);
+	                    }
+	                });
+	                return false;	
 	            }
 	        },error:function(xhr){
 	            alert("응답실패:" + xhr.status);
@@ -56,6 +67,7 @@ function withdrawBtClick(uIdx){
 	                $.ajax({
 	                    url: ajaxUrl,
 	                    success:function(){
+							alert("정말 탈퇴하시겠습니다?");
 	                        location.href="./";
 	                    },
 	                    error:function(xhr){
