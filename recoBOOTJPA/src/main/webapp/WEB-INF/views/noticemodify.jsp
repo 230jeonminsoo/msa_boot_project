@@ -21,8 +21,7 @@ $(function(){
 	<%if(ntcAttachment != null){
 		
 	}%>
-	let $formObj = $('fieldset>form');
-	let $modifyNoticeBt = $('fieldset>form>input[type=submit]');
+	let $formObj = $('fieldsetform');
 	//글수정버튼클릭시 수정된글 보낸후 수정한 글 다시 보기
 	modifyNoticeSubmit($formObj);
 	//수정취소버튼 클릭시 수정할려고 한글 다시보기

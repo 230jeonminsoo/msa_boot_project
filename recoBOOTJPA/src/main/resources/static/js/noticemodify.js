@@ -2,14 +2,16 @@
 function modifyNoticeSubmit($formObj){
 	let $modifyNoticeBt = $('fieldset.noticemodify>form>input[type=button]');
 	$modifyNoticeBt.click(function(){
-		let ajaxUrl = $(this).attr('action');		
-		let ajaxMethod = $(this).attr('method');
-		let sendData = $(this).serialize().trim();	
-		console.log(sendData);
+		let formData = new FormData($formObj[0]);
+		formData.forEach(function (value, key) {
+			console.log(key + ":" + value);
+		});
 		$.ajax({
-			url:ajaxUrl,
-            method:ajaxMethod,
-            data:sendData,
+			url:'./ntcmodify',
+            method:'post',
+            processData: false, //파일업로드용 설정
+			contentType: false, //파일업로드용 설정
+            data:formData,
 			success:function(responseData){
 				console.log(responseData);
 					let $articlesObj = $('section>div.articles');

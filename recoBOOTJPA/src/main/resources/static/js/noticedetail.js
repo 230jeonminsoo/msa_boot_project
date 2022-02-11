@@ -30,7 +30,7 @@ function noticeModifyClick(){
 function noticeRemoveClick(){
 	let $removeBtObj=$('button.notice_remove');
 	$removeBtObj.click(function(){
-		if (confirm("작성한 내용은 저장되지 않습니다. 취소하시겠습니까??") == true){
+		if (confirm("삭제하시겠습니까??") == true){
 			let $ntcIdxValue = $(this).attr("id");
 			let ajaxUrl = "./ntcremove";
 	        $.ajax({

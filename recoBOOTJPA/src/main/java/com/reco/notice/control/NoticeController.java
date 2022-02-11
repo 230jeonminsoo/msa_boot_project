@@ -223,7 +223,7 @@ public class NoticeController {
 		}
 		return mnv;
 	}
-	//공지사항을 수정하는 컨트롤러
+	
 	
 	//공지사항을 삭제하는 컨트롤러
 	@GetMapping("ntcremove")
@@ -289,16 +289,55 @@ public class NoticeController {
 		return mnv;
 	}
 	
+	//공지사항을 수정하는 컨트롤러(일반파일만 수정가능)
 	@PostMapping("ntcmodify")
-	public String noticeModify(int ntcIdx,String ntcTitle, String ntcContent, String ntcAttachment, Model model) {
-		Notice n = new Notice();
-		n.setNtcIdx(ntcIdx);
-		n.setNtcTitle(ntcTitle);
-		n.setNtcContent(ntcContent);
-		n.setNtcAttachment(ntcAttachment);
+	public String noticeModify(@RequestPart (required = false) MultipartFile letterFiles,
+								int ntcIdx,String ntcTitle, String ntcContent, String ntcAttachment, Model model) {
+
 		try {
+			Notice n = new Notice();
+			n.setNtcIdx(ntcIdx);
+			n.setNtcTitle(ntcTitle);
+			n.setNtcContent(ntcContent);
+			
+			//원래 DB에 저장된 첨부파일 이름 가져오기
+			String originAttachment = service.findNtcByIdx(ntcIdx).getNtcAttachment();
+			
+			if(letterFiles == null) {//첨부파일 삭제한경우
+				n.setNtcAttachment(ntcAttachment);
+			}else if(letterFiles.getOriginalFilename() == originAttachment) {//첨부파일이 기존과 같을경우
+				n.setNtcAttachment(originAttachment);
+			}else {//첨부파일이 바뀔경우
+				n.setNtcAttachment(letterFiles.getOriginalFilename());
+			}
 			Notice notice = service.modifyNtc(n);
 			model.addAttribute("n", notice);
+			//데이터베이스에 내용저장 끝
+			
+			//첨부파일이 바뀔시 저장시작
+			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
+			int wroteBoardNo = notice.getNtcIdx();//저장된 글번호
+			
+			
+	    	//letterFiles 저장
+			if(letterFiles != null) {
+				long letterFileSize = letterFiles.getSize();
+				if(letterFileSize > 0) {
+					String letterOriginalFileName = letterFiles.getOriginalFilename();//letter파일 원본이름 얻기
+					logger.info("레터 파일이름:" + letterFiles.getOriginalFilename()+" 파일크기: " + letterFiles.getSize());
+					//저장할 파일 이름 지정한다 ex) reco_notice_글번호_letter_XXXX_원본이름
+					String letterName = "reco_notice_"+wroteBoardNo + "_letter_" + UUID.randomUUID() + "_" + letterOriginalFileName;
+					//letter파일 생성
+					File file2 = new File(saveDirectory, letterName);
+						try {
+							FileCopyUtils.copy(letterFiles.getBytes(), file2);
+						} catch (IOException e2) {
+							e2.printStackTrace();		
+							return "failresult.jsp";
+						}
+				}//end if(letterFileSize > 0) 
+			}//end if(letterFiles != null)	
+			
 			return "noticedetailresult.jsp";
 		} catch (ModifyException e) {
 			e.printStackTrace();
@@ -306,7 +345,7 @@ public class NoticeController {
 		} catch (FindException e) {
 			e.printStackTrace();
 			return "failresult.jsp";
-		}
+		}	
 	}
 	
 	@GetMapping("/noticedownload")
