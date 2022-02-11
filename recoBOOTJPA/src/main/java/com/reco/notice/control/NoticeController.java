@@ -79,79 +79,74 @@ public class NoticeController {
 		try{
 			Notice notice = service.addNtc(n);
 			model.addAttribute("n", notice);
-			
-			//파일을 저장할 폴더가 없다면 만들기. 있다면 만들지 않음
+			logger.info("컨트롤러 addntc 1 "+notice.getNtcIdx() + notice.getNtcTitle()+notice.getNtcContent());
 			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
+			int wroteBoardNo = notice.getNtcIdx();//저장된 글번호
+			//파일을 저장할 폴더가 없다면 만들기. 있다면 만들지 않음	
 			if ( ! new File(saveDirectory).exists()) {
 				logger.info("업로드 실제경로생성");
 				new File(saveDirectory).mkdirs();
 			}
-			
-			int wroteBoardNo = notice.getNtcIdx();//저장된 글번호
-				
-				try {
-					//이미지파일의 타입가져와서 image가 아니면 실패
-					if(imageFile !=null) {
-						String contentType = imageFile.getContentType();
-						if(!contentType.contains("image/")) { 
+	
+			//이미지파일 저장
+			File thumbnailFile = null;
+			if(imageFile !=null) {
+				long imageFileSize = imageFile.getSize();
+					if(imageFileSize != 0) {
+						String imageFileName = imageFile.getOriginalFilename(); //업로드할 이미지 파일의 이름가져옴
+						logger.info("이미지파일 이름:" + imageFileName +" 이미지파일 사이즈 " + imageFile.getSize());
+						
+						//업로드할  이미지 파일의 이름을 새로생성
+						String fileName ="reco_notice_"+wroteBoardNo + "_image_" + UUID.randomUUID() + "_" + imageFileName;
+						//이미지파일 생성
+						File file = new File(saveDirectory, fileName);
+						
+						try {	
+							FileCopyUtils.copy(imageFile.getBytes(), file);
+							
+							//이미지파일의 타입가져와서 image가 아니면 실패
+							if(imageFile !=null) {
+								String contentType = imageFile.getContentType();
+								if(!contentType.contains("image/")) { 
+									return "failresult.jsp";
+								}
+							}	
+							
+							//이미지파일인 경우 섬네일파일을 만듦
+							String thumbnailName =  "reco_notice_"+ wroteBoardNo+"_image_"+imageFileName; //섬네일 파일명은 reco_notice_글번호_image_원본이름
+							thumbnailFile = new File(saveDirectory,thumbnailName);
+							FileOutputStream thumbnailOS;
+							thumbnailOS = new FileOutputStream(thumbnailFile);
+							InputStream imageFileIS = imageFile.getInputStream();
+							int width = 300;
+							int height = 300;
+							Thumbnailator.createThumbnail(imageFileIS, thumbnailOS, width, height);
+						} catch (IOException e) {
+							e.printStackTrace();
+							//return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+						}	logger.info("섬네일파일 저장:" + thumbnailFile.getAbsolutePath() + ", 섬네일파일 크기::" + thumbnailFile.length());
+					}
+				}										
+		
+	    	//letterFiles도 저장
+			if(letterFiles != null) {
+				long letterFileSize = letterFiles.getSize();
+				if(letterFileSize > 0) {
+					String letterOriginalFileName = letterFiles.getOriginalFilename();//letter파일 원본이름 얻기
+					logger.info("레터 파일이름:" + letterFiles.getOriginalFilename()+" 파일크기: " + letterFiles.getSize());
+					//저장할 파일 이름 지정한다 ex) reco_notice_글번호_letter_XXXX_원본이름
+					String letterName = /*"reco_notice_"+wroteBoardNo + "_letter_" + UUID.randomUUID() + "_" + */letterOriginalFileName;
+					//letter파일 생성
+					File file2 = new File(saveDirectory, letterName);
+						try {
+							FileCopyUtils.copy(letterFiles.getBytes(), file2);
+						} catch (IOException e2) {
+							e2.printStackTrace();		
 							return "failresult.jsp";
 						}
-					}
-				
-					//이미지파일 저장
-					File thumbnailFile = null;
-					if(imageFile !=null) {
-						long imageFileSize = imageFile.getSize();
-							if(imageFileSize != 0) {
-								String imageFileName = imageFile.getOriginalFilename(); //업로드할 이미지 파일의 이름가져옴
-								logger.info("이미지파일 이름:" + imageFileName +" 이미지파일 사이즈 " + imageFile.getSize());
-								
-								//업로드할  이미지 파일의 이름을 새로생성
-								String fileName ="reco_notice_"+wroteBoardNo + "_image_" + UUID.randomUUID() + "_" + imageFileName;
-								//이미지파일 생성
-								File file = new File(saveDirectory, fileName);
-								FileCopyUtils.copy(imageFile.getBytes(), file);
-					
-								//이미지파일인 경우 섬네일파일을 만듦
-								String thumbnailName =  "reco_notice_"+ wroteBoardNo+"_image_"+imageFileName; //섬네일 파일명은 reco_notice_글번호_image_원본이름
-								thumbnailFile = new File(saveDirectory,thumbnailName);
-								FileOutputStream thumbnailOS;
-								thumbnailOS = new FileOutputStream(thumbnailFile);
-								InputStream imageFileIS = imageFile.getInputStream();
-								int width = 100;
-								int height = 100;
-								Thumbnailator.createThumbnail(imageFileIS, thumbnailOS, width, height);
-								logger.info("섬네일파일 저장:" + thumbnailFile.getAbsolutePath() + ", 섬네일파일 크기::" + thumbnailFile.length());
-							}
-					}
-					
-					
-			    	//letterFiles도 저장
-					if(letterFiles != null) {
-						//for(int i = 0; i<letterFiles.size();i++) {
-							
-						long letterFileSize = letterFiles.getSize();
-							if(letterFileSize > 0) {
-								String letterOriginalFileName = letterFiles.getOriginalFilename();//letter파일 원본이름 얻기
-								logger.info("레터 파일이름:" + letterFiles.getOriginalFilename()+" 파일크기: " + letterFiles.getSize());
-								//저장할 파일 이름 지정한다 ex) reco_notice_글번호_letter_XXXX_원본이름
-								String letterName = /*"reco_notice_"+wroteBoardNo + "_letter_" + UUID.randomUUID() + "_" + */letterOriginalFileName;
-								//letter파일 생성
-								File file2 = new File(saveDirectory, letterName);
-									try {
-										FileCopyUtils.copy(letterFiles.getBytes(), file2);
-									} catch (IOException e2) {
-										e2.printStackTrace();		
-										return "failresult.jsp";
-									}
-							}//end if(letterFileSize > 0) 
-						}//end for
-					//}//end if(letterFiles != null)						
-						
-				} catch (IOException e) {
-					e.printStackTrace();
-					//return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-				}						
+				}//end if(letterFileSize > 0) 
+			}//end if(letterFiles != null)	
+			logger.info("컨트롤러 addntc 2"+notice.getNtcIdx() + notice.getNtcTitle()+notice.getNtcContent());
 			return "noticedetailresult.jsp";
 		} catch(AddException e){
 			e.getStackTrace();

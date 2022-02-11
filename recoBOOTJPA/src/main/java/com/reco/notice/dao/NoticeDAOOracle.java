@@ -115,7 +115,9 @@ public class NoticeDAOOracle implements NoticeDAOInterface {
 		try {
 			session = sqlSessionFactory.openSession();
 			session.insert("com.reco.notice.NoticeMapper.addNtc",n);
+			session.commit();
 			int ntcIdx = n.getNtcIdx();
+			logger.info("dao에서 글추가 추가된글 글번호 : "+ntcIdx);
 			Notice notice = findNtcByIdx(ntcIdx);
 			return notice;
 		} catch (FindException e) {

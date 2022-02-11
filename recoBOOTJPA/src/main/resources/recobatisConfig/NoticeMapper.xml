@@ -29,7 +29,7 @@
 		insert into notice(ntc_idx,ntc_title,ntc_content,ntc_attachment,ntc_unickname,ntc_views) 
 		values(ntc_idx.nextval,#{ntcTitle},#{ntcContent},#{ntcAttachment},#{ntcUNickName},0)
 		
-		<selectKey keyProperty="ntcIdx" resultType="int" order="AFTER">
+		<selectKey  keyProperty="ntcIdx" resultType="int" order="AFTER">
 			select ntc_idx.currval FROM dual
 		</selectKey>
 	</insert> 
