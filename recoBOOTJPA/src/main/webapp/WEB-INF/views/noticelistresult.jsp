@@ -147,7 +147,7 @@ int uAuthCode = c.getUAuthCode();
 		 <%  
 		 String backContextPath = request.getContextPath();
 		 if(pageDTO.getStartPage() > 1){%>			
-		 	<span class="<%= backContextPath%><%=pageDTO.getUrl()%>/<%=pageDTO.getEndPage()-1%> active">prev</span>
+		 	<span class="<%= backContextPath%><%=pageDTO.getUrl()%>/<%=pageDTO.getStartPage()-1%> active">prev</span>
 		 <%} %>
  
  		<%	for(int i = pageDTO.getStartPage() ; i<=pageDTO.getEndPage() ; i++){ %>

@@ -70,9 +70,10 @@ function noticeListClick(){
 }
 
 
-function noticeDownloadClick(){
+function noticeDownloadClick(letter){
 	$('div.ntcDetail>ul.ntcDetail>li>div.ntcAttachment').click(function(){
-		let fileName =  $('#ntcAttachment').html().trim();
+		let fileName = letter;
+		console.log(letter);
 		let href = "./noticedownload?fileName="+fileName;
 		window.location.href=href;
 		return false;

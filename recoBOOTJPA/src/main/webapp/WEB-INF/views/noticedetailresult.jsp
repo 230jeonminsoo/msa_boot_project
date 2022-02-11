@@ -15,8 +15,8 @@ Date ntcCreateAt = n.getNtcCreateAt();
 String ntcUNickname = n.getNtcUNickName();
 int ntcViews = n.getNtcViews();
 %>
-<%String image= (String)request.getAttribute("image"); %>
-    
+<%String image = (String)request.getAttribute("image"); %>
+<%String letter = (String)request.getAttribute("letter"); %>    
     <link href="./css/noticedetail.css" rel=stylesheet>
  	<script src="./js/noticedetail.js"></script>
 	<script>
@@ -25,7 +25,7 @@ int ntcViews = n.getNtcViews();
 		<%if(image != null){%>
 			let $img = $("div.ntcDetail>ul.ntcDetail>li>div.image>img");
 			$.ajax({
-				url: "./noticedownload",
+				url: "./noticedownloadimage",
 				method:'get',
 				data:"imageFileName="+"<%=image%>",
 				
@@ -42,16 +42,16 @@ int ntcViews = n.getNtcViews();
 				}
 			});
 		<%}%>
-		
-		
+	
 		//수정버튼 클릭시
-			noticeModifyClick();
+		noticeModifyClick();
 		//삭제버튼 클릭시
-			noticeRemoveClick();	
+		noticeRemoveClick();	
 		//목록버튼 클릭시
-			noticeListClick();
+		noticeListClick();
 		//첨부파일 다운로드 시
-			noticeDownloadClick();
+		letter = "<%=letter%>";
+		noticeDownloadClick(letter);
 	});
 	</script>
 	<div class="ntcDetail">

@@ -178,7 +178,7 @@ public class NoticeController {
 					}
 				});
 				if(letterFileNames.length>0) {
-					model.addAttribute("letters", letterFileNames);
+					model.addAttribute("letter", letterFileNames[0]);
 				}
 			}
 			//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
