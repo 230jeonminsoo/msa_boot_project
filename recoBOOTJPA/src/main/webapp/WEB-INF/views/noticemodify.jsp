@@ -18,7 +18,9 @@ String ntcAttachment= request.getParameter("ntcAttachment");
 %>
 <script>
 $(function(){
-	
+	<%if(ntcAttachment != null){
+		
+	}%>
 	let $formObj = $('fieldset>form');
 	let $modifyNoticeBt = $('fieldset>form>input[type=submit]');
 	//글수정버튼클릭시 수정된글 보낸후 수정한 글 다시 보기
@@ -29,8 +31,8 @@ $(function(){
 </script>
 
 
-<fieldset>
-	<form method="post" action="./ntcmodify" autocomplete="off">
+<fieldset class="noticemodify">
+	<form autocomplete="off">
 		<h1>공지사항 수정</h1>
 		<table>
 			<tr><td>날짜</td> <td><%= sf.format(nowTime)%></td></tr>
@@ -41,8 +43,8 @@ $(function(){
 		<table>
 			<tr><td><textarea rows="20" cols="100" style="resize:none;" name="ntcContent" id="ntcContent" placeholder="<%=ntcContent %>" required><%=ntcContent %></textarea></td></tr>		
 		</table>
-		<input type="file"  name="ntcattachment" value="<%=ntcAttachment%>"><br>
-		<button class="modifycancel">수정취소</button>
-		<input type="submit" value="글 수정">
+		<div class="data"><label>파일 첨부</label><input type="file" name="letterFiles"></div><br>
+		<button class="modifycancel">수정 취소</button>
+		<input type="button" value="글 수정">
 	</form>
 </fieldset>

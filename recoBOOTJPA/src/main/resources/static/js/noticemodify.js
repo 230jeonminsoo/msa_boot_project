@@ -1,6 +1,7 @@
 
 function modifyNoticeSubmit($formObj){
-	$formObj.submit(function(){
+	let $modifyNoticeBt = $('fieldset.noticemodify>form>input[type=button]');
+	$modifyNoticeBt.click(function(){
 		let ajaxUrl = $(this).attr('action');		
 		let ajaxMethod = $(this).attr('method');
 		let sendData = $(this).serialize().trim();	
