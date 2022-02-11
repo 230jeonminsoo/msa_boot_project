@@ -135,7 +135,7 @@ public class NoticeController {
 					String letterOriginalFileName = letterFiles.getOriginalFilename();//letter파일 원본이름 얻기
 					logger.info("레터 파일이름:" + letterFiles.getOriginalFilename()+" 파일크기: " + letterFiles.getSize());
 					//저장할 파일 이름 지정한다 ex) reco_notice_글번호_letter_XXXX_원본이름
-					String letterName = /*"reco_notice_"+wroteBoardNo + "_letter_" + UUID.randomUUID() + "_" + */letterOriginalFileName;
+					String letterName = "reco_notice_"+wroteBoardNo + "_letter_" + UUID.randomUUID() + "_" + letterOriginalFileName;
 					//letter파일 생성
 					File file2 = new File(saveDirectory, letterName);
 						try {
@@ -174,7 +174,7 @@ public class NoticeController {
 					
 					@Override
 					public boolean accept(File dir, String name) {
-						return name.contains(/*"reco_notice_"+ntcIdx+"_letter_"*/n.getNtcAttachment());
+						return name.contains("reco_notice_"+ntcIdx+"_letter_");//n.getNtcAttachment());
 					}
 				});
 				if(letterFileNames.length>0) {

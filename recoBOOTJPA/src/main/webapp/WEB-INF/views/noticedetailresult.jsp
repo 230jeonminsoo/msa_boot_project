@@ -15,12 +15,35 @@ Date ntcCreateAt = n.getNtcCreateAt();
 String ntcUNickname = n.getNtcUNickName();
 int ntcViews = n.getNtcViews();
 %>
+<%String image= (String)request.getAttribute("image"); %>
     
     <link href="./css/noticedetail.css" rel=stylesheet>
  	<script src="./js/noticedetail.js"></script>
 	<script>
 	$(function(){
-
+		//이미지 다운로드후 보여주기
+		<%if(image != null){%>
+			let $img = $("div.ntcDetail>ul.ntcDetail>li>div.image>img");
+			$.ajax({
+				url: "./noticedownload",
+				method:'get',
+				data:"imageFileName="+"<%=image%>",
+				
+				cache:false, //이미지 다운로드용 설정
+		        xhrFields:{  //이미지 다운로드용 설정
+		            responseType: 'blob'
+		        },
+				success:function(responseData){
+					let url = URL.createObjectURL(responseData);
+					$img.attr('src', url); 														
+				},
+				error:function(jqXHR, textStatus){
+					alert("에러:" + jqXHR.status);
+				}
+			});
+		<%}%>
+		
+		
 		//수정버튼 클릭시
 			noticeModifyClick();
 		//삭제버튼 클릭시
