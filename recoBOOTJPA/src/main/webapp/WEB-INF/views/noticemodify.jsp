@@ -21,7 +21,7 @@ $(function(){
 	<%if(ntcAttachment != null){
 		
 	}%>
-	let $formObj = $('fieldsetform');
+	let $formObj = $('fieldset form');
 	//글수정버튼클릭시 수정된글 보낸후 수정한 글 다시 보기
 	modifyNoticeSubmit($formObj);
 	//수정취소버튼 클릭시 수정할려고 한글 다시보기
@@ -42,7 +42,7 @@ $(function(){
 		<table>
 			<tr><td><textarea rows="20" cols="100" style="resize:none;" name="ntcContent" id="ntcContent" placeholder="<%=ntcContent %>" required><%=ntcContent %></textarea></td></tr>		
 		</table>
-		<div class="data"><label>파일 첨부</label><input type="file" name="letterFiles"></div><br>
+		<div class="data"><label>파일 첨부</label><input type="file" name="letterFiles"></div> 현재 저장된 첨부파일 : <%=ntcAttachment %><br>
 		<button class="modifycancel">수정 취소</button>
 		<input type="button" value="글 수정">
 	</form>
