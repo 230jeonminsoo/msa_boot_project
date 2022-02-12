@@ -2,12 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-	<%
-	if (session.getAttribute("loginInfo") != null) { 
-	%>
-	<%} else {  %>
-	<script>location.href="./";</script>
-	<%} %>
 <ul>
 <%
 Customer c = (Customer)session.getAttribute("loginInfo"); 
