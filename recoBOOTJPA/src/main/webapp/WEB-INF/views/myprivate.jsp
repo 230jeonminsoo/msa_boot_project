@@ -1,14 +1,19 @@
 <%@page import="com.reco.customer.vo.Customer"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%Customer c = (Customer)session.getAttribute("loginInfo"); %>   
+<%Customer c = (Customer)session.getAttribute("loginInfo");
+int uIdx =0;
+if(c!=null){
+	uIdx = c.getUIdx();
+}
+%>   
 
 <link href="./css/myprivate.css" rel=stylesheet>   
 <script src="./js/myprivate.js"></script>    
 
 <script>
 $(function(){
-	uIdx = "<%=c.getUIdx()%>";
+	uIdx = "<%=uIdx%>";
 	
 	modifypwdBtClick(uIdx);
 	withdrawBtClick(uIdx);
