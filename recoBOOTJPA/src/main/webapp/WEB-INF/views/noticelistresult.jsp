@@ -148,7 +148,7 @@ int uAuthCode = c.getUAuthCode();
 		}
 		%>
 <%} else {  %>
-<script>location.href="/";</script>
+<script>location.href="./";</script>
 <%} %>
 
 

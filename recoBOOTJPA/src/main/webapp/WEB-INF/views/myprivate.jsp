@@ -16,18 +16,27 @@ $(function(){
 
 </script>
 
-<div class=myprivate>   
-	<div class="modifypwd">    
-		<h1 class="info">비밀번호 변경</h1>                     
-		새비밀번호 : <input type="password" name="pwd" required><br>
-		새비밀번호확인 : <input type="password" name="pwd1" required><br>
-		<button class="modifypwdbutton">확인</button>
+
+	<%
+	if (session.getAttribute("loginInfo") != null) { 
+	%>
+
+	<div class=myprivate>   
+		<div class="modifypwd">    
+			<h1 class="info">비밀번호 변경</h1>                     
+			새비밀번호 : <input type="password" name="pwd" required><br>
+			새비밀번호확인 : <input type="password" name="pwd1" required><br>
+			<button class="modifypwdbutton">확인</button>
+		</div>
+		
+		<div class="withdraw">       
+			<h1 class="info">회원탈퇴</h1>
+			현재 비밀번호 : <input type="password" name="pwd" required><br>
+			현재 비밀번호 확인 : <input type="password" name="pwd1" required><br>
+			<button class="withdrawbutton">확인</button>
+		</div>
 	</div>
-	
-	<div class="withdraw">       
-		<h1 class="info">회원탈퇴</h1>
-		현재 비밀번호 : <input type="password" name="pwd" required><br>
-		현재 비밀번호 확인 : <input type="password" name="pwd1" required><br>
-		<button class="withdrawbutton">확인</button>
-	</div>
-</div>	
+
+	<%} else{%>
+		<script>location.href="./";</script>
+	<%} %><!--if (session.getAttribute("loginInfo") 끝  -->	
