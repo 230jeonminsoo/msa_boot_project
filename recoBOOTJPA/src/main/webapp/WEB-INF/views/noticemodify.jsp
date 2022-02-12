@@ -1,3 +1,4 @@
+<%@page import="com.reco.customer.vo.Customer"%>
 <%@page import="com.reco.notice.vo.Notice"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -29,7 +30,15 @@ $(function(){
 });
 </script>
 
-
+	<%
+	Customer c = (Customer) session.getAttribute("loginInfo"); 
+	%>
+	<%
+	if (session.getAttribute("loginInfo") != null) { 
+	%>
+	<%} else {  %>
+	<script>location.href="./";</script>
+	<%} %>
 <fieldset class="noticemodify">
 	<form autocomplete="off">
 		<h1>공지사항 수정</h1>

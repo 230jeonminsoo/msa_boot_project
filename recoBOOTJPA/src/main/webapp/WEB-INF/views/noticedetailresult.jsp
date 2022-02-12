@@ -54,6 +54,8 @@ int ntcViews = n.getNtcViews();
 		noticeDownloadClick(letter);
 	});
 	</script>
+	
+	
 	<div class="ntcDetail">
     	<h1>공지사항 </h1>
         
@@ -105,7 +107,7 @@ int uAuthCode = c.getUAuthCode();
 		%>
 		
 <%} else {  %>
-<script>location.href="/";</script>
+<script>location.href="./";</script>
 <%} %>	
 
       </div>
