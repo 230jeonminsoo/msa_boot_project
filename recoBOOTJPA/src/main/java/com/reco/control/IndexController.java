@@ -42,10 +42,11 @@ public class IndexController {
 			return "mycallist.jsp";
 		}		
 		
-		@GetMapping("/mycommunity")
-		public String mycommunity() {
-			return "mycommunity.jsp";
-		}
+		/*
+		 * @GetMapping("/mycommunity") public String mycommunity() {
+		 *  return "mycommunity.jsp"; 
+		 *  }
+		 */
 		
 		@GetMapping("/myprivate")
 		public String myprivate() {

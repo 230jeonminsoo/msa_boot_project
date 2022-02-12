@@ -35,11 +35,11 @@
 			select ntc_idx.currval FROM dual
 		</selectKey>
 	</insert> 
-	<select id="findNtcByuIdx" parameterType="map" resultType="Notice">
+	<select id="findNtcByNickname" parameterType="map" resultType="Notice">
 		select *
 		from (select rownum r, a.*
 	     	  from (select ntc_idx,ntc_unickname,ntc_title,ntc_createat 
-					from notice where NTC_UNICKNAME=#{uNickname} ) a
+					from notice where NTC_UNICKNAME=#{uNickname} order by notice.ntc_idx desc) a
 	    )
 	    where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
 	</select>

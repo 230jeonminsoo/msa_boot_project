@@ -1,8 +1,10 @@
+<%@page import="com.reco.customer.vo.Customer"%>
 <%@page import="com.reco.calendar.vo.CalPost"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%Customer c = (Customer)session.getAttribute("loginInfo"); %>
 <%
 	Date nowTime = new Date();
 	SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM");
@@ -13,9 +15,9 @@
     <script src="./js/callist.js"></script>
     <script>
 	    $(function(){
-
+			uNickname = "<%=c.getUNickName()%>"
 	    	//탭에서 메뉴클릭시 발생하는 이벤트(공지사항/faq/자유게시판/캘린더관리/커뮤니티글관리/개인정보관리)
-			tabMenuClick();
+			tabMenuClick(uNickname);
 
 			//메뉴에서 커뮤니티 클릭시 탭바뀌는 이벤트
 			tabChange();//커뮤니티용 탭 변화

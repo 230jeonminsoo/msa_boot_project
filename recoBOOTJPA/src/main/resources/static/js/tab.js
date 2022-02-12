@@ -56,7 +56,7 @@ function calMenuClick(){ //callistresult.jsp
 
 
 
-function tabMenuClick(){
+function tabMenuClick(uNickname){
 	let $tabMenuObj = $('div.tab>ul>li>a');
 	 $tabMenuObj.click(function(){
         let menuHref = $(this).attr('href'); 
@@ -116,14 +116,25 @@ function tabMenuClick(){
 			//indexcontroller	
 			//tab에서 커뮤니티 글관리이 클릭되었을때
 			case 'mycommunity':
-				ajaxUrl = menuHref;
+			console.log(uNickname);
+				$.ajax({
+			        url: './myntc/'+uNickname,
+			        success:function(responseData){
+			            let $articlesObj = $('section>div.articles');
+			            $articlesObj.empty();
+			            $articlesObj.html(responseData);
+						window.scrollTo(0, 0);
+			        } 		
+				});
+				return false;
+/*				ajaxUrl = menuHref;
                	$('section>div.articles').empty();
                 $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){
                     if(jqXHR.status != 200){
                         alert('응답실패:' + jqXHR.status);
                     }
                 });
-                return false;	 
+                return false;	*/ 
 			//indexcontroller
 			//tab에서 개인정보 관리를 클릭되었을때
 			case 'myprivate':

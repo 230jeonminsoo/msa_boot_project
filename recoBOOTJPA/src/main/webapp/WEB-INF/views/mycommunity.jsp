@@ -15,13 +15,12 @@ PageDTO<Comment> pageDTO = (PageDTO)request.getAttribute("commentPageDTO");
 List<Comment> commentList = pageDTO.getList(); */
 %> 
 <script src="./js/mycommunity.js"></script>
+<link href="./css/mycommunity.css" rel=stylesheet>
 
 <script>
 $(function(){
-	//로딩될시 회원의 글 가져오는 함수
-		allCommunityLoad();
-	//각 글 클릭시 해당 글을 새탭으로 여는 함수
-	
+	//공지사항 글 클릭시 해당 글을 새탭으로 여는 함수
+	noticeDetail();
 });
 </script>    
 
@@ -29,6 +28,7 @@ $(function(){
 
 <!-- 작성한 공지사항 글 (관리자가 아닐경우 보이지않음). 누를시 새탭에 띄울예정-->
 <fieldset>
+<div class="ntc_list">
 <%if(noticePageDTO != null) {%>
 	<%if(c.getUAuthCode() == 0){ %>
 	<h1>내가 작성한 공지사항</h1>
@@ -81,6 +81,7 @@ $(function(){
 		if(noticePageDTO.getEndPage() < noticePageDTO.getTotalPage()){%>
 			<span class="<%= backContextPath%><%=noticePageDTO.getUrl()%>/<%=noticePageDTO.getEndPage()+1%> active">next</span>
 		<%} %>
+</div>
 </div>
 </fieldset>
 
