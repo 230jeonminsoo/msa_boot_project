@@ -105,7 +105,7 @@ int uAuthCode = c.getUAuthCode();
 		%>
 		
 <%} else {  %>
-<script>location.href="index.jsp";</script>
+<script>location.href="/";</script>
 <%} %>	
 
       </div>

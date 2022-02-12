@@ -70,8 +70,10 @@ function tabMenuClick(uNickname){
 			//tab에서 공지사항이 클릭되었을때
 			case 'ntclist':
                 ajaxUrl = menuHref;
-                $('section>div.articles').empty();
+                //$('section>div.articles').empty();
                 $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){
+					console.log(responseText);
+					console.log("끝");
                     if(jqXHR.status != 200){
                         alert('응답실패:' + jqXHR.status);
                     }
@@ -127,14 +129,6 @@ function tabMenuClick(uNickname){
 			        } 		
 				});
 				return false;
-/*				ajaxUrl = menuHref;
-               	$('section>div.articles').empty();
-                $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){
-                    if(jqXHR.status != 200){
-                        alert('응답실패:' + jqXHR.status);
-                    }
-                });
-                return false;	*/ 
 			//indexcontroller
 			//tab에서 개인정보 관리를 클릭되었을때
 			case 'myprivate':

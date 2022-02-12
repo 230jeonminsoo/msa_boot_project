@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.List"%>
 <%@page import="com.reco.notice.vo.Notice"%>
@@ -7,13 +9,17 @@
     pageEncoding="UTF-8"%>
 <%Customer c = (Customer)session.getAttribute("loginInfo"); %>   
 <%
+String msg = (String)request.getAttribute("msg");
 PageDTO<Notice> noticePageDTO = (PageDTO)request.getAttribute("noticePageDTO");
-List<Notice> noticeList = noticePageDTO.getList();
-/* PageDTO<Board> pageDTO = (PageDTO)request.getAttribute("boardPageDTO");
+List<Notice> noticeList = new ArrayList<>();
+if(noticePageDTO != null){
+	noticeList = noticePageDTO.getList();
+}
+/*  PageDTO<Board> pageDTO = (PageDTO)request.getAttribute("boardPageDTO");
 List<Board> boardList = pageDTO.getList();
 PageDTO<Comment> pageDTO = (PageDTO)request.getAttribute("commentPageDTO");
-List<Comment> commentList = pageDTO.getList(); */
-%> 
+List<Comment> commentList = pageDTO.getList();  */
+%>  
 <script src="./js/mycommunity.js"></script>
 <link href="./css/mycommunity.css" rel=stylesheet>
 
@@ -25,11 +31,9 @@ $(function(){
 </script>    
 
 
-
 <!-- 작성한 공지사항 글 (관리자가 아닐경우 보이지않음). 누를시 새탭에 띄울예정-->
 <fieldset>
 	<div class="ntc_list">
-	<%if(noticePageDTO != null) {%>
 		<%if(c.getUAuthCode() == 0){ %>
 		<h1>내가 작성한 공지사항</h1>
 		<hr>
@@ -42,6 +46,9 @@ $(function(){
 				<span>작성일</span>
 			</li>
 		</ul>
+		<%if (noticePageDTO  == null) {%>
+			<span class="noNtc"><%=msg %></span>
+		<%} else{%> 
 			<%for(Notice n: noticeList){
 			  int ntcIdx = n.getNtcIdx();
 			  
@@ -50,6 +57,8 @@ $(function(){
 			  String ntcAttachment = n.getNtcAttachment();
 			  int ntcViews = n.getNtcViews();
 			  Date ntcCreatAt = n.getNtcCreateAt();
+			  SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+			  String ntcCrt = sdf.format(ntcCreatAt);
 			%>
 			<div class ="noticelist" id="<%=ntcIdx%>"> 
 				 <ul>
@@ -58,31 +67,33 @@ $(function(){
 					 <span><%=ntcTitle%><%if(ntcAttachment != null){ %><img src="./images/클립.png"><%} %></span>
 					 <span><%=ntcuNickName%></span>
 					 <span><%=ntcViews%></span>
-					 <span><%=ntcCreatAt%></span>
+					 <span><%=ntcCrt%></span>
 					 </li> 
 				  </ul>
 			</div>
 			
-			<%} %>
-		<%} %>
+			<%} %><!-- for문 끝 -->
+		<%} %><!-- if (noticePageDTO  == null) 끝 -->
 	
-		<div class="pagegroup">
-				 <%  
-				 String backContextPath = request.getContextPath();
-				 if(noticePageDTO.getStartPage() > 1){%>			
-				 	<span class="<%= backContextPath%><%=noticePageDTO.getUrl()%>/<%=noticePageDTO.getStartPage()-1%> active">prev</span>
-				 <%} %>
-		 
-		 		<%	for(int i = noticePageDTO.getStartPage() ; i<=noticePageDTO.getEndPage() ; i++){ %>
-					<span class="<%= backContextPath%><%=noticePageDTO.getUrl() %>/<%=i%> <%if(i != noticePageDTO.getCurrentPage()){ %>active<%}%>"><%=i%></span>
-				<%}%>
-				
-				<% 
-				if(noticePageDTO.getEndPage() < noticePageDTO.getTotalPage()){%>
-					<span class="<%= backContextPath%><%=noticePageDTO.getUrl()%>/<%=noticePageDTO.getEndPage()+1%> active">next</span>
-				<%} %>
-		</div>
-	<%} %>
+		<%if(noticePageDTO != null) {%>
+			<div class="pagegroup">
+					 <%  
+					 String backContextPath = request.getContextPath();
+					 if(noticePageDTO.getStartPage() > 1){%>			
+					 	<span class="<%= backContextPath%><%=noticePageDTO.getUrl()%>/<%=noticePageDTO.getStartPage()-1%> active">prev</span>
+					 <%} %>
+			 
+			 		<%	for(int i = noticePageDTO.getStartPage() ; i<=noticePageDTO.getEndPage() ; i++){ %>
+						<span class="<%= backContextPath%><%=noticePageDTO.getUrl() %>/<%=i%> <%if(i != noticePageDTO.getCurrentPage()){ %>active<%}%>"><%=i%></span>
+					<%}%>
+					
+					<% 
+					if(noticePageDTO.getEndPage() < noticePageDTO.getTotalPage()){%>
+						<span class="<%= backContextPath%><%=noticePageDTO.getUrl()%>/<%=noticePageDTO.getEndPage()+1%> active">next</span>
+					<%} %>
+			</div>
+		<%} %>	
+	<%} %><!--if(c.getUAuthCode() == 0){ 끝  -->
 	</div>
 </fieldset>
 

@@ -219,7 +219,7 @@ public class NoticeController {
 		} catch (FindException e) {
 			e.printStackTrace();
 			mnv.addObject("msg", e.getMessage());
-			mnv.setViewName("failresult.jsp");
+			mnv.setViewName("noticelistresult.jsp");
 		}
 		return mnv;
 	}
@@ -241,7 +241,7 @@ public class NoticeController {
 		} catch (FindException e) {
 			e.printStackTrace();
 			mnv.addObject("msg", e.getMessage());
-			mnv.setViewName("failresult.jsp");
+			mnv.setViewName("mycommunity.jsp");
 		}
 		return mnv;
 	}
@@ -258,9 +258,8 @@ public class NoticeController {
 			return "noticelistresult.jsp";
 		} catch (RemoveException | FindException e) {
 			System.out.println(e.getMessage());
-			model.addAttribute("status", 0);
 			model.addAttribute("msg", e.getMessage());
-			return "failresult.jsp";
+			return "noticelistresult.jsp";
 		}
 	}
 	
@@ -285,7 +284,7 @@ public class NoticeController {
 			} catch (FindException e) {
 				e.printStackTrace();
 				mnv.addObject("msg", e.getMessage());
-				mnv.setViewName("failresult.jsp");
+				mnv.setViewName("noticelistresult.jsp");
 			}
 			
 		}else {
@@ -305,7 +304,7 @@ public class NoticeController {
 			} catch (FindException e) {
 				e.printStackTrace();
 				mnv.addObject("msg", e.getMessage());
-				mnv.setViewName("failresult.jsp");
+				mnv.setViewName("noticelistresult.jsp");
 			}	
 		}
 		return mnv;

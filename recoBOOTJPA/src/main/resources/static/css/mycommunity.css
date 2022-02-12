@@ -62,6 +62,12 @@ div.ntc_list>div>ul>li span{
 	overflow: hidden;
 }
 
+/*글 없을시 글자*/
+div.ntc_list>span.noNtc{
+	margin:100px;
+	font-size: 30px;
+}
+
 div.ntc_list>div.notice_write_button{
 	margin-top:30px;
 

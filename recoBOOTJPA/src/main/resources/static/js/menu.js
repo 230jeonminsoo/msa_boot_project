@@ -78,7 +78,9 @@ function signupClick(){
             case 'ntclist':
                 ajaxUrl = menuHref;
                 $('section>div.articles').load(ajaxUrl, function(responseText, textStatus, jqXHR){
-                    if(jqXHR.status != 200){
+                   	console.log(responseText);
+					console.log("끝");
+					if(jqXHR.status != 200){
                         alert('응답실패:' + jqXHR.status);            
                     }    
                 }); 

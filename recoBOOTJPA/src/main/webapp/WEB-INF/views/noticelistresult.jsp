@@ -1,4 +1,6 @@
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.reco.dto.PageDTO"%>
 <%@page import="com.reco.customer.vo.Customer"%>
 <%@page import="java.util.Date"%>
@@ -16,9 +18,12 @@
 <!--noticelist서블릿에서 결과값 setting해서 noticelistresult.jsp로 보낸값 받아옴-->
 <%
 //List<Notice> list = (List)request.getAttribute("pageDTO");
-
+String msg = (String)request.getAttribute("msg");
 PageDTO<Notice> pageDTO = (PageDTO)request.getAttribute("pageDTO");
-List<Notice> list = pageDTO.getList();
+List<Notice> list = new ArrayList<>();
+if(pageDTO != null){
+list = pageDTO.getList();
+}
 %>
 <!--END-->
 
@@ -54,7 +59,6 @@ List<Notice> list = pageDTO.getList();
 		</tr>
 	</table>  
  
-
  <form>
 	<div class="search" style="float:right;">           
 		<select  name="f">  <!-- 즉 url부분 쿼리스트링값이 선택한거랑 같으면 검색바에 춣력해라 -->
@@ -73,6 +77,8 @@ List<Notice> list = pageDTO.getList();
 <!--공지사항 클릭시 출력될 공지사항 글 목록 출력 start-->
 
 <div class="ntc_list">
+
+
 	<ul class="ntc_top">
 		<li>
 			<span>글번호</span>
@@ -82,33 +88,37 @@ List<Notice> list = pageDTO.getList();
 			<span>작성일</span>
 		</li>
 	</ul>
-   
-<%for(Notice n: list){
-  int ntcIdx = n.getNtcIdx();
-  
-  String ntcTitle = n.getNtcTitle();
-  String ntcuNickName = n.getNtcUNickName();
-  String ntcAttachment = n.getNtcAttachment();
-  int ntcViews = n.getNtcViews();
-  Date ntcCreatAt = n.getNtcCreateAt();
-%>
-<div class ="noticelist" id="<%=ntcIdx%>"> 
-	 <ul>
-	    <li>
-		 <span><%=ntcIdx%></span>
-		 <span><%=ntcTitle%><%if(ntcAttachment != null){ %><img src="./images/클립.png"><%} %></span>
-		 <span><%=ntcuNickName%></span>
-		 <span><%=ntcViews%></span>
-		 <span><%=ntcCreatAt%></span>
-		 
-		 </li> 
-	  </ul>
-</div>
-
+<%if (pageDTO  == null) {%>
+	<span class="noNtc"><%=msg %></span>
+<%} else{%> 
+	<%
+	for(Notice n: list){
+	  int ntcIdx = n.getNtcIdx();
+	  
+	  String ntcTitle = n.getNtcTitle();
+	  String ntcuNickName = n.getNtcUNickName();
+	  String ntcAttachment = n.getNtcAttachment();
+	  int ntcViews = n.getNtcViews();
+	  Date ntcCreatAt = n.getNtcCreateAt();
+	  SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+	  String ntcCrt = sdf.format(ntcCreatAt);
+	%>
+	<div class ="noticelist" id="<%=ntcIdx%>"> 
+		 <ul>
+		    <li>
+			 <span><%=ntcIdx%></span>
+			 <span><%=ntcTitle%><%if(ntcAttachment != null){ %><img src="./images/클립.png"><%} %></span>
+			 <span><%=ntcuNickName%></span>
+			 <span><%=ntcViews%></span>
+			 <span><%=ntcCrt%></span>
+			 
+			 </li> 
+		  </ul>
+	</div>
+<%} %>
 <%} %>
 
-
-
+<!-- 글쓰기버튼 시작 -->
 <%
 Customer c = (Customer) session.getAttribute("loginInfo"); 
 %>
@@ -138,11 +148,12 @@ int uAuthCode = c.getUAuthCode();
 		}
 		%>
 <%} else {  %>
-<script>location.href="index.jsp";</script>
+<script>location.href="/";</script>
 <%} %>
 
 
 </div> 
+<%if(pageDTO != null) {%>
 <div class="pagegroup">
 		 <%  
 		 String backContextPath = request.getContextPath();
@@ -159,6 +170,7 @@ int uAuthCode = c.getUAuthCode();
 			<span class="<%= backContextPath%><%=pageDTO.getUrl()%>/<%=pageDTO.getEndPage()+1%> active">next</span>
 		<%} %>
 </div>
+<%} %>
 </div>
 
 
