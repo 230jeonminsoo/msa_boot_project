@@ -47,6 +47,22 @@ public class NoticeDAOOracle implements NoticeDAOInterface {
 	}
 	
 	@Override
+	public int findCountNickname(String uNickname) throws FindException{
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			return session.selectOne("com.reco.notice.NoticeMapper.findCountNickname", uNickname);
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new FindException(e.getMessage());
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}
+	}
+	
+	@Override
 	public int findCountWord(String word) throws FindException {
 		SqlSession session = null;
 		try {
@@ -130,6 +146,29 @@ public class NoticeDAOOracle implements NoticeDAOInterface {
 		}
 	}
 
+	
+	@Override
+	public List<Notice> findNtcByNickname(String uNickname, int currentPage, int cntperpage) throws FindException {
+		SqlSession session =null;
+		try {
+			session = sqlSessionFactory.openSession();
+			Map<String,Object> map= new HashMap<>();
+			map.put("uNickname", uNickname);
+			map.put("currentPage", currentPage);
+			map.put("cntperpage", cntperpage);
+			List<Notice> list = session.selectList("com.reco.notice.NoticeMapper.findNtcByNickname",map);
+			if(list.size() == 0) {
+				throw new FindException("단어를 포함하는 글이 없습니다.");
+			}
+			return list;
+		}catch (Exception e) {
+			throw new FindException(e.getMessage());
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}
+	}
 	@Override
 	public Notice findNtcByIdx(int ntcIdx) throws FindException {
 		SqlSession session =null;

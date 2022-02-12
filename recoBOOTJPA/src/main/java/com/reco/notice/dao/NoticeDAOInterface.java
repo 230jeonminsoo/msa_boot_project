@@ -31,6 +31,16 @@ public interface NoticeDAOInterface {
 	 */
 	public List<Notice> findNtcAll(int currentPage, int cntperpage) throws FindException;
 	
+	
+	/**
+	 * 내가 쓴 공지사항을 볼 수 있다.
+	 * @param uIdx
+	 * @return
+	 * @throws FindException
+	 */
+	public List<Notice> findNtcByNickname(String uNickname, int currentPage, int cntperpage) throws FindException; 
+	
+	
 	/**
 	 * 공지사항 상세보기를 한다.
 	 * @param ntcidx
@@ -91,6 +101,13 @@ public interface NoticeDAOInterface {
 	public int findCount() throws FindException;
 	
 	
+	/**
+	 * 회원의 공지사항글 개수를 반환한다.
+	 * @param uNickname
+	 * @return
+	 * @throws FindException
+	 */
+	public int findCountNickname(String uNickname) throws FindException;
 	/**
 	 * 제목과 내용을 검색한 글의 게시글 개수를 반환한다.
 	 * @param word

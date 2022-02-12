@@ -5,9 +5,11 @@
 <mapper namespace="com.reco.notice.NoticeMapper">
 
 	<select id="findCount" resultType="int">
-	select COUNT(*) from notice
+		select COUNT(*) from notice
 	</select>
-	
+	<select id="findCountNickname" resultType="int" parameterType="string">
+		SELECT COUNT(*) FROM notice where NTC_UNICKNAME = #{word}
+	</select>
 	<select id="findCountWord"  resultType="int" parameterType="string">
 		SELECT COUNT(*) FROM notice where ntc_title like '%${word}%' or ntc_content like '%${word}%'
 	</select>
@@ -33,6 +35,14 @@
 			select ntc_idx.currval FROM dual
 		</selectKey>
 	</insert> 
+	<select id="findNtcByuIdx" parameterType="map" resultType="Notice">
+		select *
+		from (select rownum r, a.*
+	     	  from (select ntc_idx,ntc_unickname,ntc_title,ntc_createat 
+					from notice where NTC_UNICKNAME=#{uNickname} ) a
+	    )
+	    where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
+	</select>
 	
 	<select id="findNtcByIdx" parameterType="int" resultType="Notice">
 		select * from notice where ntc_idx=#{ntcIdx}

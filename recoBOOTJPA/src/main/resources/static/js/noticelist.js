@@ -72,9 +72,8 @@ function noticeDetail(){
 		let f = $("select[name=f]").val(); /**f는 select 옵션값 */
 		let ajaxUrl = "./ntcsearch";
 		$.ajax({
-			url: ajaxUrl+'/'+searchWord,
-			method: "get",
-			data : {f:f},     
+			url: ajaxUrl+'/'+searchWord+'/'+f,
+			method: "get",    
 			success:function(responseData){
 				let $articlesObj = $('section>div.articles');
                 $articlesObj.empty();

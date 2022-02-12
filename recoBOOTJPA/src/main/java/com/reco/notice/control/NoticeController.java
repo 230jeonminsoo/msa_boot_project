@@ -224,6 +224,12 @@ public class NoticeController {
 		return mnv;
 	}
 	
+	//나의 공지사항 글 보는 컨트롤러
+//	@GetMapping(value = {"myntc/{uNickname}", "myntc/{uNickname}/{currentPage}"})
+//	public Object myNtc(){//@PathVariable uNickname, @PathVariable Optional<Integer> currentPage ,Model model) {
+//		
+//	}
+	
 	
 	//공지사항을 삭제하는 컨트롤러
 	@GetMapping("ntcremove")
@@ -243,8 +249,8 @@ public class NoticeController {
 	}
 	
 	//공지사항을 검색하는 컨트롤러
-	@GetMapping(value = {"ntcsearch/{word}","ntcsearch/{word}/{currentPage}"})
-	public Object noticeSearch(@PathVariable Optional<String> word, String f,@PathVariable Optional<Integer> currentPage ,Model model) {
+	@GetMapping(value = {"ntcsearch/{word}/{f}","ntcsearch/{word}/{f}/{currentPage}"})
+	public Object noticeSearch(@PathVariable Optional<String> word, @PathVariable String f,@PathVariable Optional<Integer> currentPage ,Model model) {
 		ModelAndView mnv = new ModelAndView();
 		PageDTO<Notice> pageDTO;
 		if(f.equals("ntc_title")) {
@@ -257,7 +263,7 @@ public class NoticeController {
 				if(currentPage.isPresent()) { //currentPage
 					cp = currentPage.get();
 				}
-				pageDTO = service.findNtcByTitle(w,cp); 
+				pageDTO = service.findNtcByTitle(w,f,cp); 
 				mnv.addObject("pageDTO", pageDTO);
 				mnv.setViewName("noticelistresult.jsp");
 			} catch (FindException e) {
