@@ -128,7 +128,7 @@ public class NoticeDAOOracle implements NoticeDAOInterface {
 				session.close();
 			}
 		}
-}
+	}
 
 	@Override
 	public Notice findNtcByIdx(int ntcIdx) throws FindException {

@@ -7,15 +7,19 @@
     pageEncoding="UTF-8"%>
 <%Customer c = (Customer)session.getAttribute("loginInfo"); %>   
 <%
-PageDTO<Notice> pageDTO = (PageDTO)request.getAttribute("pageDTO");
-List<Notice> list = pageDTO.getList();
+PageDTO<Notice> noticePageDTO = (PageDTO)request.getAttribute("noticePageDTO");
+List<Notice> noticeList = noticePageDTO.getList();
+/* PageDTO<Board> pageDTO = (PageDTO)request.getAttribute("boardPageDTO");
+List<Board> boardList = pageDTO.getList();
+PageDTO<Comment> pageDTO = (PageDTO)request.getAttribute("commentPageDTO");
+List<Comment> commentList = pageDTO.getList(); */
 %> 
 <script src="./js/mycommunity.js"></script>
 
 <script>
 $(function(){
 	//로딩될시 회원의 글 가져오는 함수
-	
+		allCommunityLoad();
 	//각 글 클릭시 해당 글을 새탭으로 여는 함수
 	
 });
@@ -25,7 +29,7 @@ $(function(){
 
 <!-- 작성한 공지사항 글 (관리자가 아닐경우 보이지않음). 누를시 새탭에 띄울예정-->
 <fieldset>
-<%if(pageDTO != null) {%>
+<%if(noticePageDTO != null) {%>
 	<%if(c.getUAuthCode() == 0){ %>
 	<h1>내가 작성한 공지사항</h1>
 	<hr>
@@ -38,7 +42,7 @@ $(function(){
 			<span>작성일</span>
 		</li>
 	</ul>
-		<%for(Notice n: list){
+		<%for(Notice n: noticeList){
 		  int ntcIdx = n.getNtcIdx();
 		  
 		  String ntcTitle = n.getNtcTitle();
@@ -55,16 +59,29 @@ $(function(){
 				 <span><%=ntcuNickName%></span>
 				 <span><%=ntcViews%></span>
 				 <span><%=ntcCreatAt%></span>
-				 
 				 </li> 
 			  </ul>
 		</div>
 		
 		<%} %>
 	<%} %>
-<%} else {%>
-작성한 공지사항 글이 없습니다.
-<%} %>	
+<%} %>
+<div class="pagegroup">
+		 <%  
+		 String backContextPath = request.getContextPath();
+		 if(noticePageDTO.getStartPage() > 1){%>			
+		 	<span class="<%= backContextPath%><%=noticePageDTO.getUrl()%>/<%=noticePageDTO.getStartPage()-1%> active">prev</span>
+		 <%} %>
+ 
+ 		<%	for(int i = noticePageDTO.getStartPage() ; i<=noticePageDTO.getEndPage() ; i++){ %>
+			<span class="<%= backContextPath%><%=noticePageDTO.getUrl() %>/<%=i%> <%if(i != noticePageDTO.getCurrentPage()){ %>active<%}%>"><%=i%></span>
+		<%}%>
+		
+		<% 
+		if(noticePageDTO.getEndPage() < noticePageDTO.getTotalPage()){%>
+			<span class="<%= backContextPath%><%=noticePageDTO.getUrl()%>/<%=noticePageDTO.getEndPage()+1%> active">next</span>
+		<%} %>
+</div>
 </fieldset>
 
 <!-- 내가 작성한 게시글. 누를시 새탭에 띄울예정-->

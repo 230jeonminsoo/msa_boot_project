@@ -65,6 +65,8 @@ function tabMenuClick(){
         let ajaxUrl = ""; 
         
 		switch(menuHref){
+			
+			//indexcontroller
 			//tab에서 공지사항이 클릭되었을때
 			case 'ntclist':
                 ajaxUrl = menuHref;
@@ -75,7 +77,8 @@ function tabMenuClick(){
                     }
                 });
 				return false;
-				
+			
+			//indexcontroller	
 			//tab에서 faq가 클릭되었을때
 			case './html/faqlist.html':
 				ajaxUrl = menuHref;
@@ -87,6 +90,7 @@ function tabMenuClick(){
                 });
                 return false;
 			
+			//indexcontroller
 			//tab에서 자유게시판이 클릭되었을때
 			case 'brdlist':
 				ajaxUrl = menuHref;
@@ -98,6 +102,7 @@ function tabMenuClick(){
                 });
                 return false;
 
+			//indexcontroller
 			//tab에서 캘린더 관리이 클릭되었을때
 			case 'mycallist':
 				ajaxUrl = menuHref;
@@ -108,7 +113,7 @@ function tabMenuClick(){
                     }
                 });
                 return false;	
-				
+			//indexcontroller	
 			//tab에서 커뮤니티 글관리이 클릭되었을때
 			case 'mycommunity':
 				ajaxUrl = menuHref;
@@ -119,7 +124,7 @@ function tabMenuClick(){
                     }
                 });
                 return false;	 
-
+			//indexcontroller
 			//tab에서 개인정보 관리를 클릭되었을때
 			case 'myprivate':
 				ajaxUrl = menuHref;
