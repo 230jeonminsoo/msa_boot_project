@@ -1,5 +1,5 @@
-let nickValidate = 0;
-let emailValidate = 0;
+var nickValidate = 0;
+var emailValidate = 0;
 
 //닉네임 중복확인
 function nickDupchk($nicknameObj, $submitBtObj){
@@ -24,7 +24,7 @@ function nickDupchk($nicknameObj, $submitBtObj){
 					nickValidate = 1;
 					//이메일, 닉네임 중복아닐시 가입 버튼 출력
 					if(nickValidate + emailValidate == 2){
-						$submitBtObj.css('display','block');
+						$submitBtObj.css('display','inline');
 					}
 					console.log(nickValidate+emailValidate);
 				}
@@ -57,7 +57,7 @@ function emailDupchk($emailObj, $submitBtObj){
 					emailValidate = 1;
 					//이메일, 닉네임 중복아닐시 가입 버튼 출력
 					if(nickValidate + emailValidate == 2){
-						$submitBtObj.css('display','block');
+						$submitBtObj.css('display','inline');
 					}
 					console.log(nickValidate+emailValidate);
 				}
