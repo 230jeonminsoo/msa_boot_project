@@ -33,14 +33,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.reco.board.service.BoardService;
 import com.reco.board.vo.Board;
+import com.reco.board.vo.Comment;
 import com.reco.customer.vo.Customer;
 import com.reco.dto.PageDTO;
 import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
 import com.reco.exception.RemoveException;
-import com.reco.notice.service.NoticeService;
-import com.reco.notice.vo.Notice;
 
 import net.coobird.thumbnailator.Thumbnailator;
 
@@ -218,7 +217,7 @@ public class BoardController {
 			} catch (FindException e) {
 				e.printStackTrace();
 				mnv.addObject("msg", e.getMessage());
-				mnv.setViewName("failresult.jsp");
+				mnv.setViewName("boardlistresult.jsp");
 			}
 			return mnv;
 		}
@@ -366,5 +365,26 @@ public class BoardController {
 			 }catch(IOException e) {
 				 return new ResponseEntity<>("이미지 다운로드 실패",HttpStatus.INTERNAL_SERVER_ERROR);
 			 }
+		}
+		
+		
+		@PostMapping("cmtadd")
+		public String commentAdd(int brdIdx, String cmtContent, int cmtParentIdx, HttpSession session, Model model) {
+			Customer c = (Customer)session.getAttribute("loginInfo");
+			String cmtUNickName = c.getUNickName();
+			Comment comment = new Comment();
+			comment.setBrdIdx(brdIdx);
+			comment.setCmtContent(cmtContent);	
+			comment.setCmtParentIdx(cmtParentIdx);	
+			comment.setCmtUNickName(cmtUNickName);
+			
+			try{
+			    Board board = service.addCmt(comment);
+			    model.addAttribute("b", board);
+			    return "boarddetailresult.jsp";
+			}catch(AddException e){
+				e.getStackTrace();
+				return "failresult.jsp";
+			}
 		}
 }
