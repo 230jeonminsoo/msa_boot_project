@@ -60,12 +60,12 @@ Customer c = (Customer)session.getAttribute("loginInfo");%>
 
 	<section>
 		<div class="articles0">
-		<%--메뉴결과가 이곳에 나타남--%>
+		<%--로그인 성공시 callistresult가 이곳에 나타남--%>
 		</div>
 	</section>
 
 	<div style="position:fixed; bottom:40px; right:50px;">
-		<a href="#"><img style="width:100px ;height:100px" src="./images/navi_top.png" title="위로 가기"></a>
+		<a href="#"><img style="width:70px ;height:70px" src="./images/navi_top.png" title="위로 가기"></a>
 	</div>
 	<hr>
 	<footer>

@@ -49,6 +49,7 @@ public class CustomerController {
 	@ResponseBody
 	public Map<String, Object> login(String email, String pwd, HttpSession session){
 		session.removeAttribute("loginInfo"); 
+		session.removeAttribute("myPage");
 		String resultMsg = "";
 		int status = 0;
 		Customer c = new Customer();
@@ -57,9 +58,9 @@ public class CustomerController {
 			if(c.getuStatus() == 0) {
 				resultMsg = "탈퇴한 사용자입니다.";			
 			}else {
-			session.setAttribute("loginInfo", c);
-			resultMsg = "로그인 성공";
-			status = 1;
+				session.setAttribute("loginInfo", c);
+				resultMsg = "로그인 성공";
+				status = 1;
 			}
 		}catch (FindException e) {
 			resultMsg = "로그인 실패";
@@ -77,6 +78,7 @@ public class CustomerController {
 	@RequestMapping("/logout")
 	public ResponseEntity logout(HttpSession session) {
 		session.removeAttribute("loginInfo");
+		session.removeAttribute("myPage");
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	

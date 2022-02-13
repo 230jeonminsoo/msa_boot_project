@@ -1,5 +1,7 @@
 package com.reco.control;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,12 +35,17 @@ public class IndexController {
 		}
 		
 		@GetMapping("/pwdcheck")
-		public String pwdcheck() {
-			return "pwdcheck.jsp";
+		public String pwdcheck(HttpSession session) {
+			if(session.getAttribute("myPage") == null) {
+				return "pwdcheck.jsp";
+			}else {
+				return "mycallist.jsp";
+			}
 		}
 		
 		@GetMapping("/mycallist")
-		public String mycallist() {
+		public String mycallist(HttpSession session) {
+			session.setAttribute("myPage", session);
 			return "mycallist.jsp";
 		}		
 		
