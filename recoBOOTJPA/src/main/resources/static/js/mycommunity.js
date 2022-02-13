@@ -7,6 +7,8 @@ function noticeDetail(){
     $noticeObj.click(function(){
         let $ntcIdx = $(this).attr('id');	
         let ajaxUrl = './ntcdetail';
+		window.open("./");
+		return false;
         $.ajax({
             url: ajaxUrl,
             method : 'get',
@@ -18,9 +20,10 @@ function noticeDetail(){
                 $articlesObj.html(responseData);
 				window.scrollTo(0, 0);
 				
+				
             }
         }); 
-        return false;
+       
     });
 }
 

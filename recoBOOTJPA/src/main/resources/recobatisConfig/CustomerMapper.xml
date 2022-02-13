@@ -12,7 +12,7 @@
 	<insert id="add" 
 			parameterType="Customer">
 		INSERT INTO customer(u_idx,u_name,u_nickname,u_email,u_pwd,u_authcode,u_status) 
-		VALUES (u_idx.nextval,?,?,?,?,1,1)
+		VALUES (u_idx.nextval,#{uName},#{uNickName},#{uEmail},#{uPwd},1,1)
 	</insert>
 	
 	<select id="findByNick" parameterType="string" resultType="Customer">

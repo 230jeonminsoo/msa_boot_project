@@ -7,6 +7,8 @@ import java.sql.SQLException;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,11 +24,14 @@ public class CustomerDAOOracle implements CustomerDAOInterface {
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Override
 	public void add(Customer customer) throws AddException {
 		SqlSession session = null;
 		
 		try {
+			logger.info("DAO로 전달된 customer"+customer.getUName()+customer.getUNickName()+customer.getUEmail()+customer.getUPwd());
 			session = sqlSessionFactory.openSession(); //Connection : DB연결
 			session.insert("com.reco.customer.CustomerMapper.add",customer);
 		} catch (Exception e) {

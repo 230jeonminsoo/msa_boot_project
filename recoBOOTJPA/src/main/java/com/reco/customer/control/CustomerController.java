@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,8 @@ public class CustomerController {
 	
 	@Autowired
 	private CustomerService service;
+	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@GetMapping("/emaildupchk")
 	@ResponseBody
@@ -102,7 +106,14 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/signup")
-	public Map<String,Object> signup(Customer c) {
+	@ResponseBody
+	public Map<String,Object> signup(String name, String nickname, String email,String pwd) {
+		Customer c = new Customer();
+		c.setUName(name);
+		c.setUNickName(nickname);
+		c.setUEmail(email);
+		c.setUPwd(pwd);
+		logger.info("컨트롤러로 전달된 c"+c.getUName()+c.getUNickName()+c.getUEmail()+c.getUPwd());
 		String resultMsg = "";
 		int status = 0;
 		try {

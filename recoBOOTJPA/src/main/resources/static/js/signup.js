@@ -89,16 +89,21 @@ function signupSubmit($formObj){
 		let ajaxUrl = $(this).attr('action');
         let ajaxMethod = $(this).attr('method'); 
 		let sendData = $(this).serialize();
-		
+		console.log("전달될 가입내용"+sendData);
 		$.ajax({
             url:ajaxUrl,
             method:ajaxMethod,
             data:sendData,//{id:idValue, pwd:pwdValue, name:nameValue},
             success:function(responseObj){
-                alert(responseObj.msg);
+                alert(responseObj.resultMsg);
                 if(responseObj.status == 1){ //가입성공       
-						location.href="./html/login.html";	
-                }
+					ajaxurl = './html/login.html';
+				    ajaxmethod = "get";	
+				    $('section>div.articles0').empty();
+				    $('section>div.articles0').load(ajaxurl,function(responsetext,textstatus,jqxhr){
+				    });
+				    return false;
+                	}
             },error:function(xhr){
                 alert("응답실패:" + xhr.status);
             }           
