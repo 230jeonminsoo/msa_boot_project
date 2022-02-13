@@ -1,3 +1,6 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.reco.dto.PageDTO"%>
 <%@page import="java.util.Date"%>
 <%@page import="com.reco.board.vo.Board"%>
 <%@page import="java.util.List"%>
@@ -11,7 +14,13 @@
 
 <!--boardlist서블릿에서 결과값 setting해서 boardlistresult.jsp로 보낸값 받아옴-->
 <%
-List<Board> list = (List)request.getAttribute("list");
+//List<Board> list = (List)request.getAttribute("list");
+String msg = (String)request.getAttribute("msg");
+PageDTO<Board> pageDTO = (PageDTO)request.getAttribute("pageDTO");
+List<Board> list = new ArrayList<>();
+if(pageDTO != null){
+list = pageDTO.getList();
+}
 %>
 <!--END-->
 
@@ -91,16 +100,22 @@ $(function(){
 			<span>작성일</span>
 		</li>
 	</ul> 
-   
-<%for(Board b: list){
-  int brdIdx = b.getBrdIdx();
-  int brdType = b.getBrdType();
-  String brdTitle = b.getBrdTitle();
-  String BrdUNickName = b.getBrdUNickName();
-  int brdViews = b.getBrdViews();
-  int cmtCount = b.getCmtCount();
-  Date brdCreatAt = b.getBrdCreateAt();
-%>
+ 
+<%if (pageDTO  == null) {%>
+	<span class="noBrd"><%=msg %></span>
+<%} else{%>    
+	<%
+	for(Board b: list){
+	  int brdIdx = b.getBrdIdx();
+	  int brdType = b.getBrdType();
+	  String brdTitle = b.getBrdTitle();
+	  String BrdUNickName = b.getBrdUNickName();
+	  int brdViews = b.getBrdViews();
+	  int cmtCount = b.getCmtCount();
+	  Date brdCreatAt = b.getBrdCreateAt();
+	  SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+	  String brdCrt = sdf.format(brdCreatAt);
+	%>
 <div id="<%=brdIdx%>"> 
 	<ul>
 	    <li>
@@ -122,7 +137,7 @@ $(function(){
 </div>
 
 <%} %>
-
+<%} %>
 
 		<div class="board_write_button">
 			<label>
