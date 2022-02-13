@@ -1,23 +1,32 @@
-let nickValidate = false;
-let emailValidate = false;
-
+let nickValidate = 0;
+let emailValidate = 0;
 
 //닉네임 중복확인
 function nickDupchk($nicknameObj, $submitBtObj){
-	$nicknameObj.focusout(function(){
-		
+	$nicknameObj.focusout(function(){		
 		let ajaxUrl = "./nickdupchk";
 		let ajaxMethod = 'get'; 
 		let nicknameValue =  $nicknameObj.val().trim();
+		console.log(nicknameValue);
 		$.ajax({
 			url: ajaxUrl,
 			method: ajaxMethod,
 			data: {nickname:nicknameValue},
 			success:function(responseObj){
 				if(responseObj.status == 0){
-                    alert('이미 사용중인 닉네임입니다'); 
+					nickValidate = 0;
+					if(nickValidate + emailValidate == 1){
+						$submitBtObj.css('display','none');
+					}
+                    alert('이미 사용중인 닉네임입니다'); 				
+					console.log("닉넴중복시"+nickValidate+emailValidate);
                 }else{
-					nickValidate = true;
+					nickValidate = 1;
+					//이메일, 닉네임 중복아닐시 가입 버튼 출력
+					if(nickValidate + emailValidate == 2){
+						$submitBtObj.css('display','block');
+					}
+					console.log(nickValidate+emailValidate);
 				}
 			},
 		});
@@ -28,33 +37,36 @@ function nickDupchk($nicknameObj, $submitBtObj){
 //이메일 중복확인
 function emailDupchk($emailObj, $submitBtObj){
 	$emailObj.focusout(function(){
-
 		let ajaxUrl = "./emaildupchk";
 		let ajaxMethod = 'get'; 
 		let emailValue =  $emailObj.val().trim();
 		var e_RegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-		
-
+		console.log(emailValue);
 		$.ajax({
 			url: ajaxUrl,
 			method: ajaxMethod,
 			data: {email:emailValue},
 			success:function(responseObj){
 				if(responseObj.status == 0){
-                    alert('이미 사용중인 이메일입니다');				
+					emailValidate = 0;
+					if(nickValidate + emailValidate == 1){
+						$submitBtObj.css('display','none');
+					}
+                    alert('이미 사용중인 이메일입니다');		
 				}else{
-					emailValidate = true;
-					if(nickValidate ==true && emailValidate == true){
-					$submitBtObj.css('display','block');
-				
-				}
-
+					emailValidate = 1;
+					//이메일, 닉네임 중복아닐시 가입 버튼 출력
+					if(nickValidate + emailValidate == 2){
+						$submitBtObj.css('display','block');
+					}
+					console.log(nickValidate+emailValidate);
 				}
 			}
 		});
 	});	
 	return false;
 }
+
 
 
 //가입버튼 클릭되엇을때

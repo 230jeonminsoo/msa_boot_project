@@ -83,6 +83,7 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/nickdupchk")
+	@ResponseBody
 	public Map<String, Object> nickdupchk(String nickname){
 		String resultMsg = "";	
 		int status = 0;
