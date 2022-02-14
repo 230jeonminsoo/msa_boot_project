@@ -58,12 +58,12 @@ public class BoardController {
 	@PostMapping("brdadd")
 	public String boardAdd( @RequestPart (required = false) List<MultipartFile> letterFiles
 							,@RequestPart (required = false) MultipartFile imageFile
-							,int intBrdType,String brdTitle,String brdContent,String brdAttachment,HttpSession session, Model model) {
+							,int brdType,String brdTitle,String brdContent,String brdAttachment,HttpSession session, Model model) {
 		Customer c = (Customer)session.getAttribute("loginInfo");
 		
 		String brdUNickName = c.getUNickName();
 		Board b = new Board();
-		b.setBrdIdx(intBrdType);
+		b.setBrdIdx(brdType);
 		b.setBrdTitle(brdTitle);
 		b.setBrdContent(brdContent);
 		b.setBrdAttachment(brdAttachment);
@@ -74,7 +74,7 @@ public class BoardController {
 			model.addAttribute("b", board);
 			
 			//파일을 저장할 폴더가 없다면 만들기. 있다면 만들지 않음
-			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\boardimages";
+			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
 			if ( ! new File(saveDirectory).exists()) {
 				logger.info("업로드 실제경로생성");
 				new File(saveDirectory).mkdirs();
@@ -85,12 +85,12 @@ public class BoardController {
 			
 			//이미지파일 저장
 			File thumbnailFile = null;
-			if(imageFileSize != 0) {
+			if(imageFileSize > 0) {
 				String imageFileName = imageFile.getOriginalFilename(); //업로드할 이미지 파일의 이름가져옴
 				logger.info("이미지파일 이름:" + imageFileName +" 이미지파일 사이즈 " + imageFile.getSize());
 				
 				//업로드할  이미지 파일의 이름을 새로생성
-				String fileName ="reco_notice_"+wroteBoardNo + "_image_" + UUID.randomUUID() + "_" + imageFileName;
+				String fileName ="reco_board_"+wroteBoardNo + "_image_" + UUID.randomUUID() + "_" + imageFileName;
 				//이미지파일 생성
 				File file = new File(saveDirectory, fileName);
 				
@@ -164,9 +164,9 @@ public class BoardController {
 			try {
 				Board b = service.findBrdByIdx(brdIdx);
 				model.addAttribute("b", b);
-				String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\boardimages";
+				String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
 				File dir = new File(saveDirectory);
-				
+				if(b.getBrdAttachment() !=null) {
 				//첨부파일 저장소에서 letters이름 가져와서 returnMap에 넣기
 				String[] letterFileNames = dir.list(new FilenameFilter() {
 					
@@ -178,16 +178,18 @@ public class BoardController {
 				if(letterFileNames.length>0) {
 					model.addAttribute("letters", letterFileNames);
 				}
+			}
 				
 				//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
-				String[] imageFiles = dir.list(new FilenameFilter() {		
+				String[] imageFiles = dir.list(new FilenameFilter() {	
+					
 					@Override
 					public boolean accept(File dir, String name) {
 						return name.contains("reco_board_"+brdIdx+"_image_");
 					}
 				});
 				
-				if(imageFiles.length > 0) {
+				if(imageFiles != null) {
 					model.addAttribute("image", imageFiles[0]);
 				}
 				return "boarddetailresult.jsp";
@@ -328,7 +330,7 @@ public class BoardController {
 		public ResponseEntity<Resource>  download(String fileName) throws UnsupportedEncodingException {
 			logger.info("첨부파일 다운로드");
 			//파일 경로생성
-			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\boardimages";
+			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
 			
 			//HttpHeaders : 요청/응답헤더용 API
 			HttpHeaders headers = new HttpHeaders();	
@@ -354,7 +356,7 @@ public class BoardController {
 		
 		@GetMapping("/downloadimage") 
 		 public ResponseEntity<?> downloadImage(String imageFileName) throws UnsupportedEncodingException{
-			 String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\boardimages";
+			 String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
 			 File thumbnailFile = new File(saveDirectory,imageFileName);
 			 HttpHeaders responseHeaders = new HttpHeaders();
 			 try {

@@ -117,7 +117,7 @@ $(function(){
 	  SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 	  String brdCrt = sdf.format(brdCreatAt);
 	%>
-<div id="<%=brdIdx%>"> 
+<div class="boardlist" id="<%=brdIdx%>"> 
 	<ul>
 	    <li>
 		    <span><%=brdIdx%></span>

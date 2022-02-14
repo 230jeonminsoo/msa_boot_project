@@ -26,11 +26,35 @@ String brdContent = b.getBrdContent();
 String brdAttachment = b.getBrdAttachment();
 List<Comment> comments = b.getComments();
 %> 
-
+<%String image = (String)request.getAttribute("image"); %>
+<%String letter = (String)request.getAttribute("letter"); %>    
 
 <script>
 $(function(){
 	let $formObj = $('fieldset>form');
+	
+	//이미지 다운로드후 보여주기
+	<%if(image != null){%>
+	let $img = $("div.brdDetail>ul.brdDetail>li>div.image>img");
+	$.ajax({
+		url: "./boarddownloadimage",
+		method:'get',
+		data:"imageFileName="+"<%=image%>",
+		
+		cache:false, //이미지 다운로드용 설정
+        xhrFields:{  //이미지 다운로드용 설정
+            responseType: 'blob'
+        },
+		success:function(responseData){
+			let url = URL.createObjectURL(responseData);
+			$img.attr('src', url); 														
+		},
+		error:function(jqXHR, textStatus){
+			alert("에러:" + jqXHR.status);
+		}
+	});
+<%}%>
+
 	//게시글 수정버튼 클릭시
 		boardModifyClick();
 	//게시글 삭제버튼 클릭시
@@ -151,7 +175,7 @@ String uNickName = c.getUNickName();
 		%>
 		
 <%} else {  %>
-<script>location.href="index.jsp";</script>
+<script>location.href="./";</script>
 <%} %>
 
 	</div>		
@@ -260,10 +284,11 @@ String uNickName = c.getUNickName();
 	         	<%
 	         	}
 	         	%>
-			<%} else{%>
+	         	<%} %>
+			<%-- <%} else{%>
 					<span>댓글이 없습니다.</span>
 				
-			<%} %>
+			<%} %> --%>
                   	
 </div>
     <!--댓글 끝--> 	
