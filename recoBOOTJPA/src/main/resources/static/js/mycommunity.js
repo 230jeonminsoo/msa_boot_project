@@ -31,31 +31,34 @@ function myNoticerm(){
 	let $myNoticermObj = $('button.myNoticerm');
 	$myNoticermObj.click(function(){
 		// 선택된 목록 가져오기
-	  	const query = 'input[name="ntcIdx"]:checked';
+		const query = 'input[name="ntcIdx"]:checked';
+		console.log(query);	  	
 	  	const selectedEls = 
 	      	document.querySelectorAll(query);
 	  
 	  	// 선택된 목록에서 value 찾기
 	  	let data = '';
-	  	selectedEls.forEach((el) => {
-	    data += 'ntcIdx'+'='+el.value +'&';
+	  	selectedEls.forEach((el,index) => {
+	    data += 'ntcIdx'+index+'='+el.value+'&';
 		});
 		console.log(data);
-		/*$.ajax({
-			url: './myntcremove',
-			method: 'get',
-			data: data,
-			success: function(responseData){
-				    let $articlesObj = $('section>div.articles');
-	                $articlesObj.empty();
-	                $articlesObj.html(responseData);
-			},
-			error: function(xhr){
-				alert(xhr.status);
+			if(data != ''){
+				$.ajax({
+					url: './myntcremove',
+					method: 'get',
+					data: data,
+					success: function(responseData){
+						    let $articlesObj = $('section>div.articles');
+			                $articlesObj.empty();
+			                $articlesObj.html(responseData);
+					},
+					error: function(xhr){
+						alert(xhr.status);
+					}
+				});
 			}
-		});
-		return false;	*/
-	});
+			return false;					
+		});	
 }
 
 

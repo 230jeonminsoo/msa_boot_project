@@ -277,15 +277,23 @@ public class NoticeController {
 		}
 	}
 	
-	//마이페이에서 공지사항을 삭제하는 컨트롤러
+	//마이페이지에서 공지사항을 삭제하는 컨트롤러
 	@GetMapping("myntcremove")
-	public String noticeRemove(int ntcIdx, int ntcIdx1, int ntcIdx2, int ntcIdx3, int ntcIdx4, Model model) {
-		try {
-				service.removeNtc(ntcIdx);
-				service.removeNtc(ntcIdx1);
-				service.removeNtc(ntcIdx2);
-				service.removeNtc(ntcIdx3);
-				service.removeNtc(ntcIdx4);
+	public String noticeRemove(int ntcIdx0, Optional<Integer> ntcIdx1, Optional<Integer> ntcIdx2, Optional<Integer> ntcIdx3, Optional<Integer> ntcIdx4, Model model) {
+		try {			
+				service.removeNtc(ntcIdx0);
+				if(ntcIdx1.isPresent()) {
+					service.removeNtc(ntcIdx1.get());
+				}
+				if(ntcIdx2.isPresent()) {
+					service.removeNtc(ntcIdx2.get());
+				}
+				if(ntcIdx3.isPresent()) {
+					service.removeNtc(ntcIdx3.get());
+				}
+				if(ntcIdx4.isPresent()) {
+					service.removeNtc(ntcIdx4.get());
+				}
 				PageDTO<Notice> pageDTO;
 				pageDTO = service.findNtcAll();
 				model.addAttribute("noticePageDTO", pageDTO);
@@ -293,7 +301,7 @@ public class NoticeController {
 		} catch (RemoveException | FindException e) {
 			System.out.println(e.getMessage());
 			model.addAttribute("msg", e.getMessage());
-			return "noticelistresult.jsp";
+			return "mycommunity.jsp";
 		}
 	}
 	
