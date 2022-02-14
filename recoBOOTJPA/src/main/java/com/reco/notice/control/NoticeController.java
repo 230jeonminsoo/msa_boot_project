@@ -265,17 +265,38 @@ public class NoticeController {
 	@GetMapping("ntcremove")
 	public String noticeRemove(int ntcIdx, Model model) {
 		try {
-			service.removeNtc(ntcIdx);
-			PageDTO<Notice> pageDTO;
-			pageDTO = service.findNtcAll();
-			model.addAttribute("pageDTO", pageDTO);
-			return "noticelistresult.jsp";
+				service.removeNtc(ntcIdx);
+				PageDTO<Notice> pageDTO;
+				pageDTO = service.findNtcAll();
+				model.addAttribute("pageDTO", pageDTO);
+				return "noticelistresult.jsp";
 		} catch (RemoveException | FindException e) {
 			System.out.println(e.getMessage());
 			model.addAttribute("msg", e.getMessage());
 			return "noticelistresult.jsp";
 		}
 	}
+	
+	//마이페이에서 공지사항을 삭제하는 컨트롤러
+	@GetMapping("myntcremove")
+	public String noticeRemove(int ntcIdx, int ntcIdx1, int ntcIdx2, int ntcIdx3, int ntcIdx4, Model model) {
+		try {
+				service.removeNtc(ntcIdx);
+				service.removeNtc(ntcIdx1);
+				service.removeNtc(ntcIdx2);
+				service.removeNtc(ntcIdx3);
+				service.removeNtc(ntcIdx4);
+				PageDTO<Notice> pageDTO;
+				pageDTO = service.findNtcAll();
+				model.addAttribute("noticePageDTO", pageDTO);
+				return "mycommunity.jsp";
+		} catch (RemoveException | FindException e) {
+			System.out.println(e.getMessage());
+			model.addAttribute("msg", e.getMessage());
+			return "noticelistresult.jsp";
+		}
+	}
+	
 	
 	//공지사항을 검색하는 컨트롤러
 	@GetMapping(value = {"ntcsearch/{word}/{f}","ntcsearch/{word}/{f}/{currentPage}"})

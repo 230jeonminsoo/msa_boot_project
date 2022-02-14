@@ -36,11 +36,25 @@ function myNoticerm(){
 	      	document.querySelectorAll(query);
 	  
 	  	// 선택된 목록에서 value 찾기
-	  	let result = '';
+	  	let data = '';
 	  	selectedEls.forEach((el) => {
-	    result += el.value + ' ';
+	    data += 'ntcIdx'+'='+el.value +'&';
 		});
-		console.log(result);
+		console.log(data);
+		/*$.ajax({
+			url: './myntcremove',
+			method: 'get',
+			data: data,
+			success: function(responseData){
+				    let $articlesObj = $('section>div.articles');
+	                $articlesObj.empty();
+	                $articlesObj.html(responseData);
+			},
+			error: function(xhr){
+				alert(xhr.status);
+			}
+		});
+		return false;	*/
 	});
 }
 
