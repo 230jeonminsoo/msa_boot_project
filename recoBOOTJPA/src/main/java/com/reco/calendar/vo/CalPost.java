@@ -32,18 +32,20 @@ public class CalPost {
 		this.calMemo = calMemo;
 		this.calMainImg = calMainImg;
 		this.calPostCreateAt = calPostCreateAt;
+		
 	}
 
 
-
-	public CalInfo getCalInfo() {
+	public CalInfo getCalinfo() {
 		return calinfo;
 	}
 
 
-	public void setCalInfo(CalInfo calinfo) {
+	public void setCalinfo(CalInfo calinfo) {
 		this.calinfo = calinfo;
 	}
+
+
 
 	public String getCalDate() {
 		return calDate;
