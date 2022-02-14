@@ -27,6 +27,8 @@ List<Comment> commentList = pageDTO.getList();  */
 $(function(){
 	//공지사항 글 클릭시 해당 글을 새탭으로 여는 함수
 	noticeDetail();
+	//내 공지사항 글 삭제
+	myNoticerm();
 });
 </script>    
 
@@ -46,6 +48,8 @@ $(function(){
 		<hr>
 			<ul class="ntc_top">
 			<li>
+			 	<input type='checkbox'
+	    	    style='width:25px; height:25px'/>	
 				<span>글번호</span>
 				<span>제목</span>
 				<span>닉네임</span>
@@ -68,8 +72,13 @@ $(function(){
 			  String ntcCrt = sdf.format(ntcCreatAt);
 			%>
 			<div class ="noticelist" id="<%=ntcIdx%>"> 
-				 <ul>
-				    <li>
+				 <ul>	
+				    <li>			    
+			 		<input type='checkbox'
+				    	   style='width:25px; height:25px'	
+					       name='ntcIdx' 
+					       value=<%=ntcIdx%> />	
+					       
 					 <span><%=ntcIdx%></span>
 					 <span><%=ntcTitle%><%if(ntcAttachment != null){ %><img src="./images/클립.png"><%} %></span>
 					 <span><%=ntcuNickName%></span>
@@ -78,10 +87,9 @@ $(function(){
 					 </li> 
 				  </ul>
 			</div>
-			
 			<%} %><!-- for문 끝 -->
 		<%} %><!-- if (noticePageDTO  == null) 끝 -->
-	
+	<button class="myNoticerm">글 삭제</button>
 		<%if(noticePageDTO != null) {%>
 			<div class="pagegroup">
 				 <%  
