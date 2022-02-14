@@ -75,6 +75,12 @@ public class Comment {
 	public void setCmtUNickName(String cmtUNickName) {
 		this.cmtUNickName = cmtUNickName;
 	}
+
+	@Override
+	public String toString() {
+		return "Comment [cmtIdx=" + cmtIdx + ", brdIdx=" + brdIdx + ", cmtContent=" + cmtContent + ", cmtParentIdx="
+				+ cmtParentIdx + ", cmtCreateAt=" + cmtCreateAt + ", cmtUNickName=" + cmtUNickName + "]";
+	}
 	
 	
 }

@@ -388,4 +388,42 @@ public class BoardController {
 				return "failresult.jsp";
 			}
 		}
+		
+		@GetMapping("cmtmodify")
+		public String commentModify(int brdIdx, int cmtIdx, String cmtContent, Model model) {
+			Comment comment = new Comment();
+			comment.setBrdIdx(brdIdx);
+			comment.setCmtIdx(cmtIdx);
+			comment.setCmtContent(cmtContent);
+			
+			try {
+				service.modifyCmt(comment);
+				Board b = service.findBrdByIdx(brdIdx);
+				model.addAttribute("b", b);
+				return "boarddetailresult.jsp";
+			} catch (ModifyException e) {
+				e.getStackTrace();
+				return "failresult.jsp";
+			} catch (FindException e) {
+				e.getStackTrace();
+				return "failresult.jsp";
+			}			
+		}
+		
+		
+		@GetMapping("cmtremove")
+		public String commentRemove(int brdIdx, int cmtIdx, Model model) {
+			try {
+				service.removeCmt(brdIdx, cmtIdx);
+				Board b= service.findBrdByIdx(brdIdx);
+				model.addAttribute("b", b);
+				return "boarddetailresult.jsp";
+			} catch (RemoveException e) {
+				e.getStackTrace();
+				return"failresult.jsp";
+			} catch (FindException e) {
+				e.getStackTrace();
+				return"failresult.jsp";
+			}
+		}
 }

@@ -179,12 +179,13 @@ public class BoardDAOOracle implements BoardDAOInterface {
 
 	
 	@Override
-	public Board findBrdByIdx(int intBrdIdx) throws FindException {
+	public Board findBrdByIdx(int brdIdx) throws FindException {
 		SqlSession session =null;
 		try {
 			session = sqlSessionFactory.openSession();
-			Board board = session.selectOne("com.reco.board.BoardMapper.findBrdByIdx",intBrdIdx);
-			plusViewCount(intBrdIdx);
+			Board board = session.selectOne("com.reco.board.BoardMapper.findBrdByIdx",brdIdx);
+//			System.out.println(board);
+			plusViewCount(brdIdx);
 			return board;
 		}catch (Exception e) {
 			throw new FindException(e.getMessage());

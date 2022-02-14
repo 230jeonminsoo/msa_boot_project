@@ -3,6 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.reco.board.BoardMapper">
+<resultMap id="boardResultMap" type="Board" autoMapping="true">
+	<id property="brdIdx" column="brd_idx"/>
+	<collection property="comments" ofType="Comment" autoMapping="true">
+	</collection>
+</resultMap>
 	
 	<select id="findCount" resultType="int">
 	select COUNT(*) from board
@@ -41,11 +46,11 @@
   where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
 	</select>
 	
-	<select id="findBrdByIdx" parameterType="int" resultType="Board">
+	<select id="findBrdByIdx" parameterType="int" resultMap="boardResultMap">
 		SELECT * FROM (SELECT c.brd_idx,cmt_idx, cmt_content, nvl(c.cmt_parentidx, 0) cmt_parentidx,  cmt_createat, cmt_unickname,
 		brd_type, brd_title, brd_content, brd_attachment, brd_createat, brd_thumbup, brd_unickname, brd_views
 		FROM comments c RIGHT JOIN  board b ON b.brd_Idx = c.brd_Idx
-		WHERE  b.brd_idx=#{intBrdIdx})
+		WHERE  b.brd_idx=#{brdIdx})
 		START WITH  cmt_parentidx = 0
 		CONNECT BY PRIOR cmt_idx = cmt_parentidx
 	</select>

@@ -133,9 +133,16 @@ public class Board {
 	public void setCmtCount(int cmtCount) {
 		this.cmtCount = cmtCount;
 	}
+	
 	private String name;
+	@Override
 	public String toString() {
-		return getClass().getSimpleName()+"[name="+name+"]";
+		return "Board [brdIdx=" + brdIdx + ", brdUNickName=" + brdUNickName + ", brdType=" + brdType + ", brdTitle="
+				+ brdTitle + ", brdContent=" + brdContent + ", brdAttachment=" + brdAttachment + ", brdViews="
+				+ brdViews + ", brdThumbUp=" + brdThumbUp + ", brdCreateAt=" + brdCreateAt + ", cmtCount=" + cmtCount
+				+ ", comments=" + comments + ", name=" + name + "]";
 	}
+	
+	
 
 }

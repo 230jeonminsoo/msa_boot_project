@@ -61,9 +61,9 @@ public class BoardService {
 	}
 	
 	
-	public Board findBrdByIdx(int intBrdIdx) throws FindException{
+	public Board findBrdByIdx(int brdIdx) throws FindException{
 		try {
-			Board b =dao.findBrdByIdx(intBrdIdx);	
+			Board b =dao.findBrdByIdx(brdIdx);	
 			return b;
 		} catch (FindException e) {
 			throw new FindException("해당글이 없습니다.");

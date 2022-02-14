@@ -1,3 +1,4 @@
+<%@page import="com.reco.customer.vo.Customer"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.reco.dto.PageDTO"%>
@@ -131,7 +132,7 @@ $(function(){
 		    <span><%=BrdUNickName%></span>
 		    <span><%=brdViews%></span>
 		    <span><%=cmtCount%></span>
-		     <span><%=brdCreatAt%></span>
+		     <span><%=brdCrt%></span>
 	    </li>
 	  </ul>
 </div>
@@ -139,12 +140,61 @@ $(function(){
 <%} %>
 <%} %>
 
-		<div class="board_write_button">
+<!-- 글쓰기버튼 시작 -->
+<%
+Customer c = (Customer) session.getAttribute("loginInfo"); 
+%>
+<%
+if (session.getAttribute("loginInfo") != null) { 
+%>
+<%
+int uAuthCode = c.getUAuthCode(); 
+%>
+<% 		if(uAuthCode == 1) {%>
+			
+	<div class="board_write_button" style= "visibility:hidden">
+		<label>
+			<img src="./images/pencil.png">글쓰기
+		</label>	
+	</div>
+
+	<%} else {%> <% uAuthCode = 0; %>
+		
+		<div class="board_write_button" style= "visibility:visible">
 			<label>
 				<img src="./images/pencil.png">글쓰기
 			</label>	
 		</div>
-	</div>
+		
+		<%
+		}
+		%>
+<%} else {  %>
+<script>location.href="./";</script>
+<%} %>
+		
+</div>
+
+<%if(pageDTO != null) {%>
+<div class="pagegroup">
+		 <%  
+		 String backContextPath = request.getContextPath();
+		 if(pageDTO.getStartPage() > 1){%>			
+		 	<span class="<%= backContextPath%><%=pageDTO.getUrl()%>/<%=pageDTO.getStartPage()-1%> active">prev</span>
+		 <%} %>
+ 
+ 		<%	for(int i = pageDTO.getStartPage() ; i<=pageDTO.getEndPage() ; i++){ %>
+			<span class="<%= backContextPath%><%=pageDTO.getUrl() %>/<%=i%> <%if(i != pageDTO.getCurrentPage()){ %>active<%}%>"><%=i%></span>
+		<%}%>
+		
+		<% 
+		if(pageDTO.getEndPage() < pageDTO.getTotalPage()){%>
+			<span class="<%= backContextPath%><%=pageDTO.getUrl()%>/<%=pageDTO.getEndPage()+1%> active">next</span>
+		<%} %>
+</div>
+<%} %>
+
+
 </div>
 <!--  end  --> 
 

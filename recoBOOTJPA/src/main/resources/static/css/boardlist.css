@@ -166,3 +166,23 @@ a{
   background-color: grey;
 }
 
+div.pagegroup{
+	margin:15px;
+	text-align: center;
+	height:50px;
+}
+
+div.pagegroup>span{
+	border: 1px solid black;
+	cursor: pointer;
+	margin:5px;
+	padding:5px;
+}
+
+div.pagegroup>span:hover {
+	font-size:150%;
+}
+
+div.pagegroup>span.active{
+	text-decoration: underline;
+}
