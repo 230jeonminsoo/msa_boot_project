@@ -147,6 +147,20 @@ public class NoticeController {
 				}//end if(letterFileSize > 0) 
 			}//end if(letterFiles != null)	
 			logger.info("컨트롤러 addntc 2"+notice.getNtcIdx() + notice.getNtcTitle()+notice.getNtcContent());
+			
+			File dir = new File(saveDirectory);
+			//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
+			String[] imageFiles = dir.list(new FilenameFilter() {		
+				@Override
+				public boolean accept(File dir, String name) {
+					return name.contains("reco_notice_"+notice.getNtcIdx()+"_image_");
+				}
+			});
+			
+			if(imageFiles.length > 0) {
+				model.addAttribute("image", imageFiles[0]);
+			}
+			
 			return "noticedetailresult.jsp";
 		} catch(AddException e){
 			e.getStackTrace();
