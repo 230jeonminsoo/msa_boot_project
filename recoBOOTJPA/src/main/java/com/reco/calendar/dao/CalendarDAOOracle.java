@@ -17,6 +17,7 @@ import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
 import com.reco.exception.RemoveException;
+import com.reco.notice.vo.Notice;
 
 @Repository
 public class CalendarDAOOracle implements CalendarDAOInterface {
@@ -181,25 +182,33 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 	@Override
 	public CalPost addCalPost(CalPost calpost) throws AddException{
 		SqlSession session = null;
-			
+		
 		try {
 			session = sqlSessionFactory.openSession();
-			int uIdx = calpost.getCalInfo().getCustomer().getUIdx();
-			int calIdx = calpost.getCalInfo().getCalIdx();
-			CalPost cp = session.selectOne("com.reco.calendar.CalendarMapper.calIdxByUIdx",calpost);
-			if(cp == null) {
-				throw new AddException("고객번호에 해당하는 cal_info행이 없습니다");
-			}
-			System.out.println("addcalpost함수 : uIdx=" + uIdx + ", calIdx =" + calIdx);
+			int uIdx = calpost.getCalinfo().getCustomer().getUIdx();
+			int calIdx = calpost.getCalinfo().getCalIdx();	
 			
-		    String calDate = calpost.getCalDate();
-		    String calMainImg = calpost.getCalMainImg();
-		    session.insert("com.reco.calendar.CalendarMapper.addCalPost",calpost);
-
-		
-		}catch(Exception e) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("uIdx", uIdx);
+			map.put("calIdx", calIdx);
+			map.put("calMainImg", calpost.getCalMainImg());
+			map.put("calDate", calpost.getCalDate());
+			map.put("calMemo", calpost.getCalMemo());
+			
+			
+			session.insert("com.reco.calendar.CalendarMapper.addCalPost", map);
+			session.commit();
+			
+			
+			System.out.println("addcalpost함수 : uIdx=" + uIdx + ", calIdx =" + calIdx);
+//			
+//		    String calDate = calpost.getCalDate();
+//		    String calMainImg = calpost.getCalMainImg();
+//		    System.out.println("addcalpost함수 : calDate=" + calDate + ", calMainImg =" + calMainImg);
+		    
+		} catch (Exception e) {
 			e.printStackTrace();
-			//throw new AddException(e.getMessage());
+			throw new AddException(e.getMessage());
 		}finally {
 			if(session != null) {
 				session.close();
@@ -209,6 +218,51 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 	}
 
 
+	
+//	@Override
+//	public CalPost addCalPost(CalPost calpost) throws AddException{
+//		Connection con =null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		
+//		//int uIdx = calinfo.getCustomer().getUIdx();
+//		//int calIdx = calinfo.getCalIdx();
+//		
+//		try {
+//			con = MyConnection.getConnection();
+//			con.setAutoCommit(false);
+//			int uIdx = calpost.getCalinfo().getCustomer().getUIdx();
+//			int calIdx = calpost.getCalinfo().getCalIdx();
+//			String selectCalIdxByUIdx = "SELECT NVL(MAX(cal_Idx)-1, 0) \r\n"
+//					+ "FROM cal_info \r\n"
+//					+ "WHERE u_Idx = ?";
+//			pstmt = con.prepareStatement(selectCalIdxByUIdx);
+//			pstmt.setInt(1, uIdx);
+//			rs = pstmt.executeQuery();
+//			if(rs.next()) {
+//				calIdx  = rs.getInt(1);
+//				calpost.getCalinfo().setCalIdx(calIdx); 
+//			}else {
+//				throw new AddException("고객번호에 해당하는 cal_info행이 없습니다");
+//			}
+//			System.out.println("addcalpost함수 : uIdx=" + uIdx + ", calIdx =" + calIdx);
+//			
+//			
+//		String calDate = calpost.getCalDate();
+//		String calMainImg = calpost.getCalMainImg();
+//		String insertSQL = "INSERT INTO cal_post_" + uIdx  + "_" + calIdx + "(cal_Main_Img,cal_Date,cal_Memo) values (?,?,?)";
+//		pstmt = con.prepareStatement(insertSQL); // 동적쿼리
+//		pstmt.setString(1,calpost.getCalMainImg()); //년,월,일 만 불러옴
+//		pstmt.setString(2,calpost.getCalDate());
+//		pstmt.setString(3,calpost.getCalMemo());
+//		pstmt.executeUpdate();
+//	} catch (SQLException e) {
+//		throw new AddException(e.getMessage());
+//	}finally {
+//		MyConnection.close(pstmt, con);
+//	}
+//		return calpost;
+//	}
 
 
 
@@ -221,13 +275,19 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 		System.out.println("findCalsByDate함수 : uIdx=" + uIdx + ", calIdx =" + calIdx);
 
 		try {
+//			logger.info("findCalsByDate함수 : uIdx=" + uIdx + ", calIdx =" + calIdx);
 			session = sqlSessionFactory.openSession();
+			
 			Map<String, Object> map = new HashMap<>(); // Map<Key형, Value형> mapName = new HashMap<>();
-			map.put("calInfo", calinfo); // calinfo map에 넣는다
-			map.put("calDate",  calDate); 
-			List<CalPost> list = session.selectList("com.reco.calendar.CalendarMapper.findCalsByDate");
+//			map.put("calInfo", calinfo); // calinfo map에 넣는다
+			map.put("calDate",  calDate);
+			map.put("calIdx", calIdx);
+			map.put("uIdx", uIdx);
+			System.out.println("null값 확인: uIdx=" + uIdx + ", calIdx =" + calIdx);
+			List<CalPost> list = session.selectList("com.reco.calendar.CalendarMapper.findCalsByDate",map);
+			
 			if(list.size() == 0) {
-				throw new FindException("해당하는 게시글이 없습니다");
+				throw new FindException("캘린더 게시글이 없습니다");
 			}
 			return list;
 		}catch(Exception e) {
@@ -241,7 +301,50 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 
 	}
 
-
+//	@Override
+//	public List<CalPost> findCalsByDate (CalInfo calinfo, String calDate) throws FindException{
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//
+//		int uIdx = calinfo.getCustomer().getUIdx();
+//		int calIdx = calinfo.getCalIdx();
+//		System.out.println("findCalsByDate함수 : uIdx=" + uIdx + ", calIdx =" + calIdx);
+//
+//		try {
+//			con = MyConnection.getConnection();
+//			String selectSQL = "select to_char(cal_Date), cal_Main_Img\r\n"
+//					+ "from Cal_Post_" + uIdx + "_" + calIdx + "\r\n"
+//					+ "where to_char(cal_Date,'yyyy/mm') = ? \r\n"
+//					+ "order by to_char(cal_Date,'yyyy/mm') asc";
+//			pstmt = con.prepareStatement(selectSQL);
+//			pstmt.setString(1,calDate);
+//
+//			rs = pstmt.executeQuery();
+//			List<CalPost> list = new ArrayList<>();
+//			//결과처리
+//			while(rs.next()) {
+//				String calDate1= rs.getString("to_char(cal_Date)");
+//				String calMainImg = rs.getString("cal_Main_Img");
+//
+//				CalPost calpost = new CalPost();
+//				calpost.setCalDate(calDate1);
+//				calpost.setCalMainImg(calMainImg);
+//				calpost.setCalinfo(calinfo);
+//				list.add(calpost);
+//			}
+//		
+//			/*
+//			 * if(list.size() == 0) { throw new FindException("캘린더에 해당하는 글이 없습니다"); }
+//			 */
+//			return list;
+//		}catch (SQLException e) {
+//			e.printStackTrace();
+//			throw new FindException(e.getMessage());
+//		}finally {
+//			MyConnection.close(rs, pstmt, con);
+//		}
+//	}
 
 
 

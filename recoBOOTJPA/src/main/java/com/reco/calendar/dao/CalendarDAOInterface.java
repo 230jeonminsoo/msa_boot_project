@@ -39,15 +39,12 @@ public interface CalendarDAOInterface {
 	 * 고객의 캘린더 글을 추가한다
 	 * @param calpost
 	 * @throws AddException
+	 * @throws FindException 
+	 * @throws AddException 
 	 */
 	
 	
 //	public void removeCal(CalInfo calinfo) throws RemoveException;
-	
-	
-	
-	
-	
 	
 	
 	public CalPost addCalPost(CalPost calpost) throws AddException;
@@ -65,6 +62,13 @@ public interface CalendarDAOInterface {
 	
 	/**
 	 * 고객의 캘린더글을 수정한다
+	 * @param calpost
+	 * @throws ModifyException
+	 */
+	
+	
+	/**
+	 * 
 	 * @param calpost
 	 * @throws ModifyException
 	 */

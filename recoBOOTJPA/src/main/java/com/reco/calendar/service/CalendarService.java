@@ -12,6 +12,7 @@ import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
 import com.reco.exception.RemoveException;
+import com.reco.notice.vo.Notice;
 
 @Service
 public class CalendarService {
@@ -45,10 +46,10 @@ public class CalendarService {
 //		dao.modifyCal(calinfo);
 //	}
 	
-	public CalPost addCalPost(CalPost calpost) throws AddException{
-		dao.addCalPost(calpost);
-		return calpost;
+	public CalPost addCalPost(CalPost calpost) throws AddException {
+			return dao.addCalPost(calpost);
 	}
+	
 	
 	public List<CalPost> findCalsByDate(CalInfo calinfo , String calDate) throws FindException{
 		return dao.findCalsByDate(calinfo , calDate);

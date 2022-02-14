@@ -1,4 +1,5 @@
 <%@page import="com.reco.calendar.vo.CalPost"%>
+<%@page import="java.io.File"%>
 <%@page import="java.util.List"%>
 <%@page import="com.reco.customer.vo.Customer"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
@@ -16,20 +17,32 @@
 </script>
 <%
 Customer c = (Customer)session.getAttribute("loginInfo"); 
+List<CalPost> list = (List)request.getAttribute("list");
+int uIdx = c.getUIdx();
+%>
+
+<%-- <%
+
+	String saveDirectory = "d:\\files";
+	File dir = new File(saveDirectory);
+	File[] files = dir.listFiles(); 
+	
 	List<CalPost> list = (List)request.getAttribute("list");
 	int uIdx = c.getUIdx();
-%>
-<section>
+	
+	for(CalPost cp : list){
+		int calIdx = cp.getCalinfo().getCalIdx();
+		String mainImgFileName = "cal_post_" + uIdx +"_" + calIdx + "." + cp.getCalMainImg();
+%> 	 --%>
+
 <%-- <%	for(CalPost cp : list){
 	/* int calIdx = cp.getCalInfo().getCalIdx();
 	String calDate = cp.getCalDate();  */
-	String calCategory = cp.getCalInfo().getCalCategory();
+	String calCategory = cp.getCalinfo().getCalCategory();
 	/* String calMainImg = cp.getCalMainImg(); */
 %>
 <div class="calCategory"> 
-	<ul>
-		<span><%= calCategory %></span>
-	</ul>
+		<p><%= calCategory %></p>
 </div>
 
 <% } %> --%>
@@ -37,6 +50,9 @@ Customer c = (Customer)session.getAttribute("loginInfo");
 <div class="container">
       <div class="body">
         <div class="calendar">
+        	  <form>
+			  	<input type='month' id='currnetMonth' style="display:none" >
+			  </form>
           <div class="header">
               <div class="year-month" style="display: block;" ></div>          
               <div class="nav">
@@ -47,11 +63,12 @@ Customer c = (Customer)session.getAttribute("loginInfo");
           </div>
 
 	<script>
+			//
             var dateChange = () => {
             var date_input = document.getElementById("date");
             //var text_input = document.getElementById("text");
             text_input.value = date_input.value;
-            };
+            }; 
      </script>
         <!-- <input type="date" id="date" onchange="dateChange();" /> -->
         <!-- <input type="text" id="text" /> -->
@@ -71,8 +88,8 @@ Customer c = (Customer)session.getAttribute("loginInfo");
       </div>
     </div>  
   </div>
-</section>	  
-
+<%-- 
+<%} %> --%>
 
     
  

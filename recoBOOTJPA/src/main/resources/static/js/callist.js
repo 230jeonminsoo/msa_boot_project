@@ -7,7 +7,8 @@ function calThumbnailClick(){
 		$calThumbnailObj.click(function(){
 			let $dateValue = $('section>div.articles>div.nowdate').html();
 			let calIdx = $(this).parents('.calIdx').attr('id');
-	        console.log("calIdx=" + calIdx);
+			let tableName = $(this).attr('id');
+	        console.log("tableName=" + tableName);
 			let ajaxUrl = "./calpostlist";	 
 			    
 			$.ajax({
