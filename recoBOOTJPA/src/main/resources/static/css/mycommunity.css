@@ -39,9 +39,6 @@ div.ntc_list>ul.ntc_top>li>span{
 	font-weight: bold;
 }
 
-div.ntc_list>ul.ntc_top>li>input{
-	visibility: hidden;
-}
 
 /*공지사항 각 리스트*/
 div.ntc_list>div>ul{

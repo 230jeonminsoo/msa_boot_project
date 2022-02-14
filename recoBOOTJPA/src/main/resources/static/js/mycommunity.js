@@ -27,6 +27,18 @@ function noticeDetail(){
 }
 
 
+/**전체체크 기능 */
+function selectAll(selectAll)  {
+  const checkboxes 
+       = document.getElementsByName('ntcIdx');
+  
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = selectAll.checked;
+  })
+}
+
+
+/**체크된 공지사항 글 삭제 */
 function myNoticerm(){
 	let $myNoticermObj = $('button.myNoticerm');
 	$myNoticermObj.click(function(){
@@ -57,7 +69,7 @@ function myNoticerm(){
 					}
 				});
 			}
-			return false;					
+			return false;			
 		});	
 }
 

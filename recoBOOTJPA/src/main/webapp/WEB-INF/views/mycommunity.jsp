@@ -49,7 +49,10 @@ $(function(){
 			<ul class="ntc_top">
 			<li>
 			 	<input type='checkbox'
-	    	    style='width:25px; height:25px'/>	
+	    	    style='width:25px; height:25px'
+	    	    name='selectAll'
+	    	    onclick='selectAll(this)'
+	    	    />	
 				<span>글번호</span>
 				<span>제목</span>
 				<span>닉네임</span>
@@ -88,8 +91,9 @@ $(function(){
 				  </ul>
 			</div>
 			<%} %><!-- for문 끝 -->
+			<button class="myNoticerm">글 삭제</button>
 		<%} %><!-- if (noticePageDTO  == null) 끝 -->
-	<button class="myNoticerm">글 삭제</button>
+	
 		<%if(noticePageDTO != null) {%>
 			<div class="pagegroup">
 				 <%  
