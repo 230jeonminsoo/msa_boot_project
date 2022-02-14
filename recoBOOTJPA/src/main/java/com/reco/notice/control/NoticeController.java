@@ -415,6 +415,20 @@ public class NoticeController {
 				}//end if(letterFileSize > 0) 
 			}//end if(letterFiles != null)	
 			
+			File dir = new File(saveDirectory);
+			if(n.getNtcAttachment() !=null) {
+				//첨부파일 저장소에서 letters이름 가져와서 returnMap에 넣기
+				String[] letterFileNames = dir.list(new FilenameFilter() {
+					
+					@Override
+					public boolean accept(File dir, String name) {
+						return name.contains("reco_notice_"+notice.getNtcIdx()+"_letter_");//n.getNtcAttachment());
+					}
+				});
+				if(letterFileNames.length>0) {
+					model.addAttribute("letter", letterFileNames[0]);
+				}
+			}	
 			return "noticedetailresult.jsp";
 		} catch (ModifyException e) {
 			e.printStackTrace();
