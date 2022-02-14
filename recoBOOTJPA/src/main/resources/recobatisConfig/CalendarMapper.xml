@@ -30,23 +30,23 @@
 	</select>
 	
 	   
-   <select id = "findCalsByDate" parameterType = "string" resultType = "CalPost">
-   SELECT to_char(cal_Date) cal_Main_Img 
-   FROM Cal_Post_${uIdx}_${calIdx}
-   WHERE to_char(cal_Date,'YYYY/MM') = #{calDate} 
-   ORDER BY to_char(cal_Date,'YYYY/MM') ASC;
+   <select id = "findCalsByDate" parameterType = "map" resultType = "CalPost">
+	   SELECT to_char(cal_Date), cal_Main_Img 
+	   FROM cal_post_${uIdx}_${calIdx}
+	   WHERE to_char(cal_Date,'YYYY/MM') = #{calDate} 
+	   ORDER BY to_char(cal_Date,'YYYY/MM')  asc
    </select>
    
-   <insert id="addCalPost"  parameterType="CalPost">
+   
+   <insert id="addCalPost"  parameterType="map">
 		<selectKey resultType="int" keyProperty="calIdx" order="BEFORE">
 			SELECT NVL(MAX(cal_Idx), 0) 
 			FROM cal_info
-			WHERE u_Idx = #{uIdx};
+			WHERE u_Idx = ${uIdx}
 		</selectKey>
-
-		 INSERT INTO cal_post_${uIdx}_${calIdx} (cal_Main_Img,cal_Date,cal_Memo)
-		 values (#{calMainImg}, #{calDate}, #{calMemo})
-		  
+		
+		 INSERT INTO cal_post_${uIdx}_${calIdx}(cal_Main_Img, cal_Date, cal_Memo) 
+		 VALUES (#{calMainImg}, #{calDate}, #{calMemo})
 	</insert>
    
    
