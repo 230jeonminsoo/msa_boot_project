@@ -4,7 +4,8 @@ let date = new Date();
 const renderCalendar = () => {    
     const viewYear = date.getFullYear();
     const viewMonth = date.getMonth();
-
+	
+	document.getElementById('currnetMonth').value= new Date().toISOString().slice(0, 7);
     document.querySelector('div.body>div.calendar>div.header>.year-month').textContent = `${viewYear}년 ${viewMonth + 1}월`;
 
     // 지난 달 마지막 Date, 이번 달 마지막 Date
@@ -83,8 +84,13 @@ const goToday = () => {
 
 
 function dateClick(){
-	$('div.body>div.calendar>div.main>a.dates').click(function(){
+	let $dateObj = $('div.body>div.calendar>div.main>a.dates');
+	console.log($dateObj);
+	$dateObj.click(function(){
+		let menuHref = $(this).attr('href'); 
 		let ajaxUrl = './html/calpostwrite.html'; 
+		
+		/*let ajaxUrl = './calpostwrite.jsp'; */
 			         
 				$.ajax({
 	            url: ajaxUrl,
