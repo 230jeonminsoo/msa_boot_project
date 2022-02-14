@@ -1,11 +1,11 @@
-
+/*calpostwrite.jsp*/
 /*-calpostwrite화면에서 작성완료 클릭했을때-*/
 function addCalPostClick(){
 	let $addCalPostObj = $('form>table>tr>td>button[id=1]');
 	 
 		$addCalPostObj.click(function(){
 	        //let menuHref = $(this).attr('id="1"'); 
-	        let ajaxUrl = "CalPostAdd"; 
+	        let ajaxUrl = './calpostAdd'; 
 	        
 			$.ajax({
 	            url: ajaxUrl,
@@ -27,18 +27,18 @@ function calPostViewClick(){
 	 
 		$calPostViewObj.click(function(){
 	       //let menuHref = $(this).attr('id="2"'); 
-	        let ajaxUrl = "calpostlistresult.jsp"; 
+	        let ajaxUrl = "./calpostlist";	
 	        
-				$.ajax({
+			$.ajax({
 	            url: ajaxUrl,
 	            method : 'get',
 	            success:function(responseData){
 	                let $articlesObj = $('section>div.articles');
 	                $articlesObj.empty();
 	                $articlesObj.html(responseData);
-			            }
-		        }); 
-		        return false;
+		        }
+	        }); 
+	        return false;
 				
 		});
 	}
