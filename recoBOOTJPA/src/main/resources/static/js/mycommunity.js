@@ -1,14 +1,15 @@
+
+
 /**
  *  공지사항 목록에서 글 하나 클릭되었을때 
  */
 function noticeDetail(){
-    let $noticeObj = $('div.noticelist');
+    let $noticeObj = $('div.noticelist>ul>li>span');
 
     $noticeObj.click(function(){
         let $ntcIdx = $(this).attr('id');	
         let ajaxUrl = './ntcdetail';
-		window.open("./");
-		return false;
+		window.open(window.location.href);
         $.ajax({
             url: ajaxUrl,
             method : 'get',
@@ -18,15 +19,30 @@ function noticeDetail(){
                 let $articlesObj = $('section>div.articles');
                 $articlesObj.empty();
                 $articlesObj.html(responseData);
-				window.scrollTo(0, 0);
-				
-				
+				window.scrollTo(0, 0);							
             }
         }); 
        
     });
 }
 
+
+function myNoticerm(){
+	let $myNoticermObj = $('button.myNoticerm');
+	$myNoticermObj.click(function(){
+		// 선택된 목록 가져오기
+	  	const query = 'input[name="ntcIdx"]:checked';
+	  	const selectedEls = 
+	      	document.querySelectorAll(query);
+	  
+	  	// 선택된 목록에서 value 찾기
+	  	let result = '';
+	  	selectedEls.forEach((el) => {
+	    result += el.value + ' ';
+		});
+		console.log(result);
+	});
+}
 
 
 //--다른페이지 클릭했을때 시작
