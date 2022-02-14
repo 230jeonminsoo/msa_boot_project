@@ -85,7 +85,7 @@ public class BoardController {
 			
 			//이미지파일 저장
 			File thumbnailFile = null;
-			if(imageFileSize > 0) {
+			if(imageFileSize != 0) {
 				String imageFileName = imageFile.getOriginalFilename(); //업로드할 이미지 파일의 이름가져옴
 				logger.info("이미지파일 이름:" + imageFileName +" 이미지파일 사이즈 " + imageFile.getSize());
 				
@@ -189,7 +189,7 @@ public class BoardController {
 					}
 				});
 				
-				if(imageFiles != null) {
+				if(imageFiles.length>0) {
 					model.addAttribute("image", imageFiles[0]);
 				}
 				return "boarddetailresult.jsp";
