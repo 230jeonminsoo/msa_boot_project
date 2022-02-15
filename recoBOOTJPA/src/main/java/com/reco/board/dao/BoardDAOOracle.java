@@ -210,12 +210,12 @@ public class BoardDAOOracle implements BoardDAOInterface {
 		SqlSession session =null;
 		try {
 			session = sqlSessionFactory.openSession();
-			Map<String,String> map= new HashMap<>();
+			Map<String,Object> map= new HashMap<>();
 			map.put("word", word);
-			String cp = Integer.toString(currentPage);
-			String cpp = Integer.toString(cntperpage);
-			map.put("currentPage", cp);//현재페이지
-			map.put("cntperpage", cpp);//페이지당 글개수
+			//String cp = Integer.toString(currentPage);
+			//String cpp = Integer.toString(cntperpage);
+			map.put("currentPage", currentPage);//현재페이지
+			map.put("cntperpage", cntperpage);//페이지당 글개수
 			List<Board> list = session.selectList("com.reco.board.BoardMapper.findBrdByTitle",map);
 			if(list.size() == 0) {
 				throw new FindException("단어를 포함하는 글이 없습니다.");
@@ -259,12 +259,12 @@ public class BoardDAOOracle implements BoardDAOInterface {
 		SqlSession session =null;	
 		try {
 			session = sqlSessionFactory.openSession();
-			Map<String,String> map= new HashMap<>();
+			Map<String,Object> map= new HashMap<>();
 			map.put("word", word);
-			String cp = Integer.toString(currentPage);
-			String cpp = Integer.toString(cntperpage);
-			map.put("currentPage", cp);//현재페이지
-			map.put("cntperpage", cpp);//페이지당 글개수
+//			String cp = Integer.toString(currentPage);
+//			String cpp = Integer.toString(cntperpage);
+			map.put("currentPage", currentPage);//현재페이지
+			map.put("cntperpage", cntperpage);//페이지당 글개수
 			List<Board> list = session.selectList("com.reco.board.BoardMapper.findBrdByWord",map);
 			if(list.size() == 0) {
 				throw new FindException("단어를 포함하는 글이 없습니다.");

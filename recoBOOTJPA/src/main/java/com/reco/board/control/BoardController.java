@@ -258,7 +258,7 @@ public class BoardController {
 			return mnv;
 		}
 	
-	
+		
 		
 		@PostMapping("brdmodify")
 		public String boardModify(int brdIdx,int brdType, String brdTitle, String brdContent, String brdAttachment, Model model) {
@@ -297,10 +297,73 @@ public class BoardController {
 		}
 		
 		
-		//자유게시판 검색
-		@GetMapping(value = {"brdsearch/{word}","brdsearch/{word}/{currentPage}"})
-		public String boardSearch(@PathVariable Optional<String> word, String f,@PathVariable Optional<Integer> currentPage ,Model model) {
+		@GetMapping({"boardfilter/{intBrdType}", "boardfilter/{intBrdType}/{currentPage}"})
+		public String boardFilter(@PathVariable int intBrdType, @PathVariable Optional<Integer> currentPage, Model model) { //f는 brdType
+			
 			PageDTO<Board> pageDTO;
+			if(intBrdType == 0) {
+				try {
+					int cp = 1;
+					if(currentPage.isPresent()) {
+						cp = currentPage.get();
+					}
+					pageDTO = service.findBrdByType(intBrdType,cp); 
+					model.addAttribute("pageDTO",pageDTO);
+					return "boardlistresult.jsp";
+				} catch (FindException e) {
+					e.printStackTrace();
+					return "failresult.jsp";
+				}
+			}else if(intBrdType == 1) {
+				try {
+					int cp = 1;
+					if(currentPage.isPresent()) {
+						cp = currentPage.get();
+					}
+					pageDTO = service.findBrdByType(intBrdType,cp); 
+					model.addAttribute("pageDTO",pageDTO);
+					return "boardlistresult.jsp";
+				} catch (FindException e) {
+					e.printStackTrace();
+					return "failresult.jsp";
+				}
+			}else if(intBrdType == 2) {
+				try {
+					int cp = 1;
+					if(currentPage.isPresent()) {
+						cp = currentPage.get();
+					}
+					pageDTO = service.findBrdByType(intBrdType,cp); 
+					model.addAttribute("pageDTO",pageDTO);
+					return "boardlistresult.jsp";
+				} catch (FindException e) {
+					e.printStackTrace();
+					return "failresult.jsp";
+				}
+			}else {
+				intBrdType = 3;
+				try {
+					int cp = 1;
+					if(currentPage.isPresent()) {
+						cp = currentPage.get();
+					}
+					pageDTO = service.findBrdAll(); 
+					model.addAttribute("pageDTO",pageDTO);
+					return "boardlistresult.jsp";
+				} catch (FindException e) {
+					e.printStackTrace();
+					return "failresult.jsp";
+				}
+			}
+		}
+			
+		
+		//자유게시판 검색
+		@GetMapping(value = {"brdsearch/{word}/{f}","brdsearch/{word}/{f}/{currentPage}"})
+		public Object boardSearch(@PathVariable Optional<String> word, @PathVariable String f,@PathVariable Optional<Integer> currentPage ,Model model) {
+			ModelAndView mnv = new ModelAndView();
+			PageDTO<Board> pageDTO;
+			logger.info("search값" + f);
 			if(f.equals("brd_title")) {
 				try {
 					String w = "";
@@ -311,12 +374,13 @@ public class BoardController {
 					if(currentPage.isPresent()) { //currentPage
 						cp = currentPage.get();
 					}
-					pageDTO = service.findBrdByTitle(w,cp); 
-					model.addAttribute("pageDTO", pageDTO);
-					return "boardlistresult.jsp";
+					pageDTO = service.findBrdByTitle(w,f,cp); 
+					mnv.addObject("pageDTO", pageDTO);
+					mnv.setViewName("boardlistresult.jsp");
 				} catch (FindException e) {
 					e.printStackTrace();
-					return "failresult.jsp";
+					mnv.addObject("msg", e.getMessage());
+					mnv.setViewName("boardlistresult.jsp");
 				}
 				
 			}else if(f.equals("brd_content")) {
@@ -329,13 +393,14 @@ public class BoardController {
 					if(currentPage.isPresent()) { //currentPage
 						cp = currentPage.get();
 					}
-					pageDTO = service.findBrdByWord(w,cp); 
-					model.addAttribute("pageDTO", pageDTO);
-					return "boardlistresult.jsp";
+					pageDTO = service.findBrdByWord(w,f,cp); 
+					mnv.addObject("pageDTO", pageDTO);
+					mnv.setViewName("boardlistresult.jsp");
 				} catch (FindException e) {
 					e.printStackTrace();
-					return "failresult.jsp";
-				}	
+					mnv.addObject("msg", e.getMessage());
+					mnv.setViewName("boardlistresult.jsp");
+				}
 			}else {
 				f = "brd_UNickName";
 				try {
@@ -347,16 +412,19 @@ public class BoardController {
 					if(currentPage.isPresent()) { //currentPage
 						cp = currentPage.get();
 					}
-					pageDTO = service.findBrdByUNickName(w,cp); 
-					model.addAttribute("pageDTO", pageDTO);
-					return "boardlistresult.jsp";
+					pageDTO = service.findBrdByUNickName(w,f,cp); 
+					mnv.addObject("pageDTO", pageDTO);
+					mnv.setViewName("boardlistresult.jsp");
 				} catch (FindException e) {
 					e.printStackTrace();
-					return "failresult.jsp";
-				}	
-			}		
+					mnv.addObject("msg", e.getMessage());
+					mnv.setViewName("boardlistresult.jsp");
+				}
+			}
+			return mnv;
 		}
 		
+	
 		
 		
 		@GetMapping("/boarddownload")

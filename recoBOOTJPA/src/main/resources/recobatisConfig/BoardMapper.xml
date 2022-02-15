@@ -18,7 +18,7 @@
 	</select>
 	
 	<select id="findCountTitle"  resultType="int" parameterType="string">
-		SELECT COUNT(*) FROM notice where ntc_title like '%${word}%'
+		SELECT COUNT(*) FROM board where brd_title like '%${word}%'
 	</select>
 	
 	<select id="findCountType" resultType="int" parameterType="int">
@@ -37,7 +37,7 @@
 	   where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
 	</select>
 	
-	<select id="findBrdByType" parameterType="int" resultType="map">
+	<select id="findBrdByType" parameterType="map" resultType="Board">
 		select *
     FROM(SELECT rownum r, d.*
         FROM(SELECT b.brd_Idx, b.brd_attachment, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_count
@@ -59,7 +59,7 @@
 		UPDATE board set brd_views = BRD_VIEWS+1 where brd_Idx=#{intBrdIdx}
 	</update>
 	
-	<select id="findBrdByTitle" parameterType="String" resultType="map">
+	<select id="findBrdByTitle" parameterType="String" resultType="Board">
 		select *
     FROM(SELECT rownum r, d.*
         FROM(SELECT b.brd_Idx, b.brd_attachment, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_comment
@@ -72,7 +72,7 @@
 		select *
 		FROM(SELECT rownum r, d.*
 		    FROM(SELECT b.brd_Idx, b.brd_attachment, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_comment
-		        FROM board b WHERE brd_content like '%${word}%'  or brd_content like '%${word}%' ORDER BY b.brd_Idx DESC) d
+		        FROM board b WHERE brd_title like '%${word}%'  or brd_content like '%${word}%' ORDER BY b.brd_Idx DESC) d
 		    )
 		where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
 	</select>
