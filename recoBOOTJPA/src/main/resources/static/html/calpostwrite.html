@@ -42,10 +42,11 @@
 		        <td>
 		             <style>.dellink{display: none;}</style>
 		             <script type="text/javascript" src="./js/imgpreview.js"></script>
-		             <input type="file" name="calMainImg" 
-		             class="hidden_input" id="imageSelector" name="imageSelector" accept="image/jpeg, image/jpg, image/png" required  />
-		              <img src="" class="thumb"/>
-		              <a href="javascript:void(0);" class="dellink">썸네일삭제</a>  
+		             <div class="image-container">
+                      <img style="width: 300px;" id="preview-image" src="https://dummyimage.com/200x200/ffffff/000000.png&text=preview+image">
+                      <input style="display: block;" type="file" name="calMainImg" id="input-image"accept="image/jpeg, image/jpg, image/png" required >
+                     </div>
+		             <a href="javascript:void(0);" class="dellink">썸네일삭제</a>  
 		        </td>
 		    </tr>
 		  
