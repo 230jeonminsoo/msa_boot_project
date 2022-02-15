@@ -155,10 +155,15 @@ public class BoardDAOOracle implements BoardDAOInterface {
 		try {
 			session = sqlSessionFactory.openSession();
 			session.insert("com.reco.board.BoardMapper.addBrd",b);
-			int brdIdx = b.getBrdIdx();
-			Board board = findBrdByIdx(brdIdx);
-			return board;
-		} catch (FindException e) {
+			session.commit();
+//		    System.out.println("addBrddao" + brdIdx); //잘나옴
+//		    b.getBrdIdx()
+//			Board board = findBrdByIdx(brdIdx);
+//			int testBrd = board.getBrdIdx(); 
+//			System.out.println("addBrddao2" + testBrd); //0나옴
+			System.out.println(b);
+			return b;
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AddException(e.getMessage());
 		}finally {
@@ -184,8 +189,10 @@ public class BoardDAOOracle implements BoardDAOInterface {
 		try {
 			session = sqlSessionFactory.openSession();
 			Board board = session.selectOne("com.reco.board.BoardMapper.findBrdByIdx",brdIdx);
-//			System.out.println(board);
+			//logger.info("들어가기전 dao"+brdIdx);
+			//logger.info("들어가기전 dao"+board.getBrdIdx());			
 			plusViewCount(brdIdx);
+			//board.setBrdIdx(brdIdx);
 			return board;
 		}catch (Exception e) {
 			throw new FindException(e.getMessage());

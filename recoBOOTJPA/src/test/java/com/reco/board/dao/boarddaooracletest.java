@@ -13,7 +13,7 @@ class boarddaooracletest {
 	private BoardDAOOracle dao;
 	@Test
 	void testFindBrdByIdx() {
-		int idx = 9;
+		int idx = 68;
 		try {
 			Board b = dao.findBrdByIdx(idx);
 			System.out.println(b);

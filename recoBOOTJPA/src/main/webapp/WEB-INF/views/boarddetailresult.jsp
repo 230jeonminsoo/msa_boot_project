@@ -87,7 +87,7 @@ $(function(){
           <ul class="brdDetail">
 	    	 <li>
 				<div class="brdIdx">글번호 :  
-					<span id="brdIdx" name="brdIdx">
+					<span id="brdIdx">
 		          	<%=brdIdx%>  
 		            </span> 
 		         </div>
@@ -140,6 +140,7 @@ $(function(){
 	         <hr>
 	         <div class="brdContent"><span id="brdContent"> 
 					<%=brdContent %></span></div>
+			<div class="image"><img></div>
 		     <hr>
 		     <%if(brdAttachment != null){ %>
 				<div class="brdAttachment">첨부파일: <span id="brdAttachment"> <%=brdAttachment %></span></div>
@@ -188,7 +189,7 @@ String uNickName = c.getUNickName();
        
 <div class="commentwrap">       
    <!-- 게시글에 달린 댓글 갯수 -->   
-<div class="size">댓글 <%=comments.size()%> </div><br>
+<div class="size">댓글 <%=b.getCmtCount()%> </div><br>
    <!-- 게시글에 달린 댓글 갯수 end-->   
 
 
@@ -209,7 +210,7 @@ String uNickName = c.getUNickName();
          <!-- 댓글 시작 -->	  
          	
          	
-         	<%if(comments.size() != 0) {%>
+         	<%if(b.getCmtCount() != 0) {%>
 	         	<% for(Comment comment: comments) {       	
 	         			int cmtIdx = comment.getCmtIdx();
 	         			int cmtParentIdx = comment.getCmtParentIdx();
@@ -284,11 +285,11 @@ String uNickName = c.getUNickName();
 	         	<%
 	         	}
 	         	%>
-	         	<%} %>
-			<%-- <%} else{%>
+	         	
+		<%} else{%>
 					<span>댓글이 없습니다.</span>
 				
-			<%} %> --%>
+			<%} %> 
                   	
 </div>
     <!--댓글 끝--> 	

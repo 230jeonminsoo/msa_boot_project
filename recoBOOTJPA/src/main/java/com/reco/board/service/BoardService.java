@@ -37,7 +37,7 @@ public class BoardService {
 	
 	
 	public Board addBrd(Board b) throws AddException,FindException{
-		return(dao.addBrd(b));
+		return dao.addBrd(b);
 	}
 	
 	

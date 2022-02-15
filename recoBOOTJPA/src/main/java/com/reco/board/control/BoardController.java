@@ -56,7 +56,7 @@ public class BoardController {
 	
 	//자유게시판 게시글 추가
 	@PostMapping("brdadd")
-	public String boardAdd( @RequestPart (required = false) List<MultipartFile> letterFiles
+	public String boardAdd( @RequestPart (required = false) MultipartFile letterFiles
 							,@RequestPart (required = false) MultipartFile imageFile
 							,int brdType,String brdTitle,String brdContent,String brdAttachment,HttpSession session, Model model) {
 		Customer c = (Customer)session.getAttribute("loginInfo");
@@ -65,85 +65,118 @@ public class BoardController {
 		Board b = new Board();
 		b.setBrdIdx(brdType);
 		b.setBrdTitle(brdTitle);
-		b.setBrdContent(brdContent);
-		b.setBrdAttachment(brdAttachment);
+		b.setBrdContent(brdContent);	
+		if(letterFiles != null) {
+			b.setBrdAttachment(letterFiles.getOriginalFilename());
+		}else {
+			b.setBrdAttachment(brdAttachment); //?
+		}
 		b.setBrdUNickName(brdUNickName);
 		
 		try{
 			Board board = service.addBrd(b);
+//			int exbrd = board.getBrdIdx();
+//			System.out.println("테스트" + exbrd);
 			model.addAttribute("b", board);
+			logger.info("컨트롤러 addbrd 1:" + board.getBrdIdx() + board.getBrdTitle() + board.getBrdContent());
 			
 			//파일을 저장할 폴더가 없다면 만들기. 있다면 만들지 않음
 			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
 			if ( ! new File(saveDirectory).exists()) {
 				logger.info("업로드 실제경로생성");
-				new File(saveDirectory).mkdirs();
+				new File(saveDirectory).mkdirs(); //파일경로가 없다면 만듬
 			}
 			
 			int wroteBoardNo = board.getBrdIdx();//저장된 글번호
-			long imageFileSize = imageFile.getSize();
-			
+					
 			//이미지파일 저장
 			File thumbnailFile = null;
-			if(imageFileSize != 0) {
-				String imageFileName = imageFile.getOriginalFilename(); //업로드할 이미지 파일의 이름가져옴
-				logger.info("이미지파일 이름:" + imageFileName +" 이미지파일 사이즈 " + imageFile.getSize());
-				
-				//업로드할  이미지 파일의 이름을 새로생성
-				String fileName ="reco_board_"+wroteBoardNo + "_image_" + UUID.randomUUID() + "_" + imageFileName;
-				//이미지파일 생성
-				File file = new File(saveDirectory, fileName);
-				
-				
-				try {
-					FileCopyUtils.copy(imageFile.getBytes(), file);
-					
-					//이미지파일의 타입가져와서 image가 아니면 실패
-					String contentType = imageFile.getContentType();
-					if(!contentType.contains("image/")) { 
-						return "failresult.jsp";
-					}
-					
-					
-					//이미지파일인 경우 섬네일파일을 만듦
-					String thumbnailName =  "reco_board_"+ wroteBoardNo+"_image_"+imageFileName; //섬네일 파일명은 reco_notice_글번호_image_원본이름
-					thumbnailFile = new File(saveDirectory,thumbnailName);
-					FileOutputStream thumbnailOS;
-					thumbnailOS = new FileOutputStream(thumbnailFile);
-					InputStream imageFileIS = imageFile.getInputStream();
-					int width = 100;
-					int height = 100;
-					Thumbnailator.createThumbnail(imageFileIS, thumbnailOS, width, height);
-					logger.info("섬네일파일 저장:" + thumbnailFile.getAbsolutePath() + ", 섬네일파일 크기::" + thumbnailFile.length());
-					
-			    	//letterFiles도 저장
-					if(letterFiles != null) {
-						for(int i = 0; i<letterFiles.size();i++) {
-							
-						long letterFileSize = letterFiles.size();
-							if(letterFileSize > 0) {
-								String letterOriginalFileName = letterFiles.get(i).getOriginalFilename();//letter파일 원본이름 얻기
-								logger.info("레터 파일이름:" + letterFiles.get(i).getOriginalFilename()+" 파일크기: " + letterFiles.get(i).getSize());
-								//저장할 파일 이름 지정한다 ex) reco_board_글번호_letter_XXXX_원본이름
-								String letterName = "reco_board_"+wroteBoardNo + "_letter_" + UUID.randomUUID() + "_" + letterOriginalFileName;
-								//letter파일 생성
-								File file2 = new File(saveDirectory, letterName);
-									try {
-										FileCopyUtils.copy(letterFiles.get(i).getBytes(), file2);
-									} catch (IOException e2) {
-										e2.printStackTrace();		
-										return "failresult.jsp";
-									}
-							}//end if(letterFileSize > 0) 
-						}//end for
-					}//end if(letterFiles != null)						
+			if(imageFile !=null) {
+				long imageFileSize = imageFile.getSize();
+					if(imageFileSize != 0) {
+						String imageFileName = imageFile.getOriginalFilename(); //업로드할 이미지 파일의 이름가져옴
+						logger.info("이미지파일 이름:" + imageFileName +" 이미지파일 사이즈 " + imageFile.getSize());
 						
-				} catch (IOException e2) {
-					e2.printStackTrace();
-					//return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+						//업로드할  이미지 파일의 이름을 새로생성
+						String fileName ="reco_board_"+wroteBoardNo + "_image_" + UUID.randomUUID() + "_" + imageFileName;
+						//이미지파일 생성
+						File file = new File(saveDirectory, fileName);
+						
+						
+						try {
+							FileCopyUtils.copy(imageFile.getBytes(), file);
+							
+							//이미지파일의 타입가져와서 image가 아니면 실패
+							if(imageFile !=null) {
+								String contentType = imageFile.getContentType();
+								if(!contentType.contains("image/")) {  //이미지파일형식이 아닌 경우
+									return "failresult.jsp";
+								}
+							}
+						
+					
+						//이미지파일인 경우 섬네일파일을 만듦
+						String thumbnailName =  "reco_board_"+ wroteBoardNo+"_image_"+imageFileName; //섬네일 파일명은 reco_notice_글번호_image_원본이름
+						thumbnailFile = new File(saveDirectory,thumbnailName); //저장결로에 섬네일파일 만듬
+						FileOutputStream thumbnailOS;
+						thumbnailOS = new FileOutputStream(thumbnailFile);
+						InputStream imageFileIS = imageFile.getInputStream();
+						int width = 300;
+						int height = 300;
+						Thumbnailator.createThumbnail(imageFileIS, thumbnailOS, width, height);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}logger.info("섬네일파일 저장:" + thumbnailFile.getAbsolutePath() + ", 섬네일파일 크기::" + thumbnailFile.length());
+					}
+			  }
+		
+	    	//letterFiles도 저장
+			if(letterFiles != null) {
+				long letterFileSize = letterFiles.getSize();
+					if(letterFileSize > 0) {
+						String letterOriginalFileName = letterFiles.getOriginalFilename();//letter파일 원본이름 얻기
+						logger.info("레터 파일이름:" + letterFiles.getOriginalFilename()+" 파일크기: " + letterFiles.getSize());
+						//저장할 파일 이름 지정한다 ex) reco_board_글번호_letter_XXXX_원본이름
+						String letterName = "reco_board_"+wroteBoardNo + "_letter_" + UUID.randomUUID() + "_" + letterOriginalFileName;
+						//letter파일 생성
+						File file2 = new File(saveDirectory, letterName);
+							try {
+								FileCopyUtils.copy(letterFiles.getBytes(), file2);
+							} catch (IOException e2) {
+								e2.printStackTrace();		
+								return "failresult.jsp";
+							}
+					}//end if(letterFileSize > 0) 
+				}//end for
+			//end if(letterFiles != null)						
+			logger.info("컨트롤러 addbrd 2:" + board.getBrdIdx() + board.getBrdTitle() + board.getBrdContent());	
+			File dir = new File(saveDirectory);
+			if(b.getBrdAttachment() !=null) {
+				//첨부파일 저장소에서 letters이름 가져와서 returnMap에 넣기
+				String[] letterFileNames = dir.list(new FilenameFilter() {
+					
+					@Override
+					public boolean accept(File dir, String name) {
+						return name.contains("reco_board_"+board.getBrdIdx()+"_letter_");//b.getBrdAttachment());
+					}
+				});
+				if(letterFileNames.length>0) {
+					model.addAttribute("letter", letterFileNames[0]);
 				}
-			}
+			}		
 			
+			//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
+			String[] imageFiles = dir.list(new FilenameFilter() {		
+				@Override
+				public boolean accept(File dir, String name) {
+					return name.contains("reco_board_"+board.getBrdIdx()+"_image_");
+				}
+			});
+			
+			if(imageFiles.length > 0) {
+				model.addAttribute("image", imageFiles[0]);
+			}
+		
 			return "boarddetailresult.jsp";
 		} catch(AddException e){
 			e.getStackTrace();
@@ -176,7 +209,7 @@ public class BoardController {
 					}
 				});
 				if(letterFileNames.length>0) {
-					model.addAttribute("letters", letterFileNames);
+					model.addAttribute("letter", letterFileNames[0]);
 				}
 			}
 				
@@ -326,7 +359,7 @@ public class BoardController {
 		
 		
 		
-		@GetMapping("/download")
+		@GetMapping("/boarddownload")
 		public ResponseEntity<Resource>  download(String fileName) throws UnsupportedEncodingException {
 			logger.info("첨부파일 다운로드");
 			//파일 경로생성
@@ -354,7 +387,7 @@ public class BoardController {
 		}
 		
 		
-		@GetMapping("/downloadimage") 
+		@GetMapping("/boarddownloadimage") 
 		 public ResponseEntity<?> downloadImage(String imageFileName) throws UnsupportedEncodingException{
 			 String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
 			 File thumbnailFile = new File(saveDirectory,imageFileName);

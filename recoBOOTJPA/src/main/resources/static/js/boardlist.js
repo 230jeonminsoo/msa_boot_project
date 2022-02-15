@@ -5,7 +5,8 @@ function boardWriteClick(){
 	let $boardWriteBt = $('div.board_write_button>label');
 	
 	$boardWriteBt.click(function(){
-	    let ajaxUrl = 'boardwritepage';
+	    /*let ajaxUrl = 'boardwritepage';*/
+		let ajaxUrl = './html/boardwrite.html';
         $.ajax({
             url: ajaxUrl,
             method : 'get',
@@ -129,3 +130,25 @@ function boardWriteClick(){
 /**
 자유게시판 목록에서 분류 클릭시 END
 */
+
+
+//--다른페이지 클릭했을때 시작
+$('div.pagegroup').on('click','span.active',function(){
+//$('div.pagegroup>span.active').click(function(){	
+	let url = $(this).attr("class").split(/\s+/)[0];//정규표현식, \s는 공백
+	console.log(url);
+	$.ajax({
+		url: url,
+		method: 'get',
+		success: function(responseData){
+			    let $articlesObj = $('section>div.articles');
+                $articlesObj.empty();
+                $articlesObj.html(responseData);
+		},
+		error: function(xhr){
+			alert(xhr.status);
+		}
+	});
+	return false;
+});
+//--다른페이지 클릭했을때 끝

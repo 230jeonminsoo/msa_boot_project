@@ -111,6 +111,7 @@ $(function(){
 	  int brdType = b.getBrdType();
 	  String brdTitle = b.getBrdTitle();
 	  String BrdUNickName = b.getBrdUNickName();
+	  String brdAttachment = b.getBrdAttachment();
 	  int brdViews = b.getBrdViews();
 	  int cmtCount = b.getCmtCount();
 	  Date brdCreatAt = b.getBrdCreateAt();
@@ -128,7 +129,7 @@ $(function(){
 		    <% }%><% else{ brdType =2;%>
 		    <%="기타" %>
 		    <%} %></span>
-		    <span><%=brdTitle%></span>
+		    <span><%=brdTitle%> <%if(brdAttachment != null){ %><img src="./images/클립.png"><%} %></span>
 		    <span><%=BrdUNickName%></span>
 		    <span><%=brdViews%></span>
 		    <span><%=cmtCount%></span>

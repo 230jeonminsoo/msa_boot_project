@@ -31,7 +31,7 @@
 	<select id="findBrdAll" parameterType="map" resultType="Board">
 		select *
 	   FROM (SELECT rownum r, d.*
-	    FROM(SELECT b.brd_Idx, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_count
+	    FROM(SELECT b.brd_Idx, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_attachment,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_count
 	    FROM board b ORDER BY b.brd_Idx DESC) d
 	  )    
 	   where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
@@ -40,14 +40,14 @@
 	<select id="findBrdByType" parameterType="int" resultType="map">
 		select *
     FROM(SELECT rownum r, d.*
-        FROM(SELECT b.brd_Idx, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_count
+        FROM(SELECT b.brd_Idx, b.brd_attachment, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_count
 		FROM board b WHERE brd_type=#{intBrdType} ORDER BY b.brd_Idx DESC) d
   )
   where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
 	</select>
 	
 	<select id="findBrdByIdx" parameterType="int" resultMap="boardResultMap">
-		SELECT * FROM (SELECT c.brd_idx,cmt_idx, cmt_content, nvl(c.cmt_parentidx, 0) cmt_parentidx,  cmt_createat, cmt_unickname,
+		SELECT * FROM (SELECT b.brd_idx,cmt_idx, cmt_content, nvl(c.cmt_parentidx, 0) cmt_parentidx,  cmt_createat, cmt_unickname,
 		brd_type, brd_title, brd_content, brd_attachment, brd_createat, brd_thumbup, brd_unickname, brd_views
 		FROM comments c RIGHT JOIN  board b ON b.brd_Idx = c.brd_Idx
 		WHERE  b.brd_idx=#{brdIdx})
@@ -62,7 +62,7 @@
 	<select id="findBrdByTitle" parameterType="String" resultType="map">
 		select *
     FROM(SELECT rownum r, d.*
-        FROM(SELECT b.brd_Idx, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_comment
+        FROM(SELECT b.brd_Idx, b.brd_attachment, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_comment
 		FROM board b WHERE brd_title like '%${word}%' ORDER BY b.brd_Idx DESC) d
   )
   where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
@@ -71,7 +71,7 @@
 	<select id="findBrdByWord" parameterType="String" resultType="Board">
 		select *
 		FROM(SELECT rownum r, d.*
-		    FROM(SELECT b.brd_Idx, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_comment
+		    FROM(SELECT b.brd_Idx, b.brd_attachment, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_comment
 		        FROM board b WHERE brd_content like '%${word}%'  or brd_content like '%${word}%' ORDER BY b.brd_Idx DESC) d
 		    )
 		where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
@@ -80,7 +80,7 @@
 	<select id="findBrdByUNickName" parameterType="String" resultType="Board">
 		select *
     FROM(SELECT rownum r, d.*  
-  FROM(SELECT b.brd_Idx, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_comment
+  FROM(SELECT b.brd_Idx, b.brd_attachment, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_comment
 		FROM board b WHERE brd_UNickName like '%${word}%' ORDER BY b.brd_Idx DESC) d
    )
    where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
