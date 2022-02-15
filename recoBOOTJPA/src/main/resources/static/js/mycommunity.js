@@ -3,27 +3,35 @@
 /**
  *  공지사항 목록에서 글 하나 클릭되었을때 
  */
-function noticeDetail(){
+function noticeDetail(option){
+	let $articlesObj = $('section>div.articles');
+	if(option == 'undefined'){ //이반 사용자가 공지사항 목록에서 글 하나 클릭한 경우		
+		 
+	}else if(option == 'mycommunity'){ //마이페이지의 커뮤니티관리에서 내가 쓴 공지사항 목록에서 글 하나 클릭한 경우 
+	  $articlesObj = $('div.detail');
+		
+	}
+	
     let $noticeObj = $('div.noticelist>ul>li>span');
 
     $noticeObj.click(function(){
         let $ntcIdx = $(this).attr('id');	
         let ajaxUrl = './ntcdetail';
-		window.open(window.location.href);
+		/*window.open(window.location.href);*/
         $.ajax({
             url: ajaxUrl,
             method : 'get',
             data : {ntcIdx: $ntcIdx},
             success:function(responseData){
 				console.log(responseData);
-                let $articlesObj = $('section>div.articles');
+               // let $articlesObj = $('section>div.articles');
                 $articlesObj.empty();
                 $articlesObj.html(responseData);
 				window.scrollTo(0, 0);							
             }
         }); 
        
-    });
+    });	
 }
 
 

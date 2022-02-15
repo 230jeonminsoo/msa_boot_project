@@ -1,7 +1,9 @@
 <%@page import="com.reco.customer.vo.Customer"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<!-- 현재 메뉴   
+<span class="currentMenu"></span>
+ -->
 <ul>
 <%
 Customer c = (Customer)session.getAttribute("loginInfo"); 

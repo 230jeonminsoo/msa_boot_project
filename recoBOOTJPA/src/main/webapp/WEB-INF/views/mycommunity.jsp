@@ -26,7 +26,7 @@ List<Comment> commentList = pageDTO.getList();  */
 <script>
 $(function(){
 	//공지사항 글 클릭시 해당 글을 새탭으로 여는 함수
-	noticeDetail();
+	noticeDetail("mycommunity");
 	//내 공지사항 글 삭제
 	myNoticerm();
 });
@@ -80,13 +80,12 @@ $(function(){
 			 		<input type='checkbox'
 				    	   style='width:25px; height:25px'	
 					       name='ntcIdx' 
-					       value=<%=ntcIdx%> />	
-					       
-					 <span><%=ntcIdx%></span>
-					 <span><%=ntcTitle%><%if(ntcAttachment != null){ %><img src="./images/클립.png"><%} %></span>
-					 <span><%=ntcuNickName%></span>
-					 <span><%=ntcViews%></span>
-					 <span><%=ntcCrt%></span>
+					       value=<%=ntcIdx%> />	     
+					 <span id="<%=ntcIdx%>"><%=ntcIdx%></span>
+					 <span id="<%=ntcIdx%>"><%=ntcTitle%><%if(ntcAttachment != null){ %><img src="./images/클립.png"><%} %></span>
+					 <span id="<%=ntcIdx%>"><%=ntcuNickName%></span>
+					 <span id="<%=ntcIdx%>"><%=ntcViews%></span>
+					 <span id="<%=ntcIdx%>"><%=ntcCrt%></span>
 					 </li> 
 				  </ul>
 			</div>
@@ -118,6 +117,10 @@ $(function(){
 		<script>location.href="./";</script>
 	<%} %><!--if (session.getAttribute("loginInfo") 끝  -->
 	</div>
+	
+	 <div class="detail">
+ 	</div> 
+	
 </fieldset>
 
 <!-- 내가 작성한 게시글. 누를시 새탭에 띄울예정-->
@@ -138,6 +141,7 @@ $(function(){
 			<td>1</td>
 		</tr>
 	</table>
+	
 </fieldset>
 
 <!-- 내가 작성한 댓글. 누를시 새탭에 띄울예정-->
@@ -159,4 +163,4 @@ $(function(){
 			<td>1</td>
 		</tr>
 	</table>	
- </fieldset>   
+ </fieldset>  

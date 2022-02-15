@@ -380,11 +380,16 @@ public class NoticeController {
 			//원래 DB에 저장된 첨부파일 이름 가져오기
 			String originAttachment = service.findNtcByIdx(ntcIdx).getNtcAttachment();
 			
-			if(letterFiles == null) {//첨부파일 삭제한경우
-				n.setNtcAttachment(ntcAttachment);
-			}else if(letterFiles.getOriginalFilename() == originAttachment) {//첨부파일이 기존과 같을경우
-				n.setNtcAttachment(originAttachment);
-			}else {//첨부파일이 바뀔경우
+//			if(letterFiles == null) {//첨부파일 삭제한경우
+//				n.setNtcAttachment(ntcAttachment);
+//			}else if(letterFiles.getOriginalFilename() == originAttachment) {//첨부파일이 기존과 같을경우
+//				n.setNtcAttachment(originAttachment);
+//			}else {//첨부파일이 바뀔경우
+//				n.setNtcAttachment(letterFiles.getOriginalFilename());
+//			}
+			if(letterFiles == null) { //attachment no 
+				//n.setNtcAttachment(ntcAttachment);
+			}else { //attachmnet 
 				n.setNtcAttachment(letterFiles.getOriginalFilename());
 			}
 			Notice notice = service.modifyNtc(n);

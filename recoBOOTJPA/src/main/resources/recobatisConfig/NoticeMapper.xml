@@ -68,7 +68,17 @@
 	</select>
 	
 	<update id="modifyNtc" parameterType="Notice">
-		update notice set ntc_title=#{ntcTitle},ntc_content=#{ntcContent},ntc_attachment=#{ntcAttachment} where ntc_idx=#{ntcIdx}
+<!--		update notice 
+		set ntc_title=#{ntcTitle},ntc_content=#{ntcContent},
+		    ntc_attachment=#{ntcAttachment} where ntc_idx=#{ntcIdx}-->
+		update notice 
+		<set>
+		ntc_title=#{ntcTitle},ntc_content=#{ntcContent}
+		<if test="{ntc_attachment != null}">
+			, ntc_attachment=#{ntcAttachment}
+		</if>
+		</set>
+		where ntc_idx=#{ntcIdx}
 	</update>
 	
 	<delete id="removeNtc" parameterType="int">

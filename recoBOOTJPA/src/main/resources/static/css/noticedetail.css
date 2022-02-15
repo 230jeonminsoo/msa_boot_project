@@ -3,8 +3,8 @@
 div.ntcDetail{
 	/* margin:40px; */
 	margin: 0 auto;
-	
-	width: 1400px;
+	width: 100%;
+	/* width: 1400px; */
 	display: block;
 	/* border-left: 5px dotted orange;
   	border-right: 5px dotted orange;	 */
