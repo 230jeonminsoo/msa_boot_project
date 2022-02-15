@@ -379,7 +379,7 @@ public class NoticeController {
 			
 			//원래 DB에 저장된 첨부파일 이름 가져오기
 			String originAttachment = service.findNtcByIdx(ntcIdx).getNtcAttachment();
-			
+			logger.info("컨트롤러 오리지널 파일 네임"+letterFiles.getOriginalFilename());
 //			if(letterFiles == null) {//첨부파일 삭제한경우
 //				n.setNtcAttachment(ntcAttachment);
 //			}else if(letterFiles.getOriginalFilename() == originAttachment) {//첨부파일이 기존과 같을경우
@@ -387,9 +387,11 @@ public class NoticeController {
 //			}else {//첨부파일이 바뀔경우
 //				n.setNtcAttachment(letterFiles.getOriginalFilename());
 //			}
-			if(letterFiles == null) { //attachment no 
+			if(letterFiles.getOriginalFilename() == "") { //attachment no 
 				//n.setNtcAttachment(ntcAttachment);
-			}else { //attachmnet 
+				n.setNtcAttachment(originAttachment);
+				logger.info("컨트롤러"+originAttachment);;
+			}else { //attachment 
 				n.setNtcAttachment(letterFiles.getOriginalFilename());
 			}
 			Notice notice = service.modifyNtc(n);
@@ -421,7 +423,7 @@ public class NoticeController {
 			}//end if(letterFiles != null)	
 			
 			File dir = new File(saveDirectory);
-			if(n.getNtcAttachment() !=null) {
+			if(notice.getNtcAttachment() !=null) {
 				//첨부파일 저장소에서 letters이름 가져와서 returnMap에 넣기
 				String[] letterFileNames = dir.list(new FilenameFilter() {
 					

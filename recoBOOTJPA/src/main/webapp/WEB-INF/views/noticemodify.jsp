@@ -19,9 +19,6 @@ String ntcAttachment= request.getParameter("ntcAttachment");
 %>
 <script>
 $(function(){
-	<%if(ntcAttachment != null){
-		
-	}%>
 	let $formObj = $('fieldset form');
 	//글수정버튼클릭시 수정된글 보낸후 수정한 글 다시 보기
 	modifyNoticeSubmit($formObj);
