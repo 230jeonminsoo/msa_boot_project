@@ -196,3 +196,12 @@ function comment2AddClick(){
 }
 
 
+function boardDownloadClick(letter){
+	$('div.brdDetail>ul.brdDetail>li>div.brdAttachment').click(function(){
+		let fileName = letter;
+		console.log(letter);
+		let href = "./boarddownload?fileName="+fileName;
+		window.location.href=href;
+		return false;
+	});
+}

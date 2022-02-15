@@ -61,6 +61,10 @@ $(function(){
 		boardRemoveClick();	
 	//게시글 목록버튼 클릭시
 		boardListClick();
+	//첨부파일 다운로드 시
+	letter = "<%=letter%>";
+	boardDownloadClick(letter);
+	
 	//댓글 등록버튼 클릭시
 		commentAddClick();
 		
@@ -189,7 +193,7 @@ String uNickName = c.getUNickName();
        
 <div class="commentwrap">       
    <!-- 게시글에 달린 댓글 갯수 -->   
-<div class="size">댓글 <%=b.getCmtCount()%> </div><br>
+<div class="size">댓글 <%=comments.size()%> </div><br>
    <!-- 게시글에 달린 댓글 갯수 end-->   
 
 
@@ -210,7 +214,7 @@ String uNickName = c.getUNickName();
          <!-- 댓글 시작 -->	  
          	
          	
-         	<%if(b.getCmtCount() != 0) {%>
+         	<%if(comments.size() != 0) {%>
 	         	<% for(Comment comment: comments) {       	
 	         			int cmtIdx = comment.getCmtIdx();
 	         			int cmtParentIdx = comment.getCmtParentIdx();

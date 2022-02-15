@@ -75,13 +75,14 @@ function boardWriteClick(){
 		let f = $("select[name=f]").val(); /**f는 select 옵션값 */
 		let ajaxUrl = "./brdsearch";
 		$.ajax({
-			url: ajaxUrl,
+			url: ajaxUrl+'/'+searchWord+'/'+f,
 			method: "get",
-			data : {f:f, q:searchWord},     
+			/*data : {f:f, q:searchWord},  */   
 			success:function(responseData){
                 let $articlesObj = $('section>div.articles');
                 $articlesObj.empty();
                 $articlesObj.html(responseData);
+				window.scrollTo(0, 0);
             },
 			error:function(xhr){
 				alert("응답실패"+xhr.status);
@@ -104,13 +105,13 @@ function boardWriteClick(){
 	function brdTypeClick(){
 		var $searchAObj = $('div.dropdown-content a');  //a태그인 분류들 찾음
 		$searchAObj.click(function(){
-			let f = $(this).attr('id')
+			let intBrdType = $(this).attr('id')
 			let ajaxUrl = "./boardfilter";
 	
 			$.ajax({
-			url: ajaxUrl,
+			url: ajaxUrl+'/'+intBrdType,
 			method: "get",  
-			data : {f:f},     
+		/*	data : {f:f},*/     
 			success:function(responseData){
                 let $articlesObj = $('section>div.articles');
                 $articlesObj.empty();

@@ -72,8 +72,8 @@ public class BoardService {
 	
 	
 	//자유게시판 제목 검색
-	public PageDTO<Board> findBrdByTitle(String word, int currentPage) throws FindException{
-		String url = "/brdsearch/"+word;
+	public PageDTO<Board> findBrdByTitle(String word, String f, int currentPage) throws FindException{
+		String url = "/brdsearch/"+word+"/"+f;
 		List<Board> list = dao.findBrdByTitle(word, currentPage, PageDTO.CNT_PER_PAGE);
 		int totalCnt = dao.findCountTitle(word);
 		PageDTO<Board> pageDTO = new PageDTO<>(url, currentPage, totalCnt, list);
@@ -82,8 +82,8 @@ public class BoardService {
 			
 			
 	//자유게시판 제목+내용 검색
-	public PageDTO<Board> findBrdByWord(String word, int currentPage) throws FindException{
-		String url = "/brdsearch/"+word;
+	public PageDTO<Board> findBrdByWord(String word, String f, int currentPage) throws FindException{
+		String url = "/brdsearch/"+word+"/"+f;
 		List<Board> list = dao.findBrdByWord(word, currentPage, PageDTO.CNT_PER_PAGE);
 		int totalCnt = dao.findCountWord(word);
 		PageDTO<Board> pageDTO = new PageDTO<>(url, currentPage, totalCnt, list);
@@ -102,8 +102,8 @@ public class BoardService {
 	
 
 	//자유게시판 닉네임 검색
-	public PageDTO<Board> findBrdByUNickName(String word, int currentPage) throws FindException{
-		String url = "/brdsearch/"+word;
+	public PageDTO<Board> findBrdByUNickName(String word, String f, int currentPage) throws FindException{
+		String url = "/brdsearch/"+word+"/"+f;
 		List<Board> list = dao.findBrdByUNickName(word, currentPage, PageDTO.CNT_PER_PAGE);
 		int totalCnt = dao.findCountUNickName(word);
 		PageDTO<Board> pageDTO = new PageDTO<>(url, currentPage, totalCnt, list);
