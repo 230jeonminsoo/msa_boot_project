@@ -41,3 +41,15 @@ function beforeSignupClick(){
 	    return false;	
 	});
 }
+
+/*--비밀번호변경 창 이동--*/
+function popUpFindPwd(){
+		$('button.findPwdPage').click(function(){		
+		ajaxurl ='./html/findPwd.html';
+		ajaxmethod = "get";
+	    $('section>div.articles0').empty();
+	    $('section>div.articles0').load(ajaxurl,function(responsetext,textstatus,jqxhr){
+	    });
+	    return false;	
+	});
+}

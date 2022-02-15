@@ -168,5 +168,21 @@ public class CustomerController {
 		return returnMap;		
 	}
 	
-
+	@GetMapping("/findPwd")
+	@ResponseBody
+	public Map<String,Object> findPwd(String email){
+		String resultMsg = "";
+		int status = 0;
+		try {
+			service.findPwd(email);
+			status = 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMsg = e.getMessage();
+		}
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("status",status);
+		returnMap.put("resultMsg",resultMsg);
+		return returnMap;		
+	}
 }

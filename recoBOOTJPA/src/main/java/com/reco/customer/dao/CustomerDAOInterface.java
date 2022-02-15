@@ -43,4 +43,12 @@ public interface CustomerDAOInterface {
 	 * @throws ModifyException
 	 */
 	public void modifyPwd(int uIdx, String pwd) throws ModifyException;
+	
+	/**
+	 * 새로운 비밀번호를 입력된 이메일로 보낸다.
+	 * @param email
+	 * @throws ModifyException
+	 */
+	public void findPwd(String email) throws ModifyException;
+	
 }
