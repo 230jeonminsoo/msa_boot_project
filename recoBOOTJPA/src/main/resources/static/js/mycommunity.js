@@ -27,7 +27,7 @@ function noticeDetail(option){
                // let $articlesObj = $('section>div.articles');
                 $articlesObj.empty();
                 $articlesObj.html(responseData);
-				window.scrollTo(0, 0);							
+				window.scrollTo(150, 150);							
             }
         }); 
        

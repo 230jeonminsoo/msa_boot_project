@@ -21,8 +21,8 @@ div.ntc_list>ul.ntc_top{
  border:1px solid gray;
   list-style-type:none;  
   padding-top:10px;
-  padding-bottom:10px;
-  padding-left:0px;
+  padding-bottom:10px; 
+  /*padding-left:0px; */
   margin:0 auto;
   width: 100%;
   font-size: 20px;
@@ -30,11 +30,11 @@ div.ntc_list>ul.ntc_top{
 
 /* 공지사항 상단 내부*/
 div.ntc_list>ul.ntc_top>li>span{
-	margin-left:13px;
-	margin-right:10px;
+	/* margin-left:13px;
+	margin-right:10px; */
 	text-align:center;
 	display: inline-block;
-	width:200px;
+	width:150px;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
@@ -48,19 +48,19 @@ div.ntc_list>div>ul{
   list-style-type:none;  
   padding-top:10px;
   padding-bottom:10px;
-  padding-left:0px;
+ /*  padding-left:0px; */
   margin:0 auto;
   width: 100%;
   font-size: 20px;
 }
 
 /*공지사항 각 리스트의 글자*/
-div.ntc_list>div>ul>li span{
-	margin-left:13px;
-	margin-right:10px;
+div.ntc_list>div>ul>li span{ 
+	/*margin-left:13px;
+	margin-right:10px; */
 	text-align:center;
 	display: inline-block;
-	width:200px;
+	width:150px;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
@@ -114,6 +114,24 @@ div.detail{
   display: inline-block; /* 추가 */
 }
 
-div.NoticeDetailButton>button{
-	visibility: hidden;
+
+div.NoticeDetailButton{
+	display:none;
 }  
+
+
+fieldset>div.ntc_list>button.myNoticerm{
+	background-color:white;
+	 border: 2px solid #77af9c;
+	 padding:10px;
+	 margin:10px;
+	 position: relative;
+}
+
+fieldset>div.ntc_list>button.myNoticerm:hover{
+     color: black;
+     letter-spacing: 2px;
+     transform: scale(1.2);
+     cursor: pointer;
+     font-weight: bold;
+}
