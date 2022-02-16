@@ -49,13 +49,17 @@ public class CustomerService {
 		dao.modifyPwd(uIdx,pwd);
 	} 
 	
-	public void findPwd(String email, String password) throws ModifyException{
-		try {
-			dao.findByEmail(email);
-			dao.findPwd(email,password);
+	public void findPwd(String email, String password) throws ModifyException,FindException{
+		try {	
+			Customer c= dao.findByEmail(email);
+			if(c!=null) {
+				dao.findPwd(email,password);
+			}
+			throw new FindException();
 		} catch (FindException e) {
-			e.printStackTrace();
-		}		
+			throw new FindException(e.getMessage());
+		}	
+		
 	}
 }
 

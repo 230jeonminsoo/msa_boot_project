@@ -176,9 +176,13 @@ public class CustomerController {
 		try {
 			service.findPwd(email,password);
 			status = 1;
+		} catch (FindException e) {
+			e.printStackTrace();
+			resultMsg = e.getMessage();	
+			logger.info("컨트롤 리설트 메시디"+resultMsg);
 		} catch (ModifyException e) {
 			e.printStackTrace();
-			resultMsg = e.getMessage();
+			resultMsg = e.getMessage();	
 		}
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("status",status);
