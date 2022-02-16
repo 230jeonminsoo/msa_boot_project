@@ -1,13 +1,16 @@
 function modifyBoardSubmit($formObj){
-	$formObj.submit(function(){
-		let ajaxUrl = $(this).attr('action');		
-		let ajaxMethod = $(this).attr('method');
-		let sendData = $(this).serialize();	
-		console.log(sendData);
+	let $modifyBoardBt = $('fieldset.boardmodify>form>input[type=button]');
+	$modifyBoardBt.click(function(){
+		let formData = new FormData($formObj[0]);
+		formData.forEach(function (value, key) {
+			console.log(key + ":" + value);
+		});
 		$.ajax({
-			url:ajaxUrl,
-            method:ajaxMethod,
-            data:sendData,
+			url: './brdmodify',
+            method: 'post',
+			processData: false, //파일업로드용 설정
+			contentType: false, //파일업로드용 설정
+            data: formData, //파일업로드용 설정
 			success:function(responseData){
 				console.log(responseData);
 					let $articlesObj = $('section>div.articles');

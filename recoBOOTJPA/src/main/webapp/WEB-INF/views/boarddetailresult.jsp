@@ -35,25 +35,27 @@ $(function(){
 	
 	//이미지 다운로드후 보여주기
 	<%if(image != null){%>
-	let $img = $("div.brdDetail>ul.brdDetail>li>div.image>img");
-	$.ajax({
-		url: "./boarddownloadimage",
-		method:'get',
-		data:"imageFileName="+"<%=image%>",
-		
-		cache:false, //이미지 다운로드용 설정
-        xhrFields:{  //이미지 다운로드용 설정
-            responseType: 'blob'
-        },
-		success:function(responseData){
-			let url = URL.createObjectURL(responseData);
-			$img.attr('src', url); 														
-		},
-		error:function(jqXHR, textStatus){
-			alert("에러:" + jqXHR.status);
-		}
-	});
-<%}%>
+		let $img = $("div.brdDetail>ul.brdDetail>li>div.image>img");
+		$.ajax({
+			url: "./boarddownloadimage",
+			method:'get',
+			data:"imageFileName="+"<%=image%>",
+			
+			cache:false, //이미지 다운로드용 설정
+	        xhrFields:{  //이미지 다운로드용 설정
+	            responseType: 'blob'
+	        },
+			success:function(responseData){
+				let url = URL.createObjectURL(responseData);
+				$img.attr('src', url); 														
+			},
+			error:function(jqXHR, textStatus){
+				alert("에러:" + jqXHR.status);
+			}
+		});
+	<%}else{%>
+			$('div.brdDetail>ul.brdDetail>li>div.image').css('display','none');
+	<%}%>
 
 	//게시글 수정버튼 클릭시
 		boardModifyClick();
@@ -142,9 +144,9 @@ $(function(){
 	             --%>
 	         
 	         <hr>
+	         <div class="image"><img style="width:500px; height:500px;"></div>
 	         <div class="brdContent"><span id="brdContent"> 
-					<%=brdContent %></span></div>
-			<div class="image"><img></div>
+					<%=brdContent %></span></div>			
 		     <hr>
 		     <%if(brdAttachment != null){ %>
 				<div class="brdAttachment">첨부파일: <span id="brdAttachment"> <%=brdAttachment %></span></div>

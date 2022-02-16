@@ -47,7 +47,19 @@ public class IndexController {
 		}
 		
 		@GetMapping("/boardmodifypage")
-		public String boardmodify() {
+		public String boardmodify(int brdIdx,Model model) {
+			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
+			File dir = new File(saveDirectory);
+			//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
+			String[] imageFiles = dir.list(new FilenameFilter() {		
+				@Override
+				public boolean accept(File dir, String name) {
+					return name.contains("reco_board_"+brdIdx+"_image_");
+				}
+			});
+			if(imageFiles.length>0) {
+				model.addAttribute("image", imageFiles[0]);
+			}
 			return "boardmodify.jsp";
 		}
 		

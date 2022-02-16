@@ -263,26 +263,78 @@ public class BoardController {
 		
 		
 		@PostMapping("brdmodify")
-		public String boardModify(int brdIdx,int brdType, String brdTitle, String brdContent, String brdAttachment, Model model) {
-			Board b = new Board();
-			b.setBrdIdx(brdIdx);
-			b.setBrdType(brdType);
-			b.setBrdTitle(brdTitle);
-			b.setBrdContent(brdContent);
-			b.setBrdAttachment(brdAttachment);
-						
+		public String boardModify(@RequestPart (required = false) MultipartFile letterFiles,
+								int brdIdx,int brdType, String brdTitle, String brdContent, String brdAttachment, Model model) throws FindException {
 			try {
-				Board board= service.modifyBrd(b);
-				model.addAttribute("b", board);
-				return "boarddetailresult.jsp";
-			} catch (ModifyException e) {
-				e.printStackTrace();
-				return "failresult.jsp";
-			} catch (Exception e) { //왜 findException 오류나는지
-				e.printStackTrace();
-				return "failresult.jsp";
+				Board b = new Board();
+				b.setBrdIdx(brdIdx);
+				b.setBrdType(brdType);
+				b.setBrdTitle(brdTitle);
+				b.setBrdContent(brdContent);
+				
+				
+				
+				//원래 DB에 저장된 첨부파일 이름 가져오기
+				String originAttachment = service.findBrdByIdx(brdIdx).getBrdAttachment();
+				logger.info("컨트롤러 오리지널 파일 네임"+letterFiles.getOriginalFilename());
+				
+				if(letterFiles.getOriginalFilename() == "") { //attachment no 
+					b.setBrdAttachment(originAttachment);
+					logger.info("컨트롤러"+originAttachment);
+				}else { //attachment 
+					b.setBrdAttachment(letterFiles.getOriginalFilename());
+				}
+					Board board= service.modifyBrd(b);
+					model.addAttribute("b", board);
+					//데이터베이스에 내용저장 끝
+					
+					//첨부파일이 바뀔시 저장시작
+					String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
+					int wroteBoardNo = board.getBrdIdx();//저장된 글번호
+					
+					
+					//letterFiles 저장
+					if(letterFiles != null) {
+						long letterFileSize = letterFiles.getSize();
+						if(letterFileSize > 0) {
+							String letterOriginalFileName = letterFiles.getOriginalFilename();//letter파일 원본이름 얻기
+							logger.info("레터 파일이름:" + letterFiles.getOriginalFilename()+" 파일크기: " + letterFiles.getSize());
+							//저장할 파일 이름 지정한다 ex) reco_notice_글번호_letter_XXXX_원본이름
+							String letterName = "reco_notice_"+wroteBoardNo + "_letter_" + UUID.randomUUID() + "_" + letterOriginalFileName;
+							//letter파일 생성
+							File file2 = new File(saveDirectory, letterName);
+								try {
+									FileCopyUtils.copy(letterFiles.getBytes(), file2);
+								} catch (IOException e2) {
+									e2.printStackTrace();		
+									return "failresult.jsp";
+								}
+						}//end if(letterFileSize > 0) 
+					}//end if(letterFiles != null)	
+					
+					File dir = new File(saveDirectory);
+					if(board.getBrdAttachment() !=null) {
+						//첨부파일 저장소에서 letters이름 가져와서 returnMap에 넣기
+						String[] letterFileNames = dir.list(new FilenameFilter() {
+							
+							@Override
+							public boolean accept(File dir, String name) {
+								return name.contains("reco_notice_"+board.getBrdIdx()+"_letter_");//b.getBrdAttachment());
+							}
+						});
+						if(letterFileNames.length>0) {
+							model.addAttribute("letter", letterFileNames[0]);
+						}
+					}			
+					return "boarddetailresult.jsp";
+				} catch (ModifyException e) {
+					e.printStackTrace();
+					return "failresult.jsp";
+				} catch (Exception e) { //왜 findException 오류나는지
+					e.printStackTrace();
+					return "failresult.jsp";
+				}
 			}
-		}
 
 		
 		@GetMapping("brdremove")
