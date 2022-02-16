@@ -193,7 +193,7 @@ String uNickName = c.getUNickName();
        
 <div class="commentwrap">       
    <!-- 게시글에 달린 댓글 갯수 -->   
-<div class="size">댓글 <%=comments.size()%> </div><br>
+<div class="size">댓글 <%=b.getCmtCount()%> </div><br>
    <!-- 게시글에 달린 댓글 갯수 end-->   
 
 
@@ -213,8 +213,8 @@ String uNickName = c.getUNickName();
          	  
          <!-- 댓글 시작 -->	  
          	
-         	
-         	<%if(comments.size() != 0) {%>
+       
+         	<%if(b.getCmtCount() != 0) {%>
 	         	<% for(Comment comment: comments) {       	
 	         			int cmtIdx = comment.getCmtIdx();
 	         			int cmtParentIdx = comment.getCmtParentIdx();
