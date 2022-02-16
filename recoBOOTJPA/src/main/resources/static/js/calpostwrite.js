@@ -45,7 +45,7 @@ inputImage.addEventListener("change", e => {
 
 // 썸네일 삭제 클릭하는 경우
 $('.dellink').on('click', function () {
-    $("#input-image").empty();
+    $("#preview-image").remove();
     $("#input-image").val("");
 });
 
