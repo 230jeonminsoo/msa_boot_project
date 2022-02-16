@@ -231,9 +231,13 @@ String uNickName = c.getUNickName();
 								<div class="cmt"><%=cmtContent %></div> 
 							
 							<div class="community_comment_button">
-								<button class="comment_comment_add" id="<%=cmtIdx %>">대댓글 달기</button>
-		         				<button class="comment_modify" id="<%=cmtIdx %>">대댓글 수정</button>
-								<button class="comment_remove" id="<%=cmtIdx %>">대댓글 삭제</button>
+								<%if(! c.getUNickName().equals(cmtUNickName)) {%> 
+									<button class="comment_comment_add" id="<%=cmtIdx %>">대댓글 달기</button>
+								<%} %> 	
+		         				 <%if(c.getUNickName().equals(cmtUNickName)) {%> 
+			         				<button class="comment_modify" id="<%=cmtIdx %>">대댓글 수정</button>
+									<button class="comment_remove" id="<%=cmtIdx %>">대댓글 삭제</button>
+								 <%} %> 
 	         				</div>
 
 							<div class="comment_modify_input" id="<%=cmtIdx%>">
@@ -262,9 +266,13 @@ String uNickName = c.getUNickName();
 	         			 <span class="cmt" id="cmtIdx"><%=cmtIdx %></span><strong><div class="cmt"><%=cmtUNickName %></div> <div class="cmt"><%=cmtCreateAt %></div></strong> 
 	         		   <div class="cmt"><%=cmtContent %></div>
 	         		   	<div class="community_comment_button">
-	         		   		<button class="comment_comment_add" id="<%=cmtIdx %>">대댓글 달기</button>
-	         		   		<button class="comment_modify" id="<%=cmtIdx %>">댓글 수정</button>
-		         		 	<button class="comment_remove" id="<%=cmtIdx %>">댓글 삭제</button>
+	         		   	<%if(! c.getUNickName().equals(cmtUNickName)) {%> 
+	         		   		<button class="comment_comment_add" id="<%=cmtIdx %>">대댓글 달기</button>   
+	         		   	<%} %>	
+	         		   		<%if(c.getUNickName().equals(cmtUNickName)) {%> 
+		         		   		<button class="comment_modify" id="<%=cmtIdx %>">댓글 수정</button>
+			         		 	<button class="comment_remove" id="<%=cmtIdx %>">댓글 삭제</button>
+		         		 	 <%} %> 
 		         		 </div>
 		         		 	<div class="comment_modify_input" id="<%=cmtIdx%>">
 								<input style="width:300px;height:30px; resize:none;" name="cmtContent" id="<%=cmtIdx %>" value="<%=cmtContent%>" required>
