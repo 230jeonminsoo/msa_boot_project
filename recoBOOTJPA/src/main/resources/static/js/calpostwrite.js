@@ -34,6 +34,7 @@ function addCalPostClick(){
         }
         // reader가 이미지 읽도록 하기
         reader.readAsDataURL(input.files[0])
+        document.querySelector('.dellink').style.display = 'block'; // 이미지 삭제 링크 표시
     }
 }
 // input file에 change 이벤트 부여
@@ -41,6 +42,13 @@ const inputImage = document.getElementById("input-image")
 inputImage.addEventListener("change", e => {
     readImage(e.target)
 })
+
+// 썸네일 삭제 클릭하는 경우
+$('.dellink').on('click', function () {
+    $("#input-image").empty();
+    $("#input-image").val("");
+});
+
 	
 	
 /*-calpostwrite화면에서 캘린더보기 클릭했을때-*/
