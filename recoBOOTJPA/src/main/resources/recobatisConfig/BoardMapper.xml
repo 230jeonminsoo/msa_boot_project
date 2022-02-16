@@ -48,7 +48,7 @@
 	
 	<select id="findBrdByIdx" parameterType="int" resultMap="boardResultMap">
 		SELECT * FROM (SELECT b.brd_idx,cmt_idx, cmt_content, nvl(c.cmt_parentidx, 0) cmt_parentidx,  cmt_createat, cmt_unickname,
-		brd_type, brd_title, brd_content, brd_attachment, brd_createat, brd_thumbup, brd_unickname, brd_views
+		brd_type, brd_title, brd_content, brd_attachment, brd_createat, brd_thumbup, brd_unickname, brd_views,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_count
 		FROM comments c RIGHT JOIN  board b ON b.brd_Idx = c.brd_Idx
 		WHERE  b.brd_idx=#{brdIdx})
 		START WITH  cmt_parentidx = 0
