@@ -68,7 +68,7 @@ public class CustomerDAOOracle implements CustomerDAOInterface {
 			}else {
 				throw new FindException("이메일에 해당하는 고객이 없습니다");
 			}
-		} catch (Exception e) {
+		} catch (FindException e) {
 			e.printStackTrace();
 			throw new FindException(e.getMessage());
 		}finally {

@@ -3,11 +3,11 @@ function newPwdSend(){
 	$('div.findPwd>button.findPwd').click(function(){
 	let email = $('div.findPwd>input[name=findPwd]').val().trim();
 	let password = $('div.findPwd>input[name=findPwdSec]').val().trim();
-	if(email =''){
+	if(email ==''){
 		alert("email은 필수입력항목입니다!");
 		return false;
 	}
-	if(password=''){
+	if(password==''){
 		alert("2차비밀번호는 필수입력항목입니다!");
 		return false;
 	}

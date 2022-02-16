@@ -50,7 +50,12 @@ public class CustomerService {
 	} 
 	
 	public void findPwd(String email, String password) throws ModifyException{
-		dao.findPwd(email,password);
+		try {
+			dao.findByEmail(email);
+			dao.findPwd(email,password);
+		} catch (FindException e) {
+			e.printStackTrace();
+		}		
 	}
 }
 

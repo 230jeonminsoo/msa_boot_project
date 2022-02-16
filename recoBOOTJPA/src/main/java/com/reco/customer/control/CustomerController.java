@@ -176,7 +176,7 @@ public class CustomerController {
 		try {
 			service.findPwd(email,password);
 			status = 1;
-		} catch (Exception e) {
+		} catch (ModifyException e) {
 			e.printStackTrace();
 			resultMsg = e.getMessage();
 		}
