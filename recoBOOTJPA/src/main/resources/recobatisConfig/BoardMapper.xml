@@ -62,7 +62,7 @@
 	<select id="findBrdByTitle" parameterType="String" resultType="Board">
 		select *
     FROM(SELECT rownum r, d.*
-        FROM(SELECT b.brd_Idx, b.brd_attachment, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_comment
+        FROM(SELECT b.brd_Idx, b.brd_attachment, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_count
 		FROM board b WHERE brd_title like '%${word}%' ORDER BY b.brd_Idx DESC) d
   )
   where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
@@ -71,7 +71,7 @@
 	<select id="findBrdByWord" parameterType="String" resultType="Board">
 		select *
 		FROM(SELECT rownum r, d.*
-		    FROM(SELECT b.brd_Idx, b.brd_attachment, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_comment
+		    FROM(SELECT b.brd_Idx, b.brd_attachment, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_count
 		        FROM board b WHERE brd_title like '%${word}%'  or brd_content like '%${word}%' ORDER BY b.brd_Idx DESC) d
 		    )
 		where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
@@ -80,7 +80,7 @@
 	<select id="findBrdByUNickName" parameterType="String" resultType="Board">
 		select *
     FROM(SELECT rownum r, d.*  
-  FROM(SELECT b.brd_Idx, b.brd_attachment, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_comment
+  FROM(SELECT b.brd_Idx, b.brd_attachment, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_count
 		FROM board b WHERE brd_UNickName like '%${word}%' ORDER BY b.brd_Idx DESC) d
    )
    where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
