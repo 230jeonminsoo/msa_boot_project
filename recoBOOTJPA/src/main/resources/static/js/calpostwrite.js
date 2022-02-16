@@ -14,9 +14,9 @@ function addCalPostClick(){
 	                let $articlesObj = $('section>div.articles');
 	                $articlesObj.empty();
 	                $articlesObj.html(responseData);
-			            }
-		        }); 
-		        return false;
+		            }
+	        }); 
+	        return false;
 		});
 	}
 	

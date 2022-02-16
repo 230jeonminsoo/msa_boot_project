@@ -2,9 +2,12 @@
 
 //탭메뉴에서 add 클릭했을때 
 function tabaddClick(){
-	$('div.tab>ul>li>a[id=clickadd]').click(function(){
-		let url = './html/calInfowrite.html';
-        let target = 'category+Thbumbnail';
+	let $tabadd = $('div.tab>ul>li>a[id=clickadd]');
+	console.log($tabadd);
+	$tabadd.click(function(){
+		/*let url = './html/calInfowrite.html';*/
+		/*let url = 'calInfowrite.jsp';*/
+        /*let target = 'category+Thbumbnail';
 
 		let _width = '400';
 		let _height = '200';
@@ -13,7 +16,22 @@ function tabaddClick(){
 		let _left = Math.ceil((window.screen.width - _width)/2);
 		
 		let features = ('width='+ _width + ',height='+ _height +',left='+ _left + ',top='+ _top);
-        window.open(url, target, features);
+        window.open(url, target, features);*/
+	
+		
+        //let menuHref = $(this).attr('id="1"'); 
+        let menuHref = $(this).attr('href'); 
+		let ajaxUrl = './html/calInfowrite.html';  
+        
+		$.ajax({
+            url: ajaxUrl,
+            method : 'get',
+            success:function(responseData){
+                let $articlesObj = $('section>div.articles');
+                $articlesObj.empty();
+                $articlesObj.html(responseData);
+		            }
+	        }); 
 		return false;
 	});
 }
@@ -30,7 +48,7 @@ function calMenuClick(){ //callistresult.jsp
 	console.log('-------------');*/
 	$calMenuObj.click(function(){
 		let menuHref = $(this).attr('href'); 
-        console.log("메뉴 href=" + menuHref);
+        //console.log("메뉴 href=" + menuHref); //81번행과 중복 
 		
         let ajaxUrl = ""; 
 		switch(menuHref){

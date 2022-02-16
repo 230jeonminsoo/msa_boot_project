@@ -5,7 +5,7 @@ fieldset{
     border:rgb(192, 192, 192) 3px solid;
     max-width: 200px;
     height: 300px;
-    background-color: seashell;
+    background-color: rgb(235, 237, 237);
   }
 
   .input_image{

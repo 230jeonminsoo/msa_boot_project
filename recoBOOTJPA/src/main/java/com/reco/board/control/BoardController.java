@@ -63,15 +63,16 @@ public class BoardController {
 		
 		String brdUNickName = c.getUNickName();
 		Board b = new Board();
-		b.setBrdIdx(brdType);
+		b.setBrdType(brdType);
 		b.setBrdTitle(brdTitle);
-		b.setBrdContent(brdContent);	
+		b.setBrdContent(brdContent);
+		b.setBrdUNickName(brdUNickName);
 		if(letterFiles != null) {
 			b.setBrdAttachment(letterFiles.getOriginalFilename());
 		}else {
 			b.setBrdAttachment(brdAttachment); //?
 		}
-		b.setBrdUNickName(brdUNickName);
+		
 		
 		try{
 			Board board = service.addBrd(b);

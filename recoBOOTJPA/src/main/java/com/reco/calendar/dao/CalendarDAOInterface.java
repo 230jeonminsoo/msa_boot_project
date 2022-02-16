@@ -8,6 +8,7 @@ import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
 import com.reco.exception.RemoveException;
+import com.reco.notice.vo.Notice;
 
 public interface CalendarDAOInterface {
 	/**
@@ -15,7 +16,7 @@ public interface CalendarDAOInterface {
 	 * @param calendarInfo
 	 * @throws AddException
 	 */
-	public CalInfo addCal(CalInfo calInfo) throws AddException;
+	public CalInfo addCal(CalInfo calinfo) throws AddException;
 
 
 	/**
@@ -81,6 +82,8 @@ public interface CalendarDAOInterface {
 	 * @throws RemoveException
 	 */
 	public void removeCalPost(String calDate) throws RemoveException;
+
+
 
 
 

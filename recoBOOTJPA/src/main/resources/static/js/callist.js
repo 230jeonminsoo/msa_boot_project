@@ -35,7 +35,7 @@ function calThumbnailClick(){
 
 function caladdClick(){
 	$('section>div.articles>ul>li>div.title_add>a>img').click(function(){
-		let url = './html/calInfowrite.html';
+		/*let url = './html/calInfowrite.html';
         let target = 'category+Thbumbnail';
 
         let _width = '400';
@@ -45,7 +45,21 @@ function caladdClick(){
 		let _left = Math.ceil((window.screen.width - _width)/2);
 		
 		let features = ('width='+ _width + ',height='+ _height +',left='+ _left + ',top='+ _top);
-        window.open(url, target, features);
+        window.open(url, target, features);*/
+
+		let menuHref = $(this).attr('href'); 
+		let ajaxUrl = './html/calInfowrite.html';  
+        
+		$.ajax({
+            url: ajaxUrl,
+            method : 'get',
+            success:function(responseData){
+                let $articlesObj = $('section>div.articles');
+                $articlesObj.empty();
+                $articlesObj.html(responseData);
+		            }
+	        }); 
+
 		return false;
 	});
 }
