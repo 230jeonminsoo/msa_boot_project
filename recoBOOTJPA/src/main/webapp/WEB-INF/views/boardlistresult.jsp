@@ -153,7 +153,7 @@ int uAuthCode = c.getUAuthCode();
 %>
 <% 		if(uAuthCode == 1) {%>
 			
-	<div class="board_write_button" style= "visibility:hidden">
+	<div class="board_write_button" style= "visibility:visible">
 		<label>
 			<img src="./images/pencil.png">글쓰기
 		</label>	

@@ -41,6 +41,7 @@ import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
 import com.reco.exception.RemoveException;
+import com.reco.notice.vo.Notice;
 
 import net.coobird.thumbnailator.Thumbnailator;
 @Controller
@@ -288,12 +289,14 @@ public class BoardController {
 		public String boardRemove(int brdIdx, Model model) {
 			try {
 				service.removeBrd(brdIdx);
+				PageDTO<Board> pageDTO;
+				pageDTO = service.findBrdAll();
+				model.addAttribute("pageDTO", pageDTO);
 				return "boardlistresult.jsp";
-			} catch (RemoveException e) {
+			} catch (RemoveException | FindException e) {
 				System.out.println(e.getMessage());
-				model.addAttribute("status", 0);
 				model.addAttribute("msg", e.getMessage());
-				return "failresult.jsp";
+				return "boardlistresult.jsp";
 			}
 		}
 		

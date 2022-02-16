@@ -99,8 +99,8 @@
 		<selectKey keyProperty="cmtIdx" resultType="int" order="BEFORE">
 			select NVL(MAX(c.cmt_idx),0)+1 from comments c join board b on c.brd_idx=b.brd_idx where b.brd_idx=#{brdIdx}
 		</selectKey>
-		insert into comments(brd_idx,cmt_idx,cmt_content,cmt_parentidx,cmt_UNickName) 
-		values(#{brdIdx},#{cmtIdx},#{cmtContent},#{cmtParentidx},#{cmtUNickName})		
+		insert into comments(brd_idx,cmt_idx,cmt_content,cmt_parentIdx,cmt_UNickName) 
+		values(#{brdIdx},#{cmtIdx},#{cmtContent},#{cmtParentIdx},#{cmtUNickName})		
 	</insert>
 	
 	<update id="modifyBrd" parameterType="Board">
@@ -108,7 +108,7 @@
 	</update>
 	
 	<update id="modifyCmt" parameterType="Comment">
-		update comments set cmt_content=? where brd_idx=? and cmt_idx=#{cmtIdx}
+		update comments set cmt_content= #{cmtContent} where brd_idx=#{brdIdx} and cmt_idx=#{cmtIdx}
 	</update>
 	
 	<delete id="removeCmtAll"  parameterType="int">

@@ -33,22 +33,25 @@ function boardModifyClick(){
 function boardRemoveClick(){
 	let $removeBtObj=$('button.board_remove');
 	$removeBtObj.click(function(){
-		let $brdIdxValue = $(this).attr("id");
-		let ajaxUrl = "./brdremove";
-        $.ajax({
-            url: ajaxUrl,
-			method: ajaxMethod,
-			data: {brdIdx:$brdIdxValue},
-            success:function(responseData){
-				alert("게시글을 삭제하시겠습니까?");
-				 let $articlesObj = $('section>div.articles');
-               	 $articlesObj.empty();
-                 $articlesObj.html(responseData);
-				 window.scrollTo(0, 0);
-            }
-        });
-        return false;
-	});
+		if (confirm("삭제하시겠습니까??") == true){
+			let $brdIdxValue = $(this).attr("id");
+			let ajaxUrl = "./brdremove";
+	        $.ajax({
+	            url: ajaxUrl,
+				method: ajaxMethod,
+				data: {brdIdx:$brdIdxValue},
+	            success:function(responseData){
+					 let $articlesObj = $('section>div.articles');
+	               	 $articlesObj.empty();
+	                 $articlesObj.html(responseData);
+					 window.scrollTo(0, 0);
+	            }
+	        });
+		}else{
+	        return false;
+		}
+		return false;
+    });
 }
 
 
@@ -136,25 +139,27 @@ function commentModifyClick(){
 
 function commentRemoveClick(){
 	$('button.comment_remove').click(function(){
-		let ajaxUrl = "./cmtremove";
-        let method = "get";
-		let $brdIdx = $('#brdIdx').html().trim();
-		let $cmtIdx = $(this).parent().parent().children('span').html();
-		console.log($brdIdx);
-		console.log($cmtIdx);
-		$.ajax({
-            url: ajaxUrl,
-            method: method,
-			data: {brdIdx:$brdIdx, cmtIdx:$cmtIdx},
-            success:function(responseData){
-				alert("댓글을 삭제하시겠습니까?");
-				let $articlesObj = $('section>div.articles');
-                $articlesObj.empty();
-                $articlesObj.html(responseData);
-				
-            }
-        });
-        return false;
+			if (confirm("삭제하시겠습니까??") == true){
+				let ajaxUrl = "./cmtremove";
+		        let method = "get";
+				let $brdIdx = $('#brdIdx').html().trim();
+				let $cmtIdx = $(this).parent().parent().children('span').html();
+				console.log($brdIdx);
+				console.log($cmtIdx);
+				$.ajax({
+		            url: ajaxUrl,
+		            method: method,
+					data: {brdIdx:$brdIdx, cmtIdx:$cmtIdx},
+		            success:function(responseData){
+						let $articlesObj = $('section>div.articles');
+		                $articlesObj.empty();
+		                $articlesObj.html(responseData);						
+		            }
+		        });	
+			}else{
+				 return false;
+		}		
+	    return false;
 	});	
 }
 

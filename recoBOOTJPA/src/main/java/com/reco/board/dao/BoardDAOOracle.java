@@ -373,12 +373,10 @@ public class BoardDAOOracle implements BoardDAOInterface {
 		SqlSession session =null;
 		try {
 			session = sqlSessionFactory.openSession();
+			session.delete("com.reco.board.BoardMapper.removeCmtAll", brdIdx);
 			int deleterow = session.delete("com.reco.board.BoardMapper.removeBrd",brdIdx);
-	
 			if(deleterow == 0) { 
 				System.out.println("해당 게시글이 존재하지 않습니다.");
-			}else {
-				session.delete("com.reco.board.BoardMapper.removeCmtAll", brdIdx);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -387,9 +385,8 @@ public class BoardDAOOracle implements BoardDAOInterface {
 				session.close();
 			}
 		}		
-	}
-	
-	
+	}	
+							
 	
 	@Override
 	public void removeCmt(int brdIdx, int cmtIdx) throws RemoveException {
