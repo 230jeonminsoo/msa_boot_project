@@ -41,6 +41,8 @@ int ntcViews = n.getNtcViews();
 					alert("에러:" + jqXHR.status);
 				}
 			});
+		<%}else{%>
+			$('div.ntcDetail>ul.ntcDetail>li>div.image').css('display','none');
 		<%}%>
 	
 		//수정버튼 클릭시

@@ -40,6 +40,8 @@ $(function(){
 				alert("에러:" + jqXHR.status);
 			}
 		});
+	<%}else{%>
+		$('div.ntcDetail>ul.ntcDetail>li>div.image').css('display','none');
 	<%}%>
 	let $formObj = $('fieldset form');
 	//글수정버튼클릭시 수정된글 보낸후 수정한 글 다시 보기
@@ -66,7 +68,7 @@ $(function(){
 		</table>
 		글번호: <input type ="text" id="ntcIdx" name="ntcIdx" value="<%=ntcIdx %>" readonly>   
 		<br>
-		<div class="image"><img style="width:300px; height:300px;"></div>
+		<%if (image !=null){%><div class="image"><img style="width:300px; height:300px;"></div><%} %>
 		<textarea rows="2" cols="100" style="resize:none;" name="ntcTitle" id="ntcTitle" placeholder="<%=ntcTitle %>" required><%=ntcTitle %></textarea> 	       
 		<table>
 			<tr><td><textarea rows="20" cols="100" style="resize:none;" name="ntcContent" id="ntcContent" placeholder="<%=ntcContent %>" required><%=ntcContent %></textarea></td></tr>		
