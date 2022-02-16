@@ -170,11 +170,11 @@ public class CustomerController {
 	
 	@GetMapping("/findPwd")
 	@ResponseBody
-	public Map<String,Object> findPwd(String email){
+	public Map<String,Object> findPwd(String email, String password){
 		String resultMsg = "";
 		int status = 0;
 		try {
-			service.findPwd(email);
+			service.findPwd(email,password);
 			status = 1;
 		} catch (Exception e) {
 			e.printStackTrace();

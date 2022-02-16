@@ -2,11 +2,12 @@
 function newPwdSend(){
 	$('div.findPwd>button.findPwd').click(function(){
 	let email = $('div.findPwd>input[name=findPwd]').val().trim();
+	let password = $('div.findPwd>input[name=findPwdSec]').val().trim();
 	console.log(email);
 		$.ajax({
 			url: './findPwd',
 			method: 'get',
-			data:{email:email},
+			data:{email:email,password:password},
 			success: function(responseObj){
 				if(responseObj.status == 0){//전송실패
 					//alert(responseObj.msg);

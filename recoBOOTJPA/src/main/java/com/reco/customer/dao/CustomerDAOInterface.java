@@ -49,6 +49,6 @@ public interface CustomerDAOInterface {
 	 * @param email
 	 * @throws ModifyException
 	 */
-	public void findPwd(String email) throws ModifyException;
+	public void findPwd(String email, String password) throws ModifyException;
 	
 }

@@ -49,8 +49,8 @@ public class CustomerService {
 		dao.modifyPwd(uIdx,pwd);
 	} 
 	
-	public void findPwd(String email) throws ModifyException{
-		dao.findPwd(email);
+	public void findPwd(String email, String password) throws ModifyException{
+		dao.findPwd(email,password);
 	}
 }
 

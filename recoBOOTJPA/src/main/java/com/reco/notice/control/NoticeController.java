@@ -216,7 +216,7 @@ public class NoticeController {
 				}
 			});
 			
-			if(imageFiles!= null) {
+			if(imageFiles.length>0) {
 				model.addAttribute("image", imageFiles[0]);
 			}
 			return "noticedetailresult.jsp";

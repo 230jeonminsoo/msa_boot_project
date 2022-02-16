@@ -1,8 +1,12 @@
 package com.reco.control;
 
+import java.io.File;
+import java.io.FilenameFilter;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,7 +24,20 @@ public class IndexController {
 //		}
 		
 		@GetMapping("/noticemodifypage")
-		public String noticemodify() {
+		public String noticemodify(int ntcIdx,Model model) {
+			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
+			File dir = new File(saveDirectory);
+			//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
+			String[] imageFiles = dir.list(new FilenameFilter() {		
+				@Override
+				public boolean accept(File dir, String name) {
+					return name.contains("reco_notice_"+ntcIdx+"_image_");
+				}
+			});
+			
+			if(imageFiles.length>0) {
+				model.addAttribute("image", imageFiles[0]);
+			}
 			return "noticemodify.jsp";
 		}
 		
