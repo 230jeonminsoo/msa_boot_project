@@ -11,6 +11,7 @@ import com.reco.board.dao.BoardDAOInterface;
 import com.reco.board.vo.Board;
 import com.reco.board.vo.Comment;
 import com.reco.dto.PageDTO;
+import com.reco.dto.PageDTO2;
 import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
@@ -36,13 +37,18 @@ public class BoardService {
 	
 	
 	
-	public Board addBrd(Board b) throws AddException,FindException{
-		return dao.addBrd(b);
+	public PageDTO2<Board> addBrd(Board b) throws AddException,FindException{
+		int brdIdx =  dao.addBrd(b);
+		PageDTO2<Board> PageDTO2 = findBrdByIdx(brdIdx);
+		return PageDTO2;
+		
 	}
 	
 	
-	public Board addCmt(Comment comment) throws AddException{
-		return dao.addCmt(comment);
+	public PageDTO2<Board> addCmt(Comment comment) throws AddException, FindException{
+		int brdIdx = dao.addCmt(comment);
+		PageDTO2<Board> PageDTO2 = findBrdByIdx(brdIdx);
+		return PageDTO2;
 	}
 	
 	
@@ -61,15 +67,23 @@ public class BoardService {
 	}
 	
 	
-	public Board findBrdByIdx(int brdIdx) throws FindException{
-		try {
-			Board b =dao.findBrdByIdx(brdIdx);	
-			return b;
-		} catch (FindException e) {
-			throw new FindException("해당글이 없습니다.");
-		}
+	public PageDTO2<Board> findBrdByIdx(int brdIdx) throws FindException{
+		PageDTO2<Board> pageDTO2 =  findBrdByIdx(brdIdx, 1);
+		System.out.println("findBrdByIdxservice" + pageDTO2);
+		return pageDTO2;
 	}
 	
+	public PageDTO2<Board> findBrdByIdx(int brdIdx, int cp) throws FindException{
+		String url= "/brddetail";
+		int totalCnt = dao.findCmtCount(brdIdx);
+		Board b =dao.findBrdByIdx(brdIdx, cp, PageDTO2.CNT_PER_PAGE);
+		//System.out.println("serviceBoard" + b);
+		List<Comment> comments = b.getComments();
+		PageDTO2<Board> pageDTO2 = new PageDTO2<>(url, cp, totalCnt, b, comments);
+		//System.out.println("servicepageDTO2" +pageDTO2);
+		return pageDTO2;
+	
+}
 	
 	//자유게시판 제목 검색
 	public PageDTO<Board> findBrdByTitle(String word, String f, int currentPage) throws FindException{
@@ -111,10 +125,13 @@ public class BoardService {
 	}
 	
 
-	public Board modifyBrd(Board b) throws ModifyException{
-		return dao.modifyBrd(b);
+	public void modifyBrd(Board b) throws ModifyException, FindException{
+//		int brdIdx = dao.modifyBrd(b);
+//		PageDTO2<Board> board = findBrdByIdx(brdIdx);
+//		return board;
+	    dao.modifyBrd(b);
 	}
-	
+
 	public void modifyCmt(Comment comment) throws ModifyException{
 		dao.modifyCmt(comment);
 	}

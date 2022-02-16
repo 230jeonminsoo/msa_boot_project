@@ -1,3 +1,5 @@
+<%@page import="com.reco.dto.PageDTO2"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.reco.customer.vo.Customer"%>
 <%@page import="java.util.List"%>
 <%@page import="com.reco.board.vo.Comment"%>
@@ -14,7 +16,10 @@
 
  
 <%
-Board b = (Board)request.getAttribute("b");
+//Board b = (Board)request.getAttribute("b");
+//List<Comment> comments = b.getComments();
+PageDTO2<Board> pageDTO2 = (PageDTO2)request.getAttribute("PageDTO2");
+Board b = pageDTO2.getBoard();
 int brdIdx = b.getBrdIdx();
 int brdType = b.getBrdType();
 String brdTitle = b.getBrdTitle();
@@ -24,7 +29,11 @@ int brdThumbUp = b.getBrdThumbUp();
 Date brdCreateAt = b.getBrdCreateAt();
 String brdContent = b.getBrdContent();
 String brdAttachment = b.getBrdAttachment();
-List<Comment> comments = b.getComments();
+
+
+List<Comment> comments = new ArrayList<>();
+comments = pageDTO2.getComments();
+
 %> 
 <%String image = (String)request.getAttribute("image"); %>
 <%String letter = (String)request.getAttribute("letter"); %>    
@@ -195,7 +204,7 @@ String uNickName = c.getUNickName();
        
 <div class="commentwrap">       
    <!-- 게시글에 달린 댓글 갯수 -->   
-<div class="size">댓글 <%=b.getCmtCount()%> </div><br>
+<div class="size">댓글 <%=pageDTO2.getTotalCnt()%> </div><br>
    <!-- 게시글에 달린 댓글 갯수 end-->   
 
 
@@ -216,7 +225,7 @@ String uNickName = c.getUNickName();
          <!-- 댓글 시작 -->	  
          	
        
-         	<%if(b.getCmtCount() != 0) {%>
+         	<%if(pageDTO2.getTotalCnt() != 0) {%>
 	         	<% for(Comment comment: comments) {       	
 	         			int cmtIdx = comment.getCmtIdx();
 	         			int cmtParentIdx = comment.getCmtParentIdx();
@@ -304,6 +313,27 @@ String uNickName = c.getUNickName();
 					<span>댓글이 없습니다.</span>
 				
 			<%} %> 
+<br>
+<br>			
+<%if(pageDTO2 != null) {%>
+<div class="pagegroup">
+		 <%  
+		 String backContextPath = request.getContextPath();
+		 if(pageDTO2.getStartPage() > 1){%>			
+		 	<span class="<%= backContextPath%><%=pageDTO2.getUrl()%>/<%=pageDTO2.getStartPage()-1%> active">prev</span>
+		 <%} %>
+ 
+ 		<%	for(int i = pageDTO2.getStartPage() ; i<=pageDTO2.getEndPage() ; i++){ %>
+			<span class="<%= backContextPath%><%=pageDTO2.getUrl() %>/<%=i%> <%if(i != pageDTO2.getCurrentPage()){ %>active<%}%>"><%=i%></span>
+		<%}%>
+		
+		<% 
+		if(pageDTO2.getEndPage() < pageDTO2.getTotalPage()){%>
+			<span class="<%= backContextPath%><%=pageDTO2.getUrl()%>/<%=pageDTO2.getEndPage()+1%> active">next</span>
+		<%} %>
+</div>
+<%} %>
+
                   	
 </div>
     <!--댓글 끝--> 	

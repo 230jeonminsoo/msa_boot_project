@@ -10,7 +10,7 @@
 </resultMap>
 	
 	<select id="findCount" resultType="int">
-	select COUNT(*) from board
+		SELECT COUNT(*) from board
 	</select>
 	
 	<select id="findCountWord"  resultType="int" parameterType="string">
@@ -28,6 +28,11 @@
 	<select id="findCountUNickName" resultType="int" parameterType="String">
 		SELECT COUNT(*) FROM board WHERE brd_UNickName like '%${word}%'
 	</select>
+	
+	<select id="findCmtCount" resultType="int" parameterType="int">
+		SELECT COUNT(*) FROM comments WHERE brd_idx=#{brdIdx}
+	</select>
+	
 	<select id="findBrdAll" parameterType="map" resultType="Board">
 		select *
 	   FROM (SELECT rownum r, d.*
@@ -46,13 +51,17 @@
   where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
 	</select>
 	
-	<select id="findBrdByIdx" parameterType="int" resultMap="boardResultMap">
-		SELECT * FROM (SELECT b.brd_idx,cmt_idx, cmt_content, nvl(c.cmt_parentidx, 0) cmt_parentidx,  cmt_createat, cmt_unickname,
-		brd_type, brd_title, brd_content, brd_attachment, brd_createat, brd_thumbup, brd_unickname, brd_views,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_count
-		FROM comments c RIGHT JOIN  board b ON b.brd_Idx = c.brd_Idx
-		WHERE  b.brd_idx=#{brdIdx})
-		START WITH  cmt_parentidx = 0
-		CONNECT BY PRIOR cmt_idx = cmt_parentidx
+	<select id="findBrdByIdx" parameterType="map" resultMap="boardResultMap">
+		select *
+   FROM (SELECT rownum r, d.* 
+    FROM(SELECT *  FROM (SELECT b.brd_idx,cmt_idx, cmt_content, nvl(c.cmt_parentidx, 0) cmt_parentidx,  cmt_createat, cmt_unickname,
+            brd_type, brd_title, brd_content, brd_attachment, brd_createat, brd_thumbup, brd_unickname, brd_views
+            FROM comments c RIGHT JOIN  board b ON b.brd_Idx = c.brd_Idx
+            WHERE  b.brd_idx=#{brdIdx})
+            START WITH  cmt_parentidx = 0
+            CONNECT BY PRIOR cmt_idx = cmt_parentidx) d
+        )
+where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
 	</select>
 	
 	<update id="plusViewCount" parameterType="int">

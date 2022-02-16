@@ -37,6 +37,7 @@ import com.reco.board.vo.Board;
 import com.reco.board.vo.Comment;
 import com.reco.customer.vo.Customer;
 import com.reco.dto.PageDTO;
+import com.reco.dto.PageDTO2;
 import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
@@ -57,7 +58,7 @@ public class BoardController {
 	
 	//자유게시판 게시글 추가
 	@PostMapping("brdadd")
-	public String boardAdd( @RequestPart (required = false) MultipartFile letterFiles
+	public Object boardAdd( @RequestPart (required = false) MultipartFile letterFiles
 							,@RequestPart (required = false) MultipartFile imageFile
 							,int brdType,String brdTitle,String brdContent,String brdAttachment,HttpSession session, Model model) {
 		Customer c = (Customer)session.getAttribute("loginInfo");
@@ -74,12 +75,14 @@ public class BoardController {
 			b.setBrdAttachment(brdAttachment); //?
 		}
 		
+		ModelAndView mnv = new ModelAndView();
 		
 		try{
-			Board board = service.addBrd(b);
+			PageDTO2<Board> PageDTO2 = service.addBrd(b);
+			Board board = PageDTO2.getBoard();
 //			int exbrd = board.getBrdIdx();
 //			System.out.println("테스트" + exbrd);
-			model.addAttribute("b", board);
+			mnv.addObject("PageDTO2", PageDTO2);
 			logger.info("컨트롤러 addbrd 1:" + board.getBrdIdx() + board.getBrdTitle() + board.getBrdContent());
 			
 			//파일을 저장할 폴더가 없다면 만들기. 있다면 만들지 않음
@@ -112,7 +115,7 @@ public class BoardController {
 							if(imageFile !=null) {
 								String contentType = imageFile.getContentType();
 								if(!contentType.contains("image/")) {  //이미지파일형식이 아닌 경우
-									return "failresult.jsp";
+									mnv.setViewName("failresult.jsp");
 								}
 							}
 						
@@ -146,7 +149,7 @@ public class BoardController {
 								FileCopyUtils.copy(letterFiles.getBytes(), file2);
 							} catch (IOException e2) {
 								e2.printStackTrace();		
-								return "failresult.jsp";
+								mnv.setViewName("failresult.jsp");
 							}
 					}//end if(letterFileSize > 0) 
 				}//end for
@@ -163,7 +166,7 @@ public class BoardController {
 					}
 				});
 				if(letterFileNames.length>0) {
-					model.addAttribute("letter", letterFileNames[0]);
+					mnv.addObject("letter", letterFileNames[0]);
 				}
 			}		
 			
@@ -176,31 +179,46 @@ public class BoardController {
 			});
 			
 			if(imageFiles.length > 0) {
-				model.addAttribute("image", imageFiles[0]);
+				mnv.addObject("image", imageFiles[0]);
 			}
 		
-			return "boarddetailresult.jsp";
+			mnv.setViewName("boarddetailresult.jsp");
 		} catch(AddException e){
 			e.getStackTrace();
 			model.addAttribute("msg", e.getMessage());
-			return "failresult.jsp";
+			mnv.setViewName("failresult.jsp");
 		} catch (FindException e) {
 			e.printStackTrace();
 			model.addAttribute("msg", e.getMessage());
-			return "failresult.jsp";
+			mnv.setViewName("failresult.jsp");
 		}
-		
+		return mnv;
 	}
 	
 	
 	//자유게시판 상세페이지 
-		@GetMapping("brddetail")
-		public Object boardDetail(int brdIdx, Model model) {
+		@GetMapping(value={"brddetail", "brddetail/{currentPage}"}) //model실패
+		public Object boardDetail(@PathVariable Optional<Integer> currentPage, 
+								  int brdIdx) {
+			
+			ModelAndView mnv = new ModelAndView();
 			try {
-				Board b = service.findBrdByIdx(brdIdx);
-				model.addAttribute("b", b);
+				PageDTO2<Board> pageDTO2;
+				if(currentPage.isPresent()) {
+					log.info("컨트롤러 현재페이지"+currentPage);
+					log.info("컨트롤러brdIdx" + brdIdx);
+					int cp = currentPage.get();
+					pageDTO2 = service.findBrdByIdx(brdIdx,cp);
+					log.info("댓글리스트"+pageDTO2.getComments()+"현재페이지"+pageDTO2.getCurrentPage());
+					
+				}else {
+					pageDTO2= service.findBrdByIdx(brdIdx);
+					log.info("findBrdByIdx콘트롤러pageDTO2" + pageDTO2);
+				}
+				mnv.addObject("PageDTO2", pageDTO2);
 				String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
 				File dir = new File(saveDirectory);
+				Board b = pageDTO2.getBoard();
 				if(b.getBrdAttachment() !=null) {
 				//첨부파일 저장소에서 letters이름 가져와서 returnMap에 넣기
 				String[] letterFileNames = dir.list(new FilenameFilter() {
@@ -211,7 +229,7 @@ public class BoardController {
 					}
 				});
 				if(letterFileNames.length>0) {
-					model.addAttribute("letter", letterFileNames[0]);
+					mnv.addObject("letter", letterFileNames[0]);
 				}
 			}
 				
@@ -225,13 +243,14 @@ public class BoardController {
 				});
 				
 				if(imageFiles.length>0) {
-					model.addAttribute("image", imageFiles[0]);
+					mnv.addObject("image", imageFiles[0]);
 				}
-				return "boarddetailresult.jsp";
+				mnv.setViewName("boarddetailresult.jsp");
 			} catch (FindException e) {
-				model.addAttribute("msg",e.getMessage());
-				return "failresult.jsp";
+				mnv.addObject("msg",e.getMessage());
+				mnv.setViewName("failresult.jsp");
 			}
+			return mnv;
 		}
 		
 		
@@ -262,7 +281,7 @@ public class BoardController {
 	
 		
 		
-		@PostMapping("brdmodify")
+		@PostMapping("brdmodify") //상세검색 문제 부분
 		public String boardModify(@RequestPart (required = false) MultipartFile letterFiles,
 								int brdIdx,int brdType, String brdTitle, String brdContent, String brdAttachment, Model model) throws FindException {
 			try {
@@ -274,8 +293,10 @@ public class BoardController {
 				
 				
 				
+				
 				//원래 DB에 저장된 첨부파일 이름 가져오기
-				String originAttachment = service.findBrdByIdx(brdIdx).getBrdAttachment();
+				PageDTO2<Board> getFileNameDTO = service.findBrdByIdx(brdIdx);
+				String originAttachment = getFileNameDTO.getBoard().getBrdAttachment();
 				logger.info("컨트롤러 오리지널 파일 네임"+letterFiles.getOriginalFilename());
 				
 				if(letterFiles.getOriginalFilename() == "") { //attachment no 
@@ -284,8 +305,11 @@ public class BoardController {
 				}else { //attachment 
 					b.setBrdAttachment(letterFiles.getOriginalFilename());
 				}
-					Board board= service.modifyBrd(b);
-					model.addAttribute("b", board);
+					service.modifyBrd(b);
+					PageDTO2<Board> PageDTO2 = service.findBrdByIdx(brdIdx);
+					Board board = PageDTO2.getBoard();
+					
+					model.addAttribute("PageDTO2", PageDTO2);
 					//데이터베이스에 내용저장 끝
 					
 					//첨부파일이 바뀔시 저장시작
@@ -325,7 +349,19 @@ public class BoardController {
 						if(letterFileNames.length>0) {
 							model.addAttribute("letter", letterFileNames[0]);
 						}
-					}			
+					}
+					//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
+					String[] imageFiles = dir.list(new FilenameFilter() {	
+						
+						@Override
+						public boolean accept(File dir, String name) {
+							return name.contains("reco_board_"+brdIdx+"_image_");
+						}
+					});
+					
+					if(imageFiles.length>0) {
+						model.addAttribute("image", imageFiles[0]);
+					}
 					return "boarddetailresult.jsp";
 				} catch (ModifyException e) {
 					e.printStackTrace();
@@ -539,16 +575,16 @@ public class BoardController {
 			comment.setCmtUNickName(cmtUNickName);
 			
 			try{
-			    Board board = service.addCmt(comment);
-			    model.addAttribute("b", board);
+				PageDTO2<Board> PageDTO2 = service.addCmt(comment);
+			    model.addAttribute("PageDTO2", PageDTO2);
 			    return "boarddetailresult.jsp";
-			}catch(AddException e){
+			}catch(AddException | FindException e){
 				e.getStackTrace();
 				return "failresult.jsp";
 			}
 		}
 		
-		@GetMapping("cmtmodify")
+		@GetMapping("cmtmodify") //상세검색 문제 부분
 		public String commentModify(int brdIdx, int cmtIdx, String cmtContent, Model model) {
 			Comment comment = new Comment();
 			comment.setBrdIdx(brdIdx);
@@ -557,8 +593,8 @@ public class BoardController {
 			
 			try {
 				service.modifyCmt(comment);
-				Board b = service.findBrdByIdx(brdIdx);
-				model.addAttribute("b", b);
+				PageDTO2<Board> PageDTO2 = service.findBrdByIdx(brdIdx);
+				model.addAttribute("PageDTO2", PageDTO2);
 				return "boarddetailresult.jsp";
 			} catch (ModifyException e) {
 				e.getStackTrace();
@@ -570,12 +606,12 @@ public class BoardController {
 		}
 		
 		
-		@GetMapping("cmtremove")
+		@GetMapping("cmtremove") //상세검색 문제 부분
 		public String commentRemove(int brdIdx, int cmtIdx, Model model) {
 			try {
 				service.removeCmt(brdIdx, cmtIdx);
-				Board b= service.findBrdByIdx(brdIdx);
-				model.addAttribute("b", b);
+				PageDTO2<Board> PageDTO2 = service.findBrdByIdx(brdIdx);
+				model.addAttribute("PageDTO2", PageDTO2);
 				return "boarddetailresult.jsp";
 			} catch (RemoveException e) {
 				e.getStackTrace();

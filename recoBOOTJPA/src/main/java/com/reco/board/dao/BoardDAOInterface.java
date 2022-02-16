@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.reco.board.vo.Board;
 import com.reco.board.vo.Comment;
+import com.reco.dto.PageDTO;
 import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
@@ -41,6 +42,15 @@ public interface BoardDAOInterface {
 	 *                         검색할 수 없는 경우 예외발생한다
 	 */
 	public Board findBrdByIdx(int intBrdIdx) throws FindException;  
+	
+	/**
+	 * 자유게시판 댓글 페이징한 상세보기 페이지
+	 * @param intBrdIdx
+	 * @param cp
+	 * @return
+	 * @throws FindException
+	 */
+	public Board findBrdByIdx(int intBrdIdx, int cp, int cntperpage) throws FindException; 
 	
 	/**
 	 * 글제목에 해당하는 글들을 검색한다
@@ -82,7 +92,7 @@ public interface BoardDAOInterface {
 	 * @param Board
 	 * @throws AddException
 	 */
-	public Board addBrd(Board board) throws AddException,FindException;
+	public int addBrd(Board board) throws AddException,FindException;
 	
 	
 	/**
@@ -90,7 +100,7 @@ public interface BoardDAOInterface {
 	 * @param cmtIdx
 	 * @throws RemoveException
 	 */
-	public Board addCmt(Comment comment) throws AddException;
+	public int addCmt(Comment comment) throws AddException;
 	
 	
 	/**
@@ -98,7 +108,7 @@ public interface BoardDAOInterface {
 	 * @param Board
 	 * @throws ModifyException
 	 */
-	public Board modifyBrd(Board board) throws ModifyException;
+	public void modifyBrd(Board board) throws ModifyException;
 	
 	
 	/**
@@ -168,5 +178,11 @@ public interface BoardDAOInterface {
 	 */
 	public int findCountUNickName(String word) throws FindException;
 	
+	/**
+	 * 댓글 페이징 관련 총 댓글수 반환
+	 * @return
+	 * @throws FindException
+	 */
+	public int findCmtCount(int brdIdx) throws FindException;
 	
 }

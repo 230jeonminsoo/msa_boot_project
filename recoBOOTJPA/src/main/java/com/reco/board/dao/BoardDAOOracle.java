@@ -20,6 +20,7 @@ import org.springframework.stereotype.Repository;
 import com.reco.board.service.BoardService;
 import com.reco.board.vo.Board;
 import com.reco.board.vo.Comment;
+import com.reco.dto.PageDTO;
 import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
@@ -116,6 +117,22 @@ public class BoardDAOOracle implements BoardDAOInterface {
 		}	
 	}
 	
+	@Override
+	public int findCmtCount(int brdIdx) throws FindException{
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			return session.selectOne("com.reco.board.BoardMapper.findCmtCount", brdIdx);
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new FindException(e.getMessage());
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}	
+	}
+	
 	
 	@Override
 	public List<Board> findBrdAll() throws FindException{
@@ -148,9 +165,40 @@ public class BoardDAOOracle implements BoardDAOInterface {
 		}
 	}
 	
+	@Override
+	public Board findBrdByIdx(int brdIdx) throws FindException {
+		return findBrdByIdx(brdIdx, 1, 5);
+	}
 	
 	@Override
-	public Board addBrd(Board b) throws AddException{
+	public Board findBrdByIdx(int brdIdx, int cp, int cntperpage) throws FindException {
+		SqlSession session =null;
+		try {
+			session = sqlSessionFactory.openSession();
+			Map<String,Integer> map= new HashMap<>();
+			map.put("brdIdx", brdIdx); //게시글번호
+			map.put("currentPage", cp);//현재페이지
+			map.put("cntperpage", cntperpage);//페이지당 글 개수
+			Board board = session.selectOne("com.reco.board.BoardMapper.findBrdByIdx", map);
+			//logger.info(" findBrdByIdxdao쪽 board:"+board);
+			//logger.info("들어가기전 dao"+board.getBrdIdx());			
+			plusViewCount(brdIdx);
+			//board.setBrdIdx(brdIdx);
+			return board;
+		}catch (Exception e) {
+			throw new FindException(e.getMessage());
+			
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}
+	}
+	
+	
+	
+	@Override
+	public int addBrd(Board b) throws AddException{
 		SqlSession session =null;
 		try {
 			session = sqlSessionFactory.openSession();
@@ -161,14 +209,14 @@ public class BoardDAOOracle implements BoardDAOInterface {
 			logger.info("find전 addDAO로:" + b);
 			//List<Comment> comments1 = b.getComments();
 			//logger.info("comments.size1:" + comments1.size()); //null
-			
-			Board board = findBrdByIdx(b.getBrdIdx());
+			int brdIdx = b.getBrdIdx();
+				//PageDTO2<Board> board = findBrdByIdx(brdIdx);
 //			int testBrd = board.getBrdIdx(); 
 //			System.out.println("addBrddao2" + testBrd); //0나옴
-			logger.info("find후 addDAO로:" + board);
-			List<Comment> comments2 = board.getComments();
-			logger.info("comments.size2:" + comments2.size());
-			return board;
+//			logger.info("find후 addDAO로:" + board);
+//			List<Comment> comments2 = board.getComments();
+//			logger.info("comments.size2:" + comments2.size());
+			return brdIdx;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AddException(e.getMessage());
@@ -188,27 +236,7 @@ public class BoardDAOOracle implements BoardDAOInterface {
 		session.update("com.reco.board.BoardMapper.plusViewCount",brdIdx);
 	}
 
-	
-	@Override
-	public Board findBrdByIdx(int brdIdx) throws FindException {
-		SqlSession session =null;
-		try {
-			session = sqlSessionFactory.openSession();
-			Board board = session.selectOne("com.reco.board.BoardMapper.findBrdByIdx",brdIdx);
-			//logger.info("들어가기전 dao"+brdIdx);
-			//logger.info("들어가기전 dao"+board.getBrdIdx());			
-			plusViewCount(brdIdx);
-			//board.setBrdIdx(brdIdx);
-			return board;
-		}catch (Exception e) {
-			throw new FindException(e.getMessage());
-			
-		}finally {
-			if(session != null) {
-				session.close();
-			}
-		}
-	}
+
 	
 	
 	@Override //제목으로 검색
@@ -313,17 +341,14 @@ public class BoardDAOOracle implements BoardDAOInterface {
 	
 		
 	@Override
-	public Board addCmt(Comment comment) throws AddException {
+	public int addCmt(Comment comment) throws AddException {
 		SqlSession session =null;
 		try {
 			session = sqlSessionFactory.openSession();
 			session.insert("com.reco.board.BoardMapper.addCmt",comment);
-			int brdIdx = comment.getBrdIdx();
-			Board board = findBrdByIdx(brdIdx);
-			return board;
-		} catch (FindException e) {
-			e.printStackTrace();
-			throw new AddException(e.getMessage());
+			int brdIdx = comment.getBrdIdx();			
+			//Board board = findBrdByIdx(brdIdx);
+			return brdIdx;
 		}finally {
 			if(session != null) {
 				session.close();
@@ -333,15 +358,14 @@ public class BoardDAOOracle implements BoardDAOInterface {
 	
 	
 	@Override
-	public Board modifyBrd(Board b) throws ModifyException {
+	public void modifyBrd(Board b) throws ModifyException {
 		SqlSession session =null;
 		try {
 			session = sqlSessionFactory.openSession();
 			session.update("com.reco.board.BoardMapper.modifyBrd",b);
-			Board board = findBrdByIdx(b.getBrdIdx());
-			return board;
-		}catch(FindException e){
-			throw new ModifyException(e.getMessage());
+			//int brdIdx = b.getBrdIdx();
+				//Board board = findBrdByIdx(b.getBrdIdx());
+			//return brdIdx;
 		}catch(Exception e) {
 			throw new ModifyException(e.getMessage());
 		}finally {
