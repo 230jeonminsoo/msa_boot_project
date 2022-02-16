@@ -31,10 +31,12 @@ function addCalPostClick(){
         reader.onload = e => {
             const previewImage = document.getElementById("preview-image")
             previewImage.src = e.target.result
+            
         }
         // reader가 이미지 읽도록 하기
         reader.readAsDataURL(input.files[0])
         document.querySelector('.dellink').style.display = 'block'; // 이미지 삭제 링크 표시
+      
     }
 }
 // input file에 change 이벤트 부여
@@ -43,10 +45,11 @@ inputImage.addEventListener("change", e => {
     readImage(e.target)
 })
 
-// 썸네일 삭제 클릭하는 경우
-$('.dellink').on('click', function () {
-    $("#preview-image").remove();
-    $("#input-image").val("");
+
+// calpostwrite화면에서 대표이미지삭제를 클릭했을경우
+$('.dellink').click( function () {
+    $('#preview-image').empty()
+    $('#input-image').val("");
 });
 
 	
