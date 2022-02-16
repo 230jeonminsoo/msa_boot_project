@@ -60,8 +60,9 @@ function calMenuClick(){ //callistresult.jsp
 				//calpost 작동하면 변경해야함.
 				ajaxUrl = menuHref;
 				//let calIdx = $(this).attr('class');
-                $('section>div.articles').empty();
+                //$('section>div.articles').empty();
                 $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){
+					//console.log(responseText);
                     if(jqXHR.status != 200){
                         alert('응답실패:' + jqXHR.status);
                     }

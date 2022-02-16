@@ -4,6 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="./css/tab.css">
+<script src="./js/tab.js"></script>
 
 <%
 Customer c = (Customer)session.getAttribute("loginInfo"); 
@@ -19,7 +20,7 @@ if(c == null){ //로그인 안된 경우
 for(CalInfo ci : list){
 %>   <li><a href="./calpostlist?calIdx=<%= ci.getCalIdx()%>"><%=ci.getCalCategory() %></a></li>
 <%} //end for 
-	for(int i=list.size(); i<5; i++){
+for(int i=list.size(); i<5; i++){
 %>
 	 <li><a href="./html/calInfowrite.html" id = "clickadd" >ADD+</a></li>
 <%}//end for
