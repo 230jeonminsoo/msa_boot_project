@@ -23,9 +23,9 @@ $(function(){
 
 <fieldset>
 	<form method="post" action="./brdadd" autocomplete="off">
-		<h1>게시글 작성</h1>
+		<h1>자유게시판글 작성</h1>
 		<table>
-			<tr><td>날짜</td> <td><%= sf.format(nowTime)%></td></tr>
+			<tr><td>날짜</td> <td id="date"></td></tr>
 		</table>
 		<br>   
 		<select name="brdType">

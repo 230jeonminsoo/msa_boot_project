@@ -155,10 +155,15 @@ public class BoardDAOOracle implements BoardDAOInterface {
 		try {
 			session = sqlSessionFactory.openSession();
 			session.insert("com.reco.board.BoardMapper.addBrd",b);
-			int brdIdx = b.getBrdIdx();
-			Board board = findBrdByIdx(brdIdx);
-			return board;
-		} catch (FindException e) {
+			session.commit();
+//		    System.out.println("addBrddao" + brdIdx); //잘나옴
+//		    b.getBrdIdx()
+//			Board board = findBrdByIdx(brdIdx);
+//			int testBrd = board.getBrdIdx(); 
+//			System.out.println("addBrddao2" + testBrd); //0나옴
+			System.out.println(b);
+			return b;
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AddException(e.getMessage());
 		}finally {
@@ -184,8 +189,10 @@ public class BoardDAOOracle implements BoardDAOInterface {
 		try {
 			session = sqlSessionFactory.openSession();
 			Board board = session.selectOne("com.reco.board.BoardMapper.findBrdByIdx",brdIdx);
-//			System.out.println(board);
+			//logger.info("들어가기전 dao"+brdIdx);
+			//logger.info("들어가기전 dao"+board.getBrdIdx());			
 			plusViewCount(brdIdx);
+			//board.setBrdIdx(brdIdx);
 			return board;
 		}catch (Exception e) {
 			throw new FindException(e.getMessage());
@@ -203,12 +210,12 @@ public class BoardDAOOracle implements BoardDAOInterface {
 		SqlSession session =null;
 		try {
 			session = sqlSessionFactory.openSession();
-			Map<String,String> map= new HashMap<>();
+			Map<String,Object> map= new HashMap<>();
 			map.put("word", word);
-			String cp = Integer.toString(currentPage);
-			String cpp = Integer.toString(cntperpage);
-			map.put("currentPage", cp);//현재페이지
-			map.put("cntperpage", cpp);//페이지당 글개수
+			//String cp = Integer.toString(currentPage);
+			//String cpp = Integer.toString(cntperpage);
+			map.put("currentPage", currentPage);//현재페이지
+			map.put("cntperpage", cntperpage);//페이지당 글개수
 			List<Board> list = session.selectList("com.reco.board.BoardMapper.findBrdByTitle",map);
 			if(list.size() == 0) {
 				throw new FindException("단어를 포함하는 글이 없습니다.");
@@ -252,12 +259,12 @@ public class BoardDAOOracle implements BoardDAOInterface {
 		SqlSession session =null;	
 		try {
 			session = sqlSessionFactory.openSession();
-			Map<String,String> map= new HashMap<>();
+			Map<String,Object> map= new HashMap<>();
 			map.put("word", word);
-			String cp = Integer.toString(currentPage);
-			String cpp = Integer.toString(cntperpage);
-			map.put("currentPage", cp);//현재페이지
-			map.put("cntperpage", cpp);//페이지당 글개수
+//			String cp = Integer.toString(currentPage);
+//			String cpp = Integer.toString(cntperpage);
+			map.put("currentPage", currentPage);//현재페이지
+			map.put("cntperpage", cntperpage);//페이지당 글개수
 			List<Board> list = session.selectList("com.reco.board.BoardMapper.findBrdByWord",map);
 			if(list.size() == 0) {
 				throw new FindException("단어를 포함하는 글이 없습니다.");

@@ -1,0 +1,28 @@
+<!-- 로그인페이지입니다. -->
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    
+    <title>login</title>
+   
+    <link href="./css/findPwd.css" rel=stylesheet>
+    <script src="./js/findPwd.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(function(){
+    	//입력한 이메일로 새로운 비밀번호 보내기
+    	//먼저 네이버,구글메일설정에 들어가서 pop3/IMAP 사용함 설정해야함
+    	newPwdSend();
+    });
+	</script>
+  	
+    	<div class="findPwd">         
+                <strong>비밀번호 재설정</strong>
+                <h3>비밀번호를 잊으셨나요?</h3>
+                <span>가입했던 이메일을 적어주세요. <br> 
+                        입력하신 이메일 주소로 비밀번호 <br>
+                        변경 메일을 보내드립니다.<br></span>               
+                <input type="text" name="findPwd" required placeholder="이메일">
+                <br>             
+                <button class="findPwd">비밀번호 변경 이메일 보내기 </button><br>    
+          </div>     
+

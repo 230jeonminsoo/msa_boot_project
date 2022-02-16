@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<link href="./css/boardwrite.css" rel=stylesheet>
+	<script src="./js/boardwrite.js"></script> 
+	<title>boardwrite.jsp</title>
+	<script>
+		$(function(){
+			let $formObj = $('fieldset form');
+			
+			//날짜 보여주기
+			let today = new Date();
+			// 년도 getFullYear()
+			let year = today.getFullYear(); 
+			
+			// 월 getMonth() (0~11로 1월이 0으로 표현되기 때문에 + 1을 해주어야 원하는 월을 구할 수 있다.)
+			let month = today.getMonth() + 1
+			
+			// 일 getDate()
+			let date = today.getDate();
+			
+			let todayE= year + '-' + month + '-' + date; 
+			document.getElementById("date").innerHTML=todayE;
+			
+			
+			//새로운 글 추가 후 작성한 글 호출
+			boardSubmit($formObj);
+			//저장취소버튼 클릭시 리스트 다시보기
+			modifyCancelBtClick();
+		});
+	</script>
+</head>
+<body>
+	<fieldset class="boardwrite">
+		<form autocomplete="off">
+			<h1>자유게시판글 작성</h1>
+			<table>
+				<tr><td>날짜</td> <td id="date"></td></tr>
+			</table>
+			<br>   
+			<select name="brdType">
+				<option value="0">잡담</option>
+				<option value="1">정보</option>
+				<option value="2">기타</option>
+			</select>
+			<br>
+			<textarea rows="2" cols="100" style="resize:none;" name="brdTitle" id="brdTitle" placeholder="제목을 입력해주세요." required></textarea>              
+			<table>
+				<tr><td><textarea rows="20" cols="100" style="resize:none;" name="brdContent" id="brdContent" placeholder="내용을 입력해주세요. 욕설/비방이 섞인글은 삭제될 수 있습니다." required></textarea></td></tr>		
+			</table>
+			<div class="data"><label>파일 첨부</label><input type="file" name="letterFiles"></div>
+			<div class="data"><label>이미지 첨부</label><input type="file" name="imageFile" accept="image/jpeg, image/jpg, image/png" ></div>
+			<div class="image">
+			    <img class="preview" style="max-width:100px;"><!--섬네일생성-->
+			    <img class="downloadview"><!-- 다운로드이미지 -->
+		 	</div>
+			<!--  <input type="file"  name="ntcattachment"   multiple><br>-->
+			<button class="addcancel">저장취소</button>
+			<input type="button" value="글 저장">
+			
+		</form>
+	</fieldset>
+</body>
+</html>

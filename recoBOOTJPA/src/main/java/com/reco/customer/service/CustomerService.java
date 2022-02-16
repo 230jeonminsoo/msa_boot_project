@@ -48,6 +48,10 @@ public class CustomerService {
 	public void modifypwd(int uIdx, String pwd) throws ModifyException{
 		dao.modifyPwd(uIdx,pwd);
 	} 
+	
+	public void findPwd(String email) throws ModifyException{
+		dao.findPwd(email);
+	}
 }
 
 

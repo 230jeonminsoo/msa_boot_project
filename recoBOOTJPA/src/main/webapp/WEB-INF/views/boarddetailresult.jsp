@@ -61,6 +61,10 @@ $(function(){
 		boardRemoveClick();	
 	//게시글 목록버튼 클릭시
 		boardListClick();
+	//첨부파일 다운로드 시
+	letter = "<%=letter%>";
+	boardDownloadClick(letter);
+	
 	//댓글 등록버튼 클릭시
 		commentAddClick();
 		
@@ -87,7 +91,7 @@ $(function(){
           <ul class="brdDetail">
 	    	 <li>
 				<div class="brdIdx">글번호 :  
-					<span id="brdIdx" name="brdIdx">
+					<span id="brdIdx">
 		          	<%=brdIdx%>  
 		            </span> 
 		         </div>
@@ -140,6 +144,7 @@ $(function(){
 	         <hr>
 	         <div class="brdContent"><span id="brdContent"> 
 					<%=brdContent %></span></div>
+			<div class="image"><img></div>
 		     <hr>
 		     <%if(brdAttachment != null){ %>
 				<div class="brdAttachment">첨부파일: <span id="brdAttachment"> <%=brdAttachment %></span></div>
@@ -284,11 +289,11 @@ String uNickName = c.getUNickName();
 	         	<%
 	         	}
 	         	%>
-	         	<%} %>
-			<%-- <%} else{%>
+	         	
+		<%} else{%>
 					<span>댓글이 없습니다.</span>
 				
-			<%} %> --%>
+			<%} %> 
                   	
 </div>
     <!--댓글 끝--> 	
