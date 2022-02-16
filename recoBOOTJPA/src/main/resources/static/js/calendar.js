@@ -92,15 +92,15 @@ function dateClick(){
 		
 		/*let ajaxUrl = './calpostwrite.jsp'; */
 			         
-				$.ajax({
-	            url: ajaxUrl,
-	            method : 'get',
-	            success:function(responseData){
-	                let $articlesObj = $('section>div.articles');
-	                $articlesObj.empty();
-	                $articlesObj.html(responseData);
-	           }
-			});
-			 return false;
+		$.ajax({
+            url: ajaxUrl,
+            method : 'get',
+            success:function(responseData){
+                let $articlesObj = $('section>div.articles');
+                $articlesObj.empty();
+                $articlesObj.html(responseData);
+           }
+		});
+		 return false;
 	});
 }

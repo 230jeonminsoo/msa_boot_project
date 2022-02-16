@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8"> <!--html에서 없으면 글씨 깨짐   -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>calwrite.html</title>
+	<title>calInfowrite.html</title>
 	<link href="./css/calwrite.css" rel=stylesheet>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="./js/calInfowrite.js"></script>
@@ -15,7 +15,7 @@ $(function(){
 	//let $thumbnailObj = $('fieldset>form>div.input_image>input[name=thumbnail]');
 	//let $categoryObj = $('fieldset>form>div.input_text>input[name=category]');
 	let $formObj = $('fieldset>form');
-	let $submitBtObj = $('fieldset>form>button[type=submit]')
+	
 	
      /*--캘린더 추가 등록버튼이 클릭되었을때 START--*/
 	 addCalSubmit($formObj);
@@ -48,20 +48,4 @@ $(function(){
     </form>
 </fieldset>
     
-    <!-- <script type="text/javascript">
-	    function validateForm(form) {  // 필수 입력 확인
-	     
-	        if (form.category.value == "") {
-	            alert("캘린더 이름를 입력하세요.");
-	            form.title.focus();
-	            return false;
-	        }
-	        if (form.thumbnail.value == "") {
-	            alert("썸네일를 추가하세요.");
-	            form.content.focus();
-	            return false;
-	        }
-	    }
-	</script>
-   -->
 </html>

@@ -8,21 +8,21 @@
 	<select id="findCalsByUIdx" resultType="CalInfo" parameterType="int">
 		SELECT u_Idx, cal_Idx, cal_Category, cal_Thumbnail 
 		FROM cal_info
-		WHERE u_Idx = #{uIdx}
+		WHERE u_Idx = ${uIdx}
 		ORDER BY cal_Idx ASC
 	</select>
 	
 	     
 	
-	<insert id="addCal"  parameterType="CalInfo">
+	<insert id="addCal"  parameterType="map">
 		<selectKey resultType="int" keyProperty="calIdx" order="BEFORE">
 			SELECT NVL(MAX(cal_Idx), 0)+1
 			FROM cal_info
-			WHERE u_Idx = #{uIdx}
+			WHERE u_Idx = ${uIdx}
 		</selectKey>
 
 		INSERT INTO cal_info (u_Idx, cal_Idx, cal_Category, cal_Thumbnail) 
-		values (#{uIdx}, #{calIdx}, #{calCategory}, #{calThumbnail})
+		values (${uIdx}, ${calIdx}, #{calCategory}, #{calThumbnail})
 	</insert>
 	
 	<select id="CreateTable" parameterType="HashMap">

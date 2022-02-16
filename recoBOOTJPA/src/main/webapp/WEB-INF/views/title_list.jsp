@@ -46,7 +46,7 @@ if(c == null){ //로그인 안된 경우
 <%
 if(c != null){
 
-	String saveDirectory = "d:\\files";
+	String saveDirectory = "d:\\files\\calendar";
 	File dir = new File(saveDirectory);
 	File[] files = dir.listFiles(); 
 	
@@ -77,7 +77,7 @@ if(c != null){
 %> 
 <li>
 	  <div class="title_add" id="title">
-	    <a href="#"> <!-- 캘린더 생성안된 add -->
+	    <a href="./html/calInfowrite.html"> <!-- 캘린더 생성안된 add -->
 		      <img src="./images/add.png" alt="ADD" title="ADD">
 		      <div class="hidden_title">
 			      <div class="title_detail">

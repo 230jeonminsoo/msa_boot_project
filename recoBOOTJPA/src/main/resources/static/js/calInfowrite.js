@@ -1,6 +1,41 @@
-/* 캘린더 추가 등록 버튼 클릭 되었을 때 */
+/* calInfowrite.html */
+/*--캘린더 등록버튼이 클릭되었을때 START--*/
+function addCalSubmit($formObj){
+	//	alert("in addCalSubmit");
+	let $submitBtObj = $('fieldset>form>button[type=submit]');
+    $submitBtObj.click(function(){
+		let formData = new FormData(this);
+		/*let formData = new FormData($formObj[0]);
+		formData.forEach(function (value, key) {
+			console.log(key + ":" + value);
+		});*/
+		
+		 let ajaxUrl = './caladd'; 
+	        
+			$.ajax({
+	            url: ajaxUrl,
+	            method : 'post',
+				processData: false, //파일업로드용 설정
+				contentType: false, //파일업로드용 설정
+				data:formData,
+				
+	            success:function(responseData){
+					console.log(responseData);
+	                let $articlesObj = $('section>div.articles');
+	                $articlesObj.empty();
+	                $articlesObj.html(response);
+	            }
+				,error: function (jqXHR)
+	           {
+	               alert(jqXHR.responseText);
+	           }
+        }); 
+		return false;
+	});
+}
 
-  /*--캘린더 등록버튼이 클릭되었을때 START--*/
+
+/* --수정전 팝업창--
 function addCalSubmit($formObj){
 	//	alert("in addCalSubmit");
     $formObj.submit(function(){
@@ -31,4 +66,4 @@ function addCalSubmit($formObj){
 	//alert("calwrite.js-5");
 		return false;
 	});
-}
+}*/

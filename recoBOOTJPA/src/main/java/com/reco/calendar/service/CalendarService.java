@@ -29,18 +29,14 @@ public class CalendarService {
 	}
 
 	public CalInfo addCal(CalInfo calinfo) throws AddException{
-		try {
-			CalInfo calinfo1 = dao.addCal(calinfo);
-			return calinfo1;
-		} catch (AddException e) {
-			throw new AddException("고객번호에 해당하는 cal_info행이 없습니다");
-		}
+		return(dao.addCal(calinfo));
 	}
 
 	public List<CalInfo> findCalsByUIdx(int uIdx) throws FindException{
 		System.out.println("in calendarservice dao=" + dao);
 		return dao.findCalsByUIdx(uIdx);
 	}
+	
 	
 //	public void modifyCal(CalInfo calinfo) throws ModifyException{
 //		dao.modifyCal(calinfo);
