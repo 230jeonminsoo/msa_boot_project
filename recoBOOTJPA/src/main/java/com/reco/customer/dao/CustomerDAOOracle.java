@@ -159,13 +159,13 @@ public class CustomerDAOOracle implements CustomerDAOInterface {
 		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		
 		/*
-		 * properies.put("mail.smtp.host", "smtp.gmail.com");
-properies.put("mail.smtp.port", "465");
-properies.put("mail.smtp.auth", "true");
-properies.put("mail.smtp.starttls.enable", "true");
-properies.put("mail.smtp.starttls.required", "true");
-properies.put("mail.smtp.ssl.protocols", "TLSv1.2");
-properies.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		 *  props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.port", "465");
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mail.smtp.starttls.required", "true");
+			props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		 */
 		
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() { 
@@ -176,8 +176,8 @@ properies.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory")
 		
 		try { 
 			MimeMessage message = new MimeMessage(session); 
-			message.setFrom(new InternetAddress(user)); 
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(email)); 
+			message.setFrom(new InternetAddress("reconice@reco.com")); 
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress("reconice@reco.com")); 
 			
 			// 메일 제목 
 			message.setSubject("새로운 비밀번호입니다"); 
