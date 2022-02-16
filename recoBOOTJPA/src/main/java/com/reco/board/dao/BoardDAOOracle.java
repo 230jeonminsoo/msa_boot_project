@@ -158,13 +158,16 @@ public class BoardDAOOracle implements BoardDAOInterface {
 			session.insert("com.reco.board.BoardMapper.addBrd",b);
 			session.commit();
 //		    System.out.println("addBrddao" + brdIdx); //잘나옴
-		    
+			logger.info("find전 addDAO로:" + b);
+			//List<Comment> comments1 = b.getComments();
+			//logger.info("comments.size1:" + comments1.size()); //null
+			
 			Board board = findBrdByIdx(b.getBrdIdx());
 //			int testBrd = board.getBrdIdx(); 
 //			System.out.println("addBrddao2" + testBrd); //0나옴
-			logger.info("addBrdDAO후:" + board);
-			List<Comment> comments = board.getComments();
-			logger.info("comments.size:" + comments.size());
+			logger.info("find후 addDAO로:" + board);
+			List<Comment> comments2 = board.getComments();
+			logger.info("comments.size2:" + comments2.size());
 			return board;
 		} catch (Exception e) {
 			e.printStackTrace();
