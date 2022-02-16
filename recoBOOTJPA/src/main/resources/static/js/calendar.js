@@ -1,7 +1,7 @@
 // Date 객체 생성 
-let date = new Date();
+var date = new Date();
 
-const renderCalendar = () => {    
+var renderCalendar = () => {    
     const viewYear = date.getFullYear();
     const viewMonth = date.getMonth();
 	
@@ -65,19 +65,19 @@ const renderCalendar = () => {
 
 renderCalendar();
 
-const prevMonth = () => {
+var prevMonth = () => {
     date.setDate(1); // setMonth 하기전에 setDate메서드로 날짜를 1로 설정 
     date.setMonth(date.getMonth() - 1);
     renderCalendar()
 };
 
-const nextMonth = () => {
+var nextMonth = () => {
     date.setDate(1); 
     date.setMonth(date.getMonth() + 1);
     renderCalendar();
 };
 
-const goToday = () => {
+var goToday = () => {
     date = new Date();
     renderCalendar();
 };

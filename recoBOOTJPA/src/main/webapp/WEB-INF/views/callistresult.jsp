@@ -10,9 +10,8 @@
 	SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM");
 	String dateValue = sf.format(nowTime);
 %>
-
-    <script src="./js/tab.js"></script><!-- tab.jsp 이벤트 -->
     <script src="./js/callist.js"></script>
+    
     <script>
 	    $(function(){
 			uNickname = "<%=c.getUNickName()%>"
