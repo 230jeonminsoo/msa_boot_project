@@ -4,6 +4,7 @@
 <!-- 현재 메뉴   
 <span class="currentMenu"></span>
  -->
+ 
 <ul>
 <%
 Customer c = (Customer)session.getAttribute("loginInfo"); 
@@ -29,7 +30,7 @@ if(c == null){ //로그인 안된 경우
 <%
 if(c != null){
 %>    
-	<li><img src="./images/afterlogin.PNG"></li>
+	<li><img src="./images/afterlogin.png"></li>
     <li><a href="logout" id="logout">로그아웃</a></li>
     <li><a href="pwdcheck">마이페이지</a></li>
     <li><a href="ntclist">커뮤니티</a></li>
