@@ -23,11 +23,14 @@ if(pageDTO != null){
 list = pageDTO.getList();
 }
 %>
+<%String image = (String)request.getAttribute("image"); %>
 <!--END-->
 
 <script src="./js/boardlist.js"></script>
 <script>
 $(function(){
+	
+
 	
 	<!--자유게시판 목록에서 글 쓰기 버튼 클릭되었을때 START-->	
 		boardWriteClick();
@@ -129,7 +132,7 @@ $(function(){
 		    <% }%><% else{ brdType =2;%>
 		    <%="기타" %>
 		    <%} %></span>
-		    <span><%=brdTitle%> <%if(brdAttachment != null){ %><img src="./images/클립.png"><%} %></span>
+		    <span><%=brdTitle%> <%if(brdAttachment != null){ %><img src="./images/클립.png"><%} %><%if(image != null){ %><img src="./images/사진.png"><%} %></span>
 		    <span><%=BrdUNickName%></span>
 		    <span><%=brdViews%></span>
 		    <span><%=cmtCount%></span>
