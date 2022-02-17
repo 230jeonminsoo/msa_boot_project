@@ -270,6 +270,30 @@ public class BoardController {
 					pageDTO= service.findBrdAll();
 				}
 				mnv.addObject("pageDTO", pageDTO);
+				
+				
+				//테스트
+				List<Board> boards = pageDTO.getList();
+				
+				
+				for(Board board : boards) {				
+				String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
+				File dir = new File(saveDirectory);
+				//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
+				String[] imageFiles = dir.list(new FilenameFilter() {	
+					
+					@Override
+					public boolean accept(File dir, String name) {
+						return name.contains("reco_board_"+board.getBrdIdx()+"_image_");
+					}
+				});
+				
+				if(imageFiles.length>0) {
+					mnv.addObject("image", imageFiles[0]);
+				}
+			}
+				//테스트끝
+				
 				mnv.setViewName("boardlistresult.jsp");
 			} catch (FindException e) {
 				e.printStackTrace();
