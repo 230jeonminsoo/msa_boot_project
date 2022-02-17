@@ -23,7 +23,7 @@ if(pageDTO != null){
 list = pageDTO.getList();
 }
 %>
-<%String image = (String)request.getAttribute("image"); %>
+
 <!--END-->
 
 <script src="./js/boardlist.js"></script>
@@ -132,7 +132,7 @@ $(function(){
 		    <% }%><% else{ brdType =2;%>
 		    <%="기타" %>
 		    <%} %></span>
-		    <span><%=brdTitle%> <%if(brdAttachment != null){ %><img src="./images/클립.png"><%} %><%if(image != null){ %><img src="./images/이미지.png"><%} %></span>
+		    <span><%=brdTitle%> <%if(brdAttachment != null){ %><img src="./images/클립.png"><%} %></span>
 		    <span><%=BrdUNickName%></span>
 		    <span><%=brdViews%></span>
 		    <span><%=cmtCount%></span>

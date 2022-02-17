@@ -116,42 +116,7 @@ public class IndexController {
 				}
 				noticePageDTO = Noticeservice.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
 				boardPageDTO = Boardservice.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);
-				
-				List<Notice> notices = noticePageDTO.getList();	
-				for(Notice notice : notices) {				
-				String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
-				File dir = new File(saveDirectory);
-				//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
-				String[] imageFiles = dir.list(new FilenameFilter() {	
-					
-					@Override
-					public boolean accept(File dir, String name) {
-						return name.contains("reco_notice_"+notice.getNtcIdx()+"_image_");
-					}
-				});
-				
-				if(imageFiles.length>0) {
-					mnv.addObject("noticelistimage", imageFiles[0]);
-				}
-			}
-				
-				List<Board> boards = boardPageDTO.getList();	
-				for(Board board : boards) {				
-				String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
-				File dir = new File(saveDirectory);
-				//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
-				String[] imageFiles = dir.list(new FilenameFilter() {	
-					
-					@Override
-					public boolean accept(File dir, String name) {
-						return name.contains("reco_board_"+board.getBrdIdx()+"_image_");
-					}
-				});
-				
-				if(imageFiles.length>0) {
-					mnv.addObject("boardlistimage", imageFiles[0]);
-				}
-			}
+
 				mnv.addObject("noticePageDTO", noticePageDTO);
 				mnv.addObject("boardPageDTO",boardPageDTO);
 				mnv.setViewName("mycommunity.jsp");

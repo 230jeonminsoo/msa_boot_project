@@ -135,3 +135,147 @@ fieldset>div.ntc_list>button.myNoticerm:hover{
      cursor: pointer;
      font-weight: bold;
 }
+
+
+
+
+/* -- 자유게시판 css 시작 --*/
+
+/*자유게시판 리스트 전체*/
+.brd_list{
+	width:50%;
+	/* margin-left: 15%; */
+	padding-top: 60px;
+  margin: 0 auto;
+   display: inline-block; /* 추가 */
+}
+
+
+a{
+	text-decoration:none;
+	font-weight:bold;
+}
+
+/* 자유게시판 상단 */
+.brd_list>ul.brd_top{
+ border:1px solid gray;
+  list-style-type:none;  
+  padding-top:10px;
+  padding-bottom:10px;
+ /*  padding-left:0px; */
+  margin:0 auto;
+  width: 100%;
+  font-size: 20px;
+}
+
+
+/* 자유게시판 상단 내부*/
+.brd_list>ul.brd_top>li span{
+/* 	margin-left:13px;
+	margin-right:10px; */
+	text-align:center;
+	display: inline-block;
+	width:150px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	font-weight: bold;
+}
+
+
+/*자유게시판 각 리스트*/
+.brd_list>div>ul{
+  border:1px solid gray;
+  list-style-type:none;  
+  padding-top:10px;
+  padding-bottom:10px;
+ /*  padding-left:0px; */
+  margin:0 auto;
+  width: 100%;
+  font-size: 20px;
+}
+
+
+
+
+
+/*자유게시판 각 리스트의 글자*/
+.brd_list>div>ul>li span{
+/* 	margin-left:13px;
+	margin-right:10px; */
+	text-align:center;
+	display: inline-block;
+	width:150px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+
+
+/*글 없을시 글자*/
+div.brd_list>span.noBrd{
+	margin:100px;
+	font-size: 30px;
+}
+
+
+fieldset>div.brd_list>button.myboardrm{
+	background-color:white;
+	 border: 2px solid #77af9c;
+	 padding:10px;
+	 margin:10px;
+	 position: relative;
+}
+
+fieldset>div.brd_list>button.myboardrm:hover{
+     color: black;
+     letter-spacing: 2px;
+     transform: scale(1.2);
+     cursor: pointer;
+     font-weight: bold;
+}
+
+div.boardpagegroup{
+	margin:15px;
+	text-align: center;
+	height:50px;
+}
+
+div.boardpagegroup>span{
+	border: 1px solid black;
+	cursor: pointer;
+	margin:5px;
+	padding:5px;
+}
+
+div.boardpagegroup>span:hover {
+	font-size:150%;
+}
+
+div.boardpagegroup>span.active{
+	text-decoration: underline;
+}
+
+/*--자유게시판 상세  --*/
+div.brddetail{
+	/* width:80%; */
+	width:45%;
+	/* margin-left: 15%;
+	margin-top: 5%; */
+	margin-right:1%;
+  padding-top: 60px;
+  margin: 0 auto;
+  display: inline-block; /* 추가 */
+}
+
+div.commentwrap{
+	display:none;
+}
+
+div.BoardDetailButton{
+	display:none;
+}  
+
+
+/* -- 자유게시판 css 끝 --*/

@@ -104,4 +104,107 @@ $('div.pagegroup').on('click','span.active',function(){
 //--다른페이지 클릭했을때 끝
 
 
+//-----자유게시판 시작-------
 
+/**
+ *  마이페이지 자유게시판 목록에서 글 하나 클릭되었을때 
+ */
+function boardDetail(option){
+	let $articlesObj = $('section>div.articles');
+	if(option == 'undefined'){ //이반 사용자가 공지사항 목록에서 글 하나 클릭한 경우		
+		 
+	}else if(option == 'mycommunity'){ //마이페이지의 커뮤니티관리에서 내가 쓴 공지사항 목록에서 글 하나 클릭한 경우 
+	  $articlesObj = $('div.brddetail');
+		
+	}
+	
+    let $boardObj = $('div.brd_list>div.boardlist>ul>li>span');
+    $boardObj.click(function(){
+        let brdIdx = $(this).attr('id');	
+        let ajaxUrl = './brddetail';
+		/*window.open(window.location.href);*/
+        $.ajax({
+            url: ajaxUrl,
+            method : 'get',
+            data : {brdIdx: brdIdx},
+            success:function(responseData){
+				console.log(responseData);
+               // let $articlesObj = $('section>div.articles');
+                $articlesObj.empty();
+                $articlesObj.html(responseData);
+				window.scrollTo(900, 900);							
+            }
+        }); 
+       
+    });	
+}
+
+
+/**전체체크 기능 */
+function checkBoxAll(checkBoxAll)  {
+  const checkboxes 
+       = document.getElementsByName('brdIdx');
+  
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = checkBoxAll.checked;
+  })
+}
+
+/**체크된 자유게시판 글 삭제 */
+function myBoardrm(){
+	let $myboardrmObj = $('button.myboardrm');
+	$myboardrmObj.click(function(){
+		// 선택된 목록 가져오기
+		const query = 'input[name="brdIdx"]:checked';
+		console.log(query);	  	
+	  	const selectedEls = 
+	      	document.querySelectorAll(query);
+	  
+	  	// 선택된 목록에서 value 찾기
+	  	let data = '';
+	  	selectedEls.forEach((el,index) => {
+	    data += 'brdIdx'+index+'='+el.value+'&';
+		});
+		console.log(data);
+			if(data != ''){
+				$.ajax({
+					url: './mybrdremove',
+					method: 'get',
+					data: data,
+					success: function(responseData){
+						    let $articlesObj = $('section>div.articles');
+			                $articlesObj.empty();
+			                $articlesObj.html(responseData);
+					},
+					error: function(xhr){
+						alert(xhr.status);
+					}
+				});
+			}
+			return false;			
+		});	
+}
+
+
+//--다른페이지 클릭했을때 시작
+$('div.boardpagegroup').on('click','span.active',function(){
+//$('div.pagegroup>span.active').click(function(){	
+	let url = $(this).attr("class").split(/\s+/)[0];//정규표현식, \s는 공백
+	console.log(url);
+	$.ajax({
+		url: url,
+		method: 'get',
+		success: function(responseData){
+			    let $articlesObj = $('section>div.articles');
+                $articlesObj.empty();
+                $articlesObj.html(responseData);
+		},
+		error: function(xhr){
+			alert(xhr.status);
+		}
+	});
+	return false;
+});
+//--다른페이지 클릭했을때 끝
+
+//------자유게시판 끝------

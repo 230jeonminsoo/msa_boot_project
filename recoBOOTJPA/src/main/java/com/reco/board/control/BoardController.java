@@ -271,29 +271,7 @@ public class BoardController {
 				}
 				mnv.addObject("pageDTO", pageDTO);
 				
-				
-				//테스트
-				List<Board> boards = pageDTO.getList();
-				
-				
-				for(Board board : boards) {				
-				String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
-				File dir = new File(saveDirectory);
-				//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
-				String[] imageFiles = dir.list(new FilenameFilter() {	
-					
-					@Override
-					public boolean accept(File dir, String name) {
-						return name.contains("reco_board_"+board.getBrdIdx()+"_image_");
-					}
-				});
-				
-				if(imageFiles.length>0) {
-					mnv.addObject("image", imageFiles[0]);
-				}
-			}
-				//테스트끝
-				
+			
 				mnv.setViewName("boardlistresult.jsp");
 			} catch (FindException e) {
 				e.printStackTrace();
@@ -644,5 +622,52 @@ public class BoardController {
 				e.getStackTrace();
 				return"failresult.jsp";
 			}
+		}
+		
+		//마이페이지에서 체크된 자유게시판글을 삭제하는 컨트롤러
+		@GetMapping("mybrdremove")
+		public String boardRemove(int brdIdx0, Optional<Integer> brdIdx1, Optional<Integer> brdIdx2, Optional<Integer> brdIdx3, Optional<Integer> brdIdx4, Model model) {
+			try {			
+					service.removeBrd(brdIdx0);
+					if(brdIdx1.isPresent()) {
+						service.removeBrd(brdIdx1.get());
+					}
+					if(brdIdx2.isPresent()) {
+						service.removeBrd(brdIdx2.get());
+					}
+					if(brdIdx3.isPresent()) {
+						service.removeBrd(brdIdx3.get());
+					}
+					if(brdIdx4.isPresent()) {
+						service.removeBrd(brdIdx4.get());
+					}
+					PageDTO<Board> pageDTO;
+					pageDTO = service.findBrdAll();
+					model.addAttribute("boardPageDTO", pageDTO);
+					return "mycommunity.jsp";
+			} catch (RemoveException | FindException e) {
+				System.out.println(e.getMessage());
+				model.addAttribute("msg", e.getMessage());
+				return "mycommunity.jsp";
+			}
+		}
+		
+		
+		//마이페이지 자유게시판글 페이징 컨트롤러
+		@GetMapping("mybrd/{uNickname}/{currentPage}")
+		public Object myBrd(@PathVariable String uNickname, @PathVariable int currentPage ,Model model){
+			ModelAndView mnv = new ModelAndView();
+			PageDTO<Board> pageDTO;
+
+			try {
+				pageDTO = service.findBrdByUNickName(uNickname, currentPage, PageDTO.CNT_PER_PAGE);
+				mnv.addObject("boardPageDTO", pageDTO);
+				mnv.setViewName("mycommunity.jsp");
+			} catch (FindException e) {
+				e.printStackTrace();
+				mnv.addObject("msg", e.getMessage());
+				mnv.setViewName("mycommunity.jsp");
+			}
+			return mnv;
 		}
 }
