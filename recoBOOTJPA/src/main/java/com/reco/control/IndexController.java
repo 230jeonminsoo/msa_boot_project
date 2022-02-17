@@ -88,5 +88,9 @@ public class IndexController {
 		public String myprivate() {
 			return "myprivate.jsp";
 		}
+		@GetMapping("/findEmailPage")
+		public String findEmailPage() {
+			return "findEmail.jsp";
+		}
 		
 }
