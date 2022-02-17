@@ -242,6 +242,27 @@ public class NoticeController {
 				pageDTO= service.findNtcAll();
 			}
 			mnv.addObject("pageDTO", pageDTO);
+			
+			
+			List<Notice> notices = pageDTO.getList();	
+			for(Notice notice : notices) {				
+			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
+			File dir = new File(saveDirectory);
+			//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
+			String[] imageFiles = dir.list(new FilenameFilter() {	
+				
+				@Override
+				public boolean accept(File dir, String name) {
+					return name.contains("reco_notice_"+notice.getNtcIdx()+"_image_");
+				}
+			});
+			
+			if(imageFiles.length>0) {
+				mnv.addObject("image", imageFiles[0]);
+			}
+		}
+			
+			
 			mnv.setViewName("noticelistresult.jsp");
 		} catch (FindException e) {
 			e.printStackTrace();

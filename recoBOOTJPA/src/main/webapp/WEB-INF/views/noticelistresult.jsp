@@ -25,6 +25,7 @@ if(pageDTO != null){
 list = pageDTO.getList();
 }
 %>
+<%String image = (String)request.getAttribute("image"); %>
 <!--END-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -107,7 +108,7 @@ list = pageDTO.getList();
 		 <ul>
 		    <li>
 			 <span><%=ntcIdx%></span>
-			 <span><%=ntcTitle%><%if(ntcAttachment != null){ %><img src="./images/클립.png"><%} %></span>
+			 <span><%=ntcTitle%><%if(ntcAttachment != null){ %><img src="./images/클립.png"><%} %><%if(image != null){ %><img src="./images/이미지.png"><%} %></span>
 			 <span><%=ntcuNickName%></span>
 			 <span><%=ntcViews%></span>
 			 <span><%=ntcCrt%></span>

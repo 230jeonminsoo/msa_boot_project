@@ -1,3 +1,4 @@
+<%@page import="com.reco.board.vo.Board"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
@@ -15,11 +16,16 @@ List<Notice> noticeList = new ArrayList<>();
 if(noticePageDTO != null){
 	noticeList = noticePageDTO.getList();
 }
-/*  PageDTO<Board> pageDTO = (PageDTO)request.getAttribute("boardPageDTO");
-List<Board> boardList = pageDTO.getList();
-PageDTO<Comment> pageDTO = (PageDTO)request.getAttribute("commentPageDTO");
-List<Comment> commentList = pageDTO.getList();  */
+ PageDTO<Board> boardPageDTO = (PageDTO)request.getAttribute("boardPageDTO");
+ List<Board> boardList = new ArrayList<>();
+if(boardPageDTO != null){
+	boardList = boardPageDTO.getList();
+}
+/* PageDTO<Comment> pageDTO = (PageDTO)request.getAttribute("commentPageDTO");
+List<Comment> commentList = pageDTO.getList();   */
 %>  
+<%String image = (String)request.getAttribute("noticelistimage"); %>
+
 <script src="./js/mycommunity.js"></script>
 <link href="./css/mycommunity.css" rel=stylesheet>
 
@@ -61,7 +67,7 @@ $(function(){
 			</li>
 		</ul>
 		<%if (noticePageDTO  == null) {%>
-			<span class="noNtc"><%=msg %></span>
+			<span class="noNtc" ><%=msg %></span>
 		<%} else{%> 
 			<%for(Notice n: noticeList){
 			  int ntcIdx = n.getNtcIdx();
@@ -82,7 +88,7 @@ $(function(){
 					       name='ntcIdx' 
 					       value=<%=ntcIdx%> />	     
 					 <span id="<%=ntcIdx%>"><%=ntcIdx%></span>
-					 <span id="<%=ntcIdx%>"><%=ntcTitle%><%if(ntcAttachment != null){ %><img src="./images/클립.png"><%} %></span>
+					 <span id="<%=ntcIdx%>"><%=ntcTitle%><%if(ntcAttachment != null){ %><img src="./images/클립.png"><%} %><%if(image != null){ %><img src="./images/이미지.png"><%} %></span>
 					 <span id="<%=ntcIdx%>"><%=ntcuNickName%></span>
 					 <span id="<%=ntcIdx%>"><%=ntcViews%></span>
 					 <span id="<%=ntcIdx%>"><%=ntcCrt%></span>

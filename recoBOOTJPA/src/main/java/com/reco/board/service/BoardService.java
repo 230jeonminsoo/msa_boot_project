@@ -125,6 +125,15 @@ public class BoardService {
 	}
 	
 
+	//자유게시판 닉네임 검색
+	public PageDTO<Board> findBrdByUNickName(String uNickname, int currentPage, int cntperpage) throws FindException{
+		String url = "/mybrd/"+ uNickname;
+		List<Board> list = dao.findBrdByUNickName(uNickname, currentPage, PageDTO.CNT_PER_PAGE);
+		int totalCnt = dao.findCountUNickName(uNickname);
+		PageDTO<Board> pageDTO = new PageDTO<>(url, currentPage, totalCnt, list);
+		return pageDTO;
+	}
+
 	public void modifyBrd(Board b) throws ModifyException, FindException{
 //		int brdIdx = dao.modifyBrd(b);
 //		PageDTO2<Board> board = findBrdByIdx(brdIdx);
