@@ -12,7 +12,16 @@ public class Customer{
 	private String uPwd;
 	private int uAuthCode;
 	private int uStatus;
-	
+	private String uRRN;
+
+
+	public String getuRRN() {
+		return uRRN;
+	}
+
+	public void setuRRN(String uRRN) {
+		this.uRRN = uRRN;
+	}
 
 	public Customer(){}
 	

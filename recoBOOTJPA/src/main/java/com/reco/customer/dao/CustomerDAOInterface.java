@@ -51,4 +51,12 @@ public interface CustomerDAOInterface {
 	 */
 	public void findPwd(String email, String password) throws ModifyException;
 	
+	/**
+	 * 이름과 주민번호로 고객을 찾는다.
+	 * @param email
+	 * @param password
+	 * @throws FindException
+	 */
+	public Customer findByNameAndRRN(String name, String RRN) throws FindException;
+	
 }
