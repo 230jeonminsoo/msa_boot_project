@@ -43,19 +43,27 @@ function CNSend(){
 	
     $.ajax({
         type: "GET",
-        url: "/check/sendSMS",
+        url: "./check/sendSMS",
         data: {
             "phoneNumber" : phoneNumber
         },
         success: function(res){
-                if($.trim(res) ==$('div.CNSend>input[name=CN]').val()){
-                    alert('인증성공!');
-					$('div.findEmail>div.CNSend>input[name=email]').css('display','inline-block');
-					
-                }else{
-                    alert('인증번호가 올바르지 않습니다!');
-                }
+			CNSendCheck(res);
         }
 	});
   });
 }
+
+function CNSendCheck(res){
+	$('div.CNSend>button.CN').click(function(){
+		console.log(res);
+	    if($.trim(res) ==$('div.CNSend>input[name=CN]').val()){
+	        alert('인증성공!');
+			$('div.findEmail>div.CNSend>input[name=email]').css('display','inline-block');
+			
+	    }else{
+	        alert('인증번호가 올바르지 않습니다!');
+	    }
+	});
+}
+
