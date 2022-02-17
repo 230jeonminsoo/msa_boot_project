@@ -17,8 +17,11 @@
         beforeSignupClick();
 		/*--회원가입 버튼이 클릭되었을때 END--*/
 		
-		/*--비밀번호변경 창 이동--*/
-		popUpFindPwd();
+		/*--비밀번호찾기 창 이동--*/
+		findPwdPage();
+		
+		/*--이메일찾기 창 이동(휴대폰본인인증)--*/
+		findEmailPage();
     });
 	</script>
   	
@@ -41,6 +44,7 @@
               </form>   
               
                 <div class="login_other">
+                	이메일를 잊어버리셨나요? <button class="findEmailPage">이메일찾기</button><br>
 	                비밀번호를 잊어버리셨나요? <button class="findPwdPage">비밀번호찾기</button><br>
 	                회원이 아니신가요? <button class="beforeSignup">회원가입</button>
                 </div>

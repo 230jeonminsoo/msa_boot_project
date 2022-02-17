@@ -42,10 +42,21 @@ function beforeSignupClick(){
 	});
 }
 
-/*--비밀번호변경 창 이동--*/
-function popUpFindPwd(){
+/*--비밀번호찾기 창 이동--*/
+function findPwdPage(){
 		$('button.findPwdPage').click(function(){		
 		ajaxurl ='./html/findPwd.html';
+		ajaxmethod = "get";
+	    $('section>div.articles0').empty();
+	    $('section>div.articles0').load(ajaxurl,function(responsetext,textstatus,jqxhr){
+	    });
+	    return false;	
+	});
+}
+
+function findEmailPage(){
+	$('button.findEmailPage').click(function(){		
+		ajaxurl ='./html/findEmail.html';
 		ajaxmethod = "get";
 	    $('section>div.articles0').empty();
 	    $('section>div.articles0').load(ajaxurl,function(responsetext,textstatus,jqxhr){
