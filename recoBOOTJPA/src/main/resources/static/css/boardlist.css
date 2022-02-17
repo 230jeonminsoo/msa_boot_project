@@ -2,12 +2,12 @@
 
 .container{
    
-  /*display: block;*/
+  display: block;
   width: 90%;
   height: 100%;
   margin: 0 auto;
  
-/*   position: relative; */
+   position: relative; 
   /* height: 140vh; */
   /* border-left: 5px dotted orange;
   border-right: 5px dotted orange; */
@@ -24,16 +24,16 @@ div.container>h1{
 /* 자유게시판 글 성격 설명하는 곳 */
 .brd_info{
   border:1px solid gray;
-  /* margin:0 auto; */
+   margin:0 auto; 
   text-align: center;
   width: 100%;
   font-size: 20px;
 
 }
 .search{
-  position: relative;
-  right: 130px;
-  top: 17px;
+   margin-top: 3px;
+  margin-bottom: 30px;
+  margin-left:1050px;
 }
 
 /*자유게시판 리스트 전체*/
