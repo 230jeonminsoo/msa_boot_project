@@ -26,5 +26,10 @@
 	<update id="modifyPwd" parameterType="Customer">
 		update customer set u_pwd=#{uPwd} where u_idx=#{uIdx}
 	</update>
+	
+	<select id="findByNameAndRRN" parameterType="Customer" resultType="Customer">
+		select u_idx,u_name,u_nickname,u_email,u_pwd,u_authcode,u_status 
+		from customer where u_name=#{uName} and u_RRN=#{uRRN}
+	</select>
 </mapper>
 

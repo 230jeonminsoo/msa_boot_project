@@ -189,4 +189,23 @@ public class CustomerController {
 		returnMap.put("resultMsg",resultMsg);
 		return returnMap;		
 	}
+	
+	@GetMapping("/findByNameAndRRN")
+	@ResponseBody
+	public Map<String,Object> findByNameAndRRN(String name, String rrn){
+		String resultMsg = "";
+		int status = 0;
+		try {
+			service.findByNameAndRRN(name, rrn);
+			status = 1;
+		} catch (FindException e) {
+			e.printStackTrace();
+			resultMsg = e.getMessage();	
+		}
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("status",status);
+		returnMap.put("resultMsg",resultMsg);
+		return returnMap;	
+	}
+	
 }

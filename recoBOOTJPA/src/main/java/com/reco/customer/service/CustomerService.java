@@ -61,6 +61,18 @@ public class CustomerService {
 		}	
 		
 	}
+	
+	public Customer findByNameAndRRN(String name, String RRN) throws FindException{
+		try {
+			Customer c = dao.findByNameAndRRN(name, RRN);
+			if(c!=null) {
+				return c;
+			}
+			throw new FindException();
+		}catch(FindException e) {
+			throw new FindException(e.getMessage());
+		}
+	}	
 }
 
 

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -136,7 +137,28 @@ public class CustomerDAOOracle implements CustomerDAOInterface {
 			}
 		}
 	}
-	
+	@Override
+	public Customer findByNameAndRRN(String name, String RRN) throws FindException{
+		SqlSession session = null;
+		try {
+			Customer c = new Customer();
+			c.setUName(name);
+			
+			c.setuRRN(RRN);
+			logger.info(name);
+			logger.info(RRN);
+			session = sqlSessionFactory.openSession();
+			Customer customer= session.selectOne("com.reco.customer.CustomerMapper.findByNameAndRRN",c);
+			if(customer != null) {
+				return customer;
+			}else {
+				throw new FindException("주민번호해당하는 회원이 없습니다.");
+			}
+		}catch(FindException e) {
+			e.printStackTrace();
+			throw new FindException(e.getMessage());
+		}
+	}
 	
 	@Override
 	public void findPwd(String email, String password) throws ModifyException{
