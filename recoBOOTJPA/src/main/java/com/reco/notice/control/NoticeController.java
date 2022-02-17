@@ -436,6 +436,17 @@ public class NoticeController {
 					model.addAttribute("letter", letterFileNames[0]);
 				}
 			}	
+			//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
+			String[] imageFiles = dir.list(new FilenameFilter() {		
+				@Override
+				public boolean accept(File dir, String name) {
+					return name.contains("reco_notice_"+ntcIdx+"_image_");
+				}
+			});
+			
+			if(imageFiles.length>0) {
+				model.addAttribute("image", imageFiles[0]);
+			}
 			return "noticedetailresult.jsp";
 		} catch (ModifyException e) {
 			e.printStackTrace();
