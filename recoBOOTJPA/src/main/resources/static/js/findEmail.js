@@ -34,5 +34,31 @@ function cerRRN(){
 }
 
 function CNSend(){
-	
+  $('div.CNSend>button.RRN').click(function(){
+    let phoneNumber = $('div.CNSend>input[name=phoneNumber]').val();
+    Swal.fire('인증번호 발송 완료!');
+
+    $.ajax({
+        type: "GET",
+        url: "/check/sendSMS",
+        data: {
+            "phoneNumber" : phoneNumber
+        },
+        success: function(res){
+                if($.trim(res) ==$('#inputCertifiedNumber').val()){
+                    Swal.fire(
+                        '인증성공!',
+                        '휴대폰 인증이 정상적으로 완료되었습니다.',
+                        'success'
+                    )
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: '인증오류',
+                        text: '인증번호가 올바르지 않습니다!',
+                    })
+                }
+        }
+	});
+  });
 }
