@@ -132,7 +132,7 @@ $(function(){
 		    <% }%><% else{ brdType =2;%>
 		    <%="기타" %>
 		    <%} %></span>
-		    <span><%=brdTitle%> <%if(brdAttachment != null){ %><img src="./images/클립.png"><%} %><%if(image != null){ %><img src="./images/사진.png"><%} %></span>
+		    <span><%=brdTitle%> <%if(brdAttachment != null){ %><img src="./images/클립.png"><%} %><%if(image != null){ %><img src="./images/이미지.png"><%} %></span>
 		    <span><%=BrdUNickName%></span>
 		    <span><%=brdViews%></span>
 		    <span><%=cmtCount%></span>

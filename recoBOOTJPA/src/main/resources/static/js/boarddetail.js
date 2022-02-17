@@ -219,8 +219,10 @@ $("div.pagegroup").on("click", "span.active",function(){ //on함수쓰면 현재
 //$("div.pagegroup>span.active").click(function(){          //on함수 대신 click함수로 바꾼것. 하지만 !!!! 중요한점은 아직 showList()함수가 호출되기 전이므로 페이지그룹핑도 안됐으니 페이지도 존재하지 않음. 즉 객체가 없음. 그래서 on써야됌
 	let url = $(this).attr("class").split(/\s+/)[0]; //정규표현식 \s는 공백 으로 자르기 했을때 가장 앞에나온 문자
 	//alert(url);
-	let brdIdx = $('button.board_modify').attr('id')
-
+	//let brdIdx = $('button.board_modify').attr('id')
+	let brdIdx = $('#brdIdx').html().trim();
+	
+	console.log(brdIdx);
 	//table tbody tr.row 원본객체만 제외하고 모두 삭제하기. 또는 table tbody tr.copy만 삭제하기
 	//$("div.tbody>div.tr").not("div.row").remove();
 	//$("div.tbody>div.tr.copy").remove();
