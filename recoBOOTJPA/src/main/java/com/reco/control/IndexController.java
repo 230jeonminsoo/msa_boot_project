@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.reco.board.service.BoardService;
+import com.reco.board.vo.Board;
 import com.reco.dto.PageDTO;
 import com.reco.exception.FindException;
 import com.reco.notice.service.NoticeService;
@@ -24,8 +26,11 @@ public class IndexController {
 
 	
 		@Autowired
-		private NoticeService service;	
-	
+		private NoticeService Noticeservice;	
+		
+		@Autowired
+		private BoardService Boardservice;
+		
 		@GetMapping("/")
 		public String index() {
 			return "index.jsp";
@@ -98,18 +103,20 @@ public class IndexController {
 		 */
 		
 		//나의 공지사항 글 보는 컨트롤러
-		@GetMapping(value = {"mycommunity/{uNickname}", "myntc/{uNickname}/{currentPage}"})
+		@GetMapping("mycommunity/{uNickname}")
 		public Object myNtc(@PathVariable String uNickname, @PathVariable Optional<Integer> currentPage ,Model model){
 			ModelAndView mnv = new ModelAndView();
-			PageDTO<Notice> pageDTO;
-
+			PageDTO<Notice> noticePageDTO;
+			PageDTO<Board> boardPageDTO;
 			try {
 				int cp = 1;
 				if(currentPage.isPresent()) { //currentPage
 					cp = currentPage.get();
 				}
-				pageDTO = service.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
-				mnv.addObject("noticePageDTO", pageDTO);
+				noticePageDTO = Noticeservice.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
+				boardPageDTO = Boardservice.findBrdByUNickName(uNickname, uNickname, cp);
+				mnv.addObject("noticePageDTO", noticePageDTO);
+				mnv.addObject("boardPageDTO",boardPageDTO);
 				mnv.setViewName("mycommunity.jsp");
 			} catch (FindException e) {
 				e.printStackTrace();

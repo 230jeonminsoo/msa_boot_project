@@ -270,6 +270,28 @@ public class NoticeController {
 		}
 	}
 	
+	//나의 공지사항 글 보는 컨트롤러
+	@GetMapping("myntc/{uNickname}/{currentPage}")
+	public Object myNtc(@PathVariable String uNickname, @PathVariable Optional<Integer> currentPage ,Model model){
+		ModelAndView mnv = new ModelAndView();
+		PageDTO<Notice> pageDTO;
+
+		try {
+			int cp = 1;
+			if(currentPage.isPresent()) { //currentPage
+				cp = currentPage.get();
+			}
+			pageDTO = service.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
+			mnv.addObject("noticePageDTO", pageDTO);
+			mnv.setViewName("mycommunity.jsp");
+		} catch (FindException e) {
+			e.printStackTrace();
+			mnv.addObject("msg", e.getMessage());
+			mnv.setViewName("mycommunity.jsp");
+		}
+		return mnv;
+	}
+	
 	//마이페이지에서 공지사항을 삭제하는 컨트롤러
 	@GetMapping("myntcremove")
 	public String noticeRemove(int ntcIdx0, Optional<Integer> ntcIdx1, Optional<Integer> ntcIdx2, Optional<Integer> ntcIdx3, Optional<Integer> ntcIdx4, Model model) {
