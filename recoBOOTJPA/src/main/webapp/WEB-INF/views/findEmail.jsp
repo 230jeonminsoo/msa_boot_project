@@ -14,6 +14,12 @@
     	//입력한 이름,주민등록번호로 기존 이메일 보내기
     	//API Key : NCSD2AAHIAUW3DUN	
 		//API Secret : 2BQ7T5VHYNUYYCTBVYQQ08UMXOPLTMK6
+		
+		//참고사이트
+		//https://1-7171771.tistory.com/84
+		//https://developer.coolsms.co.kr/download
+
+		
      	CNSend();
     });
 	</script>
