@@ -98,7 +98,7 @@ public class IndexController {
 		 */
 		
 		//나의 공지사항 글 보는 컨트롤러
-		@GetMapping(value = {"myntc/{uNickname}", "myntc/{uNickname}/{currentPage}"})
+		@GetMapping(value = {"mycommunity/{uNickname}", "myntc/{uNickname}/{currentPage}"})
 		public Object myNtc(@PathVariable String uNickname, @PathVariable Optional<Integer> currentPage ,Model model){
 			ModelAndView mnv = new ModelAndView();
 			PageDTO<Notice> pageDTO;

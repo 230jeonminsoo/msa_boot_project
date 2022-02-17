@@ -139,7 +139,7 @@ function tabMenuClick(uNickname){
 			case 'mycommunity':
 			console.log(uNickname);
 				$.ajax({
-			        url: './myntc/'+uNickname,
+			        url: './mycommunity/'+uNickname,
 			        success:function(responseData){
 			            let $articlesObj = $('section>div.articles');
 			            $articlesObj.empty();
