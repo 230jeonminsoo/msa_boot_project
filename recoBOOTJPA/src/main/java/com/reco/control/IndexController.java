@@ -2,17 +2,30 @@ package com.reco.control;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.reco.dto.PageDTO;
+import com.reco.exception.FindException;
+import com.reco.notice.service.NoticeService;
+import com.reco.notice.vo.Notice;
 
 @Controller
 public class IndexController {
 
+	
+		@Autowired
+		private NoticeService service;	
+	
 		@GetMapping("/")
 		public String index() {
 			return "index.jsp";
@@ -83,6 +96,28 @@ public class IndexController {
 		 *  return "mycommunity.jsp"; 
 		 *  }
 		 */
+		
+		//나의 공지사항 글 보는 컨트롤러
+		@GetMapping(value = {"myntc/{uNickname}", "myntc/{uNickname}/{currentPage}"})
+		public Object myNtc(@PathVariable String uNickname, @PathVariable Optional<Integer> currentPage ,Model model){
+			ModelAndView mnv = new ModelAndView();
+			PageDTO<Notice> pageDTO;
+
+			try {
+				int cp = 1;
+				if(currentPage.isPresent()) { //currentPage
+					cp = currentPage.get();
+				}
+				pageDTO = service.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
+				mnv.addObject("noticePageDTO", pageDTO);
+				mnv.setViewName("mycommunity.jsp");
+			} catch (FindException e) {
+				e.printStackTrace();
+				mnv.addObject("msg", e.getMessage());
+				mnv.setViewName("mycommunity.jsp");
+			}
+			return mnv;
+		}
 		
 		@GetMapping("/myprivate")
 		public String myprivate() {
