@@ -56,7 +56,7 @@ function findPwdPage(){
 
 function findEmailPage(){
 	$('button.findEmailPage').click(function(){		
-		ajaxurl ='./html/findEmail.html';
+		ajaxurl ='findEmailPage';
 		ajaxmethod = "get";
 	    $('section>div.articles0').empty();
 	    $('section>div.articles0').load(ajaxurl,function(responsetext,textstatus,jqxhr){

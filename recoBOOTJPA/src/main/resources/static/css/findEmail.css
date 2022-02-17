@@ -3,3 +3,7 @@ div.CNSend{
 	margin:10px;
 	display:none;
 }
+
+div.findEmail>div.CNSend>input[name=email]{
+	display:none;
+}

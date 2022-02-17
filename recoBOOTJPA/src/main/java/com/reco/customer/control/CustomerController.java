@@ -2,6 +2,7 @@ package com.reco.customer.control;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -192,20 +194,39 @@ public class CustomerController {
 	
 	@GetMapping("/findByNameAndRRN")
 	@ResponseBody
-	public Map<String,Object> findByNameAndRRN(String name, String rrn){
-		String resultMsg = "";
+	public Map<String,Object> findByNameAndRRN(String name, String rrn, Model model){
 		int status = 0;
-		try {
-			service.findByNameAndRRN(name, rrn);
-			status = 1;
-		} catch (FindException e) {
-			e.printStackTrace();
-			resultMsg = e.getMessage();	
-		}
+		Customer c = new Customer();
 		Map<String, Object> returnMap = new HashMap<>();
-		returnMap.put("status",status);
-		returnMap.put("resultMsg",resultMsg);
-		return returnMap;	
+		try {
+			c= service.findByNameAndRRN(name, rrn);
+			status = 1;
+			returnMap.put("email",c.getUEmail());
+			return returnMap;
+		} catch (FindException e) {
+			e.printStackTrace();	
+			returnMap.put("status",status);
+			returnMap.put("resultMsg",e.getMessage());
+			return returnMap;
+		}			
 	}
+	
+	@GetMapping("/check/sendSMS")
+    public @ResponseBody
+    String sendSMS(String phoneNumber) {
+
+        Random rand  = new Random();
+        String numStr = "";
+        for(int i=0; i<4; i++) {
+            String ran = Integer.toString(rand.nextInt(10));
+            numStr+=ran;
+        }
+
+        System.out.println("수신자 번호 : " + phoneNumber);
+        System.out.println("인증번호 : " + numStr);
+        service.certifiedPhoneNumber(phoneNumber,numStr);
+        return numStr;
+    }
+	
 	
 }

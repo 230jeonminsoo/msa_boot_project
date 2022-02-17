@@ -22,6 +22,9 @@ function cerRRN(){
 					alert(responseObj.resultMsg);
 					$('div.findEmail>input[name=myName]').focus();
 				}else{
+					let $articlesObj = $('div.findEmail>div.CNSend>input[name=email]');
+	                console.log(responseObj.email);
+					$articlesObj.val(responseObj.email);
 					$('div.CNSend').css('display','inline-block');
 				}
 			},
@@ -34,5 +37,25 @@ function cerRRN(){
 }
 
 function CNSend(){
+  $('div.CNSend>button.RRN').click(function(){
+    let phoneNumber = $('div.CNSend>input[name=phoneNumber]').val();
+    alert('인증번호 발송 완료!');
 	
+    $.ajax({
+        type: "GET",
+        url: "/check/sendSMS",
+        data: {
+            "phoneNumber" : phoneNumber
+        },
+        success: function(res){
+                if($.trim(res) ==$('div.CNSend>input[name=CN]').val()){
+                    alert('인증성공!');
+					$('div.findEmail>div.CNSend>input[name=email]').css('display','inline-block');
+					
+                }else{
+                    alert('인증번호가 올바르지 않습니다!');
+                }
+        }
+	});
+  });
 }
