@@ -137,4 +137,14 @@ public class IndexController {
 			return "findEmail.jsp";
 		}
 		
+
+		@GetMapping("/calpostwrite")
+		public String calpostwrite() {
+			return "calpostwrite.jsp";
+		}
+		
+		@GetMapping("/calinfowrite")
+		public String calinfowrite() {
+			return "calInfowrite.jsp";
+		}
 }
