@@ -40,9 +40,9 @@
    
    <insert id="addCalPost"  parameterType="map">
 		<selectKey resultType="int" keyProperty="calIdx" order="BEFORE">
-			SELECT NVL(MAX(cal_Idx), 0) 
+			SELECT cal_Idx
 			FROM cal_info
-			WHERE u_Idx = ${uIdx}
+			WHERE u_Idx = ${uIdx} and cal_idx = ${calIdx}
 		</selectKey>
 		
 		 INSERT INTO cal_post_${uIdx}_${calIdx}(cal_Main_Img, cal_Date, cal_Memo) 

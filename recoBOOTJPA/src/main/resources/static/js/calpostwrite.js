@@ -2,9 +2,10 @@
 /*-calpostwrite화면에서 작성완료 클릭했을때-*/
 function addCalPostClick(){
 	let $addCalPostObj = $('form>table>tr>td>button[id=1]');
-	 
+	 		console.log("addCalPostClick()");
 		$addCalPostObj.click(function(){
 	        //let menuHref = $(this).attr('id="1"'); 
+
 	        let ajaxUrl = './calpostAdd'; 
 	        
 			$.ajax({

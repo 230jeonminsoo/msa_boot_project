@@ -5,6 +5,20 @@ function tabaddClick(){
 	let $tabadd = $('div.tab>ul>li>a[id=clickadd]');
 	console.log($tabadd);
 	$tabadd.click(function(){
+		let menuHref = $(this).attr('href'); 
+		let ajaxUrl = './html/calInfowrite.html';  
+        
+		$.ajax({
+            url: ajaxUrl,
+            method : 'get',
+            success:function(responseData){
+                let $articlesObj = $('section>div.articles');
+                $articlesObj.empty();
+                $articlesObj.html(responseData);
+		            }
+	        }); 
+		return false;
+		
 		/*let url = './html/calInfowrite.html';*/
 		/*let url = 'calInfowrite.jsp';*/
         /*let target = 'category+Thbumbnail';
@@ -20,19 +34,7 @@ function tabaddClick(){
 	
 		
         //let menuHref = $(this).attr('id="1"'); 
-        let menuHref = $(this).attr('href'); 
-		let ajaxUrl = './html/calInfowrite.html';  
         
-		$.ajax({
-            url: ajaxUrl,
-            method : 'get',
-            success:function(responseData){
-                let $articlesObj = $('section>div.articles');
-                $articlesObj.empty();
-                $articlesObj.html(responseData);
-		            }
-	        }); 
-		return false;
 	});
 }
 
@@ -55,7 +57,8 @@ function calMenuClick(){ //callistresult.jsp
  			case '#':
 				break;
 			default :
-			//alert("in tab.js menuHref=" + menuHref);
+				/*alert("in tab.js menuHref=" + menuHref);
+				alert("카테고리 = " + $(this).html());*/
 				//tab에서 캘린더 카테고리 클릭되었을때
 				//calpost 작동하면 변경해야함.
 				ajaxUrl = menuHref;

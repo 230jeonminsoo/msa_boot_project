@@ -6,16 +6,19 @@ function calThumbnailClick(){
 	 		console.log("calThumbnailClick()");
 		$calThumbnailObj.click(function(){
 			let $dateValue = $('section>div.articles>div.nowdate').html();
-			let calIdx = $(this).parents('.calIdx').attr('id');
+			let $calIdxObj =  $(this).parents('.calIdx');
+			let calIdx = $calIdxObj.attr('id');
+			let calCategory = $calIdxObj.find('p.title_front').html();
+			
 			let tableName = $(this).attr('id');
-	        console.log("tableName=" + tableName);
+	        console.log("tableName=" + tableName + "calCategory" + calCategory);
 			let ajaxUrl = "./calpostlist";	 
 			    
 			$.ajax({
 	            url: ajaxUrl,
 	            method : 'get',
 				//data: {dateValue:$dateValue},
-				data:{calIdx:calIdx},  //{dateValue:'2021/12'},
+				data:{calIdx:calIdx, calCategory: calCategory},  //{dateValue:'2021/12'},
 	            success:function(responseData){
 					let $articlesObj = $('section>div.articles');
 	                $articlesObj.empty();
@@ -35,6 +38,20 @@ function calThumbnailClick(){
 
 function caladdClick(){
 	$('section>div.articles>ul>li>div.title_add>a>img').click(function(){
+		let menuHref = $(this).attr('href'); 
+		/*let ajaxUrl = './html/calInfowrite.html';*/  
+		let ajaxUrl = 'calinfowrite';
+        
+		$.ajax({
+            url: ajaxUrl,
+            method : 'get',
+            success:function(responseData){
+                let $articlesObj = $('section>div.articles');
+                $articlesObj.empty();
+                $articlesObj.html(responseData);
+		            }
+	        });
+		
 		/*let url = './html/calInfowrite.html';
         let target = 'category+Thbumbnail';
 
@@ -47,18 +64,7 @@ function caladdClick(){
 		let features = ('width='+ _width + ',height='+ _height +',left='+ _left + ',top='+ _top);
         window.open(url, target, features);*/
 
-		let menuHref = $(this).attr('href'); 
-		let ajaxUrl = './html/calInfowrite.html';  
-        
-		$.ajax({
-            url: ajaxUrl,
-            method : 'get',
-            success:function(responseData){
-                let $articlesObj = $('section>div.articles');
-                $articlesObj.empty();
-                $articlesObj.html(responseData);
-		            }
-	        }); 
+		 
 
 		return false;
 	});

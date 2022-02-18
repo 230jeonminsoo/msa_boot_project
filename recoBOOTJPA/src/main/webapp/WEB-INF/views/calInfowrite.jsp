@@ -1,3 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page import="com.reco.calendar.dao.CalendarDAOOracle" %>
+<%@page import="com.reco.calendar.vo.CalInfo" %>
+<%@page import="com.reco.customer.vo.Customer"%>
+<%@page import="java.util.List"%>
+ 
+ 
  <!--캘린더 추가등록 페이지입니다. -->
 <!DOCTYPE html>
 <html lang="ko">
@@ -26,7 +34,17 @@
 		/*--캘린더 수정 버튼이 클릭되었을때 END--*/
 	   });
 	</script>
-	            
+	
+	
+	<%
+	Customer c = (Customer)session.getAttribute("loginInfo"); 
+	CalInfo ci = (CalInfo)session.getAttribute("CalendarInfo"); 
+	
+	int uIdx  = c.getUIdx();
+	int calIdx = ci.getCalIdx();
+	
+	%>
+	 
 	<fieldset>
 	    <form  method="post" action="./caladd" autocomplete="off" enctype="multipart/form-data">
 	        
@@ -41,11 +59,12 @@
 	        	<input type="text" name="calCategory" id="input" placeholder="캘린더 이름을 입력해주세요.">
 	        </div><br>
 	        
-	
+			
 	        <button type="submit">등록</button>
 	        <button type="cancle"  onClick='self.close()'>취소</button>
+	        
 	
 	    </form>
 	</fieldset>
-
+	
 </html>

@@ -17,7 +17,6 @@ import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
 import com.reco.exception.RemoveException;
-import com.reco.notice.vo.Notice;
 
 @Repository
 public class CalendarDAOOracle implements CalendarDAOInterface {
@@ -77,20 +76,20 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 				
 				Map<String, Object> map = new HashMap<>();
 				map.put("uIdx", uIdx);
-				//map.put("calIdx", calIdx); //-> 값을 못가져옴. 0 으로 받아짐ㅜㅜ
+				map.put("calIdx", -1); //-> 값을 못가져옴. 0 으로 받아짐ㅜㅜ
 				map.put("calCategory", calCategory);
 				map.put("calThumbnail", calThumbnail);
 				
 				session.insert("com.reco.calendar.CalendarMapper.addCal",map);
 				session.commit();
 				
-				System.out.println("addCal함수 : uIdx=" + uIdx + ", calIdx =" + calIdx);
+				System.out.println("addCal함수 : uIdx=" + uIdx + ", calIdx =" + map.get("calIdx"));
 				
 				//----------------------------------------------------------------------
 				//CAL_POST_uIdx값_calIdx값 이름의 테이블 생성
-				String postTableName = "cal_post_" + uIdx + "_"  + calIdx;
+				String postTableName = "cal_post_" + uIdx + "_"  + map.get("calIdx");
 				String createCalPostSQL = "CREATE TABLE " + postTableName +"(\r\n"
-						+ "   cal_Date DATE CONSTRAINT cal_post_" + uIdx + "_" + calIdx + "_pk PRIMARY KEY,\r\n"
+						+ "   cal_Date DATE CONSTRAINT cal_post_" + uIdx + "_" + map.get("calIdx") + "_pk PRIMARY KEY,\r\n"
 						+ "   cal_Memo VARCHAR2(1000) NOT NULL,\r\n"
 						+ "   cal_Main_Img VARCHAR2(50) NOT NULL,\r\n"
 						+ "   cal_Post_CreateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP\r\n"
@@ -195,6 +194,7 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 			session = sqlSessionFactory.openSession();
 			int uIdx = calpost.getCalinfo().getCustomer().getUIdx();
 			int calIdx = calpost.getCalinfo().getCalIdx();	
+			System.out.println("calIdx값 = " + calIdx);
 			
 			Map<String, Object> map = new HashMap<>();
 			map.put("uIdx", uIdx);
@@ -287,7 +287,7 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 			Map<String, Object> map = new HashMap<>(); // Map<Key형, Value형> mapName = new HashMap<>();
 			map.put("calInfo", calinfo); // calinfo map에 넣는다
 			map.put("calDate",  calDate);
-			map.put("calIdx", calIdx);
+			map.put("calIdx", calIdx); // 값 제대로 받음 
 			map.put("uIdx", uIdx);
 			System.out.println("null값 확인: uIdx=" + uIdx + ", calIdx =" + calIdx);
 			List<CalPost> list = session.selectList("com.reco.calendar.CalendarMapper.findCalsByDate",map);

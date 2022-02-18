@@ -17,7 +17,7 @@ $(function(){
 	$img.each(function(i, element){
 		let imgId = $(element).attr('id');	
 		$.ajax({
-			url: './download?filename='+imgId,
+			url: './calendar/downloadimage?thumbnailName='+imgId,
 			 cache:false,
 	         xhrFields:{
 	            responseType: 'blob'
@@ -56,14 +56,16 @@ if(c != null){
 	
 	for(CalInfo ci : list){
 		int calIdx = ci.getCalIdx();
-		String thumbFileName = "cal_post_" + uIdx +"_" + calIdx + "." + ci.getCalThumbnail();
+		String imageFileName = "cal_post_" + uIdx  + "_" + calIdx + ".jpg";
+		String thumbnailName = "s_"+ imageFileName;
+		session.setAttribute("CalendarInfo", ci);    /* 다른 jsp페이지에 CalInfo 클래스에 연결되게. */
 %> 	
-
+	
 <li>
 	<div id="<%=calIdx %>" class="calIdx"> 
 	  <div class="title_wrap" id="title5">
 	    <a href="#"> <!-- 썸네일 -->
-	     	<img id="<%=thumbFileName %>" alt="ADD" title="ADD">
+	     	<img id="<%=thumbnailName %>" alt="ADD" title="ADD">
 	    </a>
 	  </div>
 	  

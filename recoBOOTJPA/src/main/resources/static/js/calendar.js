@@ -60,6 +60,7 @@ var renderCalendar = () => {
             break;
         }
         }
+
     }
 };
 
@@ -83,13 +84,16 @@ var goToday = () => {
 };
 
 
-function dateClick(){
+//calpostlist화면에서 date 클릭했을때
+function dateClick(){  
 	let $dateObj = $('div.body>div.calendar>div.main>a.dates');
 	console.log($dateObj);
 	$dateObj.click(function(){
 		let menuHref = $(this).attr('href'); 
-		let ajaxUrl = './html/calpostwrite.html'; 
-		
+		/*let dateName = $(this).attr('id');
+		console.log("dateName=" + dateName);*/
+		/*let ajaxUrl = './html/calpostwrite.html';*/ 
+		let ajaxUrl = 'calpostwrite';
 		/*let ajaxUrl = './calpostwrite.jsp'; */
 			         
 		$.ajax({

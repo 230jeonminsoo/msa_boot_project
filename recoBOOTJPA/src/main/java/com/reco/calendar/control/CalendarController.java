@@ -57,7 +57,8 @@ public class CalendarController {
 						,@RequestParam(value = "calThumbnail") MultipartFile multipartFile
 						,@RequestPart(required=false) List<MultipartFile> letterFiles
 						,@RequestPart(required=false) MultipartFile imageFile
-						, HttpSession session, Model model)  {
+						, HttpSession session, Model model
+						)  {
 		String filenameString= StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		//logger.info("imageFile.getSize()=" + imageFile.getSize() + ", imageFile.getOriginalFileName()=" + imageFile.getOriginalFilename());
 
@@ -139,9 +140,9 @@ public class CalendarController {
 
 			if(thumbnailFile != null) {
 				//ResponseEntity 응답상태(200번, 404번 등), 응답헤더설정(쿠키, 컨텐트 LENGTH등 ), 응답내용설정 
-				return "failresult.jsp";
-			}
-		
+//				return "failresult.jsp";
+//			}
+//		
 			try {
 				//이미지 썸네일다운로드하기
 				HttpHeaders responseHeaders = new HttpHeaders();
@@ -155,13 +156,10 @@ public class CalendarController {
 				return "failresult.jsp";
 			}
 			
-			
+		}//return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			return "callistresult.jsp";
-		
-	}//return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 	
-
-
 //CalAddServlet
 
 //protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -246,12 +244,14 @@ public class CalendarController {
 public String calInfoList(HttpSession session, Model model) {
 	Customer c = (Customer)session.getAttribute("loginInfo");
 	int uIdx = c.getUIdx();
-
+	
+	CalInfo ci = new CalInfo();
 	try {
 		//비지니스로직호출
 		List<CalInfo> list = service.findCalsByUIdx(uIdx);
 		//응답할 결과 요청속성에 설정
-		model.addAttribute("list", list);		
+		model.addAttribute("list", list);	
+		session.setAttribute("CalendarInfo", ci);
 		return "callistresult.jsp";
 	} catch (FindException e) {
 		e.printStackTrace();
@@ -262,50 +262,24 @@ public String calInfoList(HttpSession session, Model model) {
 
 }
 
-//CalInfoListServlet
-//protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		HttpSession session = request.getSession();
-//		/*--샘플 로그인된 정보 -- */
-////		Customer sampleCustomer = new Customer();
-////		sampleCustomer.setuIdx(3);
-////		session.setAttribute("loginInfo", sampleCustomer);
-//		/*-------------------*/
-//	
-//		Customer c = (Customer)session.getAttribute("loginInfo");
-//		int uIdx = c.getUIdx();
-//		String path = "";
-//	
-//		try {
-//	
-//		//비지니스로직호출
-//			List<CalInfo> list = service.findCalsByUIdx(uIdx);
-//			
-//			//응답할 결과 요청속성에 설정
-//			request.setAttribute("list", list);			
-//		} catch (FindException e) {
-//			e.printStackTrace();
-//			//path = "failresult.jsp";
-//			request.setAttribute("list", new ArrayList<CalInfo>());		
-////			request.setAttribute("msg", e.getMessage());
-//		}
-//		path="callistresult.jsp";
-//		//VIEWER로 이동
-//		RequestDispatcher rd = request.getRequestDispatcher(path);
-//		rd.forward(request, response);
-//}
+
 
 //캘린더 달력을 보는 컨트롤러 
 @GetMapping("calpostlist")
-public String CalPostList (@RequestParam(value = "calIdx")int calIdx, String calDate,
+public String CalPostList (@RequestParam(value = "calIdx")int calIdx,
+						   @RequestParam(value="calCategory")String calCategory,
+		                   String calDate,
 		//@RequestParam(value = "dateValue")String calDate,
 		HttpSession session, Model model) {
 	Customer c = (Customer)session.getAttribute("loginInfo");
 
 	CalInfo calinfo = new CalInfo();
 	calinfo.setCustomer(c);
-
-	//String calIdx =  request.getParameter("calIdx");
 	calinfo.setCalIdx(calIdx);
+	
+	
+	//String calIdx =  request.getParameter("calIdx");
+	
 
 	//요청전달데이터로 년/월정보가 없으면 오늘날짜기준의 년/월값으로 설정한다
 	//String calDate = request.getParameter("dateValue");  
@@ -315,11 +289,13 @@ public String CalPostList (@RequestParam(value = "calIdx")int calIdx, String cal
 	}
 
 
-	System.out.println("in CalPostListServlet calIdx = " + calIdx +", calDate=" + calDate );
+	System.out.println("in CalendarController CalPostList calIdx = " + calIdx +", calDate=" + calDate );
 
 	try {
 		List<CalPost> list = service.findCalsByDate(calinfo,calDate);
-		model.addAttribute("list", list);			
+		model.addAttribute("list", list);	
+		model.addAttribute("calinfo",calinfo);
+		
 		return "calpostlistresult.jsp";
 	} catch (FindException e) {
 		e.printStackTrace();
@@ -329,47 +305,6 @@ public String CalPostList (@RequestParam(value = "calIdx")int calIdx, String cal
 
 }
 
-
-//  CalPostListServlet
-//	@WebServlet("/calpost")  //서블릿url 경로
-//	public class CalPostListServlet extends HttpServlet {
-//		private static final long serialVersionUID = 1L;
-//		private CalendarService service = CalendarService.getInstance();
-//
-//		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-//			HttpSession session = request.getSession();
-//			Customer c = (Customer)session.getAttribute("loginInfo"); // 세션에 저장되어있는 로그인정보를 가져오기
-////			int uIdx = c.getUIdx();
-//			CalInfo calinfo = new CalInfo();
-//			calinfo.setCustomer(c);
-//			
-//			String calIdx = request.getParameter("calIdx");
-//			calinfo.setCalIdx(Integer.parseInt(calIdx));
-//			
-//			String calDate = request.getParameter("dateValue"); //요청전달데이터로 년/월정보가 없으면 오늘날짜기준의 년/월값으로 설정한다 
-//			if(calDate == null ||calDate.equals("")) {
-//				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM");
-//				calDate = sdf.format(new Date());
-//			}
-//			
-//			String path = "";
-//			System.out.println("in CalPostListServlet calIdx = " + calIdx +", calDate=" + calDate );
-//			try {
-//				List<CalPost> list = service.findCalsByDate(calinfo,calDate);
-//				request.setAttribute("list", list);			
-//				path="calpostlistresult.jsp";
-//			} catch (FindException e) {
-//				e.printStackTrace();
-//				path="calpostlistresult.jsp";	
-//			}
-//			
-//			RequestDispatcher rd = request.getRequestDispatcher(path);
-//			rd.forward(request, response);
-//			
-//		}
-//
-//		
-//	}
 
 
 //	String calDate = request.getParameter("calDate");
@@ -387,34 +322,38 @@ public String calpostAdd(@RequestParam(value = "calMemo") String calMemo,
 						 @RequestParam(value = "calMainImg") MultipartFile multipartFile,
 						 @RequestPart (required = false) MultipartFile letterFiles,
 						 @RequestPart (required = false) MultipartFile imageFile,
-						 CalInfo calinfo, HttpSession session, Model model) {
+						 HttpSession session, Model model, int calIdx
+						 ) {
 
 	String filenameString= StringUtils.cleanPath(multipartFile.getOriginalFilename());
 	//logger.info("imageFile.getSize()=" + imageFile.getSize() + ", imageFile.getOriginalFileName()=" + imageFile.getOriginalFilename());
-
+	
+	
 	Customer c = (Customer)session.getAttribute("loginInfo");
+	int uIdx = c.getUIdx();
+	
+	CalInfo calinfo = new CalInfo();
 	calinfo.setCustomer(c);
-	int uIdx = calinfo.getCustomer().getUIdx();
-
-
+	calinfo.setCalIdx(calIdx);
+	
+	
 	CalPost cp = new CalPost();
 	cp.setCalMemo(calMemo);
 	cp.setCalDate(calDate);
 	cp.setCalMainImg(filenameString);
 	cp.setCalinfo(calinfo);
-
-
+	
+	System.out.println("in CalendarController calpostAdd calIdx = " + calIdx +", calDate=" + calDate );
 	//게시글내용 DB에 저장
 	try {
 		CalPost calpost = service.addCalPost(cp);
 		model.addAttribute("cp", calpost);
 	} catch (AddException e1) {
 		e1.printStackTrace();
-		return "failresult.jsp";
 	}
 
 	//파일 경로 생성
-	String saveDirectory = "d:\\files";
+	String saveDirectory = "d:\\files"; // d:\\files\\calendar
 	if ( ! new File(saveDirectory).exists()) {
 		logger.info("업로드 실제경로생성");
 		new File(saveDirectory).mkdirs(); // 상위디렉토리생성
@@ -429,7 +368,7 @@ public String calpostAdd(@RequestParam(value = "calMemo") String calMemo,
 		logger.info("이미지 파일이름:" + imageOrignFileName +", 파일크기: " + multipartFile.getSize());
 
 
-		int calIdx = cp.getCalinfo().getCalIdx();
+//		calIdx = cp.getCalinfo().getCalIdx();
 		System.out.println("값확인용> uIdx= "+ uIdx + ", calIdx= " + calIdx + ", calDate= " + calDate);
 		//저장할 파일이름을 지정한다 ex) 저장파일명 : cal_(UIdx)_(CalIdx)_(CalDate)
 		String imageFileName = "cal_"+ uIdx  + "_" + calIdx + "_" + calDate + ".jpg" ; //파일이름("선택날짜.확장자") //calMainImg를 .jpg 저장하는법 찾기 
@@ -569,51 +508,26 @@ public String calpostAdd(@RequestParam(value = "calMemo") String calMemo,
 //	}
 //
 //}
-@GetMapping("calendar/download")
-public ResponseEntity<Resource>  download(String fileName) throws UnsupportedEncodingException {
-	logger.info("첨부파일 다운로드");
-	//파일 경로생성
-	String saveDirectory = "d:\\files\\calendar";
 
-	//HttpHeaders : 요청/응답헤더용 API
-	HttpHeaders headers = new HttpHeaders();	
-	headers.add(HttpHeaders.CONTENT_TYPE, "application/octet-stream;charset=UTF-8");
-	//다운로드시 파일이름 결정
-	headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
 
-	//Resource : 자원(파일, URL)용 API
-	//다운로드할 파일의 실제 경로 얻기
-	File f = new File(saveDirectory, fileName);		
-	Resource resource = new FileSystemResource(f);
-	try {
-		logger.info("첨부파일이름: " + resource.getFilename());
-		logger.info("첨부파일resource.contentLength()=" + resource.contentLength());
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
 
-	ResponseEntity<Resource> responseEntity  =  
-			new ResponseEntity<>(resource, headers, HttpStatus.OK);
-	return responseEntity;
-}
 
-@GetMapping("calendar/downloadimage")
-public ResponseEntity<?> downloadImage(String imageFileName) {
-	String SaveDirectory = "d:\\files\\calendar";
-	File thumbnailFile = new File(SaveDirectory, imageFileName);
-	HttpHeaders responseHeaders = new HttpHeaders();
-	try {
-		//이미지 썸네일다운로드하기
-		responseHeaders.set(HttpHeaders.CONTENT_LENGTH, thumbnailFile.length()+"");
-		responseHeaders.set(HttpHeaders.CONTENT_TYPE, Files.probeContentType(thumbnailFile.toPath()));
-		responseHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename="+ URLEncoder.encode("a", "UTF-8"));
-		logger.info("섬네일파일 다운로드");
-		return new ResponseEntity<>(FileCopyUtils.copyToByteArray(thumbnailFile), responseHeaders, HttpStatus.OK);
-	}catch (IOException e) {
-		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-	}	
-
-}
+//@GetMapping("calendar/downloadimage")
+//public ResponseEntity<?> downloadImage(String imageFileName) {
+//	String SaveDirectory = "d:\\files\\calendar";
+//	File thumbnailFile = new File(SaveDirectory, imageFileName);
+//	HttpHeaders responseHeaders = new HttpHeaders();
+//	try {
+//		//이미지 썸네일다운로드하기
+//		responseHeaders.set(HttpHeaders.CONTENT_LENGTH, thumbnailFile.length()+"");
+//		responseHeaders.set(HttpHeaders.CONTENT_TYPE, Files.probeContentType(thumbnailFile.toPath()));
+//		responseHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename="+ URLEncoder.encode("a", "UTF-8"));
+//		logger.info("섬네일파일 다운로드");
+//		return new ResponseEntity<>(FileCopyUtils.copyToByteArray(thumbnailFile), responseHeaders, HttpStatus.OK);
+//	}catch (IOException e) {
+//		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//	}	
+//
+//}
 
 }

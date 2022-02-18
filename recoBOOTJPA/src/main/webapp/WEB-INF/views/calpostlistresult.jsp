@@ -1,51 +1,67 @@
-<%@page import="com.reco.calendar.vo.CalPost"%>
 <%@page import="java.io.File"%>
+<%@page import="java.util.Date"%>
 <%@page import="java.util.List"%>
+<%@page import="com.reco.calendar.vo.CalInfo"%>
+<%@page import="com.reco.calendar.vo.CalPost"%>
 <%@page import="com.reco.customer.vo.Customer"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="java.util.Date"%>
 
 <link rel=stylesheet href="./css/calendar.css" >
 <script src="./js/calendar.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script>
 	$(function(){
+		/*--- div.calMainImg에서  모든 img태그 보여주기 START--*/
+		let $img = $('div.main img');
+		$img.each(function(i, element){
+			let imgId = $(element).attr('id');	
+			$.ajax({
+				url: './calendar/downloadimage?thumbnailName='+imgId,
+				 cache:false,
+		         xhrFields:{
+		            responseType: 'blob'
+		        } , 
+		        success: function(responseData, textStatus, jqXhr){
+		        	let contentType = jqXhr.getResponseHeader("content-type");
+		        	let contentDisposition = decodeURI(jqXhr.getResponseHeader("content-disposition"));
+		       		var url = URL.createObjectURL(responseData);
+		       		$(element).attr('src', url); 
+		        },
+		        error:function(){
+		        }
+			}); //end $.ajax
+		});//end each
+		/*---두번째 div에서  모든 img태그 보여주기 END--*/
+		
 		//달력에서 날짜 클릭시 발생하는 이벤트 
-		dateClick();
+		dateClick(); /* calendar.js */
 	});
 </script>
+
+
 <%
 Customer c = (Customer)session.getAttribute("loginInfo"); 
-List<CalPost> list = (List)request.getAttribute("list");
-int uIdx = c.getUIdx();
+String calCategory = request.getParameter("calCategory");
+CalInfo ci = (CalInfo)request.getAttribute("calinfo");
+int uIdx  = c.getUIdx();
+/* int calIdx = (Integer)request.getAttribute("calIdx"); */
+/* int calIdx = ci.getCalIdx(); */
+
+String saveDirectory = "d:\\files\\calendar";
+File dir = new File(saveDirectory);
+File[] files = dir.listFiles(); 
+
+/* String calCategory = calinfo.getCalCategory(); */
+
 %>
 
-<%-- <%
-
-	String saveDirectory = "d:\\files";
-	File dir = new File(saveDirectory);
-	File[] files = dir.listFiles(); 
-	
-	List<CalPost> list = (List)request.getAttribute("list");
-	int uIdx = c.getUIdx();
-	
-	for(CalPost cp : list){
-		int calIdx = cp.getCalinfo().getCalIdx();
-		String mainImgFileName = "cal_post_" + uIdx +"_" + calIdx + "." + cp.getCalMainImg();
-%> 	 --%>
-
-<%-- <%	for(CalPost cp : list){
-	/* int calIdx = cp.getCalInfo().getCalIdx();
-	String calDate = cp.getCalDate();  */
-	String calCategory = cp.getCalinfo().getCalCategory();
-	/* String calMainImg = cp.getCalMainImg(); */
-%>
 <div class="calCategory"> 
-		<p><%= calCategory %></p>
+	<p><%=calCategory %></p> 
+	<%-- <p><%=calIdx %></p> --%>
 </div>
 
-<% } %> --%>
 
 <div class="container">
       <div class="body">
@@ -83,13 +99,35 @@ int uIdx = c.getUIdx();
                   <div class="day">금</div>
                   <div class="day">토</div>
               </div>
-              <a class="dates" href ="#" target="_blank"></a>
+              <a class="dates" href ="./calpostlistresult" target="_blank">
+             		<%
+					List<CalPost> list = (List)request.getAttribute("list");
+             		
+             		if( list != null) {
+	             		for(CalPost cp : list){
+						String Date = cp.getCalDate();
+						}
+					} %>
+					
+					<%if( list == null){ %>
+					
+						<a href="calpostlistresult.jsp"></a>
+					<%} %>
+					
+					   
+					
+				<%-- <div id="<%=calMainjImg %>" class="calMainjImg"> 
+					  <div class="dateImg" id="dateImg">
+					    <a href="#"> <!-- 썸네일 -->
+					     	<img id="<%=thumbnailName %>" alt="ADD" title="ADD">
+					    </a>
+					</div> --%>
+              </a>
           </div>
       </div>
     </div>  
   </div>
-<%-- 
-<%} %> --%>
 
-    
+
+
  
