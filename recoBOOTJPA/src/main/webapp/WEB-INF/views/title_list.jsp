@@ -47,7 +47,7 @@ if(c == null){ //로그인 안된 경우
 <%
 if(c != null){
 
-	String saveDirectory = "d:\\files\\calendar";
+	String saveDirectory = "c:\\reco\\calendar";
 	File dir = new File(saveDirectory);
 	File[] files = dir.listFiles(); 
 	
@@ -58,7 +58,6 @@ if(c != null){
 		int calIdx = ci.getCalIdx();
 		String imageFileName = "cal_post_" + uIdx  + "_" + calIdx + ".jpg";
 		String thumbnailName = "s_"+ imageFileName;
-		session.setAttribute("CalendarInfo", ci);    /* 다른 jsp페이지에 CalInfo 클래스에 연결되게. */
 %> 	
 	
 <li>

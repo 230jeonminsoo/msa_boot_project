@@ -49,7 +49,7 @@ int uIdx  = c.getUIdx();
 /* int calIdx = (Integer)request.getAttribute("calIdx"); */
 /* int calIdx = ci.getCalIdx(); */
 
-String saveDirectory = "d:\\files\\calendar";
+String saveDirectory = "c:\\reco\\calendar";
 File dir = new File(saveDirectory);
 File[] files = dir.listFiles(); 
 

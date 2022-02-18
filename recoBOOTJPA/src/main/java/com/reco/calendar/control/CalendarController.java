@@ -85,7 +85,7 @@ public class CalendarController {
 
 
 		//파일 경로생성
-		String saveDirectory = "d:\\files\\calendar";
+		String saveDirectory = "c:\\reco\\calendar";
 		if ( ! new File(saveDirectory).exists()) {
 			logger.info("업로드 실제경로생성");
 			new File(saveDirectory).mkdirs(); // 상위디렉토리생성
@@ -354,7 +354,7 @@ public String calpostAdd(@RequestParam(value = "calMemo") String calMemo,
 	}
 
 	//파일 경로 생성
-	String saveDirectory = "d:\\files"; // d:\\files\\calendar
+	String saveDirectory = "c:\\reco\\calendar"; // d:\\files\\calendar
 	if ( ! new File(saveDirectory).exists()) {
 		logger.info("업로드 실제경로생성");
 		new File(saveDirectory).mkdirs(); // 상위디렉토리생성
@@ -515,7 +515,7 @@ public String calpostAdd(@RequestParam(value = "calMemo") String calMemo,
 
 //@GetMapping("calendar/downloadimage")
 //public ResponseEntity<?> downloadImage(String imageFileName) {
-//	String SaveDirectory = "d:\\files\\calendar";
+//	String SaveDirectory = "c:\\reco\\calendar";
 //	File thumbnailFile = new File(SaveDirectory, imageFileName);
 //	HttpHeaders responseHeaders = new HttpHeaders();
 //	try {
