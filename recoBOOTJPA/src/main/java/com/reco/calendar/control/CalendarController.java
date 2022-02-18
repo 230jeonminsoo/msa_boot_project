@@ -322,8 +322,7 @@ public String calpostAdd(@RequestParam(value = "calMemo") String calMemo,
 						 @RequestParam(value = "calMainImg") MultipartFile multipartFile,
 						 @RequestPart (required = false) MultipartFile letterFiles,
 						 @RequestPart (required = false) MultipartFile imageFile,
-						 HttpSession session, Model model, int calIdx
-						 ) {
+						 HttpSession session, Model model) {
 
 	String filenameString= StringUtils.cleanPath(multipartFile.getOriginalFilename());
 	//logger.info("imageFile.getSize()=" + imageFile.getSize() + ", imageFile.getOriginalFileName()=" + imageFile.getOriginalFilename());
@@ -332,7 +331,9 @@ public String calpostAdd(@RequestParam(value = "calMemo") String calMemo,
 	Customer c = (Customer)session.getAttribute("loginInfo");
 	int uIdx = c.getUIdx();
 	
+	
 	CalInfo calinfo = new CalInfo();
+	int calIdx = calinfo.getCalIdx();
 	calinfo.setCustomer(c);
 	calinfo.setCalIdx(calIdx);
 	
