@@ -86,7 +86,7 @@ public class BoardController {
 			logger.info("컨트롤러 addbrd 1:" + board.getBrdIdx() + board.getBrdTitle() + board.getBrdContent());
 			
 			//파일을 저장할 폴더가 없다면 만들기. 있다면 만들지 않음
-			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
+			String saveDirectory = "C:\\reco\\boardimages";
 			if ( ! new File(saveDirectory).exists()) {
 				logger.info("업로드 실제경로생성");
 				new File(saveDirectory).mkdirs(); //파일경로가 없다면 만듬
@@ -216,7 +216,7 @@ public class BoardController {
 					log.info("findBrdByIdx콘트롤러pageDTO2" + pageDTO2);
 				}
 				mnv.addObject("PageDTO2", pageDTO2);
-				String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
+				String saveDirectory = "C:\\reco\\boardimages";
 				File dir = new File(saveDirectory);
 				Board b = pageDTO2.getBoard();
 				if(b.getBrdAttachment() !=null) {
@@ -315,7 +315,7 @@ public class BoardController {
 					//데이터베이스에 내용저장 끝
 					
 					//첨부파일이 바뀔시 저장시작
-					String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
+					String saveDirectory = "C:\\reco\\boardimages";
 					int wroteBoardNo = board.getBrdIdx();//저장된 글번호
 					
 					
@@ -525,7 +525,7 @@ public class BoardController {
 		public ResponseEntity<Resource>  download(String fileName) throws UnsupportedEncodingException {
 			logger.info("첨부파일 다운로드");
 			//파일 경로생성
-			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
+			String saveDirectory = "C:\\reco\\boardimages";
 			
 			//HttpHeaders : 요청/응답헤더용 API
 			HttpHeaders headers = new HttpHeaders();	
@@ -551,7 +551,7 @@ public class BoardController {
 		
 		@GetMapping("/boarddownloadimage") 
 		 public ResponseEntity<?> downloadImage(String imageFileName) throws UnsupportedEncodingException{
-			 String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
+			 String saveDirectory = "C:\\reco\\boardimages";
 			 File thumbnailFile = new File(saveDirectory,imageFileName);
 			 HttpHeaders responseHeaders = new HttpHeaders();
 			 try {
