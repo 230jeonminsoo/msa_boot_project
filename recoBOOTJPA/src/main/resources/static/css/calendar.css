@@ -1,161 +1,9 @@
 @charset "UTF-8";
 
-/* 헤더부분 reco이름부분 */
-header{
-  font-family: "나눔고딕", NanumGothic,Dotum,"돋음",sans-serif;
-}
-
-/* reco부분 감싸고 있는 박스와 메뉴바부분*/
-.headerbox,.menu,.menu_item{
-  margin:0;
-  padding:0;
-  display: block; margin: 0 auto;
-}
-.a{
-  color: inherit;
-  text-decoration: none;
-}
-
-/* reco있는 오렌지색 박스 */
-.headerbox{
-  background-color: orange;
-  height:120px;
-  /* margin:0 auto; */
- /* text-align: center; */
-  
-  
-}
-.headertext
-{
-  width:1080px;
-
-  font-weight: bold;
-  font-size: 85px;
-  color: #fff;
-  margin: 0 auto;
-  text-align: center;
-  
-}
-/* 로그인 고객센터 버튼 있는 곳 감싸는 태그 */
-.login_item{
-  position: absolute;
-  display: block;
-  margin-top: -108px ; 
-  margin-left: 1221.5px;
-  padding-right: 0.05px;
-}
-
-/* 로그인 회원 가입 버튼 있는 곳 감싸는 ul태그  */
-.login{
-  list-style:none;
-  margin:0;
-  padding:0;
-  display: table;
-  text-decoration: none;
-}
-
-/* 로그인 회원 가입 각 버튼  */
-.log_link{
-  text-decoration: none;
-  color: #000;
-  font-weight: bold;
-  
-}
-
-
-.log_link1{
-  text-decoration: none;
-  
-  /* color: aqua; */
-  color: rgb(78, 67, 67);
-  font-weight: bold;
-
-}
-.login li{
-  display: table-cell;
-  padding-right: 30px;
-  
-  
-}
-.link{
-  text-decoration: none;
-  color: #000;
-}
-
-/* 메뉴바 회색부분  */
-.wrap{
-  max-width:2000px;
-  margin:14px;
-  margin:0 auto;
-  background-color: lightgray;
-  
-
-}
-
-/* 메뉴바 */
-.menu{
-  display: table;
-  table-layout:fixed;
-  /* width:100%; */
-  list-style:none;
-  width:1080px;
-
-}
-/* 메뉴와 관련 */
-.menu_item{
-  display: table-cell;
-  list-style:none;
- 
-}
-.menu_link {
-  display: block;
-  
-  border: 1px none;
-  font-size: 100px
-  color#000;
-  text-align:center;
-  line-height:36px;
-  margin-left:40px;
-  margin-right:40px;
-  text-decoration:none;
-}
-
-
-/* 로그인 회원가입 부분 커서 갖다대면 효과 */
-.log_li:hover .log_link{
-  background-color: skyblue;
-  font-weight: bolder;
-  
-}
-
-.log_li:hover .log_link1 {
-  
-  background-color: aqua;
-  font-weight: bolder;
-  
-}
-.menu_item + .menu_item .menu_link {
-    margin-left: 14px;
-}
-
-
-/* 메뉴바 커서 대면 효과 */
-.menu_item:hover .menu_link {
-    font-weight: bold;
-    border-color: #454545;
-
-}
-
-
-/* 메뉴바 커서 대면 효과 */
-.menu_item:hover .yellow {
-    background-color: gray;
-
-}
-
-
-
 /* 캘린더 부분  start*/
+.calCategory{
+	font-size: 30px;
+}
 
 .container{
  
@@ -189,7 +37,7 @@ header{
 }
 
 .body {
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
   min-height: 100vh; /*수정*/
@@ -216,6 +64,7 @@ header{
   align-items: center;
 }
 
+/* 년/월  */
 .year-month {
     font-size: 30px;
     margin-left: 400px;

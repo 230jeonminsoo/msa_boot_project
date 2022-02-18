@@ -58,7 +58,7 @@ File[] files = dir.listFiles();
 %>
 
 <div class="calCategory"> 
-	<p><%=calCategory %></p> 
+	<br><p align="center">-&nbsp;<%=calCategory %>&nbsp;캘린더&nbsp;-</p> 
 	<%-- <p><%=calIdx %></p> --%>
 </div>
 
