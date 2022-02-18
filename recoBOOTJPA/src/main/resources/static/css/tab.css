@@ -2,7 +2,7 @@
 
 
 div.tab{
-	background-color: rgb(240, 225, 204);
+	background-color: rgb(244, 244, 244);
     display:block;
 }
 
@@ -20,7 +20,7 @@ div.tab>ul>li{
     text-align: center;
 }
 div.tab>ul>li:hover{
-	background-color: gray;
+	background-color: rgb(194, 194, 194);
 }
 
 div.tab>ul>li>a{

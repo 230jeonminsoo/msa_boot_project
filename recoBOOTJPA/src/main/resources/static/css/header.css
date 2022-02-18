@@ -2,7 +2,7 @@
 @import url("base.css");
 
 header{
-   background-color:orange; 
+   background-color:rgb(253, 205, 81); 
    border-bottom: 1px solid #e5e5e5;
    height: 150px;
 }
@@ -43,6 +43,11 @@ header>nav>ul>li{
     display: inline-block;
    /*  width:100px; */
     text-align: center;
+}
+
+header>nav>ul>li>img{
+    width:45px;
+    height:45px;
 }
 
 header>nav>ul>li>a{
