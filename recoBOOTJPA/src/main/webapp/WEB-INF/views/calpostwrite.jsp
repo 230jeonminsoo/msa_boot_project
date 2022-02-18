@@ -3,11 +3,24 @@
 <%@page import="java.util.Date" %>
 <%@page import="com.reco.calendar.dao.CalendarDAOOracle" %>
 <%@page import="com.reco.calendar.vo.CalPost" %>
+<%@page import="com.reco.calendar.vo.CalInfo" %>
+<%@page import="com.reco.customer.vo.Customer"%>
+<%@page import="java.util.List"%>
 
 
 <head>
-<meta charset="UTF-8">
-<title>calpostwrite.jsp</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	
+	<!-- <script src="./js/calendar_write.js"></script> --> 
+	<!-- <script src="./js/imgpreview.js"></script> -->
+	<title>calpostwrite.jsp</title>
+	   <style>
+        .dellink{
+          display: none;
+        }
+      </style>
+	
 	<link href="./css/calendar_write.css" rel=stylesheet>
 	<script src="./js/calpostwrite.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -43,16 +56,19 @@
 		        <td>
 		             <style>.dellink{display: none;}</style>
 		             <script type="text/javascript" src="./js/imgpreview.js"></script>
-		             <input type="file" name="calMainImg" 
-		             class="hidden_input" id="imageSelector" name="imageSelector" accept="image/jpeg, image/jpg, image/png" required  />
-		              <img src="" class="thumb"/>
-		              <a href="javascript:void(0);" class="dellink">썸네일삭제</a>  
+		             <div class="image-container">
+                      <img style="width: 300px;" id="preview-image" src="https://dummyimage.com/200x200/ffffff/000000.png&text=preview+image">
+                      <input style="display: block;" type="file" name="calMainImg" id="input-image"accept="image/jpeg, image/jpg, image/png" required >
+                     </div>
+                     	
+		             <a href="javascript:void(0);" class="dellink">대표이미지삭제</a>    
 		        </td>
 		    </tr>
 		  
 		       <td>날짜</td>
 		       <td>
 		       	<input type="date" id="currentDate" name="calDate">
+		       
 	<!-- 	          <script> -->
 	<!--             var dateChange = () => {
 		            var date_input = document.getElementById("date");
@@ -65,6 +81,7 @@
 		        <td>리뷰/메모</td>
 		        <td>
 		            <textarea name="calMemo" cols="140" rows="30" placeholder="500자까지 자유작성/필수입력사항/캘린더에 작성하는 내용은 본인만 볼수 있다." required></textarea>
+		            
 		        </td>
 		    </tr>
 		    <tr>
@@ -93,3 +110,4 @@
 	</script>
 
 
+</body>
