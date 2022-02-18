@@ -251,7 +251,7 @@ public String calInfoList(HttpSession session, Model model) {
 		List<CalInfo> list = service.findCalsByUIdx(uIdx);
 		//응답할 결과 요청속성에 설정
 		model.addAttribute("list", list);	
-		session.setAttribute("CalendarInfo", ci);
+//		session.setAttribute("CalendarInfo", ci);
 		return "callistresult.jsp";
 	} catch (FindException e) {
 		e.printStackTrace();
