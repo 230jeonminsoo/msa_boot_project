@@ -1,5 +1,6 @@
 package com.reco.board.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -46,8 +47,10 @@ public class BoardService {
 	
 	
 	public PageDTO2<Board> addCmt(Comment comment) throws AddException, FindException{
-		int brdIdx = dao.addCmt(comment);
-		PageDTO2<Board> PageDTO2 = findBrdByIdx(brdIdx);
+//		int brdIdx = dao.addCmt(comment);
+		dao.addCmt(comment);
+		PageDTO2<Board> PageDTO2 =findBrdByIdx(comment.getBrd().getBrdIdx());
+		//PageDTO2<Board> PageDTO2 = findBrdByIdx(brdIdx);
 		return PageDTO2;
 	}
 	
@@ -133,7 +136,28 @@ public class BoardService {
 		PageDTO<Board> pageDTO = new PageDTO<>(url, currentPage, totalCnt, list);
 		return pageDTO;
 	}
-
+	
+	
+	//마이페이지 내가쓴 댓글 검색
+	public PageDTO2<Board> findCmtByUNickName(String uNickname, int currentPage, int cntperpage) throws FindException{
+		String url = "/mycmt/"+ uNickname;
+		int totalCnt = dao.findCmtCountUNickName(uNickname); //내가쓴 총 댓글수
+		List<Comment> comments = dao.findCmtByUNickName(uNickname, currentPage, PageDTO.CNT_PER_PAGE);//내가쓴 댓글들
+		ArrayList<String> brdTitleList = new ArrayList<String>();
+//		int index=0;
+//		for(Comment comment: comments ) {
+//			int brdIdx = comment.getBrd().getBrdIdx();
+//			String brdTitle = dao.findBrdTitle(brdIdx);
+//			brdTitleList.add(index, brdTitle);
+//			index++;
+//		}
+		PageDTO2<Board> commentPageDTO = new PageDTO2<>(url, currentPage, totalCnt, brdTitleList, comments);
+		return commentPageDTO;
+	}
+	
+	
+	
+	
 	public void modifyBrd(Board b) throws ModifyException, FindException{
 //		int brdIdx = dao.modifyBrd(b);
 //		PageDTO2<Board> board = findBrdByIdx(brdIdx);

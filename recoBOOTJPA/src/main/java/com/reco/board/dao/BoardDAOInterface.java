@@ -87,6 +87,8 @@ public interface BoardDAOInterface {
 	public List<Board> findBrdByUNickName(String word, int currentPage, int cntperpage) throws FindException;
 	
 	
+	public List<Comment> findCmtByUNickName(String uNickname, int currentPage, int cntperpage) throws FindException;
+	
 	/**
 	 * 저장소에 자유게시판글을 추가한다.
 	 * @param Board
@@ -100,7 +102,7 @@ public interface BoardDAOInterface {
 	 * @param cmtIdx
 	 * @throws RemoveException
 	 */
-	public int addCmt(Comment comment) throws AddException;
+	public void addCmt(Comment comment) throws AddException;
 	
 	
 	/**
@@ -185,4 +187,16 @@ public interface BoardDAOInterface {
 	 */
 	public int findCmtCount(int brdIdx) throws FindException;
 	
+	/**
+	 * 마이페이지 댓글 페이징 관련 닉네임에 해당하는 총 댓글 수 반환 
+	 * @param uNickname
+	 * @return
+	 * @throws FindException
+	 */
+	public int findCmtCountUNickName(String uNickname) throws FindException;
+	
+	/**
+	 * 마이페이지 내가 쓴 댓글의 게시글 제목 반환
+	 */
+	//public String findBrdTitle(int brdIdx) throws FindException;
 }

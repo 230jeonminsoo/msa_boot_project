@@ -17,7 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.reco.board.service.BoardService;
 import com.reco.board.vo.Board;
+import com.reco.board.vo.Comment;
 import com.reco.dto.PageDTO;
+import com.reco.dto.PageDTO2;
 import com.reco.exception.FindException;
 import com.reco.notice.service.NoticeService;
 import com.reco.notice.vo.Notice;
@@ -109,6 +111,7 @@ public class IndexController {
 			ModelAndView mnv = new ModelAndView();
 			PageDTO<Notice> noticePageDTO;
 			PageDTO<Board> boardPageDTO;
+			PageDTO2<Board> commentPageDTO;
 			try {
 				int cp = 1;
 				if(currentPage.isPresent()) { //currentPage
@@ -116,9 +119,10 @@ public class IndexController {
 				}
 				noticePageDTO = Noticeservice.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
 				boardPageDTO = Boardservice.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);
-
+				commentPageDTO = Boardservice.findCmtByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);
 				mnv.addObject("noticePageDTO", noticePageDTO);
 				mnv.addObject("boardPageDTO",boardPageDTO);
+				mnv.addObject("commentPageDTO", commentPageDTO);
 				mnv.setViewName("mycommunity.jsp");
 			} catch (FindException e) {
 				e.printStackTrace();

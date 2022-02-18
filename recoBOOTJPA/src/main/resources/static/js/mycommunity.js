@@ -118,15 +118,16 @@ function boardDetail(option){
 		
 	}
 	
-    let $boardObj = $('div.brd_list>div.boardlist>ul>li>span');
+    let $boardObj = $('div.boardlist>ul>li>span');
     $boardObj.click(function(){
-        let brdIdx = $(this).attr('id');	
+        //let brdIdx = $(this).attr('id');	
+		let $brdIdx = $('#brdIdx').html().trim();
         let ajaxUrl = './brddetail';
 		/*window.open(window.location.href);*/
         $.ajax({
             url: ajaxUrl,
             method : 'get',
-            data : {brdIdx: brdIdx},
+            data : {brdIdx: $brdIdx},
             success:function(responseData){
 				console.log(responseData);
                // let $articlesObj = $('section>div.articles');
@@ -208,3 +209,74 @@ $('div.boardpagegroup').on('click','span.active',function(){
 //--다른페이지 클릭했을때 끝
 
 //------자유게시판 끝------
+
+
+
+
+
+
+
+//------댓글 시작---------
+
+/**전체체크 기능 */
+function cmtCheckBoxAll(cmtCheckBoxAll)  {
+  const checkboxes 
+       = document.getElementsByName('brdIdxMy');
+  
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = cmtCheckBoxAll.checked;
+  })
+}
+
+
+
+function commentDetail(){
+	let $articlesObj = $('section>div.articles');
+	
+    let $commentObj = $('div.cmt_list>div.commentlist>ul>li>span');
+    $commentObj.click(function(){
+		if (confirm("해당 게시글로 이동하시겠습니까?") == true){
+        //let brdIdx = $(this).attr('id');	
+		let $brdIdx = $('#brdIdxMy').html().trim();
+        let ajaxUrl = './brddetail';
+		/*window.open(window.location.href);*/
+        $.ajax({
+            url: ajaxUrl,
+            method : 'get',
+            data : {brdIdx: $brdIdx},
+            success:function(responseData){
+				console.log(responseData);
+				
+               // let $articlesObj = $('section>div.articles');
+                $articlesObj.empty();
+                $articlesObj.html(responseData);					
+            }
+        }); 
+       }else{
+		 return false;
+	  }
+    });	
+}
+
+
+//--다른페이지 클릭했을때 시작
+$('div.commentpagegroup').on('click','span.active',function(){
+//$('div.pagegroup>span.active').click(function(){	
+	let url = $(this).attr("class").split(/\s+/)[0];//정규표현식, \s는 공백
+	console.log(url);
+	$.ajax({
+		url: url,
+		method: 'get',
+		success: function(responseData){
+			    let $articlesObj = $('section>div.articles');
+                $articlesObj.empty();
+                $articlesObj.html(responseData);
+		},
+		error: function(xhr){
+			alert(xhr.status);
+		}
+	});
+	return false;
+});
+
+//------댓글 끝------------

@@ -9,6 +9,10 @@
 	</collection>
 </resultMap>
 	
+	<select id="findBrdTitle" parameterType="int" resultType="string">
+		 SELECT brd_title FROM board WHERE brd_idx=#{brdIdx}
+	</select>
+	
 	<select id="findCount" resultType="int">
 		SELECT COUNT(*) from board
 	</select>
@@ -31,6 +35,10 @@
 	
 	<select id="findCmtCount" resultType="int" parameterType="int">
 		SELECT COUNT(*) FROM comments WHERE brd_idx=#{brdIdx}
+	</select>
+	
+	<select id="findCmtCountUNickName" parameterType="String" resultType="int" >
+		SELECT COUNT(*) FROM comments WHERE cmt_UNickName like '%${uNickname}%'
 	</select>
 	
 	<select id="findBrdAll" parameterType="map" resultType="Board">
@@ -95,6 +103,27 @@ where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPag
    where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
 	</select>
 	
+	
+	<select id="findCmtByUNickName" parameterType="map" resultType="Comment">
+   select *
+    FROM( SELECT rownum r, d.*    
+		       FROM(  SELECT
+		b.BRD_IDX "brd.brdIdx",
+		b.BRD_TYPE "brd.brdType",
+		b.BRD_TITLE "brd.brdTitle",
+		b.BRD_CONTENT "brd.brdContent",
+		b.BRD_ATTACHMENT "brd.brdAttachment",
+		b.BRD_CREATEAT "brd.brdCreateAt",
+		b.BRD_THUMBUP "brd.brdThumbUp",
+		b.BRD_UNICKNAME "brd.brdUNickName",
+		b.BRD_VIEWS "brd.brdViews"
+		   ,c.*   
+		   FROM comments c  
+		   JOIN board b ON c.brd_idx = b.brd_idx         
+		       WHERE cmt_UNickName like '%${uNickname}%' ORDER BY c.brd_Idx DESC) d)  
+	where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
+	</select>
+	
 	<insert id="addBrd" parameterType="Board">
 		insert into board(brd_idx,brd_type,brd_title,brd_content,brd_attachment,brd_UNickName) 
 		values(brd_idx.NEXTVAL,#{brdType},#{brdTitle},#{brdContent},#{brdAttachment},#{brdUNickName})
@@ -106,10 +135,10 @@ where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPag
 	
 	<insert id="addCmt" parameterType="Comment">
 		<selectKey keyProperty="cmtIdx" resultType="int" order="BEFORE">
-			select NVL(MAX(c.cmt_idx),0)+1 from comments c join board b on c.brd_idx=b.brd_idx where b.brd_idx=#{brdIdx}
+			select NVL(MAX(c.cmt_idx),0)+1 from comments c join board b on c.brd_idx=b.brd_idx where b.brd_idx=#{brd.brdIdx}
 		</selectKey>
 		insert into comments(brd_idx,cmt_idx,cmt_content,cmt_parentIdx,cmt_UNickName) 
-		values(#{brdIdx},#{cmtIdx},#{cmtContent},#{cmtParentIdx},#{cmtUNickName})		
+		values(#{brd.brdIdx},#{cmtIdx},#{cmtContent},#{cmtParentIdx},#{cmtUNickName})		
 	</insert>
 	
 	<update id="modifyBrd" parameterType="Board">
@@ -117,11 +146,11 @@ where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPag
 	</update>
 	
 	<update id="modifyCmt" parameterType="Comment">
-		update comments set cmt_content= #{cmtContent} where brd_idx=#{brdIdx} and cmt_idx=#{cmtIdx}
+		update comments set cmt_content= #{cmtContent} where brd_idx=#{brd.brdIdx} and cmt_idx=#{cmtIdx}
 	</update>
 	
 	<delete id="removeCmtAll"  parameterType="int">
-			delete from comments where brd_idx=#{brdIdx}			
+			delete from comments where brd_idx=#{brd.brdIdx}			
 	</delete>
 	
 	<delete  id="removeBrd"  parameterType="int">
@@ -133,11 +162,11 @@ where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPag
 	</delete>
 	
 	<select id="nullprotection" parameterType="int" resultType="int">
-		select count(*) from comments where brd_idx=#{brdIdx} and cmt_parentidx=0		
+		select count(*) from comments where brd_idx=#{brd.brdIdx} and cmt_parentidx=0		
 	</select>
 	
 	<delete id="deleteRestCmt" parameterType="int">
-		delete from comments where brd_idx=#{brdIdx}
+		delete from comments where brd_idx=#{brd.brdIdx}
 	</delete>
 	
 	<!-- <select id="findCmtByIdx" parameterType="map" resultType="Comment">

@@ -2,6 +2,8 @@ package com.reco.dto;
 
 import java.util.List;
 
+import com.reco.board.vo.Comment;
+
 
 public class PageDTO<T> {
 	private String url; //ex. board/list
@@ -13,6 +15,8 @@ public class PageDTO<T> {
 	private int startPage; //시작페이지
 	private int endPage;  //끝페이지
 	private List<T> list; //ex. 게시글목록
+	
+	
 
 	public PageDTO() {
 		super();
@@ -133,5 +137,7 @@ public class PageDTO<T> {
 	public void setList(List<T> list) {
 		this.list = list;
 	}
+	
+	
 
 }

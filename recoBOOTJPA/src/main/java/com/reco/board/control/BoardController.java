@@ -571,7 +571,10 @@ public class BoardController {
 			Customer c = (Customer)session.getAttribute("loginInfo");
 			String cmtUNickName = c.getUNickName();
 			Comment comment = new Comment();
-			comment.setBrdIdx(brdIdx);
+			//comment.setBrdIdx(brdIdx);
+			Board brd = new Board();
+			brd.setBrdIdx(brdIdx);
+			comment.setBrd(brd);
 			comment.setCmtContent(cmtContent);	
 			comment.setCmtParentIdx(cmtParentIdx);	
 			comment.setCmtUNickName(cmtUNickName);
@@ -589,7 +592,10 @@ public class BoardController {
 		@GetMapping("cmtmodify") //상세검색 문제 부분
 		public String commentModify(int brdIdx, int cmtIdx, String cmtContent, Model model) {
 			Comment comment = new Comment();
-			comment.setBrdIdx(brdIdx);
+			//comment.setBrdIdx(brdIdx);
+			Board brd = new Board();
+			brd.setBrdIdx(brdIdx);
+			comment.setBrd(brd);
 			comment.setCmtIdx(cmtIdx);
 			comment.setCmtContent(cmtContent);
 			
@@ -670,4 +676,22 @@ public class BoardController {
 			}
 			return mnv;
 		}
+		
+		//마이페이지 댓글 페이징 컨트롤러
+				@GetMapping("mycmt/{uNickname}/{currentPage}")
+				public Object mycmt(@PathVariable String uNickname, @PathVariable int currentPage ,Model model){
+					ModelAndView mnv = new ModelAndView();
+					PageDTO2<Board> commentPageDTO;
+
+					try {
+						commentPageDTO = service.findCmtByUNickName(uNickname, currentPage, PageDTO.CNT_PER_PAGE);
+						mnv.addObject("commentPageDTO", commentPageDTO);
+						mnv.setViewName("mycommunity.jsp");
+					} catch (FindException e) {
+						e.printStackTrace();
+						mnv.addObject("msg", e.getMessage());
+						mnv.setViewName("mycommunity.jsp");
+					}
+					return mnv;
+				}
 }

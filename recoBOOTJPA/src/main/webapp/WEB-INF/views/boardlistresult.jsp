@@ -151,10 +151,7 @@ Customer c = (Customer) session.getAttribute("loginInfo");
 <%
 if (session.getAttribute("loginInfo") != null) { 
 %>
-<%
-int uAuthCode = c.getUAuthCode(); 
-%>
-<% 		if(uAuthCode == 1) {%>
+
 			
 	<div class="board_write_button" style= "visibility:visible">
 		<label>
@@ -162,17 +159,7 @@ int uAuthCode = c.getUAuthCode();
 		</label>	
 	</div>
 
-	<%} else {%> <% uAuthCode = 0; %>
-		
-		<div class="board_write_button" style= "visibility:visible">
-			<label>
-				<img src="./images/pencil.png">글쓰기
-			</label>	
-		</div>
-		
-		<%
-		}
-		%>
+	
 <%} else {  %>
 <script>location.href="./";</script>
 <%} %>

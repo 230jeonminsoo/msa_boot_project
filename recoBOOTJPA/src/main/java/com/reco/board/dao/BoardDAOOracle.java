@@ -133,7 +133,22 @@ public class BoardDAOOracle implements BoardDAOInterface {
 		}	
 	}
 	
-	
+	//마이페이지 내가 쓴 댓글들 총 갯수 반환
+	public int findCmtCountUNickName(String uNickname) throws FindException {
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			return session.selectOne("com.reco.board.BoardMapper.findCmtCountUNickName", uNickname);
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new FindException(e.getMessage());
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}	
+	}
+
 	@Override
 	public List<Board> findBrdAll() throws FindException{
 		return findBrdAll(1,5);
@@ -339,16 +354,43 @@ public class BoardDAOOracle implements BoardDAOInterface {
 		}
 	}
 	
+	//마이페이지 내가 쓴 댓글들만 찾아오기
+	public List<Comment> findCmtByUNickName(String uNickname, int currentPage, int cntperpage) throws FindException{
+		SqlSession session =null;		
+		try {
+			session = sqlSessionFactory.openSession();
+			Map<String,String> map= new HashMap<>();
+			map.put("uNickname", uNickname);
+			String cp = Integer.toString(currentPage);
+			String cpp = Integer.toString(cntperpage);
+			map.put("currentPage", cp);//현재페이지
+			map.put("cntperpage", cpp);//페이지당 글개수
+			List<Comment> cmtList = session.selectList("com.reco.board.BoardMapper.findCmtByUNickName",map);
+			if(cmtList.size() == 0) {
+				throw new FindException("작성한 댓글이 없습니다.");
+			}
+			return cmtList;		
+		} catch (Exception e) {
+			throw new FindException(e.getMessage());
+		} finally {
+			if(session != null) {
+				session.close();
+			}
+		}
+	}
+
+	
 		
 	@Override
-	public int addCmt(Comment comment) throws AddException {
+	public void addCmt(Comment comment) throws AddException {
 		SqlSession session =null;
 		try {
 			session = sqlSessionFactory.openSession();
 			session.insert("com.reco.board.BoardMapper.addCmt",comment);
-			int brdIdx = comment.getBrdIdx();			
+			//int brdIdx = comment.getBrdIdx();			
 			//Board board = findBrdByIdx(brdIdx);
-			return brdIdx;
+			//return brdIdx;
+			
 		}finally {
 			if(session != null) {
 				session.close();
@@ -424,6 +466,7 @@ public class BoardDAOOracle implements BoardDAOInterface {
 			if(deleterow == 0) {
 				System.out.println("해당 댓글이 존재하지 않습니다.");
 			}else {
+				//미해결 
 				int cmtParentIdxCnt = session.delete("com.reco.board.BoardMapper.nullprotection", map);
 				if(cmtParentIdxCnt == 0) {
 					session.delete("com.reco.board.BoardMapper.removeCmtAll", map);
@@ -438,9 +481,25 @@ public class BoardDAOOracle implements BoardDAOInterface {
 		}				
 	}
 	
-
 	
-
+	//마이페이지 내가 쓴 댓글의 게시글 제목 반환
+//	public String findBrdTitle(int brdIdx) throws FindException{
+//		SqlSession session =null;
+//		try {
+//			session = sqlSessionFactory.openSession();
+//			String brdTitle = session.selectOne("com.reco.board.BoardMapper.findBrdTitle", brdIdx);
+//			return brdTitle;
+//		} catch (Exception e) {
+//			throw new FindException(e.getMessage());
+//		} finally {
+//			if(session != null) {
+//				session.close();
+//			}
+//		}
+//	}
+//	
+	
+	
 	
 	public static void main(String[] args) {
 		BoardDAOOracle dao = new BoardDAOOracle();

@@ -4,7 +4,8 @@ import java.util.Date;
 
 public class Comment {
 	private int cmtIdx;
-	private int brdIdx;
+private Board brd; 
+//	private int brdIdx;
 	private String cmtContent;
 	private int cmtParentIdx;
 	private Date cmtCreateAt;
@@ -15,55 +16,65 @@ public class Comment {
 	public Comment() {	  
 	}
 	
-	//매개변수들을 초기화해줄 수 있는 생성자 만듬
-	public Comment(int cmtIdx, int brdIdx, String cmtContent, int cmtParentIdx, Date cmtCreateAt, String cmtUNickName) {
+//	//매개변수들을 초기화해줄 수 있는 생성자 만듬
+//	public Comment(int cmtIdx, int brdIdx, String cmtContent, int cmtParentIdx, Date cmtCreateAt, String cmtUNickName) {
+//		super();
+//		this.cmtIdx = cmtIdx;
+//		this.brdIdx = brdIdx;
+//		this.cmtContent = cmtContent;
+//		this.cmtParentIdx = cmtParentIdx;
+//		this.cmtCreateAt = cmtCreateAt;
+//		this.cmtUNickName = cmtUNickName;
+//	}
+	public Comment(int cmtIdx, Board brd, String cmtContent, int cmtParentIdx, Date cmtCreateAt, String cmtUNickName) {
 		super();
 		this.cmtIdx = cmtIdx;
-		this.brdIdx = brdIdx;
+		this.brd = brd;
 		this.cmtContent = cmtContent;
 		this.cmtParentIdx = cmtParentIdx;
 		this.cmtCreateAt = cmtCreateAt;
 		this.cmtUNickName = cmtUNickName;
 	}
-		
+
+	
 	//setter, getter메소드 만듬
 	
 	public int getCmtIdx() {
 		return cmtIdx;
-	}	
-	
+	}
+
 	public void setCmtIdx(int cmtIdx) {
 		this.cmtIdx = cmtIdx;
 	}
-	
-	public int getBrdIdx() {
-		return brdIdx;
+
+	public Board getBrd() {
+		return brd;
 	}
-	
-	public void setBrdIdx(int brdIdx) {
-		this.brdIdx = brdIdx;
+
+	public void setBrd(Board brd) {
+		this.brd = brd;
 	}
-	
+
 	public String getCmtContent() {
 		return cmtContent;
 	}
-	
+
 	public void setCmtContent(String cmtContent) {
 		this.cmtContent = cmtContent;
 	}
-	
+
 	public int getCmtParentIdx() {
 		return cmtParentIdx;
 	}
-	
+
 	public void setCmtParentIdx(int cmtParentIdx) {
 		this.cmtParentIdx = cmtParentIdx;
 	}
-	
+
 	public Date getCmtCreateAt() {
 		return cmtCreateAt;
-	}	
-	
+	}
+
 	public void setCmtCreateAt(Date cmtCreateAt) {
 		this.cmtCreateAt = cmtCreateAt;
 	}
@@ -78,9 +89,10 @@ public class Comment {
 
 	@Override
 	public String toString() {
-		return "Comment [cmtIdx=" + cmtIdx + ", brdIdx=" + brdIdx + ", cmtContent=" + cmtContent + ", cmtParentIdx="
+		return "Comment [cmtIdx=" + cmtIdx + ", brd=" + brd + ", cmtContent=" + cmtContent + ", cmtParentIdx="
 				+ cmtParentIdx + ", cmtCreateAt=" + cmtCreateAt + ", cmtUNickName=" + cmtUNickName + "]";
 	}
-	
+
+
 	
 }
