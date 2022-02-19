@@ -233,7 +233,7 @@ function cmtCheckBoxAll(cmtCheckBoxAll)  {
 }
 
 
-
+/**댓글 클릭시 해당 댓글이 달린 게시글 페이지로 이동 */
 function commentDetail(){
 	let $articlesObj = $('section>div.articles');
 	
@@ -253,7 +253,8 @@ function commentDetail(){
 				
                // let $articlesObj = $('section>div.articles');
                 $articlesObj.empty();
-                $articlesObj.html(responseData);					
+                $articlesObj.html(responseData);
+				window.scrollTo(0, 0);					
             }
         }); 
        }else{

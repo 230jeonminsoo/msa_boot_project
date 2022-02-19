@@ -142,7 +142,7 @@ public class BoardService {
 	public PageDTO2<Board> findCmtByUNickName(String uNickname, int currentPage, int cntperpage) throws FindException{
 		String url = "/mycmt/"+ uNickname;
 		int totalCnt = dao.findCmtCountUNickName(uNickname); //내가쓴 총 댓글수
-		List<Comment> comments = dao.findCmtByUNickName(uNickname, currentPage, PageDTO.CNT_PER_PAGE);//내가쓴 댓글들
+		List<Comment> comments = dao.findCmtByUNickName(uNickname, currentPage, PageDTO2.CNT_PER_PAGE);//내가쓴 댓글들
 		ArrayList<String> brdTitleList = new ArrayList<String>();
 //		int index=0;
 //		for(Comment comment: comments ) {

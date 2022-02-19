@@ -117,16 +117,16 @@ public class IndexController {
 				if(currentPage.isPresent()) { //currentPage
 					cp = currentPage.get();
 				}
-				noticePageDTO = Noticeservice.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
+				noticePageDTO = Noticeservice.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);				
 				boardPageDTO = Boardservice.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);
-				commentPageDTO = Boardservice.findCmtByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);
+				commentPageDTO = Boardservice.findCmtByUNickName(uNickname, cp, PageDTO2.CNT_PER_PAGE);
 				mnv.addObject("noticePageDTO", noticePageDTO);
 				mnv.addObject("boardPageDTO",boardPageDTO);
 				mnv.addObject("commentPageDTO", commentPageDTO);
 				mnv.setViewName("mycommunity.jsp");
 			} catch (FindException e) {
 				e.printStackTrace();
-				mnv.addObject("msg", e.getMessage());
+				//mnv.addObject("msg", e.getMessage());
 				mnv.setViewName("mycommunity.jsp");
 			}
 			return mnv;

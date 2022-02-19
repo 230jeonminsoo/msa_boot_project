@@ -157,9 +157,9 @@ public class NoticeDAOOracle implements NoticeDAOInterface {
 			map.put("currentPage", currentPage);
 			map.put("cntperpage", cntperpage);
 			List<Notice> list = session.selectList("com.reco.notice.NoticeMapper.findNtcByNickname",map);
-			if(list.size() == 0) {
-				throw new FindException("내가 작성한 공지사항 글이 없습니다.");
-			}
+//			if(list.size() == 0) {
+//				throw new FindException("내가 작성한 공지사항 글이 없습니다.");
+//			}
 			return list;
 		}catch (Exception e) {
 			throw new FindException(e.getMessage());
