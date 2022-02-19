@@ -81,7 +81,7 @@ public class NoticeController {
 			Notice notice = service.addNtc(n);
 			model.addAttribute("n", notice);
 			logger.info("컨트롤러 addntc 1 "+notice.getNtcIdx() + notice.getNtcTitle()+notice.getNtcContent());
-			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
+			String saveDirectory = "C:\\reco\\noticeimages";
 			int wroteBoardNo = notice.getNtcIdx();//저장된 글번호
 			//파일을 저장할 폴더가 없다면 만들기. 있다면 만들지 않음	
 			if ( ! new File(saveDirectory).exists()) {
@@ -194,7 +194,7 @@ public class NoticeController {
 		try {
 			Notice n = service.findNtcByIdx(ntcIdx);
 			model.addAttribute("n", n);
-			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
+			String saveDirectory = "C:\\reco\\noticeimages";
 			File dir = new File(saveDirectory);
 			if(n.getNtcAttachment() !=null) {
 				//첨부파일 저장소에서 letters이름 가져와서 returnMap에 넣기
@@ -247,7 +247,7 @@ public class NoticeController {
 			
 			List<Notice> notices = pageDTO.getList();	
 			for(Notice notice : notices) {				
-			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
+			String saveDirectory = "C:\\reco\\noticeimages";
 			File dir = new File(saveDirectory);
 			//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
 			String[] imageFiles = dir.list(new FilenameFilter() {	
@@ -429,7 +429,7 @@ public class NoticeController {
 			//데이터베이스에 내용저장 끝
 			
 			//첨부파일이 바뀔시 저장시작
-			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
+			String saveDirectory = "C:\\reco\\noticeimages";
 			int wroteBoardNo = notice.getNtcIdx();//저장된 글번호
 			
 			
@@ -491,7 +491,7 @@ public class NoticeController {
 	public ResponseEntity<Resource>  download(String fileName) throws UnsupportedEncodingException {
 		logger.info("첨부파일 다운로드");
 		//파일 경로생성
-		String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
+		String saveDirectory = "C:\\reco\\noticeimages";
 		
 		//HttpHeaders : 요청/응답헤더용 API
 		HttpHeaders headers = new HttpHeaders();	
@@ -518,7 +518,7 @@ public class NoticeController {
 	
 	 @GetMapping("/noticedownloadimage") 
 	 public ResponseEntity<?> downloadImage(String imageFileName) throws UnsupportedEncodingException{
-		 String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
+		 String saveDirectory = "C:\\reco\\noticeimages";
 		 File thumbnailFile = new File(saveDirectory,imageFileName);
 		 HttpHeaders responseHeaders = new HttpHeaders();
 		 try {
