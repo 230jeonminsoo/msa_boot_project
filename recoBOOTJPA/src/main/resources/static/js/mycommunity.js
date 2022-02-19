@@ -68,9 +68,10 @@ function myNoticerm(){
 					method: 'get',
 					data: data,
 					success: function(responseData){
-						    let $articlesObj = $('section>div.articles');
+						    /*let $articlesObj = $('section>div.articles');
 			                $articlesObj.empty();
-			                $articlesObj.html(responseData);
+			                $articlesObj.html(responseData);*/
+							$('section>div.articles0>div.tab>ul.myinfotab>li>a[href=mycommunity]').trigger('click');
 					},
 					error: function(xhr){
 						alert(xhr.status);
@@ -173,9 +174,12 @@ function myBoardrm(){
 					method: 'get',
 					data: data,
 					success: function(responseData){
-						    let $articlesObj = $('section>div.articles');
+						   /* let $articlesObj = $('section>div.articles');
 			                $articlesObj.empty();
-			                $articlesObj.html(responseData);
+			                $articlesObj.html(responseData);*/
+							$('section>div.articles0>div.tab>ul.myinfotab>li>a[href=mycommunity]').trigger('click');
+							/*$('header>nav>ul>li>a[href=orderlist]').trigger('click');*/
+							
 					},
 					error: function(xhr){
 						alert(xhr.status);

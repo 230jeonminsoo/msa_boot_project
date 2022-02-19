@@ -23,9 +23,12 @@ if(noticePageDTO != null){
 if(boardPageDTO != null){
 	boardList = boardPageDTO.getList();
 }
-PageDTO2<Board> commentPageDTO = (PageDTO2)request.getAttribute("commentPageDTO");
-List<Comment> listComments = commentPageDTO.getComments(); 
 
+PageDTO2<Board> commentPageDTO = (PageDTO2)request.getAttribute("commentPageDTO");
+List<Comment> listComments = new ArrayList<>();
+if(commentPageDTO != null) {
+listComments = commentPageDTO.getComments(); 
+}
 
 /* PageDTO<Comment> pageDTO = (PageDTO)request.getAttribute("commentPageDTO");
 List<Comment> commentList = pageDTO.getList();   */

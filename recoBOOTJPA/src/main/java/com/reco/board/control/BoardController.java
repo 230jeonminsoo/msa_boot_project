@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.file.Files;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -42,6 +41,7 @@ import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
 import com.reco.exception.RemoveException;
+import com.reco.notice.service.NoticeService;
 import com.reco.notice.vo.Notice;
 
 import net.coobird.thumbnailator.Thumbnailator;
@@ -55,6 +55,8 @@ public class BoardController {
 	
 	private Logger log = LoggerFactory.getLogger(BoardService.class.getName());
 	
+	@Autowired
+	private NoticeService NoticeService;
 	
 	//자유게시판 게시글 추가
 	@PostMapping("brdadd")
@@ -633,6 +635,7 @@ public class BoardController {
 		//마이페이지에서 체크된 자유게시판글을 삭제하는 컨트롤러
 		@GetMapping("mybrdremove")
 		public String boardRemove(int brdIdx0, Optional<Integer> brdIdx1, Optional<Integer> brdIdx2, Optional<Integer> brdIdx3, Optional<Integer> brdIdx4, Model model) {
+			
 			try {			
 					service.removeBrd(brdIdx0);
 					if(brdIdx1.isPresent()) {
@@ -647,13 +650,13 @@ public class BoardController {
 					if(brdIdx4.isPresent()) {
 						service.removeBrd(brdIdx4.get());
 					}
-					PageDTO<Board> pageDTO;
-					pageDTO = service.findBrdAll();
-					model.addAttribute("boardPageDTO", pageDTO);
+//					PageDTO<Board> pageDTO;
+//					pageDTO = service.findBrdAll();
+//					model.addAttribute("boardPageDTO", pageDTO);
 					return "mycommunity.jsp";
-			} catch (RemoveException | FindException e) {
+			} catch (RemoveException e) {
 				System.out.println(e.getMessage());
-				model.addAttribute("msg", e.getMessage());
+//				model.addAttribute("msg", e.getMessage());
 				return "mycommunity.jsp";
 			}
 		}
@@ -663,11 +666,20 @@ public class BoardController {
 		@GetMapping("mybrd/{uNickname}/{currentPage}")
 		public Object myBrd(@PathVariable String uNickname, @PathVariable int currentPage ,Model model){
 			ModelAndView mnv = new ModelAndView();
-			PageDTO<Board> pageDTO;
-
+			PageDTO<Notice> noticePageDTO;
+			PageDTO<Board> boardPageDTO;
+			PageDTO2<Board> commentPageDTO;
+			int cp = 1;
 			try {
-				pageDTO = service.findBrdByUNickName(uNickname, currentPage, PageDTO.CNT_PER_PAGE);
-				mnv.addObject("boardPageDTO", pageDTO);
+				boardPageDTO = service.findBrdByUNickName(uNickname, currentPage, PageDTO.CNT_PER_PAGE);
+				mnv.addObject("boardPageDTO", boardPageDTO);
+				
+				noticePageDTO = NoticeService.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
+				mnv.addObject("noticePageDTO", noticePageDTO);
+								
+				commentPageDTO = service.findCmtByUNickName(uNickname, cp, PageDTO2.CNT_PER_PAGE);
+				mnv.addObject("commentPageDTO", commentPageDTO);
+				
 				mnv.setViewName("mycommunity.jsp");
 			} catch (FindException e) {
 				e.printStackTrace();

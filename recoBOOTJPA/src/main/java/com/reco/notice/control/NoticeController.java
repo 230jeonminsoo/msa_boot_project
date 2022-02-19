@@ -8,15 +8,12 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.file.Files;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,17 +25,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.reco.board.service.BoardService;
+import com.reco.board.vo.Board;
 import com.reco.customer.vo.Customer;
 import com.reco.dto.PageDTO;
+import com.reco.dto.PageDTO2;
 import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
@@ -53,6 +51,9 @@ public class NoticeController {
 
 	@Autowired
 	private NoticeService service;
+	
+	@Autowired
+	private BoardService BoardService;
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -293,17 +294,23 @@ public class NoticeController {
 	
 	//나의 공지사항 글 보는 컨트롤러
 	@GetMapping("myntc/{uNickname}/{currentPage}")
-	public Object myNtc(@PathVariable String uNickname, @PathVariable Optional<Integer> currentPage ,Model model){
+	public Object myNtc(@PathVariable String uNickname, @PathVariable int currentPage ,Model model){
 		ModelAndView mnv = new ModelAndView();
-		PageDTO<Notice> pageDTO;
-
+		PageDTO<Notice> noticePageDTO;
+		PageDTO<Board> boardPageDTO;
+		PageDTO2<Board> commentPageDTO;
+		
+		int cp = 1;
 		try {
-			int cp = 1;
-			if(currentPage.isPresent()) { //currentPage
-				cp = currentPage.get();
-			}
-			pageDTO = service.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
-			mnv.addObject("noticePageDTO", pageDTO);
+			noticePageDTO = service.findNtcByNickname(uNickname, currentPage, PageDTO.CNT_PER_PAGE);
+			mnv.addObject("noticePageDTO", noticePageDTO);
+					
+			boardPageDTO = BoardService.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);
+			mnv.addObject("boardPageDTO", boardPageDTO);
+			
+			commentPageDTO = BoardService.findCmtByUNickName(uNickname, cp, PageDTO2.CNT_PER_PAGE);
+			mnv.addObject("commentPageDTO", commentPageDTO);
+			
 			mnv.setViewName("mycommunity.jsp");
 		} catch (FindException e) {
 			e.printStackTrace();
@@ -330,11 +337,11 @@ public class NoticeController {
 				if(ntcIdx4.isPresent()) {
 					service.removeNtc(ntcIdx4.get());
 				}
-				PageDTO<Notice> pageDTO;
-				pageDTO = service.findNtcAll();
-				model.addAttribute("noticePageDTO", pageDTO);
+//				PageDTO<Notice> pageDTO;
+//				pageDTO = service.findNtcAll();
+//				model.addAttribute("noticePageDTO", pageDTO);
 				return "mycommunity.jsp";
-		} catch (RemoveException | FindException e) {
+		} catch (RemoveException e) {
 			System.out.println(e.getMessage());
 			model.addAttribute("msg", e.getMessage());
 			return "mycommunity.jsp";
