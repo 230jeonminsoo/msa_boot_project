@@ -462,16 +462,17 @@ public class BoardDAOOracle implements BoardDAOInterface {
 			Map<String,Integer> map= new HashMap<>();
 			map.put("brdIdx", brdIdx);
 			map.put("cmtIdx", cmtIdx);
-			int deleterow = session.delete("com.reco.board.BoardMapper.removeCmt", map);
-			if(deleterow == 0) {
-				System.out.println("해당 댓글이 존재하지 않습니다.");
-			}else {
-				//미해결 
-				int cmtParentIdxCnt = session.delete("com.reco.board.BoardMapper.nullprotection", map);
-				if(cmtParentIdxCnt == 0) {
-					session.delete("com.reco.board.BoardMapper.removeCmtAll", map);
-				}
-			}
+			session.delete("com.reco.board.BoardMapper.removeCmt", map);//댓글삭제
+			session.delete("com.reco.board.BoardMapper.removeCmtReplies", map);//삭제한 댓글에 해당하는 대댓글 계층형 쿼리로 모두 삭제			
+//			if(deleterow == 0) {
+//				System.out.println("해당 댓글이 존재하지 않습니다.");
+//			}else {
+//				//미해결 
+//				int cmtParentIdxCnt = session.delete("com.reco.board.BoardMapper.nullprotection", map);
+//				if(cmtParentIdxCnt == 0) {
+//					session.delete("com.reco.board.BoardMapper.removeCmtAll", map);
+//				}
+//			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {

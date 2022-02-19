@@ -156,18 +156,37 @@ where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPag
 	<delete  id="removeBrd"  parameterType="int">
 		delete from board where brd_idx=#{brdIdx}	
 	</delete>
+
 	
 	<delete id="removeCmt" parameterType="map">
 		delete from comments where brd_idx=#{brdIdx} and cmt_idx=#{cmtIdx}
-	</delete>
+	</delete> <!--해결 -->
 	
-	<select id="nullprotection" parameterType="int" resultType="int">
+	<delete id="removeCmtReplies"  parameterType="map">		                   
+		 delete FROM comments
+		 where (cmt_idx,brd_idx)IN(SELECT cmt_idx,brd_idx 
+		                           FROM (SELECT rownum r, a.*
+		                                 FROM ( SELECT *
+		                                        FROM comments
+		                                        ORDER BY cmt_idx DESC
+		                                       ) a
+		                                 START WITH cmt_parentIdx= #{cmtIdx}
+		                                 CONNECT BY PRIOR cmt_idx = cmt_parentIdx
+		                                 ) 
+		                              WHERE brd_idx=#{brdIdx}
+		                           )                    	                   		
+	</delete> <!-- 해결 -->
+	
+	
+	
+	<!-- <select id="nullprotection" parameterType="int" resultType="int">
 		select count(*) from comments where brd_idx=#{brd.brdIdx} and cmt_parentidx=0		
 	</select>
 	
 	<delete id="deleteRestCmt" parameterType="int">
 		delete from comments where brd_idx=#{brd.brdIdx}
-	</delete>
+	</delete> -->
+	
 	
 	<!-- <select id="findCmtByIdx" parameterType="map" resultType="Comment">
 		select * from Comment where brd_idx=#{brdIdx} and cmt_idx=#{cmtIdx}
