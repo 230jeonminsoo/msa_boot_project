@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +33,7 @@ public class IndexController {
 		@Autowired
 		private NoticeService Noticeservice;	
 		
+		private Logger logger = LoggerFactory.getLogger(this.getClass());
 		@Autowired
 		private BoardService Boardservice;
 		
@@ -46,7 +49,7 @@ public class IndexController {
 		
 		@GetMapping("/noticemodifypage")
 		public String noticemodify(int ntcIdx,Model model) {
-			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\noticeimages";
+			String saveDirectory = "C:\\reco\\noticeimages";
 			File dir = new File(saveDirectory);
 			//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
 			String[] imageFiles = dir.list(new FilenameFilter() {		
@@ -69,7 +72,7 @@ public class IndexController {
 		
 		@GetMapping("/boardmodifypage")
 		public String boardmodify(int brdIdx,Model model) {
-			String saveDirectory = "C:\\230\\msa_boot_project\\recoBOOTJPA\\src\\main\\resources\\static\\images\\boardimages";
+			String saveDirectory = "C:\\reco\\noticeimages";
 			File dir = new File(saveDirectory);
 			//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
 			String[] imageFiles = dir.list(new FilenameFilter() {		
@@ -112,23 +115,48 @@ public class IndexController {
 			PageDTO<Notice> noticePageDTO;
 			PageDTO<Board> boardPageDTO;
 			PageDTO2<Board> commentPageDTO;
-			try {
-				int cp = 1;
+			int cp = 1;
+			
+			//공지사항 글 가져와서 넣기
+			try {		
 				if(currentPage.isPresent()) { //currentPage
 					cp = currentPage.get();
 				}
-				noticePageDTO = Noticeservice.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);				
-				boardPageDTO = Boardservice.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);
-				commentPageDTO = Boardservice.findCmtByUNickName(uNickname, cp, PageDTO2.CNT_PER_PAGE);
+				
+				noticePageDTO = Noticeservice.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
 				mnv.addObject("noticePageDTO", noticePageDTO);
-				mnv.addObject("boardPageDTO",boardPageDTO);
-				mnv.addObject("commentPageDTO", commentPageDTO);
-				mnv.setViewName("mycommunity.jsp");
 			} catch (FindException e) {
 				e.printStackTrace();
-				//mnv.addObject("msg", e.getMessage());
-				mnv.setViewName("mycommunity.jsp");
+				logger.info("공지사항 컨트롤 익셉션 메세지 "+e.getMessage());
+				mnv.addObject("msg", e.getMessage());	
+			}	
+			
+			//자유게시판 글 가져와서 넣기
+			try {		
+				if(currentPage.isPresent()) { //currentPage
+					cp = currentPage.get();
+				}
+				boardPageDTO = Boardservice.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);
+				mnv.addObject("boardPageDTO",boardPageDTO);
+			} catch (FindException e1) {
+				e1.printStackTrace();
+				mnv.addObject("msg1", e1.getMessage());	
 			}
+			
+			//댓글 가져와서 넣기
+			try {		
+				if(currentPage.isPresent()) { //currentPage
+					cp = currentPage.get();
+				}
+				commentPageDTO = Boardservice.findCmtByUNickName(uNickname, cp, PageDTO2.CNT_PER_PAGE);			
+				mnv.addObject("commentPageDTO", commentPageDTO);
+			} catch (FindException e2) {
+				e2.printStackTrace();
+				mnv.addObject("msg2", e2.getMessage());		
+			}
+			
+			//jsp페이지 넣고 mnv로 감.
+			mnv.setViewName("mycommunity.jsp");
 			return mnv;
 		}
 		
