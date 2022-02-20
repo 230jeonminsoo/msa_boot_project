@@ -341,9 +341,9 @@ public class BoardDAOOracle implements BoardDAOInterface {
 			map.put("currentPage", cp);//현재페이지
 			map.put("cntperpage", cpp);//페이지당 글개수
 			List<Board> list = session.selectList("com.reco.board.BoardMapper.findBrdByUNickName",map);
-			if(list.size() == 0) {
-				throw new FindException("단어를 포함하는 글이 없습니다.");
-			}
+//			if(list.size() == 0) {
+//				throw new FindException("단어를 포함하는 글이 없습니다.");
+//			}
 			return list;		
 		} catch (Exception e) {
 			throw new FindException(e.getMessage());
@@ -366,9 +366,9 @@ public class BoardDAOOracle implements BoardDAOInterface {
 			map.put("currentPage", cp);//현재페이지
 			map.put("cntperpage", cpp);//페이지당 글개수
 			List<Comment> cmtList = session.selectList("com.reco.board.BoardMapper.findCmtByUNickName",map);
-			if(cmtList.size() == 0) {
-				throw new FindException("작성한 댓글이 없습니다.");
-			}
+//			if(cmtList.size() == 0) {
+//				throw new FindException("작성한 댓글이 없습니다.");
+//			}
 			return cmtList;		
 		} catch (Exception e) {
 			throw new FindException(e.getMessage());

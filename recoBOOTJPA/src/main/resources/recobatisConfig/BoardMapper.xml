@@ -120,7 +120,7 @@ where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPag
 		   ,c.*   
 		   FROM comments c  
 		   JOIN board b ON c.brd_idx = b.brd_idx         
-		       WHERE cmt_UNickName like '%${uNickname}%' ORDER BY c.brd_Idx DESC) d)  
+		       WHERE cmt_UNickName like '%${uNickname}%' ORDER BY c.cmt_createAt DESC) d)  
 	where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
 	</select>
 	

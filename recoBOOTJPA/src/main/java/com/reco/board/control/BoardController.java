@@ -27,6 +27,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -634,7 +635,13 @@ public class BoardController {
 		
 		//마이페이지에서 체크된 자유게시판글을 삭제하는 컨트롤러
 		@GetMapping("mybrdremove")
-		public String boardRemove(int brdIdx0, Optional<Integer> brdIdx1, Optional<Integer> brdIdx2, Optional<Integer> brdIdx3, Optional<Integer> brdIdx4, Model model) {
+		public String boardRemove(int brdIdx0, Optional<Integer> brdIdx1, Optional<Integer> brdIdx2, Optional<Integer> brdIdx3, Optional<Integer> brdIdx4, Model model) throws FindException {
+			String uNickname = service.findBrdByIdx(brdIdx0).getBoard().getBrdUNickName();
+			ModelAndView mnv = new ModelAndView();
+			PageDTO<Notice> noticePageDTO;
+			PageDTO<Board> boardPageDTO;
+			PageDTO2<Board> commentPageDTO;
+			int cp = 1;
 			
 			try {			
 					service.removeBrd(brdIdx0);
@@ -650,9 +657,12 @@ public class BoardController {
 					if(brdIdx4.isPresent()) {
 						service.removeBrd(brdIdx4.get());
 					}
-//					PageDTO<Board> pageDTO;
-//					pageDTO = service.findBrdAll();
-//					model.addAttribute("boardPageDTO", pageDTO);
+				noticePageDTO = NoticeService.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
+				mnv.addObject("noticePageDTO", noticePageDTO);
+				boardPageDTO = service.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);				
+				mnv.addObject("boardPageDTO",boardPageDTO);
+				commentPageDTO = service.findCmtByUNickName(uNickname, cp, PageDTO2.CNT_PER_PAGE);
+				mnv.addObject("commentPageDTO", commentPageDTO);
 					return "mycommunity.jsp";
 			} catch (RemoveException e) {
 				System.out.println(e.getMessage());
@@ -705,5 +715,57 @@ public class BoardController {
 						mnv.setViewName("mycommunity.jsp");
 					}
 					return mnv;
+				}
+				
+				
+				//마이페이지에서 체크된 댓글을 삭제하는 컨트롤러
+				@GetMapping("mycmtremove")
+				public String commentRemove(Optional<String> brdIdx,  Optional<String> cmtIdx) {
+					
+					
+					//String uNickname = service.findCmt
+//					ModelAndView mnv = new ModelAndView();
+//					PageDTO<Notice> noticePageDTO;
+//					PageDTO<Board> boardPageDTO;
+//					PageDTO2<Board> commentPageDTO;
+//					int cp = 1;
+//					
+					int brdIdxMy0 = 0;
+					int cmtIdxMy0 = 0;
+					
+					try {			
+						 	if(brdIdx.isPresent()) {
+						 		brdIdxMy0 = Integer.parseInt(brdIdx.get());
+						 	}
+							if(cmtIdx.isPresent()) {
+								cmtIdxMy0 = Integer.parseInt(cmtIdx.get());
+						 	}
+
+						 	System.out.println("콘트롤러값 brdIdx0체크:" + brdIdxMy0);
+						 	System.out.println("콘트롤러값 cmtIdxMy0체크:" + cmtIdxMy0);
+							//service.removeCmt(brdIdx, cmtIdx);
+//							if((brdIdxMy1.isPresent() & cmtIdxMy1.isPresent())) {
+//								service.removeCmt(brdIdxMy1.get(), cmtIdxMy1.get());
+//							}
+//							if((brdIdxMy2.isPresent() & cmtIdxMy2.isPresent())) {
+//								service.removeCmt(brdIdxMy2.get(), cmtIdxMy2.get());
+//							}
+//							if((brdIdxMy3.isPresent() & cmtIdxMy3.isPresent())) {
+//								service.removeCmt(brdIdxMy3.get(), cmtIdxMy3.get());
+//							}
+//							if((brdIdxMy4.isPresent() & cmtIdxMy4.isPresent())) {
+//								service.removeCmt(brdIdxMy4.get(), cmtIdxMy4.get());
+//							}
+							//PageDTO<Board> pageDTO;
+							
+							//pageDTO = service.findBrdAll();
+							//logger.info("mybrdremove컨트롤러 pageDTO값" + pageDTO);
+							//model.addAttribute("boardPageDTO", pageDTO);
+							return "mycommunity.jsp";
+					} catch (Exception e) { // | FindException RemoveException
+						System.out.println(e.getMessage());
+//						model.addAttribute("msg", e.getMessage());
+						return "mycommunity.jsp";
+					}
 				}
 }

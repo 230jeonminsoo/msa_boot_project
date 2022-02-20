@@ -12,12 +12,14 @@
     pageEncoding="UTF-8"%>
 <%Customer c = (Customer)session.getAttribute("loginInfo"); %> 
 <%
+
 String msg = (String)request.getAttribute("msg");
 PageDTO<Notice> noticePageDTO = (PageDTO)request.getAttribute("noticePageDTO");
 List<Notice> noticeList = new ArrayList<>();
 if(noticePageDTO != null){
 	noticeList = noticePageDTO.getList();
 }
+String msg1 = (String)request.getAttribute("msg1");
  PageDTO<Board> boardPageDTO = (PageDTO)request.getAttribute("boardPageDTO");
  List<Board> boardList = new ArrayList<>();
 if(boardPageDTO != null){
@@ -29,6 +31,8 @@ List<Comment> listComments = new ArrayList<>();
 if(commentPageDTO != null) {
 listComments = commentPageDTO.getComments(); 
 }
+String msg2 = (String)request.getAttribute("msg2");
+
 
 /* PageDTO<Comment> pageDTO = (PageDTO)request.getAttribute("commentPageDTO");
 List<Comment> commentList = pageDTO.getList();   */
@@ -53,7 +57,7 @@ $(function(){
 	commentDetail();
 	
 	//내가 쓴 댓글 삭제
-	
+	myCommentrm();
 	
 });
 </script>    
@@ -86,8 +90,8 @@ $(function(){
 				<span>작성일</span>
 			</li>
 		</ul>
-		<%if (noticePageDTO  == null) {%>
-			<span class="noNtc" ><%=msg %></span>
+		<%if (noticePageDTO == null) {%>
+			<span class="noNtc" ><%=msg%></span>
 		<%} else{%> 
 			<%for(Notice n: noticeList){
 			  int ntcIdx = n.getNtcIdx();
@@ -177,7 +181,7 @@ if (session.getAttribute("loginInfo") != null) {
 	</ul> 
  
 <%if (boardPageDTO  == null) {%>
-	<span class="noBrd"><%=msg %></span>
+	<span class="noBrd"></span>
 <%} else{%>    
 	<%
 	for(Board b: boardList){
@@ -277,7 +281,7 @@ if (session.getAttribute("loginInfo") != null) {
 		</li>
 	</ul> 
 	<%if (commentPageDTO  == null) {%>
-	<span class="noCmt"><%=msg %></span>
+	<span class="noCmt"><%=msg2%></span>
 <%} else{%>    
 	<%
 	for(Comment comment: listComments){
@@ -302,10 +306,12 @@ if (session.getAttribute("loginInfo") != null) {
 <div class="commentlist" > 
 	<ul>
 	    <li>
-	    	<input type='checkbox'
-				    	   style='width:25px; height:25px'	
-					       name='brdIdxMy' 
-					       value=<%=brdIdxMy%>/>	  
+	    	<input type='checkbox' 
+	    		   style='width:25px; height:25px'
+	    		   name='cmtIdxMy' 
+	    		   value1= <%=brdIdxMy%>
+	    		   value2= <%=cmtIdxMy%>>
+	    	</input>	  
 		   
 		    	
 		  
