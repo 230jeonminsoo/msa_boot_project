@@ -37,8 +37,10 @@
 			
 			document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);;
 			
+			
 			//작성완료 버튼 클릭시, 캘린더 리스트 보기 
 			addCalPostClick();
+			
 			//캘린더보기 버튼 클릭시 캘린더 리스트(calpostlist) 다시보기 
 			calPostViewClick();	
 			
@@ -50,9 +52,10 @@
 	<h2>캘린더 글 작성</h2>
 	<form name="writeFrm" method="post" enctype="multipart/form-data"
 	      action="./calpostAdd" onsubmit="return validateForm(this);">
-		<table border="1" width="90%">
+		<table style="margin-left: auto; margin-right: auto;" border="1" width="90%">
+		
 		    <tr>
-		        <td>대표 이미지 업로드</td>
+		        <td>대표이미지</td>
 		        <td>
 		             <style>.dellink{display: none;}</style>
 		             <script type="text/javascript" src="./js/imgpreview.js"></script>
@@ -80,7 +83,7 @@
 		    <tr>
 		        <td>리뷰/메모</td>
 		        <td>
-		            <textarea name="calMemo" cols="140" rows="30" placeholder="500자까지 자유작성/필수입력사항/캘린더에 작성하는 내용은 본인만 볼수 있다." required></textarea>
+		            <textarea name="calMemo" cols="150" rows="30" placeholder="500자까지 자유작성/필수입력사항/캘린더에 작성하는 내용은 본인만 볼수 있다." required></textarea>
 		            
 		        </td>
 		    </tr>
