@@ -180,9 +180,9 @@ if (session.getAttribute("loginInfo") != null) {
 		</li>
 	</ul> 
  
-<%if (boardPageDTO  == null) {%>
-	<span class="noBrd"></span>
-<%} else{%>    
+	<%if (boardPageDTO == null) {%>
+			<span class="noBrd" ><%=msg1%></span>
+	<%} else{%> 
 	<%
 	for(Board b: boardList){
 	  int brdIdx = b.getBrdIdx();

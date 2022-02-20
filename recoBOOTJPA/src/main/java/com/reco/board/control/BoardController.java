@@ -703,10 +703,19 @@ public class BoardController {
 				@GetMapping("mycmt/{uNickname}/{currentPage}")
 				public Object mycmt(@PathVariable String uNickname, @PathVariable int currentPage ,Model model){
 					ModelAndView mnv = new ModelAndView();
-					PageDTO2<Board> commentPageDTO;
+					PageDTO<Notice> noticePageDTO;
+					PageDTO<Board> boardPageDTO;
+					PageDTO2<Board> commentPageDTO;	
+					int cp = 1;
 
 					try {
-						commentPageDTO = service.findCmtByUNickName(uNickname, currentPage, PageDTO.CNT_PER_PAGE);
+						boardPageDTO = service.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);
+						mnv.addObject("boardPageDTO", boardPageDTO);
+						
+						noticePageDTO = NoticeService.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
+						mnv.addObject("noticePageDTO", noticePageDTO);
+						
+						commentPageDTO = service.findCmtByUNickName(uNickname, currentPage, PageDTO2.CNT_PER_PAGE);
 						mnv.addObject("commentPageDTO", commentPageDTO);
 						mnv.setViewName("mycommunity.jsp");
 					} catch (FindException e) {
@@ -719,54 +728,78 @@ public class BoardController {
 				
 				
 				//마이페이지에서 체크된 댓글을 삭제하는 컨트롤러
-				@GetMapping("mycmtremove")
-				public String commentRemove(Optional<Integer> brdIdx0,  Optional<Integer> cmtIdx0, 
-						Optional<Integer> brdIdx1,  Optional<Integer> cmtIdx1) {
+				@GetMapping("mycmtremove/{uNickname}")
+				public String commentRemove(@PathVariable String uNickname,
+											Optional<Integer> brdIdx0,  Optional<Integer> cmtIdx0, 
+											Optional<Integer> brdIdx1,  Optional<Integer> cmtIdx1,
+											Optional<Integer> brdIdx2,  Optional<Integer> cmtIdx2,
+											Optional<Integer> brdIdx3,  Optional<Integer> cmtIdx3,
+											Optional<Integer> brdIdx4,  Optional<Integer> cmtIdx4) {
 					
-					logger.info("삭제1 "+brdIdx0.get());
-					logger.info("삭제2 "+cmtIdx0.get());
-					logger.info("삭제3 "+brdIdx1.get());
-					logger.info("삭제4 "+cmtIdx1.get());
-					//String uNickname = service.findCmt
-//					ModelAndView mnv = new ModelAndView();
-//					PageDTO<Notice> noticePageDTO;
-//					PageDTO<Board> boardPageDTO;
-//					PageDTO2<Board> commentPageDTO;
-//					int cp = 1;
+//					
+					ModelAndView mnv = new ModelAndView();
+					PageDTO<Notice> noticePageDTO;
+					PageDTO<Board> boardPageDTO;
+					PageDTO2<Board> commentPageDTO;
+					int cp = 1;
 //					
 					int brdIdxMy0 = 0;
 					int cmtIdxMy0 = 0;
 					
-					try {			
-						 	if(brdIdx0.isPresent()) {
-						 		brdIdxMy0 = brdIdx0.get();
-						 	}
-							if(cmtIdx0.isPresent()) {
-								cmtIdxMy0 = cmtIdx0.get();
-						 	}
+					int brdIdxMy1 = 0;
+					int cmtIdxMy1 = 0;
 					
-							//service.removeCmt(brdIdx, cmtIdx);
-//							if((brdIdxMy1.isPresent() & cmtIdxMy1.isPresent())) {
-//								service.removeCmt(brdIdxMy1.get(), cmtIdxMy1.get());
-//							}
-//							if((brdIdxMy2.isPresent() & cmtIdxMy2.isPresent())) {
-//								service.removeCmt(brdIdxMy2.get(), cmtIdxMy2.get());
-//							}
-//							if((brdIdxMy3.isPresent() & cmtIdxMy3.isPresent())) {
-//								service.removeCmt(brdIdxMy3.get(), cmtIdxMy3.get());
-//							}
-//							if((brdIdxMy4.isPresent() & cmtIdxMy4.isPresent())) {
-//								service.removeCmt(brdIdxMy4.get(), cmtIdxMy4.get());
-//							}
-							//PageDTO<Board> pageDTO;
+					int brdIdxMy2 = 0;
+					int cmtIdxMy2 = 0;
+					
+					int brdIdxMy3 = 0;
+					int cmtIdxMy3 = 0;
+					
+					int brdIdxMy4 = 0;
+					int cmtIdxMy4 = 0;
+					
+					try {			
+						 	if(brdIdx0.isPresent() & cmtIdx0.isPresent()) {
+						 		brdIdxMy0 = brdIdx0.get();
+						 		cmtIdxMy0 = cmtIdx0.get();
+								service.removeCmt(brdIdxMy0, cmtIdxMy0);
+						 	}
 							
-							//pageDTO = service.findBrdAll();
-							//logger.info("mybrdremove컨트롤러 pageDTO값" + pageDTO);
-							//model.addAttribute("boardPageDTO", pageDTO);
+							if(brdIdx1.isPresent() & cmtIdx1.isPresent()) {
+						 		brdIdxMy1 = brdIdx1.get();
+						 		cmtIdxMy1 = cmtIdx1.get();
+								service.removeCmt(brdIdxMy1, cmtIdxMy1);
+						 	}
+							
+							if(brdIdx2.isPresent() & cmtIdx2.isPresent()) {
+						 		brdIdxMy2 = brdIdx2.get();
+						 		cmtIdxMy2 = cmtIdx2.get();
+								service.removeCmt(brdIdxMy2, cmtIdxMy2);
+						 	}
+							
+							if(brdIdx3.isPresent() & cmtIdx3.isPresent()) {
+						 		brdIdxMy3 = brdIdx3.get();
+						 		cmtIdxMy3 = cmtIdx3.get();
+								service.removeCmt(brdIdxMy3, cmtIdxMy3);
+						 	}
+							
+							if(brdIdx4.isPresent() & cmtIdx4.isPresent()) {
+						 		brdIdxMy4 = brdIdx4.get();
+						 		cmtIdxMy4 = cmtIdx4.get();
+								service.removeCmt(brdIdxMy4, cmtIdxMy4);
+						 	}
+							
+							noticePageDTO = NoticeService.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
+							logger.info("noticePageDTO리턴받은값" + noticePageDTO);
+							mnv.addObject("noticePageDTO", noticePageDTO);
+							boardPageDTO = service.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);				
+							mnv.addObject("boardPageDTO",boardPageDTO);
+							commentPageDTO = service.findCmtByUNickName(uNickname, cp, PageDTO2.CNT_PER_PAGE);
+							mnv.addObject("commentPageDTO", commentPageDTO);
 							return "mycommunity.jsp";
-					} catch (Exception e) { // | FindException RemoveException
+					} catch (Exception e) { 
 						System.out.println(e.getMessage());
-//						model.addAttribute("msg", e.getMessage());
+						mnv.addObject("msg", e.getMessage());
 						return "mycommunity.jsp";
 					}
 				}
