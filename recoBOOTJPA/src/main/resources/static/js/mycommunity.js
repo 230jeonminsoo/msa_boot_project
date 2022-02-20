@@ -68,10 +68,10 @@ function myNoticerm(){
 					method: 'get',
 					data: data,
 					success: function(responseData){
-						    /*let $articlesObj = $('section>div.articles');
+						    let $articlesObj = $('section>div.articles');
 			                $articlesObj.empty();
-			                $articlesObj.html(responseData);*/
-							$('section>div.articles0>div.tab>ul.myinfotab>li>a[href=mycommunity]').trigger('click');
+			                $articlesObj.html(responseData);
+							/*$('section>div.articles0>div.tab>ul.myinfotab>li>a[href=mycommunity]').trigger('click');*/
 					},
 					error: function(xhr){
 						alert(xhr.status);
@@ -174,10 +174,10 @@ function myBoardrm(){
 					method: 'get',
 					data: data,
 					success: function(responseData){
-						   /* let $articlesObj = $('section>div.articles');
+						    let $articlesObj = $('section>div.articles');
 			                $articlesObj.empty();
-			                $articlesObj.html(responseData);*/
-							$('section>div.articles0>div.tab>ul.myinfotab>li>a[href=mycommunity]').trigger('click');
+			                $articlesObj.html(responseData);
+							/*$('section>div.articles0>div.tab>ul.myinfotab>li>a[href=mycommunity]').trigger('click');*/
 							/*$('header>nav>ul>li>a[href=orderlist]').trigger('click');*/
 							
 					},
@@ -222,15 +222,6 @@ $('div.boardpagegroup').on('click','span.active',function(){
 
 //------댓글 시작---------
 
-/**전체체크 기능 */
-function cmtCheckBoxAll(cmtCheckBoxAll)  {
-  const checkboxes 
-       = document.getElementsByName('brdIdxMy');
-  
-  checkboxes.forEach((checkbox) => {
-    checkbox.checked = cmtCheckBoxAll.checked;
-  })
-}
 
 
 /**댓글 클릭시 해당 댓글이 달린 게시글 페이지로 이동 */
@@ -262,6 +253,59 @@ function commentDetail(){
 	  }
     });	
 }
+
+
+
+
+/**전체체크 기능 */
+function cmtCheckBoxAll(cmtCheckBoxAll)  {
+  const checkboxes 
+       = document.getElementsByName('cmtIdxMy');
+  
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = cmtCheckBoxAll.checked;
+  })
+}
+
+
+
+
+/**체크된 내가쓴 댓글 삭제 */
+function myCommentrm(){
+	let $mycommentrmObj = $('button.mycommentrm');
+	$mycommentrmObj.click(function(){
+	
+	  
+	  	// 선택된 목록에서 value 찾기
+	  	let brdIdx = '';
+		let cmtIdx = '';
+	    $('input[name="cmtIdxMy"]:checked').each(function(index, item){
+		  	brdIdx += 'brdIdxMy'+index+'='+ $(item).attr("value1")+'&';
+			cmtIdx += 'cmtIdxMy'+index+'='+ $(item).attr("value2")+'&';
+	    });
+
+		console.log(brdIdx);
+		console.log(cmtIdx);
+			if(brdIdx != '' & cmtIdx != ''){
+				$.ajax({
+					url: './mycmtremove',
+					method: 'get',
+					data: {"brdIdx":brdIdx, "cmtIdx":cmtIdx},
+					success: function(responseData){
+						    let $articlesObj = $('section>div.articles');
+			                $articlesObj.empty();
+			                $articlesObj.html(responseData);
+							/*$('section>div.articles0>div.tab>ul.myinfotab>li>a[href=mycommunity]').trigger('click');
+					*/},
+					error: function(xhr){
+						alert(xhr.status);
+					}
+				});
+			}
+			return false;			
+		});	
+}
+
 
 
 //--다른페이지 클릭했을때 시작
