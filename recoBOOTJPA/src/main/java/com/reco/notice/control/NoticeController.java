@@ -50,7 +50,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 public class NoticeController {
 
 	@Autowired
-	private NoticeService service;
+	private NoticeService Noticeservice;
 	
 	@Autowired
 	private BoardService BoardService;
@@ -78,7 +78,7 @@ public class NoticeController {
 		n.setNtcUNickName(ntcUNickName);
 		
 		try{
-			Notice notice = service.addNtc(n);
+			Notice notice = Noticeservice.addNtc(n);
 			model.addAttribute("n", notice);
 			logger.info("컨트롤러 addntc 1 "+notice.getNtcIdx() + notice.getNtcTitle()+notice.getNtcContent());
 			String saveDirectory = "C:\\reco\\noticeimages";
@@ -192,7 +192,7 @@ public class NoticeController {
 	@GetMapping("ntcdetail")
 	public Object noticeDetail(int ntcIdx, Model model) {
 		try {
-			Notice n = service.findNtcByIdx(ntcIdx);
+			Notice n = Noticeservice.findNtcByIdx(ntcIdx);
 			model.addAttribute("n", n);
 			String saveDirectory = "C:\\reco\\noticeimages";
 			//파일을 저장할 폴더가 없다면 만들기. 있다면 만들지 않음	
@@ -241,11 +241,11 @@ public class NoticeController {
 			if(currentPage.isPresent()) {
 				log.info("컨트롤러 현재페이지"+currentPage);
 				int cp = currentPage.get();
-				pageDTO= service.findNtcAll(cp);
+				pageDTO= Noticeservice.findNtcAll(cp);
 				log.info("리스트"+pageDTO.getList()+"현재페이지"+pageDTO.getCurrentPage());
 				
 			}else {
-				pageDTO= service.findNtcAll();
+				pageDTO= Noticeservice.findNtcAll();
 			}
 			mnv.addObject("pageDTO", pageDTO);
 			
@@ -267,7 +267,7 @@ public class NoticeController {
 				}
 			});
 			
-			if(imageFiles.length>0) {
+			if(imageFiles.length >0) {
 				mnv.addObject("image", imageFiles[0]);
 			}
 		}
@@ -289,9 +289,9 @@ public class NoticeController {
 	@GetMapping("ntcremove")
 	public String noticeRemove(int ntcIdx, Model model) {
 		try {
-				service.removeNtc(ntcIdx);
+			Noticeservice.removeNtc(ntcIdx);
 				PageDTO<Notice> pageDTO;
-				pageDTO = service.findNtcAll();
+				pageDTO = Noticeservice.findNtcAll();
 				model.addAttribute("pageDTO", pageDTO);
 				return "noticelistresult.jsp";
 		} catch (RemoveException | FindException e) {
@@ -303,58 +303,101 @@ public class NoticeController {
 	
 	//나의 공지사항 글 보는 컨트롤러
 	@GetMapping("myntc/{uNickname}/{currentPage}")
-	public Object myNtc(@PathVariable String uNickname, @PathVariable int currentPage ,Model model){
+	public Object myNtc(@PathVariable String uNickname, @PathVariable Optional<Integer> currentPage ,Model model){
 		ModelAndView mnv = new ModelAndView();
 		PageDTO<Notice> noticePageDTO;
 		PageDTO<Board> boardPageDTO;
 		PageDTO2<Board> commentPageDTO;
 		
 		int cp = 1;
-		try {
-			noticePageDTO = service.findNtcByNickname(uNickname, currentPage, PageDTO.CNT_PER_PAGE);
+		
+		//공지사항 글 가져와서 넣기
+		try {		
+			if(currentPage.isPresent()) { //currentPage
+				cp = currentPage.get();
+			}
+			
+			noticePageDTO = Noticeservice.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
 			mnv.addObject("noticePageDTO", noticePageDTO);
-					
-			boardPageDTO = BoardService.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);
-			mnv.addObject("boardPageDTO", boardPageDTO);
-			
-			commentPageDTO = BoardService.findCmtByUNickName(uNickname, cp, PageDTO2.CNT_PER_PAGE);
-			mnv.addObject("commentPageDTO", commentPageDTO);
-			
-			mnv.setViewName("mycommunity.jsp");
 		} catch (FindException e) {
 			e.printStackTrace();
-			mnv.addObject("msg", e.getMessage());
-			mnv.setViewName("mycommunity.jsp");
+			logger.info("공지사항 컨트롤 익셉션 메세지 "+e.getMessage());
+			mnv.addObject("msg", e.getMessage());	
+		}	
+		
+		//자유게시판 글 가져와서 넣기
+		try {		
+			if(currentPage.isPresent()) { //currentPage
+				cp = currentPage.get();
+			}
+			boardPageDTO = BoardService.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);
+			mnv.addObject("boardPageDTO",boardPageDTO);
+		} catch (FindException e1) {
+			e1.printStackTrace();
+			mnv.addObject("msg1", e1.getMessage());	
 		}
+		
+		//댓글 가져와서 넣기
+		try {		
+			if(currentPage.isPresent()) { //currentPage
+				cp = currentPage.get();
+			}
+			commentPageDTO = BoardService.findCmtByUNickName(uNickname, cp, PageDTO2.CNT_PER_PAGE);			
+			mnv.addObject("commentPageDTO", commentPageDTO);
+		} catch (FindException e2) {
+			e2.printStackTrace();
+			mnv.addObject("msg2", e2.getMessage());		
+		}
+		
+		//jsp페이지 넣고 mnv로 감.
+		mnv.setViewName("mycommunity.jsp");
 		return mnv;
 	}
+
+	
+	
+	
 	
 	//마이페이지에서 공지사항을 삭제하는 컨트롤러
 	@GetMapping("myntcremove")
 	public String noticeRemove(int ntcIdx0, Optional<Integer> ntcIdx1, Optional<Integer> ntcIdx2, Optional<Integer> ntcIdx3, Optional<Integer> ntcIdx4, Model model) {
-		try {			
-				service.removeNtc(ntcIdx0);
-				if(ntcIdx1.isPresent()) {
-					service.removeNtc(ntcIdx1.get());
-				}
-				if(ntcIdx2.isPresent()) {
-					service.removeNtc(ntcIdx2.get());
-				}
-				if(ntcIdx3.isPresent()) {
-					service.removeNtc(ntcIdx3.get());
-				}
-				if(ntcIdx4.isPresent()) {
-					service.removeNtc(ntcIdx4.get());
-				}
-//				PageDTO<Notice> pageDTO;
-//				pageDTO = service.findNtcAll();
-//				model.addAttribute("noticePageDTO", pageDTO);
-				return "mycommunity.jsp";
+		try {		
+			String uNickname = Noticeservice.findNtcByIdx(ntcIdx0).getNtcUNickName();
+			PageDTO<Notice> noticePageDTO;
+			PageDTO<Board> boardPageDTO;
+			PageDTO2<Board> commentPageDTO;
+			int cp = 1;
+			Noticeservice.removeNtc(ntcIdx0);
+			
+			if(ntcIdx1.isPresent()) {
+				Noticeservice.removeNtc(ntcIdx1.get());
+			}
+			if(ntcIdx2.isPresent()) {
+				Noticeservice.removeNtc(ntcIdx2.get());
+			}
+			if(ntcIdx3.isPresent()) {
+				Noticeservice.removeNtc(ntcIdx3.get());
+			}
+			if(ntcIdx4.isPresent()) {
+				Noticeservice.removeNtc(ntcIdx4.get());
+			}
+			noticePageDTO = Noticeservice.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
+			boardPageDTO = BoardService.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);
+			commentPageDTO = BoardService.findCmtByUNickName(uNickname, cp, PageDTO2.CNT_PER_PAGE);	
+			
+			model.addAttribute("noticePageDTO",noticePageDTO);
+			model.addAttribute("boardPageDTO",boardPageDTO);
+			model.addAttribute("commentPageDTO",commentPageDTO);
+			return "mycommunity.jsp";
 		} catch (RemoveException e) {
 			System.out.println(e.getMessage());
 			model.addAttribute("msg", e.getMessage());
 			return "mycommunity.jsp";
-		}
+		} catch (FindException e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.getMessage());
+			return "mycommunity.jsp";
+		} 
 	}
 	
 	
@@ -373,7 +416,7 @@ public class NoticeController {
 				if(currentPage.isPresent()) { //currentPage
 					cp = currentPage.get();
 				}
-				pageDTO = service.findNtcByTitle(w,f,cp); 
+				pageDTO = Noticeservice.findNtcByTitle(w,f,cp); 
 				mnv.addObject("pageDTO", pageDTO);
 				mnv.setViewName("noticelistresult.jsp");
 			} catch (FindException e) {
@@ -393,7 +436,7 @@ public class NoticeController {
 				if(currentPage.isPresent()) { //currentPage
 					cp = currentPage.get();
 				}
-				pageDTO = service.findNtcByWord(w,cp); 
+				pageDTO = Noticeservice.findNtcByWord(w,cp); 
 				mnv.addObject("pageDTO", pageDTO);
 				mnv.setViewName("noticelistresult.jsp");
 			} catch (FindException e) {
@@ -417,7 +460,7 @@ public class NoticeController {
 			n.setNtcContent(ntcContent);
 			
 			//원래 DB에 저장된 첨부파일 이름 가져오기
-			String originAttachment = service.findNtcByIdx(ntcIdx).getNtcAttachment();
+			String originAttachment = Noticeservice.findNtcByIdx(ntcIdx).getNtcAttachment();
 			logger.info("컨트롤러 오리지널 파일 네임"+letterFiles.getOriginalFilename());
 //			if(letterFiles == null) {//첨부파일 삭제한경우
 //				n.setNtcAttachment(ntcAttachment);
@@ -433,7 +476,7 @@ public class NoticeController {
 			}else { //attachment 
 				n.setNtcAttachment(letterFiles.getOriginalFilename());
 			}
-			Notice notice = service.modifyNtc(n);
+			Notice notice = Noticeservice.modifyNtc(n);
 			model.addAttribute("n", notice);
 			//데이터베이스에 내용저장 끝
 			
