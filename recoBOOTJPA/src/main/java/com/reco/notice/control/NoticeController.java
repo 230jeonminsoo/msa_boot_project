@@ -330,7 +330,7 @@ public class NoticeController {
 			if(currentPage.isPresent()) { //currentPage
 				cp = currentPage.get();
 			}
-			boardPageDTO = BoardService.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);
+			boardPageDTO = BoardService.findBrdByUNickNameMy(uNickname, cp, PageDTO.CNT_PER_PAGE);
 			mnv.addObject("boardPageDTO",boardPageDTO);
 		} catch (FindException e1) {
 			e1.printStackTrace();
@@ -382,7 +382,7 @@ public class NoticeController {
 				Noticeservice.removeNtc(ntcIdx4.get());
 			}
 			noticePageDTO = Noticeservice.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
-			boardPageDTO = BoardService.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);
+			boardPageDTO = BoardService.findBrdByUNickNameMy(uNickname, cp, PageDTO.CNT_PER_PAGE);
 			commentPageDTO = BoardService.findCmtByUNickName(uNickname, cp, PageDTO2.CNT_PER_PAGE);	
 			
 			model.addAttribute("noticePageDTO",noticePageDTO);

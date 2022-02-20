@@ -118,6 +118,22 @@ public class BoardDAOOracle implements BoardDAOInterface {
 	}
 	
 	@Override
+	public int findCountUNickNameMy(String uNickname) throws FindException {
+		SqlSession session = null;
+		try {
+			session = sqlSessionFactory.openSession();
+			return session.selectOne("com.reco.board.BoardMapper.findCountUNickNameMy", uNickname);
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new FindException(e.getMessage());
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}	
+	}
+	
+	@Override
 	public int findCmtCount(int brdIdx) throws FindException{
 		SqlSession session = null;
 		try {
@@ -353,6 +369,33 @@ public class BoardDAOOracle implements BoardDAOInterface {
 			}
 		}
 	}
+	
+	
+	@Override
+	public List<Board> findBrdByUNickNameMy(String uNickname, int currentPage, int cntperpage) throws FindException {
+		SqlSession session =null;		
+		try {
+			session = sqlSessionFactory.openSession();
+			Map<String,String> map= new HashMap<>();
+			map.put("uNickname", uNickname);
+			String cp = Integer.toString(currentPage);
+			String cpp = Integer.toString(cntperpage);
+			map.put("currentPage", cp);//현재페이지
+			map.put("cntperpage", cpp);//페이지당 글개수
+			List<Board> list = session.selectList("com.reco.board.BoardMapper.findBrdByUNickNameMy",map);
+//			if(list.size() == 0) {
+//				throw new FindException("단어를 포함하는 글이 없습니다.");
+//			}
+			return list;		
+		} catch (Exception e) {
+			throw new FindException(e.getMessage());
+		} finally {
+			if(session != null) {
+				session.close();
+			}
+		}
+	}
+	
 	
 	//마이페이지 내가 쓴 댓글들만 찾아오기
 	public List<Comment> findCmtByUNickName(String uNickname, int currentPage, int cntperpage) throws FindException{

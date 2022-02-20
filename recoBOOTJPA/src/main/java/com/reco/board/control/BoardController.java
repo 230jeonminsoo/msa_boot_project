@@ -636,6 +636,8 @@ public class BoardController {
 		//마이페이지에서 체크된 자유게시판글을 삭제하는 컨트롤러
 		@GetMapping("mybrdremove")
 		public String boardRemove(int brdIdx0, Optional<Integer> brdIdx1, Optional<Integer> brdIdx2, Optional<Integer> brdIdx3, Optional<Integer> brdIdx4, Model model) throws FindException {
+			
+		try {
 			String uNickname = service.findBrdByIdx(brdIdx0).getBoard().getBrdUNickName();
 			ModelAndView mnv = new ModelAndView();
 			PageDTO<Notice> noticePageDTO;
@@ -643,7 +645,6 @@ public class BoardController {
 			PageDTO2<Board> commentPageDTO;
 			int cp = 1;
 			
-			try {			
 					service.removeBrd(brdIdx0);
 					if(brdIdx1.isPresent()) {
 						service.removeBrd(brdIdx1.get());
@@ -659,7 +660,7 @@ public class BoardController {
 					}
 				noticePageDTO = NoticeService.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
 				mnv.addObject("noticePageDTO", noticePageDTO);
-				boardPageDTO = service.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);				
+				boardPageDTO = service.findBrdByUNickNameMy(uNickname, cp, PageDTO.CNT_PER_PAGE);				
 				mnv.addObject("boardPageDTO",boardPageDTO);
 				commentPageDTO = service.findCmtByUNickName(uNickname, cp, PageDTO2.CNT_PER_PAGE);
 				mnv.addObject("commentPageDTO", commentPageDTO);
@@ -681,7 +682,7 @@ public class BoardController {
 			PageDTO2<Board> commentPageDTO;
 			int cp = 1;
 			try {
-				boardPageDTO = service.findBrdByUNickName(uNickname, currentPage, PageDTO.CNT_PER_PAGE);
+				boardPageDTO = service.findBrdByUNickNameMy(uNickname, currentPage, PageDTO.CNT_PER_PAGE);
 				mnv.addObject("boardPageDTO", boardPageDTO);
 				
 				noticePageDTO = NoticeService.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
@@ -709,7 +710,7 @@ public class BoardController {
 					int cp = 1;
 
 					try {
-						boardPageDTO = service.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);
+						boardPageDTO = service.findBrdByUNickNameMy(uNickname, cp, PageDTO.CNT_PER_PAGE);
 						mnv.addObject("boardPageDTO", boardPageDTO);
 						
 						noticePageDTO = NoticeService.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
@@ -790,17 +791,23 @@ public class BoardController {
 						 	}
 							
 							noticePageDTO = NoticeService.findNtcByNickname(uNickname, cp, PageDTO.CNT_PER_PAGE);
-							logger.info("noticePageDTO리턴받은값" + noticePageDTO);
 							mnv.addObject("noticePageDTO", noticePageDTO);
-							boardPageDTO = service.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);				
+							
+							boardPageDTO = service.findBrdByUNickNameMy(uNickname, cp, PageDTO.CNT_PER_PAGE);				
 							mnv.addObject("boardPageDTO",boardPageDTO);
+							
 							commentPageDTO = service.findCmtByUNickName(uNickname, cp, PageDTO2.CNT_PER_PAGE);
 							mnv.addObject("commentPageDTO", commentPageDTO);
 							return "mycommunity.jsp";
-					} catch (Exception e) { 
+					} catch (RemoveException e) {
 						System.out.println(e.getMessage());
+						mnv.addObject("msg", e.getMessage());
+						return "mycommunity.jsp";
+					} catch (FindException e) {
+						e.printStackTrace();
 						mnv.addObject("msg", e.getMessage());
 						return "mycommunity.jsp";
 					}
 				}
+					
 }
