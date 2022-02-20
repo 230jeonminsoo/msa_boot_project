@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.reco.calendar.service.CalendarService;
 import com.reco.calendar.vo.CalInfo;
@@ -53,7 +54,7 @@ public class CalendarController {
 
 	//캘린서 제목과 썸네일을 추가하는 컨트롤러 
 	@PostMapping("caladd")
-	public String calAdd(@RequestParam(value = "calCategory", required=false) String calCategory
+	public Object calAdd(@RequestParam(value = "calCategory", required=false) String calCategory
 						,@RequestParam(value = "calThumbnail") MultipartFile multipartFile
 						,@RequestPart(required=false) List<MultipartFile> letterFiles
 						,@RequestPart(required=false) MultipartFile imageFile
@@ -71,93 +72,98 @@ public class CalendarController {
 		ci.setCalCategory(calCategory);
 		ci.setCalThumbnail(filenameString);
 		logger.info("요청전달데이터 calCategory=" + calCategory + ", calThumbnail=" + filenameString);
-
+		
+		
+		ModelAndView mnv = new ModelAndView();
 		//게시글내용 DB에 저장
 		try {
 			CalInfo calinfo = service.addCal(ci); //calInfo를 service의 add()메소드 인자로 사용
 			model.addAttribute("ci", calinfo);
 			System.out.println(calinfo);
 			
-		} catch (AddException e1) {
-			e1.printStackTrace();
-			return "failresult.jsp";
-		}
+			List<CalInfo> list = service.findCalsByUIdx(uIdx);	
+			mnv.addObject("list", list);
+			
+			//파일 경로생성
+			String saveDirectory = "c:\\reco\\calendar";
+			if ( ! new File(saveDirectory).exists()) {
+				logger.info("업로드 실제경로생성");
+				new File(saveDirectory).mkdirs(); // 상위디렉토리생성
+			}
+
+			//썸네일 생성
+			File thumbnailFile = null;
+			long imageFileSize = multipartFile.getSize();
+			if(imageFileSize > 0) {
+
+				//이미지파일 저장하기
+				String imageOriginFileName = multipartFile.getOriginalFilename(); //이미지파일원본이름얻기
+				logger.info("이미지 파일이름:" + imageOriginFileName +", 파일크기: " + multipartFile.getSize());
 
 
-		//파일 경로생성
-		String saveDirectory = "c:\\reco\\calendar";
-		if ( ! new File(saveDirectory).exists()) {
-			logger.info("업로드 실제경로생성");
-			new File(saveDirectory).mkdirs(); // 상위디렉토리생성
-		}
+				//저장할 파일이름을 지정한다 ex) 테이블이름 : cal_post__uIdx_calIdx
+				String imageFileName = "cal_post_" + uIdx  + "_" + ci.getCalIdx() + ".jpg";
 
-		//썸네일 생성
-		File thumbnailFile = null;
-		long imageFileSize = multipartFile.getSize();
-		if(imageFileSize > 0) {
+				//이미지 파일생성
+				File savedImagefile = new File(saveDirectory, imageFileName);
 
-			//이미지파일 저장하기
-			String imageOriginFileName = multipartFile.getOriginalFilename(); //이미지파일원본이름얻기
-			logger.info("이미지 파일이름:" + imageOriginFileName +", 파일크기: " + multipartFile.getSize());
+				try {
+					FileCopyUtils.copy(multipartFile.getBytes(), savedImagefile);
+					logger.info("이미지 파일저장:" + savedImagefile.getAbsolutePath());
 
+					//파일형식 확인
+					String contentType = multipartFile.getContentType();
+					if(!contentType.contains("image/")) { //이미지파일형식이 아닌 경우
+						mnv.setViewName("failresult.jsp");
+					}
 
-			//저장할 파일이름을 지정한다 ex) 테이블이름 : cal_post__uIdx_calIdx
-			String imageFileName = "cal_post_" + uIdx  + "_" + ci.getCalIdx() + ".jpg";
+					//이미지파일인 경우 섬네일파일을 만듦
+					String thumbnailName =  "s_"+ imageFileName; //섬네일 파일명은 s_글번호_XXXX_원본이름
+					thumbnailFile = new File(saveDirectory,thumbnailName);
+					FileOutputStream thumbnailOS;
+					thumbnailOS = new FileOutputStream(thumbnailFile);
+					InputStream imageFileIS = multipartFile.getInputStream();
+					int width = 500;
+					int height = 500;
+					Thumbnailator.createThumbnail(imageFileIS, thumbnailOS, width, height);
+					logger.info("썸네일파일 저장:" + thumbnailFile.getAbsolutePath() + ", 썸네일파일 크기:" + thumbnailFile.length());
 
-			//이미지 파일생성
-			File savedImagefile = new File(saveDirectory, imageFileName);
+					} catch (IOException e2) {
+						e2.printStackTrace();
+					}
+					
+				} //end if(imageFileSize > 0 )
+				
 
-			try {
-				FileCopyUtils.copy(multipartFile.getBytes(), savedImagefile);
-				logger.info("이미지 파일저장:" + savedImagefile.getAbsolutePath());
-
-				//파일형식 확인
-				String contentType = multipartFile.getContentType();
-				if(!contentType.contains("image/")) { //이미지파일형식이 아닌 경우
-					//					return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-					return "failresult.jsp";
-				}
-
-				//이미지파일인 경우 섬네일파일을 만듦
-				String thumbnailName =  "s_"+ imageFileName; //섬네일 파일명은 s_글번호_XXXX_원본이름
-				thumbnailFile = new File(saveDirectory,thumbnailName);
-				FileOutputStream thumbnailOS;
-				thumbnailOS = new FileOutputStream(thumbnailFile);
-				InputStream imageFileIS = multipartFile.getInputStream();
-				int width = 500;
-				int height = 500;
-				Thumbnailator.createThumbnail(imageFileIS, thumbnailOS, width, height);
-				logger.info("썸네일파일 저장:" + thumbnailFile.getAbsolutePath() + ", 썸네일파일 크기:" + thumbnailFile.length());
-
-				} catch (IOException e2) {
-					e2.printStackTrace();
-					//				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-					return "failresult.jsp";
+				if(thumbnailFile != null) {
+					//ResponseEntity 응답상태(200번, 404번 등), 응답헤더설정(쿠키, 컨텐트 LENGTH등 ), 응답내용설정 
+//					return "failresult.jsp";
+//				}
+//			
+				try {
+					//이미지 썸네일다운로드하기
+					HttpHeaders responseHeaders = new HttpHeaders();
+					responseHeaders.set(HttpHeaders.CONTENT_LENGTH, thumbnailFile.length()+"");
+					responseHeaders.set(HttpHeaders.CONTENT_TYPE, Files.probeContentType(thumbnailFile.toPath()));
+					responseHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename="+ URLEncoder.encode("a", "UTF-8"));
+					logger.info("썸네일파일 다운로드");
+				}catch (IOException e) {
+					mnv.setViewName("failresult.jsp");
 				}
 				
-			} //end if(imageFileSize > 0 )
-			
-
-			if(thumbnailFile != null) {
-				//ResponseEntity 응답상태(200번, 404번 등), 응답헤더설정(쿠키, 컨텐트 LENGTH등 ), 응답내용설정 
-//				return "failresult.jsp";
-//			}
-//		
-			try {
-				//이미지 썸네일다운로드하기
-				HttpHeaders responseHeaders = new HttpHeaders();
-				responseHeaders.set(HttpHeaders.CONTENT_LENGTH, thumbnailFile.length()+"");
-				responseHeaders.set(HttpHeaders.CONTENT_TYPE, Files.probeContentType(thumbnailFile.toPath()));
-				responseHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename="+ URLEncoder.encode("a", "UTF-8"));
-				logger.info("썸네일파일 다운로드");
-				//				return new ResponseEntity<>(FileCopyUtils.copyToByteArray(thumbnailFile), responseHeaders, HttpStatus.OK);
-			}catch (IOException e) {
-				//				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-				return "failresult.jsp";
 			}
 			
-		}//return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-			return "callistresult.jsp";
+			mnv.setViewName("index.jsp");
+		} catch (AddException e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.getMessage());
+			mnv.setViewName("failresult.jsp");
+		} catch (FindException e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.getMessage());
+			mnv.setViewName("failresult.jsp");
+		}
+		return mnv;
 	}
 	
 //CalAddServlet

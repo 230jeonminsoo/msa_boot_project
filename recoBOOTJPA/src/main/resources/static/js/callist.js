@@ -40,7 +40,7 @@ function caladdClick(){
 	$('section>div.articles>ul>li>div.title_add>a>img').click(function(){
 		let menuHref = $(this).attr('href'); 
 		/*let ajaxUrl = './html/calInfowrite.html';*/  
-		let ajaxUrl = 'calinfowrite';
+		let ajaxUrl = './html/calInfowrite.html';
         
 		$.ajax({
             url: ajaxUrl,

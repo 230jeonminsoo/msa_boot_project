@@ -10,11 +10,12 @@
 	SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM");
 	String dateValue = sf.format(nowTime);
 %>
-    <script src="./js/callist.js"></script>
+    <!-- <script src="./js/callist.js"></script> -->
     
     <script>
 	    $(function(){
 			uNickname = "<%=c.getUNickName()%>"
+			/*------- tab.js ----------*/
 	    	//탭에서 메뉴클릭시 발생하는 이벤트(공지사항/faq/자유게시판/캘린더관리/커뮤니티글관리/개인정보관리)
 			tabMenuClick(uNickname);
 
@@ -27,7 +28,8 @@
 
 			//탭에서 캘린더 add 클릭시 발생하는 이벤트
 			tabaddClick();
-
+			
+			/*------- title_list.js ----------*/
 			//섹션영역에 캘린더 썸네일 클릭시 발생하는 이벤트
 			calThumbnailClick();
 

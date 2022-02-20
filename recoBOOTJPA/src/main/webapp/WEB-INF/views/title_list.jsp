@@ -8,7 +8,7 @@
 
 <link rel="stylesheet" href="./css/title_list.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="./js/tab.js"></script>
+<script src="./js/callist.js"></script>
 
 <script>
 $(function(){
