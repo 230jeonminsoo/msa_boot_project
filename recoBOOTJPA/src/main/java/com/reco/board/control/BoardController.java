@@ -635,11 +635,11 @@ public class BoardController {
 		
 		//마이페이지에서 체크된 자유게시판글을 삭제하는 컨트롤러
 		@GetMapping("mybrdremove")
-		public String boardRemove(int brdIdx0, Optional<Integer> brdIdx1, Optional<Integer> brdIdx2, Optional<Integer> brdIdx3, Optional<Integer> brdIdx4, Model model) throws FindException {
-			
+		public Object boardRemove(int brdIdx0, Optional<Integer> brdIdx1, Optional<Integer> brdIdx2, Optional<Integer> brdIdx3, Optional<Integer> brdIdx4, Model model) throws FindException {
+			ModelAndView mnv = new ModelAndView();
 		try {
 			String uNickname = service.findBrdByIdx(brdIdx0).getBoard().getBrdUNickName();
-			ModelAndView mnv = new ModelAndView();
+		
 			PageDTO<Notice> noticePageDTO;
 			PageDTO<Board> boardPageDTO;
 			PageDTO2<Board> commentPageDTO;
@@ -664,12 +664,13 @@ public class BoardController {
 				mnv.addObject("boardPageDTO",boardPageDTO);
 				commentPageDTO = service.findCmtByUNickName(uNickname, cp, PageDTO2.CNT_PER_PAGE);
 				mnv.addObject("commentPageDTO", commentPageDTO);
-					return "mycommunity.jsp";
+				mnv.setViewName("mycommunity.jsp");
 			} catch (RemoveException e) {
 				System.out.println(e.getMessage());
 //				model.addAttribute("msg", e.getMessage());
-				return "mycommunity.jsp";
+				mnv.setViewName("mycommunity.jsp");
 			}
+			return mnv;
 		}
 		
 		
@@ -730,7 +731,7 @@ public class BoardController {
 				
 				//마이페이지에서 체크된 댓글을 삭제하는 컨트롤러
 				@GetMapping("mycmtremove/{uNickname}")
-				public String commentRemove(@PathVariable String uNickname,
+				public Object commentRemove(@PathVariable String uNickname,
 											Optional<Integer> brdIdx0,  Optional<Integer> cmtIdx0, 
 											Optional<Integer> brdIdx1,  Optional<Integer> cmtIdx1,
 											Optional<Integer> brdIdx2,  Optional<Integer> cmtIdx2,
@@ -798,16 +799,17 @@ public class BoardController {
 							
 							commentPageDTO = service.findCmtByUNickName(uNickname, cp, PageDTO2.CNT_PER_PAGE);
 							mnv.addObject("commentPageDTO", commentPageDTO);
-							return "mycommunity.jsp";
+							mnv.setViewName("mycommunity.jsp");
 					} catch (RemoveException e) {
 						System.out.println(e.getMessage());
 						mnv.addObject("msg", e.getMessage());
-						return "mycommunity.jsp";
+						mnv.setViewName("mycommunity.jsp");
 					} catch (FindException e) {
 						e.printStackTrace();
 						mnv.addObject("msg", e.getMessage());
-						return "mycommunity.jsp";
+						mnv.setViewName("mycommunity.jsp");
 					}
+					return mnv;
 				}
 					
 }

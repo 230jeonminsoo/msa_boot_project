@@ -131,7 +131,7 @@ public class BoardService {
 	//자유게시판 닉네임 검색
 	public PageDTO<Board> findBrdByUNickNameMy(String uNickname, int currentPage, int cntperpage) throws FindException{
 		String url = "/mybrd/"+ uNickname;
-		List<Board> list = dao.findBrdByUNickName(uNickname, currentPage, PageDTO.CNT_PER_PAGE);
+		List<Board> list = dao.findBrdByUNickNameMy(uNickname, currentPage, PageDTO.CNT_PER_PAGE);
 		int totalCnt = dao.findCountUNickNameMy(uNickname);
 		PageDTO<Board> pageDTO = new PageDTO<>(url, currentPage, totalCnt, list);
 		return pageDTO;
