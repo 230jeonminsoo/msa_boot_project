@@ -277,20 +277,21 @@ function myCommentrm(){
 	
 	  
 	  	// 선택된 목록에서 value 찾기
-	  	let brdIdx = '';
-		let cmtIdx = '';
+	  	//let brdIdx = '';
+		//let cmtIdx = '';
+		let data = '';
 	    $('input[name="cmtIdxMy"]:checked').each(function(index, item){
-		  	brdIdx += 'brdIdxMy'+index+'='+ $(item).attr("value1")+'&';
-			cmtIdx += 'cmtIdxMy'+index+'='+ $(item).attr("value2")+'&';
+		  	data += 'brdIdx'+index+'='+ $(item).attr("value1")+'&'; //brdidx0=9&
+			data += 'cmtIdx'+index+'='+ $(item).attr("value2")+'&';//cmtidx0=1&
 	    });
-
-		console.log(brdIdx);
-		console.log(cmtIdx);
-			if(brdIdx != '' & cmtIdx != ''){
+		
+		
+		console.log(data);
+			//if(brdIdx != '' & cmtIdx != ''){
 				$.ajax({
 					url: './mycmtremove',
 					method: 'get',
-					data: {"brdIdx":brdIdx, "cmtIdx":cmtIdx},
+					data: data,
 					success: function(responseData){
 						    let $articlesObj = $('section>div.articles');
 			                $articlesObj.empty();
@@ -301,7 +302,7 @@ function myCommentrm(){
 						alert(xhr.status);
 					}
 				});
-			}
+			//}
 			return false;			
 		});	
 }

@@ -720,9 +720,13 @@ public class BoardController {
 				
 				//마이페이지에서 체크된 댓글을 삭제하는 컨트롤러
 				@GetMapping("mycmtremove")
-				public String commentRemove(Optional<String> brdIdx,  Optional<String> cmtIdx) {
+				public String commentRemove(Optional<Integer> brdIdx0,  Optional<Integer> cmtIdx0, 
+						Optional<Integer> brdIdx1,  Optional<Integer> cmtIdx1) {
 					
-					
+					logger.info("삭제1 "+brdIdx0.get());
+					logger.info("삭제2 "+cmtIdx0.get());
+					logger.info("삭제3 "+brdIdx1.get());
+					logger.info("삭제4 "+cmtIdx1.get());
 					//String uNickname = service.findCmt
 //					ModelAndView mnv = new ModelAndView();
 //					PageDTO<Notice> noticePageDTO;
@@ -734,15 +738,13 @@ public class BoardController {
 					int cmtIdxMy0 = 0;
 					
 					try {			
-						 	if(brdIdx.isPresent()) {
-						 		brdIdxMy0 = Integer.parseInt(brdIdx.get());
+						 	if(brdIdx0.isPresent()) {
+						 		brdIdxMy0 = brdIdx0.get();
 						 	}
-							if(cmtIdx.isPresent()) {
-								cmtIdxMy0 = Integer.parseInt(cmtIdx.get());
+							if(cmtIdx0.isPresent()) {
+								cmtIdxMy0 = cmtIdx0.get();
 						 	}
-
-						 	System.out.println("콘트롤러값 brdIdx0체크:" + brdIdxMy0);
-						 	System.out.println("콘트롤러값 cmtIdxMy0체크:" + cmtIdxMy0);
+					
 							//service.removeCmt(brdIdx, cmtIdx);
 //							if((brdIdxMy1.isPresent() & cmtIdxMy1.isPresent())) {
 //								service.removeCmt(brdIdxMy1.get(), cmtIdxMy1.get());
