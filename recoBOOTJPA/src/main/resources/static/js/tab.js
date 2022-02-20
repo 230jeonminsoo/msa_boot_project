@@ -62,7 +62,6 @@ function calMenuClick(){ //callistresult.jsp
 				//tab에서 캘린더 카테고리 클릭되었을때
 				//calpost 작동하면 변경해야함.
 				ajaxUrl = menuHref;
-				//let calIdx = $(this).attr('class');
                 //$('section>div.articles').empty();
                 $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){
 					//console.log(responseText);
