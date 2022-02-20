@@ -10,7 +10,7 @@
 	SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM");
 	String dateValue = sf.format(nowTime);
 %>
-    <!-- <script src="./js/callist.js"></script> -->
+    <script src="./js/callist.js"></script>
     
     <script>
 	    $(function(){
