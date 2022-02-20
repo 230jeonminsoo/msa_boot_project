@@ -195,6 +195,11 @@ public class NoticeController {
 			Notice n = service.findNtcByIdx(ntcIdx);
 			model.addAttribute("n", n);
 			String saveDirectory = "C:\\reco\\noticeimages";
+			//파일을 저장할 폴더가 없다면 만들기. 있다면 만들지 않음	
+			if ( ! new File(saveDirectory).exists()) {
+				logger.info("업로드 실제경로생성");
+				new File(saveDirectory).mkdirs();
+			}
 			File dir = new File(saveDirectory);
 			if(n.getNtcAttachment() !=null) {
 				//첨부파일 저장소에서 letters이름 가져와서 returnMap에 넣기
@@ -244,10 +249,14 @@ public class NoticeController {
 			}
 			mnv.addObject("pageDTO", pageDTO);
 			
-			
-			List<Notice> notices = pageDTO.getList();	
-			for(Notice notice : notices) {				
 			String saveDirectory = "C:\\reco\\noticeimages";
+			//파일을 저장할 폴더가 없다면 만들기. 있다면 만들지 않음	
+			if ( ! new File(saveDirectory).exists()) {
+				logger.info("업로드 실제경로생성");
+				new File(saveDirectory).mkdirs();
+			}	
+			List<Notice> notices = pageDTO.getList();	
+			for(Notice notice : notices) {						
 			File dir = new File(saveDirectory);
 			//첨부파일 저장소에서 images이름 가져와서 returnMap에 넣기
 			String[] imageFiles = dir.list(new FilenameFilter() {	
@@ -431,7 +440,11 @@ public class NoticeController {
 			//첨부파일이 바뀔시 저장시작
 			String saveDirectory = "C:\\reco\\noticeimages";
 			int wroteBoardNo = notice.getNtcIdx();//저장된 글번호
-			
+			//파일을 저장할 폴더가 없다면 만들기. 있다면 만들지 않음	
+			if ( ! new File(saveDirectory).exists()) {
+				logger.info("업로드 실제경로생성");
+				new File(saveDirectory).mkdirs();
+			}
 			
 	    	//letterFiles 저장
 			if(letterFiles != null) {
