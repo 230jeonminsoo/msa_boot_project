@@ -111,13 +111,15 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 
 	
 //	@Override
-	public void modifyCal(CalInfo calinfo) throws ModifyException{
-//
+	public void modifyCal(CalInfo calinfo) throws ModifyException {
+//		SqlSession session = null;
+//			
 //		int uIdx = calinfo.getCustomer().getUIdx();
 //		int calIdx = calinfo.getCalIdx();
-////		String calCategory = calinfo.getCalCategory();
-////		String calThumbnail = calinfo.getCalThumbnail();
+//		
 //		try {
+//			session = sqlSessionFactory.openSession();
+//			
 //			List<CalInfo> list = findCalsByUIdx(uIdx);
 //			Connection con = null;
 //			PreparedStatement pstmt = null;
@@ -131,7 +133,7 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 //			pstmt.setInt(2, calinfo.getCalIdx());
 //			pstmt.executeUpdate();
 //			pstmt = con.prepareStatement(modifySQL1);
-//			pstmt.setString(1, calinfo.getCalThumbnail());
+//			pstmt.setString(캘린더 게시글이 없습니다1, calinfo.getCalThumbnail());
 //			pstmt.setInt(2, calinfo.getCalIdx());
 //			pstmt.executeUpdate();
 //			con.commit();
