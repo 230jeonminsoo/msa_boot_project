@@ -76,7 +76,7 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 				
 				Map<String, Object> map = new HashMap<>();
 				map.put("uIdx", uIdx);
-				map.put("calIdx", -1); //-> 값을 못가져옴. 0 으로 받아짐ㅜㅜ
+				map.put("calIdx", -1); 
 				map.put("calCategory", calCategory);
 				map.put("calThumbnail", calThumbnail);
 				
@@ -111,13 +111,15 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 
 	
 //	@Override
-	public void modifyCal(CalInfo calinfo) throws ModifyException{
-//
+	public void modifyCal(CalInfo calinfo) throws ModifyException {
+//		SqlSession session = null;
+//			
 //		int uIdx = calinfo.getCustomer().getUIdx();
 //		int calIdx = calinfo.getCalIdx();
-////		String calCategory = calinfo.getCalCategory();
-////		String calThumbnail = calinfo.getCalThumbnail();
+//		
 //		try {
+//			session = sqlSessionFactory.openSession();
+//			
 //			List<CalInfo> list = findCalsByUIdx(uIdx);
 //			Connection con = null;
 //			PreparedStatement pstmt = null;
@@ -131,7 +133,7 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 //			pstmt.setInt(2, calinfo.getCalIdx());
 //			pstmt.executeUpdate();
 //			pstmt = con.prepareStatement(modifySQL1);
-//			pstmt.setString(1, calinfo.getCalThumbnail());
+//			pstmt.setString(캘린더 게시글이 없습니다1, calinfo.getCalThumbnail());
 //			pstmt.setInt(2, calinfo.getCalIdx());
 //			pstmt.executeUpdate();
 //			con.commit();
@@ -198,15 +200,15 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 			
 			Map<String, Object> map = new HashMap<>();
 			map.put("uIdx", uIdx);
-			map.put("calIdx", calIdx); //-> 값을 못가져옴. 0 으로 받아짐 
+			map.put("calIdx", calIdx);//-> 값을 못가져옴. 0 으로 받아짐 
 			map.put("calMainImg", calpost.getCalMainImg());
 			map.put("calDate", calpost.getCalDate());
 			map.put("calMemo", calpost.getCalMemo());
-			System.out.println("addcalpost함수 : uIdx=" + uIdx + ", calIdx =" + calIdx);
 			
 			session.insert("com.reco.calendar.CalendarMapper.addCalPost", map);
 			session.commit();
-			
+	
+			System.out.println("addcalpost함수 : uIdx=" + uIdx + ", calIdx =" + calIdx);
 //			
 //		    String calDate = calpost.getCalDate();
 //		    String calMainImg = calpost.getCalMainImg();

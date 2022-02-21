@@ -1,26 +1,48 @@
 /*calpostwrite.jsp*/
+
+function validateForm($form) {  // 필수 입력 확인
+	let calMainImg = $form.find('input[name=calMainImg]');
+    if (calMainImg.val() == "") {
+        alert("대표 이미지를 추가하세요.");
+        calMainImg.focus();
+        return false;
+    }
+	let calMemo = $form.find('textarea[name=calMemo]');
+    if (calMemo.val() == ''){
+        alert("리뷰/메모를 입력하세요.");
+        calMemo.focus();
+        return false;
+    }
+	return true;
+}
 /*-calpostwrite화면에서 작성완료 클릭했을때-*/
 function addCalPostClick(){
-	let $addCalPostObj = $('form>table>tr>td>button[id=1]');
-	 		console.log("addCalPostClick()");
-		$addCalPostObj.click(function(){
-	        //let menuHref = $(this).attr('id="1"'); 
-
-	        let ajaxUrl = './calpostAdd'; 
-	        
-			$.ajax({
+	let $writeFormObj = $('form');
+	$writeFormObj.submit(function(){
+		if(!validateForm($writeFormObj)){
+			return false;
+		}
+		let calIdx = $(this).find('input[name=calIdx]');
+		let ajaxUrl = './calpostAdd';
+		
+		let formData = new FormData($(this)[0]);
+		$.ajax({
 	            url: ajaxUrl,
 	            method : 'post',
+				processData: false, //파일업로드용 설정
+				contentType: false, //파일업로드용 설정
+				//data:{calIdx:calIdx}, //formData:formData,
+				data:formData,
 	            success:function(responseData){
 	                let $articlesObj = $('section>div.articles');
 	                $articlesObj.empty();
 	                $articlesObj.html(responseData);
 		            }
-	        }); 
+	        });
 	        return false;
 		});
-	}
-	
+}
+
 /*-calpostwrite화면에서 calmainimg 미리보기-*/
 	function readImage(input) {
     // 인풋 태그에 파일이 있는 경우
@@ -76,5 +98,3 @@ function calPostViewClick(){
 				
 		});
 	}
-	
-	

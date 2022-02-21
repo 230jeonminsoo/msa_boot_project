@@ -50,15 +50,16 @@ function calMenuClick(){ //callistresult.jsp
 	console.log('-------------');*/
 	$calMenuObj.click(function(){
 		let menuHref = $(this).attr('href'); 
-        //console.log("메뉴 href=" + menuHref); //81번행과 중복 
+        //console.log("메뉴 href=" + menuHref); 
+		//tabMenuClick()의 콘솔창으로도 출력이되서 생락함 
 		
         let ajaxUrl = ""; 
 		switch(menuHref){
  			case '#':
 				break;
 			default :
-				/*alert("in tab.js menuHref=" + menuHref);
-				alert("카테고리 = " + $(this).html());*/
+				/*alert("in tab.js menuHref=" + menuHref);*/
+				/*alert("카테고리 = " + $(this).html());*/
 				//tab에서 캘린더 카테고리 클릭되었을때
 				//calpost 작동하면 변경해야함.
 				ajaxUrl = menuHref;

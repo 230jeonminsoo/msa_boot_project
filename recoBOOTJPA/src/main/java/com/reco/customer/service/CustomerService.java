@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.HashMap;
 
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +37,8 @@ public class CustomerService {
 	
 	@Autowired
 	private CustomerDAOInterface dao;
-
+	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	
 	public Customer login(String uEmail, String uPwd) throws FindException{
@@ -75,8 +78,9 @@ public class CustomerService {
 			Customer c= dao.findByEmail(email);
 			if(c!=null) {
 				dao.findPwd(email,password);
+			}else {
+				throw new FindException("이메일에 해당하는 회원이 없습니다.");
 			}
-			throw new FindException();
 		} catch (FindException e) {
 			throw new FindException(e.getMessage());
 		}	
@@ -106,7 +110,7 @@ public class CustomerService {
 	        params.put("to", phoneNumber);    // 수신전화번호
 	        params.put("from", "01071354330");    // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
 	        params.put("type", "SMS");
-	        params.put("text", "핫띵크 휴대폰인증 테스트 메시지 : 인증번호는" + "["+numStr+"]" + "입니다.");
+	        params.put("text", "RECO 휴대폰인증 테스트 메시지 : 인증번호는" + "["+numStr+"]" + "입니다.");
 	        params.put("app_version", "test app 1.2"); // application name and version
 
 	        try {
