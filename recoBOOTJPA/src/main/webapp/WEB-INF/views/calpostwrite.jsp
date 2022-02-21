@@ -38,7 +38,7 @@
 			addCalPostClick();
 			
 			//캘린더보기 버튼 클릭시 캘린더 리스트(calpostlist) 다시보기 
-			//calPostViewClick();	
+			calPostViewClick();	
 			
 		});
 	</script>
@@ -55,9 +55,9 @@ int calIdx = Integer.parseInt(request.getParameter("calIdx"));
 
 <body>
 	<h2><%=calIdx%><%=calCategory %>&nbsp;캘린더 글 작성</h2>
-	<form name="writeFrm" method="post" enctype="multipart/form-data"
-	     >
+	<form name="writeFrm" method="post" enctype="multipart/form-data" >
 	     <input type="hidden" name="calIdx" value="<%=calIdx %>">
+	     <input type="hidden" name="calCategory" value="<%=calCategory %>">
 	   		<table style="margin-left: auto; margin-right: auto;" border="1" width="90%">
 		
 		    <tr>
@@ -97,7 +97,7 @@ int calIdx = Integer.parseInt(request.getParameter("calIdx"));
 		        <td colspan="2" align="center">
 		           
 		            <button type="submit" >작성 완료</button>
-		            <button id=2 type="button" >캘린더보기</button>  
+		            <button type="button" id="listcal" >캘린더보기</button>  
 			            <%-- <input type="hidden" th:value="${calIdx}" th:name="calIdx" /> --%>
 		           
 		        </td>
