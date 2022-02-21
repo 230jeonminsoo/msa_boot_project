@@ -12,6 +12,7 @@ function newPwdSend(){
 		return false;
 	}
 	console.log(email);
+	console.log(password);
 		$.ajax({
 			url: './findPwd',
 			method: 'get',
