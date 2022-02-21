@@ -20,7 +20,7 @@ function calThumbnailClick(){
 				//data: {dateValue:$dateValue},
 				data:{calIdx:calIdx, calCategory: calCategory},  //{dateValue:'2021/12'},
 	            success:function(responseData){
-					let $articlesObj = $('section>div.articles');
+					let $articlesObj = $('section>div.articles');//callistresutl.jsp의 섹션
 	                $articlesObj.empty();
 	                $articlesObj.html(responseData);
 			     	window.scrollTo(0, 0);

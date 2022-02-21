@@ -76,7 +76,7 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 				
 				Map<String, Object> map = new HashMap<>();
 				map.put("uIdx", uIdx);
-				map.put("calIdx", -1); //-> 값을 못가져옴. 0 으로 받아짐ㅜㅜ
+				map.put("calIdx", -1); 
 				map.put("calCategory", calCategory);
 				map.put("calThumbnail", calThumbnail);
 				
@@ -198,15 +198,15 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 			
 			Map<String, Object> map = new HashMap<>();
 			map.put("uIdx", uIdx);
-			map.put("calIdx", calIdx); //-> 값을 못가져옴. 0 으로 받아짐 
+			map.put("calIdx", calIdx);//-> 값을 못가져옴. 0 으로 받아짐 
 			map.put("calMainImg", calpost.getCalMainImg());
 			map.put("calDate", calpost.getCalDate());
 			map.put("calMemo", calpost.getCalMemo());
-			System.out.println("addcalpost함수 : uIdx=" + uIdx + ", calIdx =" + calIdx);
 			
 			session.insert("com.reco.calendar.CalendarMapper.addCalPost", map);
 			session.commit();
-			
+	
+			System.out.println("addcalpost함수 : uIdx=" + uIdx + ", calIdx =" + calIdx);
 //			
 //		    String calDate = calpost.getCalDate();
 //		    String calMainImg = calpost.getCalMainImg();

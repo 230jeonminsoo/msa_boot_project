@@ -5,12 +5,15 @@ function addCalPostClick(){
 	 		console.log("addCalPostClick()");
 		$addCalPostObj.click(function(){
 	        //let menuHref = $(this).attr('id="1"'); 
-
+			let calIdx = $(this).parents('.calIdx').attr('id');
+			console.log("calIdx=" + calIdx);
+			alert("calIdx=" + calIdx);
 	        let ajaxUrl = './calpostAdd'; 
 	        
 			$.ajax({
 	            url: ajaxUrl,
 	            method : 'post',
+				data:{calIdx:calIdx},
 	            success:function(responseData){
 	                let $articlesObj = $('section>div.articles');
 	                $articlesObj.empty();

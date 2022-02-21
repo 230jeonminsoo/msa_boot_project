@@ -46,14 +46,14 @@ Customer c = (Customer)session.getAttribute("loginInfo");
 String calCategory = request.getParameter("calCategory");
 CalInfo ci = (CalInfo)request.getAttribute("calinfo");
 int uIdx  = c.getUIdx();
-/* int calIdx = (Integer)request.getAttribute("calIdx"); */
-/* int calIdx = ci.getCalIdx(); */
+/* String calIdx = request.getParameter("calIdx"); */
+/* int calIdx = ci.getCalIdx();   */
+int calIdx = Integer.parseInt(request.getParameter("calIdx"));
 
 String saveDirectory = "c:\\reco\\calendar";
 File dir = new File(saveDirectory);
 File[] files = dir.listFiles(); 
 
-/* String calCategory = calinfo.getCalCategory(); */
 
 %>
 
@@ -99,8 +99,9 @@ File[] files = dir.listFiles();
                   <div class="day">금</div>
                   <div class="day">토</div>
               </div>
-              <a class="dates" href ="./calpostlistresult" target="_blank">
-             		<%
+              <a class="dates" href ="<%=calCategory%>" id="<%=calIdx%>" >
+
+              		<%
 					List<CalPost> list = (List)request.getAttribute("list");
              		
              		if( list != null) {
@@ -110,7 +111,6 @@ File[] files = dir.listFiles();
 					} %>
 					
 					<%if( list == null){ %>
-					
 						<a href="calpostlistresult.jsp"></a>
 					<%} %>
 					

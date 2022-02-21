@@ -81,6 +81,8 @@ public class CalendarController {
 			model.addAttribute("ci", calinfo);
 			System.out.println(calinfo);
 			
+//			int calIdx = calinfo.getCalIdx();
+			
 			List<CalInfo> list = service.findCalsByUIdx(uIdx);	
 			mnv.addObject("list", list);
 			
@@ -102,7 +104,7 @@ public class CalendarController {
 
 
 				//저장할 파일이름을 지정한다 ex) 테이블이름 : cal_post__uIdx_calIdx
-				String imageFileName = "cal_post_" + uIdx  + "_" + ci.getCalIdx() + ".jpg";
+				String imageFileName = "cal_post_" + uIdx  + "_" + list.size() + ".jpg"; //calIdx 값 = list.size()
 
 				//이미지 파일생성
 				File savedImagefile = new File(saveDirectory, imageFileName);
@@ -140,18 +142,18 @@ public class CalendarController {
 //					return "failresult.jsp";
 //				}
 //			
-				try {
-					//이미지 썸네일다운로드하기
-					HttpHeaders responseHeaders = new HttpHeaders();
-					responseHeaders.set(HttpHeaders.CONTENT_LENGTH, thumbnailFile.length()+"");
-					responseHeaders.set(HttpHeaders.CONTENT_TYPE, Files.probeContentType(thumbnailFile.toPath()));
-					responseHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename="+ URLEncoder.encode("a", "UTF-8"));
-					logger.info("썸네일파일 다운로드");
-				}catch (IOException e) {
-					mnv.setViewName("failresult.jsp");
+					try {
+						//이미지 썸네일다운로드하기
+						HttpHeaders responseHeaders = new HttpHeaders();
+						responseHeaders.set(HttpHeaders.CONTENT_LENGTH, thumbnailFile.length()+"");
+						responseHeaders.set(HttpHeaders.CONTENT_TYPE, Files.probeContentType(thumbnailFile.toPath()));
+						responseHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename="+ URLEncoder.encode("a", "UTF-8"));
+						logger.info("썸네일파일 다운로드");
+					}catch (IOException e) {
+						mnv.setViewName("failresult.jsp");
+					}
+					
 				}
-				
-			}
 			
 			mnv.setViewName("index.jsp");
 		} catch (AddException e) {
@@ -275,8 +277,7 @@ public String calInfoList(HttpSession session, Model model) {
 public String CalPostList (@RequestParam(value = "calIdx")int calIdx,
 						   @RequestParam(value="calCategory")String calCategory,
 		                   String calDate,
-		//@RequestParam(value = "dateValue")String calDate,
-		HttpSession session, Model model) {
+		                   HttpSession session, Model model) {
 	Customer c = (Customer)session.getAttribute("loginInfo");
 
 	CalInfo calinfo = new CalInfo();
@@ -323,9 +324,11 @@ public String CalPostList (@RequestParam(value = "calIdx")int calIdx,
 //	
 
 @PostMapping("calpostAdd") //calpost작성url
-public String calpostAdd(@RequestParam(value = "calMemo") String calMemo, 
+public Object calpostAdd(
+						 @RequestParam(value = "calMemo") String calMemo, 
 						 @RequestParam(value = "calDate") String calDate,
 						 @RequestParam(value = "calMainImg") MultipartFile multipartFile,
+						 @RequestParam(value = "calIdx") int calIdx,
 						 @RequestPart (required = false) MultipartFile letterFiles,
 						 @RequestPart (required = false) MultipartFile imageFile,
 						 HttpSession session, Model model) {
@@ -339,7 +342,6 @@ public String calpostAdd(@RequestParam(value = "calMemo") String calMemo,
 	
 	
 	CalInfo calinfo = new CalInfo();
-	int calIdx = calinfo.getCalIdx();
 	calinfo.setCustomer(c);
 	calinfo.setCalIdx(calIdx);
 	
@@ -349,81 +351,101 @@ public String calpostAdd(@RequestParam(value = "calMemo") String calMemo,
 	cp.setCalDate(calDate);
 	cp.setCalMainImg(filenameString);
 	cp.setCalinfo(calinfo);
+	logger.info("요청전달데이터 calinfo=" + calinfo + ", calMainImg=" + filenameString);
 	
-	System.out.println("in CalendarController calpostAdd calIdx = " + calIdx +", calDate=" + calDate );
+	System.out.println("in CalendarController calpostAdd의 calMemo= " + calMemo +", calDate=" + calDate + 
+			             ", calMainImg" + filenameString + ", calIdx=" + calIdx);
+	
+	ModelAndView mnv = new ModelAndView();
 	//게시글내용 DB에 저장
 	try {
+		model.addAttribute("calIdx", calIdx);
+		
 		CalPost calpost = service.addCalPost(cp);
 		model.addAttribute("cp", calpost);
-	} catch (AddException e1) {
-		e1.printStackTrace();
-	}
+		System.out.println(calpost);
+		
+		List<CalPost> list = service.findCalsByDate(calinfo,calDate);
+		mnv.addObject("list", list);
+		model.addAttribute("list", list);	
+		model.addAttribute("calinfo",calinfo);
+		
 
-	//파일 경로 생성
-	String saveDirectory = "c:\\reco\\calendar"; // d:\\files\\calendar
-	if ( ! new File(saveDirectory).exists()) {
-		logger.info("업로드 실제경로생성");
-		new File(saveDirectory).mkdirs(); // 상위디렉토리생성
-	}
-
-	//썸네일 생성
-	File thumbnailFile = null;
-	long imageFileSize = multipartFile.getSize();
-	if(imageFileSize > 0) {
-		//이미지파일 저장하기
-		String imageOrignFileName = multipartFile.getOriginalFilename(); //이미지파일원본이름얻기
-		logger.info("이미지 파일이름:" + imageOrignFileName +", 파일크기: " + multipartFile.getSize());
-
-
-//		calIdx = cp.getCalinfo().getCalIdx();
-		System.out.println("값확인용> uIdx= "+ uIdx + ", calIdx= " + calIdx + ", calDate= " + calDate);
-		//저장할 파일이름을 지정한다 ex) 저장파일명 : cal_(UIdx)_(CalIdx)_(CalDate)
-		String imageFileName = "cal_"+ uIdx  + "_" + calIdx + "_" + calDate + ".jpg" ; //파일이름("선택날짜.확장자") //calMainImg를 .jpg 저장하는법 찾기 
-
-
-		//이미지파일생성
-		File savedImageFile = new File(saveDirectory, imageFileName);	
-		try {
-			FileCopyUtils.copy(multipartFile.getBytes(), savedImageFile);
-			logger.info("이미지 파일저장:" + savedImageFile.getAbsolutePath());
-
-			//파일형식 확인
-			String contentType = multipartFile.getContentType();
-			if(!contentType.contains("image/")) { //이미지파일형식이 아닌 경우
-				return "failresult.jsp";
-			}
-
-			//이미지파일인 경우 섬네일파일을 만듦
-			String thumbnailName =  "s_"+imageFileName; //섬네일 파일명은 s_글번호_XXXX_원본이름
-			thumbnailFile = new File(saveDirectory,thumbnailName);
-			FileOutputStream thumbnailOS;
-			thumbnailOS = new FileOutputStream(thumbnailFile);
-			InputStream imageFileIS = multipartFile.getInputStream();
-			int width = 500;
-			int height = 500;
-			Thumbnailator.createThumbnail(imageFileIS, thumbnailOS, width, height);
-			logger.info("섬네일파일 저장:" + thumbnailFile.getAbsolutePath() + ", 섬네일파일 크기:" + thumbnailFile.length());
-
-		} catch (IOException e2) {
-			e2.printStackTrace();
-			return "failresult.jsp";
+		//파일 경로 생성
+		String saveDirectory = "c:\\reco\\calendar"; // d:\\files\\calendar
+		if ( ! new File(saveDirectory).exists()) {
+			logger.info("업로드 실제경로생성");
+			new File(saveDirectory).mkdirs(); // 상위디렉토리생성
 		}
-	}
-	if(thumbnailFile == null) {
-		return "failresult.jsp";
-	}
-	try {
-		//이미지 썸네일다운로드하기
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.set(HttpHeaders.CONTENT_LENGTH, thumbnailFile.length()+"");
-		responseHeaders.set(HttpHeaders.CONTENT_TYPE, Files.probeContentType(thumbnailFile.toPath()));
-		responseHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename="+URLEncoder.encode("a", "UTF-8"));
-		logger.info("섬네일파일 다운로드");
 
-	}catch(Exception e) {
-		return "failresult.jsp";
+		//썸네일 생성
+		File thumbnailFile = null;
+		long imageFileSize = multipartFile.getSize();
+		if(imageFileSize > 0) {
+			//이미지파일 저장하기
+			String imageOrignFileName = multipartFile.getOriginalFilename(); //이미지파일원본이름얻기
+			logger.info("이미지 파일이름:" + imageOrignFileName +", 파일크기: " + multipartFile.getSize());
+
+
+//			calIdx = cp.getCalinfo().getCalIdx();
+			System.out.println("값확인용> uIdx= "+ uIdx + ", calIdx= " + calIdx + ", calDate= " + calDate);
+			//저장할 파일이름을 지정한다 ex) 저장파일명 : cal_(UIdx)_(CalIdx)_(CalDate)
+			String imageFileName = "cal_"+ uIdx  + "_" + calIdx + "_" + calDate + ".jpg" ; //파일이름("선택날짜.확장자") //calMainImg를 .jpg 저장하는법 찾기 
+
+
+			//이미지파일생성
+			File savedImageFile = new File(saveDirectory, imageFileName);	
+			try {
+				FileCopyUtils.copy(multipartFile.getBytes(), savedImageFile);
+				logger.info("이미지 파일저장:" + savedImageFile.getAbsolutePath());
+
+				//파일형식 확인
+				String contentType = multipartFile.getContentType();
+				if(!contentType.contains("image/")) { //이미지파일형식이 아닌 경우
+					mnv.setViewName("failresult.jsp");
+				}
+
+				//이미지파일인 경우 섬네일파일을 만듦
+				String thumbnailName =  "s_"+imageFileName; //섬네일 파일명은 s_글번호_XXXX_원본이름
+				thumbnailFile = new File(saveDirectory,thumbnailName);
+				FileOutputStream thumbnailOS;
+				thumbnailOS = new FileOutputStream(thumbnailFile);
+				InputStream imageFileIS = multipartFile.getInputStream();
+				int width = 500;
+				int height = 500;
+				Thumbnailator.createThumbnail(imageFileIS, thumbnailOS, width, height);
+				logger.info("섬네일파일 저장:" + thumbnailFile.getAbsolutePath() + ", 섬네일파일 크기:" + thumbnailFile.length());
+
+			} catch (IOException e2) {
+				e2.printStackTrace();
+			}
+		}//end if(imageFileSize > 0 )
+		
+		if(thumbnailFile != null) {
+			
+			try {
+				//이미지 썸네일다운로드하기
+				HttpHeaders responseHeaders = new HttpHeaders();
+				responseHeaders.set(HttpHeaders.CONTENT_LENGTH, thumbnailFile.length()+"");
+				responseHeaders.set(HttpHeaders.CONTENT_TYPE, Files.probeContentType(thumbnailFile.toPath()));
+				responseHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename="+ URLEncoder.encode("a", "UTF-8"));
+				logger.info("썸네일파일 다운로드");
+			}catch (IOException e) {
+				mnv.setViewName("failresult.jsp");
+			}
+			
+		}
+		mnv.setViewName("calpostlistresult.jsp");
+	} catch (AddException e) {
+		e.printStackTrace();
+		model.addAttribute("msg", e.getMessage());
+		mnv.setViewName("failresult.jsp");
+	} catch (FindException e) {
+		e.printStackTrace();
+		model.addAttribute("msg", e.getMessage());
+		mnv.setViewName("failresult.jsp");
 	}
-	return "calpostlistresult.jsp";
+	return mnv;
 }
 
 

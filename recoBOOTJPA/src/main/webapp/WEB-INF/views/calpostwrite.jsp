@@ -24,18 +24,15 @@
 	<link href="./css/calendar_write.css" rel=stylesheet>
 	<script src="./js/calpostwrite.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
 	<script>
-		/* $(function(){
-			//작성완료 버튼 클릭시
-				addCalPostClick();
-			//캘린더보기 버튼 클릭시 캘린더 리스트(calpostlist) 다시보기 
-				calPostViewClick();	
-		}); */
-		
 	
 		$(function(){
 			
-			document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);;
+			/* document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10); */ //외국시간기준?? 
+			document.getElementById('currentDate').valueAsDate = new Date();
+
+			출처: https://pjsprogram.tistory.com/32 [행배]
 			
 			//작성완료 버튼 클릭시, 캘린더 리스트 보기 
 			addCalPostClick();
@@ -43,11 +40,20 @@
 			calPostViewClick();	
 			
 		});
-	
-		</script>
+	</script>
 </head>
+
+<%
+Customer c = (Customer)session.getAttribute("loginInfo");
+String calCategory = request.getParameter("calCategory");
+CalInfo ci = (CalInfo)request.getAttribute("calinfo");
+int uIdx  = c.getUIdx();
+int calIdx = Integer.parseInt(request.getParameter("calIdx"));
+
+%>
+
 <body>
-	<h2>캘린더 글 작성</h2>
+	<h2><%=calIdx%><%=calCategory %>&nbsp;캘린더 글 작성</h2>
 	<form name="writeFrm" method="post" enctype="multipart/form-data"
 	      action="./calpostAdd" onsubmit="return validateForm(this);">
 		<table border="1" width="90%">
@@ -86,8 +92,10 @@
 		    </tr>
 		    <tr>
 		        <td colspan="2" align="center">
-		            <button id=1 type="submit" >작성 완료</button>
-		            <button id=2 type="button" >캘린더보기</button>            
+		            <div class="calIdx" id="<%=calIdx %>">
+			            <button id=1 type="submit" >작성 완료</button>
+			            <button id=2 type="button" >캘린더보기</button>  
+		           	</div>          
 		        </td>
 		    </tr>
 		</table>    

@@ -90,21 +90,28 @@ function dateClick(){
 	console.log($dateObj);
 	$dateObj.click(function(){
 		let menuHref = $(this).attr('href'); 
-		/*let dateName = $(this).attr('id');
-		console.log("dateName=" + dateName);*/
+		/*let calCategory =*/
+		console.log("메뉴 href=" + menuHref); 
 		/*let ajaxUrl = './html/calpostwrite.html';*/ 
-		let ajaxUrl = 'calpostwrite';
-		/*let ajaxUrl = './calpostwrite.jsp'; */
-			         
+		
+		let calIdx = $(this).attr('id'); 
+		let calCategory = $(this).attr('href');
+		
+		let ajaxUrl = 'calpostwrite'; //index controller에서 calpostwrite.jsp 처리
+		         
 		$.ajax({
             url: ajaxUrl,
             method : 'get',
+			data:{calIdx:calIdx, calCategory: calCategory},
             success:function(responseData){
                 let $articlesObj = $('section>div.articles');
                 $articlesObj.empty();
                 $articlesObj.html(responseData);
            }
 		});
-		 return false;
+		
+	 	return false;
 	});
 }
+
+
