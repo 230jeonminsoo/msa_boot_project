@@ -198,8 +198,8 @@ public class CustomerDAOOracle implements CustomerDAOInterface {
 		
 		try { 
 			MimeMessage message = new MimeMessage(session); 
-			message.setFrom(new InternetAddress("reconice@reco.com")); 
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress("reconice@reco.com")); 
+			message.setFrom(new InternetAddress(email)); 
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(email)); 
 			
 			// 메일 제목 
 			message.setSubject("새로운 비밀번호입니다"); 
