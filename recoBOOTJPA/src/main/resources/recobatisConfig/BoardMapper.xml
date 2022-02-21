@@ -33,6 +33,10 @@
 		SELECT COUNT(*) FROM board WHERE brd_UNickName like '%${word}%'
 	</select>
 	
+	<select id="findCountUNickNameMy" resultType="int" parameterType="String">
+		SELECT COUNT(*) FROM board WHERE brd_UNickName=#{uNickname}
+	</select>
+	
 	<select id="findCmtCount" resultType="int" parameterType="int">
 		SELECT COUNT(*) FROM comments WHERE brd_idx=#{brdIdx}
 	</select>
@@ -85,7 +89,7 @@ where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPag
   where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
 	</select>
 	
-	<select id="findBrdByWord" parameterType="String" resultType="Board">
+	<select id="findBrdByWord" parameterType="map" resultType="Board">
 		select *
 		FROM(SELECT rownum r, d.*
 		    FROM(SELECT b.brd_Idx, b.brd_attachment, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_count
@@ -94,11 +98,11 @@ where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPag
 		where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
 	</select>
 	
-	<select id="findBrdByUNickName" parameterType="String" resultType="Board">
+	<select id="findBrdByUNickNameMy" parameterType="map" resultType="Board">
 		select *
     FROM(SELECT rownum r, d.*  
   FROM(SELECT b.brd_Idx, b.brd_attachment, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_count
-		FROM board b WHERE brd_UNickName like '%${word}%' ORDER BY b.brd_Idx DESC) d
+		FROM board b WHERE brd_UNickName=#{uNickname} ORDER BY b.brd_Idx DESC) d
    )
    where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
 	</select>

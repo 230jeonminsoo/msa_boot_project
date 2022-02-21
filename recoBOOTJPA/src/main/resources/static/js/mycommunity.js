@@ -289,7 +289,7 @@ function myCommentrm(){
 		console.log(data);
 			//if(brdIdx != '' & cmtIdx != ''){
 				$.ajax({
-					url: './mycmtremove',
+					url: './mycmtremove/'+uNickname,
 					method: 'get',
 					data: data,
 					success: function(responseData){

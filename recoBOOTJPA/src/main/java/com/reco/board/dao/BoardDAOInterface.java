@@ -196,7 +196,16 @@ public interface BoardDAOInterface {
 	public int findCmtCountUNickName(String uNickname) throws FindException;
 	
 	/**
-	 * 마이페이지 내가 쓴 댓글의 게시글 제목 반환
+	 * 마이페이지 내가 쓴 자유게시글 목록 반환
 	 */
-	//public String findBrdTitle(int brdIdx) throws FindException;
+	public List<Board> findBrdByUNickNameMy(String uNickname, int currentPage, int cntperpage) throws FindException;
+
+	/**
+	 * 마이페이지 내가 쓴 자유게시글 총 갯수 반환
+	 * @param uNickname
+	 * @return
+	 * @throws FindException
+	 */
+	public int findCountUNickNameMy(String uNickname) throws FindException;
+
 }

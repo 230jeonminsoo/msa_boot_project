@@ -136,7 +136,7 @@ public class IndexController {
 				if(currentPage.isPresent()) { //currentPage
 					cp = currentPage.get();
 				}
-				boardPageDTO = Boardservice.findBrdByUNickName(uNickname, cp, PageDTO.CNT_PER_PAGE);
+				boardPageDTO = Boardservice.findBrdByUNickNameMy(uNickname, cp, PageDTO.CNT_PER_PAGE);
 				mnv.addObject("boardPageDTO",boardPageDTO);
 			} catch (FindException e1) {
 				e1.printStackTrace();
