@@ -47,7 +47,18 @@
 		
 		 INSERT INTO cal_post_${uIdx}_${calIdx}(cal_Main_Img, cal_Date, cal_Memo) 
 		 VALUES (#{calMainImg}, #{calDate}, #{calMemo})
+		 
 	</insert>
+	
+	<update id="modifyCalPost" parameterType = "calPost">
+	UPDATE cal_post set cal_Memo=#{calMemo},cal_Main_Img=#{calMaimImg} 
+	WHERE cal_date=#{calDate}
+	</update>
+	
+	<delete id = "removeCalPost" parameterType = "String">
+	DELETE FROM cal_post_${uIdx}_${calIdx} 
+	WHERE cal_Date =#{calDate}
+	</delete>
    
    
 	
