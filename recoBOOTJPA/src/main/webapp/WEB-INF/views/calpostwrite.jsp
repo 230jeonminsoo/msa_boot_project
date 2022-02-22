@@ -96,8 +96,6 @@ int calIdx = Integer.parseInt(request.getParameter("calIdx"));
 		        <td colspan="2" align="center">
 		            <button type="submit" >작성 완료</button>
 		            <button type="button" id="listcal" >캘린더보기</button>
-			            <%-- <input type="hidden" th:value="${calIdx}" th:name="calIdx" /> --%>
-
 		        </td>
 		    </tr>
 		</table>

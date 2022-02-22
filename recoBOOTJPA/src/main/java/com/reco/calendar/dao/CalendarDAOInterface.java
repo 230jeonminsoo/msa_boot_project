@@ -18,7 +18,15 @@ public interface CalendarDAOInterface {
 	 */
 	public CalInfo addCal(CalInfo calinfo) throws AddException;
 
-
+	/**
+	 * 특정 캘린더를 찾는다 
+	 * @param uIdx
+	 * @param calIdx
+	 * @return
+	 * @throws FindException 
+	 */
+	public CalInfo findCalsByUIdxandCalIdx(int uIdx, int calIdx) throws FindException;
+	
 	/**
 	 * 고객번호와 캘린더 번호로 캘린더들을 가져온다. 
 	 * @param uIdx
@@ -36,6 +44,16 @@ public interface CalendarDAOInterface {
 	 */
 	public void modifyCal(CalInfo calinfo) throws ModifyException;
 	
+	
+	
+	/**
+	 * 고객의 캘린더 기본정보(카테고리, 썸네일)를 삭제한다 
+	 * @param calinfo
+	 * @throws RemoveException
+	 */
+	public void removeCal(CalInfo calinfo) throws RemoveException;
+	
+	
 	/**
 	 * 고객의 캘린더 글을 추가한다
 	 * @param calpost
@@ -43,12 +61,8 @@ public interface CalendarDAOInterface {
 	 * @throws FindException 
 	 * @throws AddException 
 	 */
-	
-	
-//	public void removeCal(CalInfo calinfo) throws RemoveException;
-	
-	
 	public CalPost addCalPost(CalPost calpost) throws AddException;
+	
 	
 	/**
 	 * 캘린더를 년/월 기준으로 한달을 가져온다
@@ -61,15 +75,9 @@ public interface CalendarDAOInterface {
 	 */
 	public List<CalPost> findCalsByDate(CalInfo calinfo, String calDate) throws FindException;
 	
+
 	/**
 	 * 고객의 캘린더글을 수정한다
-	 * @param calpost
-	 * @throws ModifyException
-	 */
-	
-	
-	/**
-	 * 
 	 * @param calpost
 	 * @throws ModifyException
 	 */
@@ -82,6 +90,12 @@ public interface CalendarDAOInterface {
 	 * @throws RemoveException
 	 */
 	public void removeCalPost(String calDate) throws RemoveException;
+
+
+	
+
+
+	
 
 
 
