@@ -6,6 +6,8 @@ import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.reco.customer.service.CustomerService;
@@ -81,6 +84,7 @@ public class CustomerController {
 		return returnMap;		
 	}
 	
+
 	@RequestMapping("/logout")
 	public ResponseEntity logout(HttpSession session) {
 		session.removeAttribute("loginInfo");
@@ -229,4 +233,31 @@ public class CustomerController {
     }
 	
 	
+	
+	@RequestMapping(value="/kakaologin")
+	public String kakaologin(@RequestParam("code") String code, HttpSession session) {
+		session.removeAttribute("loginInfo"); 
+		session.removeAttribute("myPage");
+		 session.removeAttribute("userId"); 
+ 		session.removeAttribute("access_Token");
+		System.out.println("code : " + code);
+	
+        String access_Token = service.getAccessToken(code);
+        System.out.println("controller access_token : " + access_Token);
+        HashMap<String, Object> userInfo = service.getUserInfo(access_Token);
+        System.out.println("kakaologin Controller : " + userInfo);
+        
+        // 전달받은 userInfo에 클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
+        if (userInfo.get("email") != null) {
+        	//Customer c = new Customer();
+        	
+            session.setAttribute("userId", userInfo.get("email"));
+            session.setAttribute("access_Token", access_Token);
+          
+        }
+        return "index.jsp";
+	}
+	
 }
+
+

@@ -64,3 +64,39 @@ function findEmailPage(){
 	    return false;	
 	});
 }
+
+
+
+
+
+
+
+
+/* 카카오 스크립트 */
+/*Kakao.init('ca898c349b46fee558b7da2bb3e7ef9f'); //발급받은 키 중 javascript키
+console.log(Kakao.isInitialized()); // sdk초기화여부판단*/
+
+
+//카카오로그인
+/*function kakaoLogin() {
+	$('div.login>a>img').click(function(){
+		
+	})
+    Kakao.Auth.login({
+      success: function (response) {
+        Kakao.API.request({
+          url: '/v2/user/me',
+          success: function (response) {
+        	  console.log(response)
+          },
+          fail: function (error) {
+            console.log(error)
+          },
+        })
+      },
+      fail: function (error) {
+        console.log(error)
+      },
+    })
+  }
+*/

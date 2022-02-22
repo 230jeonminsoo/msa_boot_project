@@ -6,14 +6,14 @@
 
 
 	<select id="findCalsByUIdx" resultType="CalInfo" parameterType="int">
-		SELECT u_Idx, cal_Idx, cal_Category, cal_Thumbnail 
+		SELECT u_Idx, cal_Idx, cal_Category, cal_Thumbnail
 		FROM cal_info
 		WHERE u_Idx = ${uIdx}
 		ORDER BY cal_Idx ASC
 	</select>
-	
-	     
-	
+
+
+
 	<insert id="addCal"  parameterType="map">
 		<selectKey resultType="int" keyProperty="calIdx" order="BEFORE">
 			SELECT NVL(MAX(cal_Idx), 0)+1
@@ -21,63 +21,73 @@
 			WHERE u_Idx = ${uIdx}
 		</selectKey>
 
-		INSERT INTO cal_info (u_Idx, cal_Idx, cal_Category, cal_Thumbnail) 
+		INSERT INTO cal_info (u_Idx, cal_Idx, cal_Category, cal_Thumbnail)
 		values (${uIdx}, ${calIdx}, #{calCategory}, #{calThumbnail})
 	</insert>
-	
+
 	<select id="CreateTable" parameterType="HashMap">
 		${createCalPostSQL}
 	</select>
-	
-	
+
+
 	<update id="modifyCal" parameterType="CalInfo">
 	<!-- update cal_info
 	set cal_Category=#{calCategory},cal_Thumbnail=#{calThumbnail}
 	where u_Idx=${uIdx} and cal_Idx=${calIdx} -->
-	
+
 	update cal_info
 		<set>
 		cal_Category=#{calCategory},cal_Thumbnail=#{calThumbnail}
 		</set>
 		where u_Idx=${uIdx} and cal_Idx=${calIdx}
 	</update>
-	
-	
+
+
 	<!-- <select id="findCalsByUIdxandCalIdx" resultType="CalInfo" parameterType="int">
 		SELECT * FROM cal_info
 		WHERE u_Idx = ${uIdx} and cal_Idx=${calIdx}
 	</select> -->
-	
-	<!-- cal_info 컬럼삭제 -->   
+
+	<!-- cal_info 컬럼삭제 -->
 	<delete id="removeCal" parameterType="int">
 		delete from CalInfo where u_Idx=${uIdx} and cal_Idx=${calIdx}
-	</delete>   
-	
+	</delete>
+
 	<!-- cal_post 테이블 삭제 -->
 	<select id="DropTable" parameterType="HashMap">
 		${DropCalPostSQL}
 	</select>
-	
+
     <select id = "findCalsByDate" parameterType = "map" resultType = "CalPost">
-	   SELECT to_char(cal_Date), cal_Main_Img 
+	   SELECT to_char(cal_Date), cal_Main_Img
 	   FROM cal_post_${uIdx}_${calIdx}
-	   WHERE to_char(cal_Date,'YYYY/MM') = #{calDate} 
+	   WHERE to_char(cal_Date,'YYYY/MM') = #{calDate}
 	   ORDER BY to_char(cal_Date,'YYYY/MM')  asc
     </select>
-   
-   
+
+
     <insert id="addCalPost"  parameterType="map">
 		<selectKey resultType="int" keyProperty="calIdx" order="BEFORE">
 			SELECT cal_Idx
 			FROM cal_info
 			WHERE u_Idx = ${uIdx} and cal_idx = ${calIdx}
 		</selectKey>
-		
-		 INSERT INTO cal_post_${uIdx}_${calIdx}(cal_Main_Img, cal_Date, cal_Memo) 
-		 VALUES (#{calMainImg}, #{calDate}, #{calMemo})
-	 </insert>
-   
-   
-	
-</mapper>
 
+		 INSERT INTO cal_post_${uIdx}_${calIdx}(cal_Main_Img, cal_Date, cal_Memo)
+		 VALUES (#{calMainImg}, #{calDate}, #{calMemo})
+
+	</insert>
+
+	<update id="modifyCalPost" parameterType = "calPost">
+	UPDATE cal_post set cal_Memo=#{calMemo},cal_Main_Img=#{calMaimImg}
+	WHERE cal_date=#{calDate}
+	</update>
+
+	<delete id = "removeCalPost" parameterType = "String">
+	DELETE FROM cal_post_${uIdx}_${calIdx}
+	WHERE cal_Date =#{calDate}
+	</delete>
+
+
+
+</mapper>
