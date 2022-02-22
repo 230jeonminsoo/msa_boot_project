@@ -201,9 +201,10 @@ public class CustomerService {
 		        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		        conn.setRequestMethod("POST");
 		        
-		        //    요청에 필요한 Header에 포함될 내용
+		        //  요청에 필요한 Header에 포함될 내용
 		        conn.setRequestProperty("Authorization", "Bearer " + access_Token);
 		        
+		        //	결과 코드가 200이라면 성공
 		        int responseCode = conn.getResponseCode();
 		        System.out.println("responseCode : " + responseCode);
 		        
@@ -220,6 +221,7 @@ public class CustomerService {
 		        JSONParser parser = new JSONParser(); // 파싱 작업을 하기 위한 객체 생성
 		        JSONObject jsonObj = (JSONObject) parser.parse(result);
 		        System.out.println("jsonObj서비스"+jsonObj);
+		       
 		        JSONObject properties = (JSONObject)jsonObj.get("properties");
 		        String nickname = (String)properties.get("nickname");
 		        System.out.println("nickname서비스"+ nickname);	
@@ -227,6 +229,10 @@ public class CustomerService {
 		        JSONObject kakao_account = (JSONObject)jsonObj.get("kakao_account");
 		        String email = (String)kakao_account.get("email");
 		        System.out.println("email서비스" + email);
+		        
+		        Long idLong = (Long)jsonObj.get("id");
+		        int id = idLong.intValue();
+		        System.out.println("id서비스" + id);
 		        
 //		        JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 //		        JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
@@ -236,16 +242,23 @@ public class CustomerService {
 		        
 		        userInfo.put("nickname", nickname);
 		        userInfo.put("email", email);
+		        userInfo.put("id", id);
 		        
 		    } catch (Exception e) {
-		        // TODO Auto-generated catch block
 		        e.printStackTrace();
 		    }
 		    
 		    return userInfo; //닉네임과 이메일 들어있음(이메일은 경우에따라 없을 수도 있음)
 		}
 
-	 
+	  
+	  public Customer kakaoEmailDupChk(String uEmail) throws FindException{
+			return dao.kakaoEmailDupChk(uEmail);
+		}
+		
+	  public Customer kakaonickdupchk(String uNickName) throws FindException{
+			return dao.findByKakaoNick(uNickName);
+		}
 }
 
 

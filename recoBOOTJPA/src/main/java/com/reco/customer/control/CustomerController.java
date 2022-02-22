@@ -1,13 +1,13 @@
 package com.reco.customer.control;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.DesktopManager;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,24 +35,7 @@ public class CustomerController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@GetMapping("/emaildupchk")
-	@ResponseBody
-	public Map<String, Object> emaildupchk(String email){
-		String resultMsg = "";
-		int status = 0;
-		try {
-			service.emaildupchk(email);
-			resultMsg = "이미 사용중인 아이디입니다";
-		}catch (FindException e) {
-			e.printStackTrace();
-			status = 1;
-			resultMsg = "사용가능한 아이디입니다";
-		}
-		Map<String,Object> returnMap = new HashMap<>();
-		returnMap.put("status",status);
-		returnMap.put("resultMsg", resultMsg);
-		return returnMap;
-	}
+
 	
 	@PostMapping("/login")
 	@ResponseBody
@@ -233,9 +216,41 @@ public class CustomerController {
     }
 	
 	
+	@GetMapping("/emaildupchk")
+	@ResponseBody
+	public Map<String, Object> emaildupchk(String email){
+		String resultMsg = "";
+		int status = 0;
+		try {
+			service.emaildupchk(email);
+			resultMsg = "이미 사용중인 아이디입니다";
+		}catch (FindException e) {
+			e.printStackTrace();
+			status = 1;
+			resultMsg = "사용가능한 아이디입니다";
+		}
+		Map<String,Object> returnMap = new HashMap<>();
+		returnMap.put("status",status);
+		returnMap.put("resultMsg", resultMsg);
+		return returnMap;
+	}
+	
+//	@GetMapping("/kakaoemaildupchk")
+//	@ResponseBody
+//	public Customer kakaoEmailDupChk(String uEmail){ //가입위한 매개변수 추가로 받아야함
+//		Customer c = new Customer();
+//		c.setUName(name);
+//		c.setUNickName(nickname);
+//		c.setUEmail(uEmail);
+//		c.setUPwd(pwd);
+//		
+//		Customer c = service.kakaoEmailDupChk(uEmail);
+//		return c;
+//		
+//	}
 	
 	@RequestMapping(value="/kakaologin")
-	public String kakaologin(@RequestParam("code") String code, HttpSession session) {
+	public String kakaologin(@RequestParam("code") String code, HttpSession session, Model model) throws FindException, AddException {
 		session.removeAttribute("loginInfo"); 
 		session.removeAttribute("myPage");
 		 session.removeAttribute("userId"); 
@@ -248,16 +263,40 @@ public class CustomerController {
         System.out.println("kakaologin Controller : " + userInfo);
         
         // 전달받은 userInfo에 클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
-        if (userInfo.get("email") != null) {
-        	//Customer c = new Customer();
-        	
-            session.setAttribute("userId", userInfo.get("email"));
-            session.setAttribute("access_Token", access_Token);
-          
-        }
-        return "index.jsp";
+        //if (userInfo.get("email") != null) {
+    	String uEmail = (String)userInfo.get("email");
+    	String uNickName = (String)userInfo.get("nickname");
+    	int id = (int)userInfo.get("id"); // 어떻게 활용할지 고민중
+    	String idString = Integer.toString(id);
+    	
+    	Customer c = new Customer();
+    	c = service.kakaoEmailDupChk(uEmail);
+    	System.out.println("c값" + c);
+		if(c == null) { //가입이 안된 경우
+		
+	    	Customer NickExist = service.kakaonickdupchk(uNickName);//닉네임 중복확인	    	
+	    	if(NickExist == null) { //닉네임중복 아닌경우
+	    		c.setUEmail(uEmail);
+				c.setUPwd(idString); 
+				c.setUNickName(uNickName);
+	    		service.signup(c); //회원가입 서비스 호출
+	    		
+	    	}else { // 닉네임중복인 경우
+	    		model.addAttribute("email", uEmail);
+	    		model.addAttribute("pwd", idString);
+	    		return "kakaosignup.jsp";
+	    	}	    	
+		}else {
+			c.setUEmail(uEmail);
+			c.setUPwd(idString); 
+			c.setUNickName(uNickName);
+		}
+		
+        session.setAttribute("loginInfo", c);
+        session.setAttribute("myPage", session); //카카오 로그인 시 pwd없어 마이페이지 비번 입력못하니 일단 임시방편
+        //session.setAttribute("access_Token", access_Token);//세션 loginInfo로 사용해서 필요없을 듯
+    	return "index.jsp";
 	}
-	
 }
 
 

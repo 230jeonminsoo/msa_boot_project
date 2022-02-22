@@ -59,4 +59,19 @@ public interface CustomerDAOInterface {
 	 */
 	public Customer findByNameAndRRN(String name, String RRN) throws FindException;
 	
+	/**
+	 * 카카오 로그인한 고객이 이미 가입되어있는지 확인한다
+	 * @param uEmail
+	 * @return
+	 * @throws FindException
+	 */
+	public Customer kakaoEmailDupChk(String uEmail) throws FindException;
+	
+	/**
+	 * 카카오 닉네임에 해당하는 고객이 DB에 있는지 확인
+	 * @param uNickName
+	 * @return
+	 * @throws FindException
+	 */
+	public Customer findByKakaoNick(String uNickName) throws FindException;
 }

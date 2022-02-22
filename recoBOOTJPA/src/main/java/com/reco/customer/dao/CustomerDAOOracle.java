@@ -276,5 +276,32 @@ public class CustomerDAOOracle implements CustomerDAOInterface {
 ////			  e.printStackTrace();
 ////		}
 	}
+	
+
+	
+	public Customer kakaoEmailDupChk(String uEmail) throws FindException{
+		SqlSession session = null;
+		
+			session = sqlSessionFactory.openSession();
+			Customer c= session.selectOne("com.reco.customer.CustomerMapper.findByEmail",uEmail);
+			if(session !=null) {
+				session.close();
+			}
+			return c;
+	}
+	
+	@Override
+	public Customer findByKakaoNick(String uNickName) throws FindException {
+		
+		SqlSession session = null;
+		
+			session = sqlSessionFactory.openSession();
+			Customer c= session.selectOne("com.reco.customer.CustomerMapper.findByNick", uNickName);			
+			if(session !=null) {
+				session.close();
+			}
+			return c;
+	}
+
 
 }
