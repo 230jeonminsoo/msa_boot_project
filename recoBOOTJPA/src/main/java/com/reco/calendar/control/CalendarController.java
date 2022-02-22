@@ -77,7 +77,7 @@ public class CalendarController {
 			model.addAttribute("msg", e.getMessage());
 			model.addAttribute("list", new ArrayList<CalInfo>());		
 		}
-		return "index.jsp";
+		return "callistresult.jsp";
 
 	}
 	
@@ -208,14 +208,13 @@ public class CalendarController {
 //						,@RequestPart(required=false) MultipartFile imageFile
 //						, HttpSession session, Model model )  { 
 //
-//		
 //		Customer c = (Customer)session.getAttribute("loginInfo");
 //		int uIdx = c.getUIdx();
 //
 //		CalInfo ci = new CalInfo();
 //		ci.setCustomer(c); //calinfo의 고객정보는 로그인된 Customer타입의 c로 채워줌
 //		ci.setCalCategory(calCategory);
-////		logger.info("요청전달데이터 calCategory=" + calCategory + ", calThumbnail=" + filenameString);
+//		logger.info("요청전달데이터 calCategory=" + calCategory + ", calThumbnail=" + filenameString);
 //		
 //		String originAttachment = service.findCalsByUIdx(uIdx).get
 //		logger.info("컨트롤러 오리지널 파일 네임"+letterFiles.getOriginalFilename());
@@ -240,8 +239,7 @@ public class CalendarController {
 //		
 //			RequestDispatcher rd = request.getRequestDispatcher(path);
 //			rd.forward(request, response);
-//	}
-//
+//	
 //}
 
 
