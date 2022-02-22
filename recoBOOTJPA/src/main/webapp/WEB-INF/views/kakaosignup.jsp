@@ -4,6 +4,7 @@
   <head>
     <!-- <link href="./css/signup.css" rel=stylesheet> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="./css/kakaosignup.css" rel=stylesheet>
     <script src="./js/kakaologin.js"></script>
    
    
@@ -37,11 +38,11 @@ String code = (String)request.getAttribute("code");
 		<!-- 카카오가입시 name은 사용안함 -->
 		
 		<input type="text" name="nickname" id="nickname" required placeholder="닉네임을 입력해주세요">		
-		<span id="code" style="visibility:visible"><%=code%></span>
-		<span id="email" style="visibility:visible"><%=email%></span>
-		<span id="pwd" style="visibility:visible"><%=pwd %></span>
-		<button class="kakaoLogin" type="submit">가입</button>
-		<button type="reset">CLEAR</button>
+		<span id="code" style="display:none"><%=code%></span>
+		<span id="email" style="display:none"><%=email%></span>
+		<span id="pwd" style="display:none"><%=pwd %></span>
+		<div><button class="kakaoLogin" type="submit">가입</button>
+		<button type="reset">CLEAR</button></div>
 	</form>             
    </div>
                           

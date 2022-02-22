@@ -48,7 +48,8 @@ $(function(){
 			<h1 class="info">카카오 가입회원 탈퇴</h1>
 			<!-- <button class="kakaowithdrawbutton">확인</button>  -->
 			
-			<a href="https://kauth.kakao.com/oauth/authorize?client_id=2177f6a7b4ac54c3449ddca01ead7def&redirect_uri=http://localhost:9998/recoBOOTJPA/kakaoexit&response_type=code">카카오 간편가입 회원탈퇴 </a>
+			<a href="https://kauth.kakao.com/oauth/authorize?client_id=2177f6a7b4ac54c3449ddca01ead7def&redirect_uri=http://localhost:9998/recoBOOTJPA/kakaoexit&response_type=code">
+			<img src="./images/카카오탈퇴.png"> </a>
 
 		</div>
 	</div>

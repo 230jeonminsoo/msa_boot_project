@@ -1,0 +1,8 @@
+@charset "UTF-8";
+*{
+   box-sizing: border-box;
+}
+
+div.signup{
+	text-align: center;
+}
