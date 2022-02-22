@@ -32,8 +32,6 @@ function calThumbnailClick(){
 	}
 
 
-
-
 /*-callistresult화면에서 캘린더 add 클릭했을때-*/	
 
 function caladdClick(){
@@ -63,8 +61,6 @@ function caladdClick(){
 		
 		let features = ('width='+ _width + ',height='+ _height +',left='+ _left + ',top='+ _top);
         window.open(url, target, features);*/
-
-		 
 
 		return false;
 	});

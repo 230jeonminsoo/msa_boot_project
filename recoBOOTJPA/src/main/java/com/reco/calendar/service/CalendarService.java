@@ -38,9 +38,9 @@ public class CalendarService {
 	}
 	
 	
-//	public void modifyCal(CalInfo calinfo) throws ModifyException{
-//		dao.modifyCal(calinfo);
-//	}
+	public void modifyCal(CalInfo calinfo) throws ModifyException{
+		dao.modifyCal(calinfo);
+	}
 	
 	public CalPost addCalPost(CalPost calpost) throws AddException {
 			return dao.addCalPost(calpost);

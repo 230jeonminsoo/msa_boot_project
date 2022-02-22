@@ -34,7 +34,7 @@ public interface CalendarDAOInterface {
 	 * @param calinfo
 	 * @throws ModifyException
 	 */
-//	public void modifyCal(CalInfo calinfo) throws ModifyException;
+	public void modifyCal(CalInfo calinfo) throws ModifyException;
 	
 	/**
 	 * 고객의 캘린더 글을 추가한다

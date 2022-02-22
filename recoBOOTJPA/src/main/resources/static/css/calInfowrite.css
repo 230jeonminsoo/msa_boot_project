@@ -31,27 +31,7 @@ fieldset{
   #input{
     width: 255px;
   }
-  /* 이메일 비밀번호 입력란 */
-  input{
-    text-align: center;
-    /* width: 120px; */
-    
+  
+  .bt{
+  	 text-align: center;
   }
-  
-  
-  /* 버튼 */
-  .fieldset_form_button{
-    
-    font-size: 15px;
-    text-align: center;
-    border-color: rgb(192, 192, 192);
-  }
-  
-  button {
-      background-color: whitesmoke;
-  }
-  
-  
-  
-  
-  
