@@ -31,7 +31,11 @@ public class CalendarService {
 	public CalInfo addCal(CalInfo calinfo) throws AddException{
 		return(dao.addCal(calinfo));
 	}
-
+	
+	public CalInfo findCalsByUIdxandCalIdx(int uIdx, int calIdx) throws FindException {
+		return(dao.findCalsByUIdxandCalIdx(uIdx, calIdx));
+	}
+	
 	public List<CalInfo> findCalsByUIdx(int uIdx) throws FindException{
 		System.out.println("in calendarservice dao=" + dao);
 		return dao.findCalsByUIdx(uIdx);

@@ -33,7 +33,7 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 			session = sqlSessionFactory.openSession();
 			List<CalInfo> list = session.selectList("com.reco.calendar.CalendarMapper.findCalsByUIdx", uIdx);
 			logger.warn("list.size=" + list.size());
-
+			
 			/*
 			 3	1	운동	ex.jpg
 			 3	2	책	book.jpg
@@ -52,9 +52,33 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 				session.close();
 			}
 		}
-
 	}
-
+	
+	//특정 캘린더를 찾음 
+	@Override
+	public CalInfo findCalsByUIdxandCalIdx(int uIdx, int calIdx) throws FindException {
+		
+//		SqlSession session =null;
+//		try {
+//			session = sqlSessionFactory.openSession();
+//			
+//			Map<String,Object> map= new HashMap<>();
+//			map.put("uIdx", uIdx);
+//			map.put("calIdx", calIdx);
+//			CalInfo calinfo = session.selectOne("com.reco.calendar.CalendarMapper.findCalsByUIdxandCalIdx", map);
+//			System.out.println("findCalsByUIdxandCalIdx함수 : uIdx=" + uIdx + ", calIdx =" + calIdx);
+//			return calinfo;
+//		}catch (Exception e) {
+//			throw new FindException(e.getMessage());
+//			
+//		}finally {
+//			if(session != null) {
+//				session.close();
+//			}
+//		}
+		return null;
+	}
+	
 	@Override
 	public CalInfo addCal(CalInfo calinfo) throws AddException{
 		SqlSession session = null;
@@ -112,71 +136,68 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 
 	@Override
 	public void modifyCal(CalInfo calinfo) throws ModifyException {
-//		SqlSession session = null;
-//
-//		int uIdx = calinfo.getCustomer().getUIdx();
-//		int calIdx = calinfo.getCalIdx();
-//
-//		try {
-//			List<CalInfo> list = findCalsByUIdx(uIdx);
-//
-//			session = sqlSessionFactory.openSession();
-//			session.update("com.reco.calendar.CalendarMapper.modifyCal", calinfo);
-////			String modifySQL = "update cal_info set cal_Category = ? where cal_idx = ?";
-////			String modifySQL1 = "update cal_info set cal_Thumbnail = ? where cal_idx = ?";
-//			session.commit();
-//		} catch (FindException e) {
-//			throw new ModifyException(e.getMessage());
-//		}catch(Exception e) {
-//			throw new ModifyException(e.getMessage());
-//		}finally {
-//			if(session != null) {
-//				session.close();
-//			}
-//		}
+		SqlSession session = null;
+
+		int uIdx = calinfo.getCustomer().getUIdx();
+		int calIdx = calinfo.getCalIdx();
+
+		try {
+			List<CalInfo> list = findCalsByUIdx(uIdx);
+
+			session = sqlSessionFactory.openSession();
+			session.update("com.reco.calendar.CalendarMapper.modifyCal", calinfo);
+			session.commit();
+			
+			System.out.println("modifyCal함수 : uIdx=" + uIdx + ", calIdx =" + calIdx);
+		} catch (FindException e) {
+			throw new ModifyException(e.getMessage());
+		}catch(Exception e) {
+			throw new ModifyException(e.getMessage());
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}
 
 	}
 
-//	@Override
+	@Override
 	public void removeCal(CalInfo calinfo) throws RemoveException {
-//		// "drop table Cal_post_" + uIdx + "_" + calIdx;
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//
-//		try {
-//			con = MyConnection.getConnection();
-//			con.setAutoCommit(false);
-//
-//			int uIdx = calinfo.getCustomer().getUIdx();
-//			//---다음캘린더 글번호 얻기
-//			int calIdx = calinfo.getCalIdx();
-//
-////			CalInfo calinfo = null;
-////			uIdx = calinfo.getCustomer().getUIdx();
-////			int calIdx = calinfo.getCalIdx();
-//			//---다음캘린더 글번호 얻기
-//
-//			System.out.println("uIdx=" + uIdx + ", calIdx =" + calIdx);
-//			//----------------------------------------------------------------------
-//
-//			//Cal_Post 행삭제
-//			String dropCalInfoSQL = "drop table Cal_post_" + uIdx + "_" + calIdx;
-//
-//			pstmt = con.prepareStatement(dropCalInfoSQL);
-////			pstmt.setInt(1, uIdx);
-////			pstmt.setInt(2, calIdx);
-//			pstmt.executeUpdate();
-//
-//			int droptable = pstmt.executeUpdate();
-//
-//			if(droptable == 0) {
-//				System.out.println("해당 캘린더가 존재하지 않습니다.");
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}finally {
-//			MyConnection.close(pstmt, con);
-//		}
+		SqlSession session = null;
+		
+		try {
+			
+			session = sqlSessionFactory.openSession();
+
+			int uIdx = calinfo.getCustomer().getUIdx();
+			int calIdx = calinfo.getCalIdx();
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("uIdx", uIdx);
+			map.put("calIdx", calIdx);
+			int deleteCalInfoRow = session.delete("com.reco.calendar.CalendarMapper.deleteCal", map);
+
+			System.out.println("removeCal함수 : uIdx=" + uIdx + ", calIdx =" + calIdx);
+			//----------------------------------------------------------------------
+
+			//CAL_POST_uIdx값_calIdx값 이름의 테이블 삭제
+			String dropCalInfoSQL = "drop table Cal_post_" + uIdx + "_" + calIdx;
+			
+			HashMap<String, String> hashmap = new HashMap<String, String>();
+			hashmap.put("dropCalInfoSQL", dropCalInfoSQL);
+			session.update("dropCalInfoSQL",hashmap);
+			session.commit();
+			
+			if(deleteCalInfoRow == 0) {
+				System.out.println("해당 캘린더정보가 존재하지 않습니다.");
+			} 
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}	
 	}
 
 

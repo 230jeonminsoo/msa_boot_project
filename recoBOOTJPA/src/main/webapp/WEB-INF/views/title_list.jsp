@@ -15,11 +15,12 @@ $(function(){
 	/*---두번째 div에서  모든 img태그 보여주기 START--*/
 	let $img = $('div.calIdx img');
 	$img.each(function(i, element){
-		let imgId = $(element).attr('id');	
+		let imgId = $(element).attr('id'); <%-- <%=imageFileName %>값 = "s_cal_post_" + uIdx  + "_" + calIdx + ".jpg"; --%>	
 		$.ajax({
-			url: './calendar/downloadimage?thumbnailName='+imgId,
-			 cache:false,
-	         xhrFields:{
+			url: './calendardownloadimage?imageFileName='+imgId,
+			
+			cache:false, //이미지 다운로드용 설정
+	         xhrFields:{ //이미지 다운로드용 설정
 	            responseType: 'blob'
 	        } , 
 	        success: function(responseData, textStatus, jqXhr){
@@ -30,48 +31,42 @@ $(function(){
 	        },
 	        error:function(){
 	        }
-		}); //end $.ajax
+		});  //end $.ajax
 	});//end each
 	/*---두번째 div에서  모든 img태그 보여주기 END--*/
-	
-	/*---토글버튼---*/
-	let $sensorBtn =$('div.calIdx input');
-		$sensorBtn.click(function (){
-	  	$("#btn2").toggle();
-	  	$("#btn3").toggle();
-	});
 });
 </script>
+
 <%
 Customer c = (Customer)session.getAttribute("loginInfo"); 
 if(c == null){ //로그인 안된 경우
 %>
-
 <%
 }
 %> 
-
 <%
 if(c != null){
-
-	String saveDirectory = "c:\\reco\\calendar";
-	File dir = new File(saveDirectory);
-	File[] files = dir.listFiles(); 
 	
 	List<CalInfo> list = (List)request.getAttribute("list");
 	int uIdx = c.getUIdx();
+
+	String saveDirectory = "C:\\reco\\calendar";
+	File dir = new File(saveDirectory);
+	File[] files = dir.listFiles();
 	
+%>
+
+<%	
 	for(CalInfo ci : list){
 		int calIdx = ci.getCalIdx();
-		String imageFileName = "cal_post_" + uIdx  + "_" + calIdx + ".jpg";
-		String thumbnailName = "s_"+ imageFileName;
+		String imageFileName = "s_cal_post_" + uIdx  + "_" + calIdx + ".jpg";
 %> 	
 	
 <li>
 	<div id="<%=calIdx %>" class="calIdx"> 
 	  <div class="title_wrap" id="title5">
 	    <a href="#"> <!-- 썸네일 -->
-	     	<img id="<%=thumbnailName %>" alt="thumbnailName" title="thumbnailName">
+	     	<img id="<%=imageFileName %>" alt="thumbnailName" title="thumbnailName">
 	     	<input class="btn1" type="image" src="./images/three_dots.png"  width="20px" height="20px">
 	    </a>
 	  </div>
@@ -81,6 +76,10 @@ if(c != null){
 	  </div>
 	</div>
 </li>
+
+<form method="get"> 
+	<input type="hidden" name="calIdx" value="<%=calIdx %>">
+</form>
 
 <%} //end for 
 	for(int i=list.size(); i<5; i++){
@@ -107,5 +106,5 @@ if(c != null){
      
 	
 <%
-}
+} //end if
 %>

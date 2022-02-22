@@ -5,39 +5,44 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%Customer c = (Customer)session.getAttribute("loginInfo"); %>
-<%
+<%-- <%
 	Date nowTime = new Date();
 	SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM");
 	String dateValue = sf.format(nowTime);
-%>
-    <script src="./js/callist.js"></script>
-    
-    <script>
-	    $(function(){
-			uNickname = "<%=c.getUNickName()%>"
-			/*------- tab.js ----------*/
-	    	//탭에서 메뉴클릭시 발생하는 이벤트(공지사항/faq/자유게시판/캘린더관리/커뮤니티글관리/개인정보관리)
-			tabMenuClick(uNickname);
+%> --%>
+<script src="./js/callist.js"></script>
 
-			//메뉴에서 커뮤니티 클릭시 탭바뀌는 이벤트
-			tabChange();//커뮤니티용 탭 변화
-			//tabChange2();//마이페이지용 탭 변화
 
-			//탭에서 생성된 캘린더 카테고리 클릭시 발생하는 이벤트
-			calMenuClick();
+<script>
+    $(function(){
+		uNickname = "<%=c.getUNickName()%>"
+		/*------- tab.js ----------*/
+    	//탭에서 메뉴클릭시 발생하는 이벤트(공지사항/faq/자유게시판/캘린더관리/커뮤니티글관리/개인정보관리)
+		tabMenuClick(uNickname);
 
-			//탭에서 캘린더 add 클릭시 발생하는 이벤트
-			tabaddClick();
-			
-			/*------- title_list.js ----------*/
-			//섹션영역에 캘린더 썸네일 클릭시 발생하는 이벤트
-			calThumbnailClick();
+		//메뉴에서 커뮤니티 클릭시 탭바뀌는 이벤트
+		tabChange();//커뮤니티용 탭 변화
+		//tabChange2();//마이페이지용 탭 변화
 
-			//섹션영역에 캘린더 add 클릭시 발생하는 이벤트
-			caladdClick();
+		//탭에서 생성된 캘린더 카테고리 클릭시 발생하는 이벤트
+		calMenuClick();
 
-	    });
-	</script>
+		//탭에서 캘린더 add 클릭시 발생하는 이벤트
+		tabaddClick();
+		
+		/*------- title_list.js ----------*/
+		//섹션영역에 캘린더 썸네일 클릭시 발생하는 이벤트
+		calThumbnailClick();
+
+		//섹션영역에 캘린더 add 클릭시 발생하는 이벤트
+		caladdClick();
+		
+		//섹션영역에 캘린더 썸네일 안에있는 three_dots 버튼 클릭시 발생하는 이벤트 
+		/* sensorBtnClick(); */
+		
+		
+    });
+</script>
  <div class="tab"><!-- tab.js -->
   	<jsp:include page="./tab.jsp"/>
 
@@ -45,9 +50,9 @@
 
 <section><!--callist.js -->
 <div class="articles"><!-- 오늘 날짜값 넣기-->
-	 <div class="nowdate" style="display:none">
+	 <%-- <div class="nowdate" style="display:none">
 	 	<%=sf.format(nowTime)%>
-	 </div>
+	 </div> --%>
 	 <ul class="title_list">
 	  	<jsp:include page="./title_list.jsp"/>
 

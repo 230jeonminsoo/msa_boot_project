@@ -49,13 +49,13 @@
 	</select> -->
 
 	<!-- cal_info 컬럼삭제 -->
-	<delete id="removeCal" parameterType="int">
+	<delete id="deleteCal" parameterType="int">
 		delete from CalInfo where u_Idx=${uIdx} and cal_Idx=${calIdx}
 	</delete>
 
 	<!-- cal_post 테이블 삭제 -->
 	<select id="DropTable" parameterType="HashMap">
-		${DropCalPostSQL}
+		${dropCalInfoSQL}
 	</select>
 
     <select id = "findCalsByDate" parameterType = "map" resultType = "CalPost">
