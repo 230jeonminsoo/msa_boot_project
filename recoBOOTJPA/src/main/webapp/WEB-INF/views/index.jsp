@@ -18,6 +18,14 @@ Customer c = (Customer)session.getAttribute("loginInfo");%>
 	    }
 	</style>
 
+<%
+String email = (String)request.getAttribute("email");
+String pwd = (String)request.getAttribute("pwd");
+String code = (String)request.getAttribute("code");
+%>
+
+
+
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="./js/menu.js"></script><!-- menu.jsp 이벤트-->
@@ -26,7 +34,24 @@ Customer c = (Customer)session.getAttribute("loginInfo");%>
 
 	<script>
 	$(function(){
-
+		
+		<%if(email != null) {%>
+			email = "<%=email%>";
+			pwd = "<%=pwd%>";
+			code = "<%=code%>";
+			$.ajax({
+				url: "./kakaopopup",
+				method:'get',
+				data: {email:email, pwd:pwd, code:code} , 
+				success:function(responseData){
+					let $articlesObj = $('section>div.articles0');
+	               	 $articlesObj.empty();
+	                 $articlesObj.html(responseData);
+			         window.scrollTo(0, 0);
+				}
+			});
+		<%}%>
+		
 		//로그인전은 before.html, 로그인 후는 callistresult.jsp로드
 		loadBeforeAfter();
 
@@ -40,7 +65,7 @@ Customer c = (Customer)session.getAttribute("loginInfo");%>
 		//로그인,회원가입 제외 각메뉴 클릭시 발생하는 이벤트
 	    menuClick();
 
-	  })
+	  });
 	</script>
 
 </head>

@@ -31,5 +31,9 @@
 		select u_idx,u_name,u_nickname,u_email,u_pwd,u_authcode,u_status 
 		from customer where u_name=#{uName} and u_RRN=#{uRRN}
 	</select>
+	
+	<delete id="findAndDeleteCustomerByPwd" parameterType="String">
+		delete FROM customer where u_pwd=#{uPwd}
+	</delete>
 </mapper>
 

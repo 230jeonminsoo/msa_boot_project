@@ -3,8 +3,10 @@
     pageEncoding="UTF-8"%>
 <%Customer c = (Customer)session.getAttribute("loginInfo");
 int uIdx =0;
+
 if(c!=null){
 	uIdx = c.getUIdx();
+	
 }
 %>   
 
@@ -17,6 +19,7 @@ $(function(){
 	
 	modifypwdBtClick(uIdx);
 	withdrawBtClick(uIdx);
+
 });
 
 </script>
@@ -39,6 +42,14 @@ $(function(){
 			현재 비밀번호 : <input type="password" name="pwd" required><br>
 			현재 비밀번호 확인 : <input type="password" name="pwd1" required><br>
 			<button class="withdrawbutton">확인</button>
+		</div>
+		
+		<div class="kakaowithdraw">       
+			<h1 class="info">카카오 가입회원 탈퇴</h1>
+			<!-- <button class="kakaowithdrawbutton">확인</button>  -->
+			
+			<a href="https://kauth.kakao.com/oauth/authorize?client_id=2177f6a7b4ac54c3449ddca01ead7def&redirect_uri=http://localhost:9998/recoBOOTJPA/kakaoexit&response_type=code">카카오 간편가입 회원탈퇴 </a>
+
 		</div>
 	</div>
 

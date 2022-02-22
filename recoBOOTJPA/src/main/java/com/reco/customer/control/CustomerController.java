@@ -3,6 +3,7 @@ package com.reco.customer.control;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -118,7 +120,53 @@ public class CustomerController {
 		returnMap.put("resultMsg",resultMsg);
 		return returnMap;
 	}
+	
+	
 
+	@PostMapping("/kakaosignup")
+	@ResponseBody
+	public Map<String,Object> kakaosignup(String nickname, String code, String email,String pwd, HttpSession session) {
+		Customer c = new Customer();
+		c.setUNickName(nickname);
+		c.setUEmail(email);
+		c.setUPwd(pwd);
+		logger.info("kakaosignup컨트롤러로 전달된값" +c.getUNickName()+c.getUEmail()+c.getUPwd());
+		String resultMsg = "";
+		int status = 0;
+		try {
+			service.signup(c);
+			status = 1;
+			resultMsg = "가입성공";	
+			session.setAttribute("loginInfo", c);
+		    session.setAttribute("myPage", session); 
+		}catch (AddException e) {
+			e.printStackTrace();
+			resultMsg = e.getMessage();
+		}
+		Map<String, Object> returnMap = new HashMap<>();
+		returnMap.put("code",code);
+		returnMap.put("status",status);
+		returnMap.put("resultMsg",resultMsg);
+		return returnMap;
+	}
+	
+//
+//	@PostMapping("/kakaosignup")
+//	@ResponseBody
+//	public String kakaosignup(String nickname, String email,String pwd) {
+//		Customer c = new Customer();
+//		c.setUNickName(nickname);
+//		c.setUEmail(email);
+//		c.setUPwd(pwd);
+//		logger.info("kakaosignup컨트롤러로 전달된값" +c.getUNickName()+c.getUEmail()+c.getUPwd());
+//		try {
+//			service.signup(c);
+//		}catch (AddException e) {
+//			e.printStackTrace();
+//		}
+//		return "index.jsp";
+//	}
+//	
 	@GetMapping("/modifypwd")
 	@ResponseBody
 	public Map<String,Object> modifypwd(int uIdx, String pwd) {
@@ -249,12 +297,25 @@ public class CustomerController {
 //		
 //	}
 	
+	@RequestMapping(value="/kakaoexit")
+	public void kakaologout(@RequestParam(value="code", required=false) String code, HttpSession session, Model model) throws FindException, AddException {
+		
+		String access_Token = service.getExitAccessToken(code);
+		 HashMap<String, Object> userInfo = service.disconnectUserInfo(access_Token);
+		 session.removeAttribute("loginInfo"); 
+		 session.removeAttribute("myPage"); 
+		 int pwdInt = (int)userInfo.get("pwd");
+		 String uPwd = Integer.toString(pwdInt);
+		 service.findAndDeleteCustomerByPwd(uPwd);
+		
+		 
+	}
+	
 	@RequestMapping(value="/kakaologin")
-	public String kakaologin(@RequestParam("code") String code, HttpSession session, Model model) throws FindException, AddException {
+	public String kakaologin(@RequestParam(value="code", required=false) String code, HttpSession session, Model model) throws FindException, AddException {
 		session.removeAttribute("loginInfo"); 
 		session.removeAttribute("myPage");
-		 session.removeAttribute("userId"); 
- 		session.removeAttribute("access_Token");
+		 
 		System.out.println("code : " + code);
 	
         String access_Token = service.getAccessToken(code);
@@ -275,27 +336,33 @@ public class CustomerController {
 		if(c == null) { //가입이 안된 경우
 		
 	    	Customer NickExist = service.kakaonickdupchk(uNickName);//닉네임 중복확인	    	
+	    	
 	    	if(NickExist == null) { //닉네임중복 아닌경우
-	    		c.setUEmail(uEmail);
-				c.setUPwd(idString); 
-				c.setUNickName(uNickName);
-	    		service.signup(c); //회원가입 서비스 호출
+	    		Customer c2 = new Customer();
+	    		c2.setUEmail(uEmail);
+	    		c2.setUPwd(idString); 
+	    		c2.setUNickName(uNickName);
+	    		service.signup(c2); //회원가입 서비스 호출
 	    		
 	    	}else { // 닉네임중복인 경우
 	    		model.addAttribute("email", uEmail);
 	    		model.addAttribute("pwd", idString);
-	    		return "kakaosignup.jsp";
+	    		model.addAttribute("code", code);
+	    		
+	    		return "index.jsp";
 	    	}	    	
-		}else {
+		}else {//가입이 이미 된경우
+			String nickname = c.getUNickName();
 			c.setUEmail(uEmail);
 			c.setUPwd(idString); 
-			c.setUNickName(uNickName);
+			c.setUNickName(nickname);
 		}
 		
         session.setAttribute("loginInfo", c);
-        session.setAttribute("myPage", session); //카카오 로그인 시 pwd없어 마이페이지 비번 입력못하니 일단 임시방편
+        session.setAttribute("myPage", session); 
         //session.setAttribute("access_Token", access_Token);//세션 loginInfo로 사용해서 필요없을 듯
-    	return "index.jsp";
+    	
+        return "index.jsp";
 	}
 }
 

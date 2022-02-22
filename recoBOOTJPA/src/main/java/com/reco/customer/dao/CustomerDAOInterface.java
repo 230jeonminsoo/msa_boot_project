@@ -74,4 +74,12 @@ public interface CustomerDAOInterface {
 	 * @throws FindException
 	 */
 	public Customer findByKakaoNick(String uNickName) throws FindException;
+	
+	/**
+	 * 카톡 간편가입한 회원 탈퇴시 해당 메소드로 고객정보찾아 DB에서 삭제
+	 * @param pwd
+	 * @throws FindException
+	 */
+	public void findAndDeleteCustomerByPwd(String uPwd) throws FindException;
+	
 }

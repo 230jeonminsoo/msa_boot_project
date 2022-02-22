@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,6 +65,15 @@ public class IndexController {
 			}
 			return "noticemodify.jsp";
 		}
+		
+		@GetMapping("/kakaopopup")
+		public String kakaopopup(String code, String email, String pwd, Model model) {
+			model.addAttribute("email",email);
+			model.addAttribute("pwd",pwd);
+			model.addAttribute("code", code);
+			return "kakaosignup.jsp";
+		}
+		
 		
 		@GetMapping("/boardwritepage")
 		public String boardwite() {
@@ -178,5 +188,21 @@ public class IndexController {
 		@GetMapping("/calinfowrite")
 		public String calinfowrite() {
 			return "calInfowrite.jsp";
+		}
+		
+		
+		@Controller
+		public class CustomErrorController implements ErrorController {
+
+			@GetMapping("/error")
+			public String redirectRoot() {
+
+				return "index.jsp";
+			}
+						
+			public String getErrorPath() {
+				return "/error";
+			}
+
 		}
 }

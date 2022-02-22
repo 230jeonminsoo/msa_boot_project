@@ -280,8 +280,7 @@ public class CustomerDAOOracle implements CustomerDAOInterface {
 
 	
 	public Customer kakaoEmailDupChk(String uEmail) throws FindException{
-		SqlSession session = null;
-		
+			SqlSession session = null;
 			session = sqlSessionFactory.openSession();
 			Customer c= session.selectOne("com.reco.customer.CustomerMapper.findByEmail",uEmail);
 			if(session !=null) {
@@ -293,8 +292,7 @@ public class CustomerDAOOracle implements CustomerDAOInterface {
 	@Override
 	public Customer findByKakaoNick(String uNickName) throws FindException {
 		
-		SqlSession session = null;
-		
+			SqlSession session = null;
 			session = sqlSessionFactory.openSession();
 			Customer c= session.selectOne("com.reco.customer.CustomerMapper.findByNick", uNickName);			
 			if(session !=null) {
@@ -302,6 +300,16 @@ public class CustomerDAOOracle implements CustomerDAOInterface {
 			}
 			return c;
 	}
-
+	
+	
+	@Override
+	public void findAndDeleteCustomerByPwd(String uPwd) throws FindException{
+		SqlSession session = null;
+		session = sqlSessionFactory.openSession();
+		session.delete("com.reco.customer.CustomerMapper.findAndDeleteCustomerByPwd", uPwd);				
+		if(session !=null) {
+			session.close();
+		}
+	}
 
 }
