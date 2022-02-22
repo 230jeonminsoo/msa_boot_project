@@ -41,10 +41,10 @@
 	        	<input type="text" name="calCategory" id="input" placeholder="캘린더 이름을 입력해주세요.">
 	        </div><br>
 	        
-	
-	        <button type="submit">등록</button>
-	        <button type="cancle"  onClick='self.close()'>취소</button>
-	
+			<div class="bt">
+		        <button type="submit" >등록</button>
+		        <button type="button" value="Back" onClick="history.go(-1)" >취소</button> <!-- 뒤로가기 처리 -->
+			</div>
 	    </form>
 	</fieldset>
 

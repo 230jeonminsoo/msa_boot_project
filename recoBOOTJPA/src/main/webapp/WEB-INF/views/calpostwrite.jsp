@@ -12,8 +12,6 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
 	
-<!-- 	<script src="./js/calendar_write.js"></script> -->
-	<!-- <script src="./js/imgpreview.js"></script> -->
 	<title>calpostwrite.jsp</title>
 	   <style>
         .dellink{
@@ -21,7 +19,7 @@
         }
       </style>
 	
-	<link href="./css/calendar_write.css" rel=stylesheet>
+	<link href="./css/calpostwrite.css" rel=stylesheet>
 	<script src="./js/calpostwrite.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	
@@ -54,7 +52,7 @@ int calIdx = Integer.parseInt(request.getParameter("calIdx"));
 %>
 
 <body>
-	<h2><%=calIdx%><%=calCategory %>&nbsp;캘린더 글 작성</h2>
+	<h2 align="center"><%=calCategory %>&nbsp;캘린더 글 작성</h2>
 	<form name="writeFrm" method="post" enctype="multipart/form-data"
 	     >
 	     <input type="hidden" name="calIdx" value="<%=calIdx %>">
@@ -95,11 +93,8 @@ int calIdx = Integer.parseInt(request.getParameter("calIdx"));
 		    </tr>
 		    <tr>
 		        <td colspan="2" align="center">
-		           
 		            <button type="submit" >작성 완료</button>
 		            <button id=2 type="button" >캘린더보기</button>  
-			            <%-- <input type="hidden" th:value="${calIdx}" th:name="calIdx" /> --%>
-		           
 		        </td>
 		    </tr>
 		</table>    

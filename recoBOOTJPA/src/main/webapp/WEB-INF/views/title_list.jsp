@@ -33,6 +33,13 @@ $(function(){
 		}); //end $.ajax
 	});//end each
 	/*---두번째 div에서  모든 img태그 보여주기 END--*/
+	
+	/*---토글버튼---*/
+	let $sensorBtn =$('div.calIdx input');
+		$sensorBtn.click(function (){
+	  	$("#btn2").toggle();
+	  	$("#btn3").toggle();
+	});
 });
 </script>
 <%
@@ -64,7 +71,8 @@ if(c != null){
 	<div id="<%=calIdx %>" class="calIdx"> 
 	  <div class="title_wrap" id="title5">
 	    <a href="#"> <!-- 썸네일 -->
-	     	<img id="<%=thumbnailName %>" alt="ADD" title="ADD">
+	     	<img id="<%=thumbnailName %>" alt="thumbnailName" title="thumbnailName">
+	     	<input class="btn1" type="image" src="./images/three_dots.png"  width="20px" height="20px">
 	    </a>
 	  </div>
 	  
