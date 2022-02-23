@@ -90,7 +90,7 @@ if(c != null){
 			      <div class="title_detail">
 			      	<p class="title_name">+</p>
 			      </div>
-		   	 </div>
+		   	  </div>
 	    </a>
 	  </div>
 	  

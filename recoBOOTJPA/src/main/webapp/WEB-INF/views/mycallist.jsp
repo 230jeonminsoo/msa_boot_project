@@ -47,8 +47,11 @@
     
     
 <section><!--callist.js -->
-<div class="articles" style=" text-align: center;"><!-- 오늘 날짜값 넣기-->
-	 <button class="mycalRM" style=" display: inline-block;">글 삭제</button>
+<div class="articles" >
+	 <div class="rm_title">	
+	 	<p class="mycalRM" style="font-size: 30px;"><b> <캘린더 관리> </b></p>
+	 	<button class="mycalRM" >글 삭제</button>
+	 </div>
 	 <ul class="title_list">
 		<%
 		Customer c = (Customer)session.getAttribute("loginInfo"); 

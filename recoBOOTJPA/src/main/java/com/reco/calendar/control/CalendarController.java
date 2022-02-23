@@ -63,14 +63,14 @@ public class CalendarController {
 		try {
 			List<CalInfo> list = service.findCalsByUIdx(uIdx);
 			model.addAttribute("list", list);
-			
 			return "callistresult.jsp";
 		} catch (FindException e) {
 			e.printStackTrace();
 			model.addAttribute("msg", e.getMessage());
-			model.addAttribute("list", new ArrayList<CalInfo>());		
+			model.addAttribute("list", new ArrayList<CalInfo>());
+			return "callistresult.jsp";
 		}
-		return "callistresult.jsp";
+		
 
 	}
 	

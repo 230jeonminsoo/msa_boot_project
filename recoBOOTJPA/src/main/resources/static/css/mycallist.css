@@ -11,14 +11,20 @@ a{
   text-decoration: none;
 }
 
+.rm_title{
+	 width:900px;
+ 	 margin: 0 auto;
+}
+
+p.mycalRM{
+	font-size: 25px;
+}
 
 /* 글삭제버튼 */
 button.mycalRM{
-	 margin-top : 30px;
 	 background-color:white;
 	 border: 2px solid #77af9c;
 	 padding:10px;
-	 margin:10px;
 	 position: relative;
 } 
 

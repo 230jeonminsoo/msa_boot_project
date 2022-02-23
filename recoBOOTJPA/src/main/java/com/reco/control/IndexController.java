@@ -130,10 +130,9 @@ public class IndexController {
 				mnv.addObject("list", list);
 				mnv.addObject("calinfo", calinfo);
 				
-				
-				if(list.size()==0) {
-					mnv.addObject("msg", "생성된 캘린더가 없습니다");
-				}
+//				if(list.size()==0) {
+//					mnv.addObject("msg", "생성된 캘린더가 없습니다");
+//				}
 				
 				mnv.setViewName("mycallist.jsp");
 			} catch (FindException e) {
@@ -223,11 +222,6 @@ public class IndexController {
 		@GetMapping("/calpostwrite")
 		public String calpostwrite() {
 			return "calpostwrite.jsp";
-		}
-		
-		@GetMapping("/calinfowrite")
-		public String calinfowrite() {
-			return "calInfowrite.jsp";
 		}
 		
 		

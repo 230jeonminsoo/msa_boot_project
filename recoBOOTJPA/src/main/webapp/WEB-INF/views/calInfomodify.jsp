@@ -39,9 +39,9 @@ int calIdx = Integer.parseInt(request.getParameter("calIdx"));
 <fieldset>
     <form  method="post" action="./calInfomodify" autocomplete="off" enctype="multipart/form-data">
         <input type="hidden" name="calIdx" value="<%=calIdx %>">
-        <div class="Category" align="center">
-        	<strong>캘린더이름&nbsp;:&nbsp;<%=calCategory %> </strong> <br>
-        	<strong>calIdx값&nbsp;:&nbsp;<%=calIdx %> </strong>
+        <div class="Category" align="center">        	
+			<strong>캘린더이름&nbsp;:&nbsp;<%=calCategory %> </strong> <br>
+        	<strong style="display: none;">calIdx값&nbsp;:&nbsp;<%=calIdx %> </strong>
         </div>
         
         <div class="input_image">
