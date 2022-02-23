@@ -82,6 +82,24 @@ img{
   display: block; margin: 0 auto;
 }
 
+input.modifyBt {
+  position: absolute;
+  top: 10px;
+  right : 10px; 
+  border-radius: 50%;
+    -webkit-transition-duration: 0.4s; /* Safari */
+
+  transition-duration: 0.4s;
+}
+
+input.modifyBt[type=image]:hover ,
+input.modifyBt[type=image]:active,
+input.modifyBt[type=image]:focus {
+  background-image: url(./images/navi.png);
+  background: gray; 
+  color: white;
+}
+
 /* 그림에 커서가 놓일 때 hover되는 것 */
 .title_wrap:hover .hidden_title{
   position: absolute;

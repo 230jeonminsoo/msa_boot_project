@@ -18,14 +18,6 @@ public interface CalendarDAOInterface {
 	 */
 	public CalInfo addCal(CalInfo calinfo) throws AddException;
 
-	/**
-	 * 특정 캘린더를 찾는다 
-	 * @param uIdx
-	 * @param calIdx
-	 * @return
-	 * @throws FindException 
-	 */
-	public CalInfo findCalsByUIdxandCalIdx(int uIdx, int calIdx) throws FindException;
 	
 	/**
 	 * 고객번호와 캘린더 번호로 캘린더들을 가져온다. 
@@ -40,9 +32,10 @@ public interface CalendarDAOInterface {
 	/**
 	 * 고객의 캘린더 기본정보(카테고리, 썸네일)를 수정한다
 	 * @param calinfo
+	 * @return 
 	 * @throws ModifyException
 	 */
-	public void modifyCal(CalInfo calinfo) throws ModifyException;
+	public CalInfo modifyCal(CalInfo calinfo) throws ModifyException;
 	
 	
 	
@@ -51,7 +44,7 @@ public interface CalendarDAOInterface {
 	 * @param calinfo
 	 * @throws RemoveException
 	 */
-	public void removeCal(CalInfo calinfo) throws RemoveException;
+	public CalInfo removeCal(CalInfo calinfo) throws RemoveException;
 	
 	
 	/**

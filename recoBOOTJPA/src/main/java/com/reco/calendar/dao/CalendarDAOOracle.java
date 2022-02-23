@@ -54,30 +54,6 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 		}
 	}
 	
-	//특정 캘린더를 찾음 
-	@Override
-	public CalInfo findCalsByUIdxandCalIdx(int uIdx, int calIdx) throws FindException {
-		
-//		SqlSession session =null;
-//		try {
-//			session = sqlSessionFactory.openSession();
-//			
-//			Map<String,Object> map= new HashMap<>();
-//			map.put("uIdx", uIdx);
-//			map.put("calIdx", calIdx);
-//			CalInfo calinfo = session.selectOne("com.reco.calendar.CalendarMapper.findCalsByUIdxandCalIdx", map);
-//			System.out.println("findCalsByUIdxandCalIdx함수 : uIdx=" + uIdx + ", calIdx =" + calIdx);
-//			return calinfo;
-//		}catch (Exception e) {
-//			throw new FindException(e.getMessage());
-//			
-//		}finally {
-//			if(session != null) {
-//				session.close();
-//			}
-//		}
-		return null;
-	}
 	
 	@Override
 	public CalInfo addCal(CalInfo calinfo) throws AddException{
@@ -135,17 +111,26 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 
 
 	@Override
-	public void modifyCal(CalInfo calinfo) throws ModifyException {
+	public CalInfo modifyCal(CalInfo calinfo) throws ModifyException {
 		SqlSession session = null;
 
-		int uIdx = calinfo.getCustomer().getUIdx();
-		int calIdx = calinfo.getCalIdx();
-
 		try {
-			List<CalInfo> list = findCalsByUIdx(uIdx);
-
 			session = sqlSessionFactory.openSession();
-			session.update("com.reco.calendar.CalendarMapper.modifyCal", calinfo);
+			
+			int uIdx = calinfo.getCustomer().getUIdx();
+			int calIdx = calinfo.getCalIdx();
+			String calCategory = calinfo.getCalCategory();
+			String calThumbnail = calinfo.getCalThumbnail();
+			
+			List<CalInfo> list = findCalsByUIdx(uIdx);
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("uIdx", uIdx);
+			map.put("calIdx", calIdx);
+			map.put("calCategory", calCategory);
+			map.put("calThumbnail", calThumbnail);
+			
+			session.update("com.reco.calendar.CalendarMapper.modifyCal", map);
 			session.commit();
 			
 			System.out.println("modifyCal함수 : uIdx=" + uIdx + ", calIdx =" + calIdx);
@@ -158,11 +143,12 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 				session.close();
 			}
 		}
+		return calinfo;
 
 	}
 
 	@Override
-	public void removeCal(CalInfo calinfo) throws RemoveException {
+	public CalInfo removeCal(CalInfo calinfo) throws RemoveException {
 		SqlSession session = null;
 		
 		try {
@@ -197,7 +183,8 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 			if(session != null) {
 				session.close();
 			}
-		}	
+		}
+		return calinfo;	
 	}
 
 

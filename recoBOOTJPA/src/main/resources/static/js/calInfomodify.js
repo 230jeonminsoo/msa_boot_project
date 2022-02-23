@@ -1,16 +1,14 @@
 /* calInfowrite.html */
 /*--캘린더 수정버튼이 클릭되었을때 START--*/
-function addCalSubmit($formObj){
+function calInfomodifyBtClick($formObj){
 	//	alert("in addCalSubmit");
-	let $submitBtObj = $('fieldset>form>button[type=submit]');
-    $submitBtObj.click(function(){
+	let $calInfomodifyBt = $('fieldset>form>button[type=submit]');
+    $calInfomodifyBt.click(function(){
 		let formData = new FormData(this);
-		/*let formData = new FormData($formObj[0]);
 		formData.forEach(function (value, key) {
 			console.log(key + ":" + value);
-		});*/
-		
-		 let ajaxUrl = './caladd'; 
+		});		
+		 let ajaxUrl = './calInfomodify'; 
 	        
 			$.ajax({
 	            url: ajaxUrl,
@@ -18,7 +16,6 @@ function addCalSubmit($formObj){
 				processData: false, //파일업로드용 설정
 				contentType: false, //파일업로드용 설정
 				data:formData,
-				
 	            success:function(responseData){
 					console.log(responseData);
 	                let $articlesObj = $('section>div.articles');

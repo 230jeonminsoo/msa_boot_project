@@ -30,23 +30,18 @@
 	</select>
 
 
-	<update id="modifyCal" parameterType="CalInfo">
+	<update id="modifyCal" parameterType="HashMap">
 	<!-- update cal_info
 	set cal_Category=#{calCategory},cal_Thumbnail=#{calThumbnail}
 	where u_Idx=${uIdx} and cal_Idx=${calIdx} -->
 
-	update cal_info
+		update cal_info
 		<set>
 		cal_Category=#{calCategory},cal_Thumbnail=#{calThumbnail}
 		</set>
 		where u_Idx=${uIdx} and cal_Idx=${calIdx}
 	</update>
 
-
-	<!-- <select id="findCalsByUIdxandCalIdx" resultType="CalInfo" parameterType="int">
-		SELECT * FROM cal_info
-		WHERE u_Idx = ${uIdx} and cal_Idx=${calIdx}
-	</select> -->
 
 	<!-- cal_info 컬럼삭제 -->
 	<delete id="deleteCal" parameterType="int">

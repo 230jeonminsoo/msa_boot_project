@@ -3,7 +3,7 @@
 /*-callistresult.jsp화면에서 캘린더 썸네일 클릭했을때-title_list.jsp페이지*/
 function calThumbnailClick(){
 	 	let $calThumbnailObj = $('div.calIdx img');
-	 		console.log("calThumbnailClick()");
+	 	console.log("calThumbnailClick()");
 		$calThumbnailObj.click(function(){
 			/*let $dateValue = $('section>div.articles>div.nowdate').html();*/
 			let $calIdxObj =  $(this).parents('.calIdx'); /*값을 2가지 경우로 나누기 위해 분리해줌*/
@@ -17,8 +17,7 @@ function calThumbnailClick(){
 			$.ajax({
 	            url: ajaxUrl,
 	            method : 'get',
-				//data: {dateValue:$dateValue},
-				data:{calIdx:calIdx, calCategory: calCategory},  //{dateValue:'2021/12'},
+				data:{calIdx:calIdx, calCategory: calCategory},
 	            success:function(responseData){
 					let $articlesObj = $('section>div.articles');//callistresutl.jsp의 섹션
 	                $articlesObj.empty();
@@ -33,7 +32,6 @@ function calThumbnailClick(){
 
 
 /*-callistresult화면에서 캘린더 add 클릭했을때-*/	
-
 function caladdClick(){
 	$('section>div.articles>ul>li>div.title_add>a>img').click(function(){
 		let menuHref = $(this).attr('href'); 
@@ -47,15 +45,42 @@ function caladdClick(){
                 let $articlesObj = $('section>div.articles');
                 $articlesObj.empty();
                 $articlesObj.html(responseData);
-		            }
-	        });
+	            }
+        });
 		
 
 		return false;
 	});
 }
 
+/*--callistresult화면에서 캘린더 썸네일 안에있는 three_dots 버튼 클릭했을때 = calInfo 수정페이지 이동*/
+function calInfoModifyClick(){
+	let $calInfoModifyObj = $('div.calIdx input');
+	$calInfoModifyObj.click(function(){	
+		console.log("calInfoModifyClick()");
+		let ajaxUrl = 'calInfomodifypage';	
+		
+		let $calIdxObj =  $(this).parents('.calIdx'); /*값을 2가지 경우로 나누기 위해 분리해줌*/
+		let calIdx = $calIdxObj.attr('id'); /*1번 : calIdx값 */
+		let calCategory = $calIdxObj.find('p.title_front').html(); /*2번 calCategory값*/
+			
+		
+		$.ajax({
+            url: ajaxUrl,
+            method : 'get',
+			data:{calIdx:calIdx, calCategory: calCategory},
+            success:function(responseData){
+                let $articlesObj = $('section>div.articles');
+                $articlesObj.empty();
+                $articlesObj.html(responseData);
+	            }
+        });
+			
+	});
+	
+}
 
+/*-팝업창 : callistresult화면에서 캘린더 add 클릭했을때-*/
 /*function caladdClick(){
 	let $caladdObj = $('section>div.articles>ul>li>div.title_add>a>img');
  

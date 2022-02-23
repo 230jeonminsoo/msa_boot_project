@@ -2,6 +2,7 @@ package com.reco.control;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,12 +16,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.reco.board.service.BoardService;
 import com.reco.board.vo.Board;
-import com.reco.board.vo.Comment;
+import com.reco.calendar.service.CalendarService;
+import com.reco.calendar.vo.CalInfo;
+import com.reco.customer.vo.Customer;
 import com.reco.dto.PageDTO;
 import com.reco.dto.PageDTO2;
 import com.reco.exception.FindException;
@@ -37,6 +39,9 @@ public class IndexController {
 		private Logger logger = LoggerFactory.getLogger(this.getClass());
 		@Autowired
 		private BoardService Boardservice;
+		
+		@Autowired
+		private CalendarService Calendarservice;
 		
 		@GetMapping("/")
 		public String index() {
@@ -106,11 +111,46 @@ public class IndexController {
 			}
 		}
 		
+		//마이페이지 첫화면
+		//마이캘린더 보는 컨트롤러 
 		@GetMapping("/mycallist")
-		public String mycallist(HttpSession session) {
+		public Object mycallist(HttpSession session, Model model) {
 			session.setAttribute("myPage", session);
+//			
+//			Customer c = (Customer)session.getAttribute("loginInfo");
+//			int uIdx = c.getUIdx();
+//			
+//			CalInfo calinfo = new CalInfo();
+//			calinfo.setCustomer(c);
+//			
+//			ModelAndView mnv = new ModelAndView();
+//			
+//			try {
+//				//생성된 캘린더 리스트 가져오기 
+//				List<CalInfo> list = Calendarservice.findCalsByUIdx(uIdx);
+//				mnv.addObject("list", list);
+//				mnv.addObject("calinfo", calinfo);
+//				mnv.setViewName("mycallist.jsp");
+//				
+//				if(list.size()==0) {
+//					mnv.addObject("msg", "생성된 캘린더가 없습니다");
+//				}
+//				
+//				mnv.setViewName("mycallist.jsp");
+//			} catch (FindException e) {
+//				e.printStackTrace();
+//				mnv.addObject("msg", e.getMessage());
+//				mnv.addObject("list", new ArrayList<CalInfo>());
+//			}
+//			
+//			return mnv;
 			return "mycallist.jsp";
-		}		
+		}	
+				
+		@GetMapping("/calInfomodifypage")
+		public String calInfomodify() {
+			return "calInfomodify.jsp";
+		}
 		
 		/*
 		 * @GetMapping("/mycommunity") public String mycommunity() {

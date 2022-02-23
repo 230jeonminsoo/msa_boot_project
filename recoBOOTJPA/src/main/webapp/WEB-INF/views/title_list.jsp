@@ -34,6 +34,7 @@ $(function(){
 		});  //end $.ajax
 	});//end each
 	/*---두번째 div에서  모든 img태그 보여주기 END--*/
+	
 });
 </script>
 
@@ -67,8 +68,9 @@ if(c != null){
 	  <div class="title_wrap" id="title5">
 	    <a href="#"> <!-- 썸네일 -->
 	     	<img id="<%=imageFileName %>" alt="thumbnailName" title="thumbnailName">
-	     	<input class="btn1" type="image" src="./images/three_dots.png"  width="20px" height="20px">
 	    </a>
+	    <!-- 썸네일 우측상단에 수정페이지 연결되는 버튼 -->
+	    <input class="modifyBt" type="image" src="./images/three_dots.png"  width="20px" height="20px">
 	  </div>
 	  
 	  <div class="title_info">
@@ -76,10 +78,6 @@ if(c != null){
 	  </div>
 	</div>
 </li>
-
-<form method="get"> 
-	<input type="hidden" name="calIdx" value="<%=calIdx %>">
-</form>
 
 <%} //end for 
 	for(int i=list.size(); i<5; i++){

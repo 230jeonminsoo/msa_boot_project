@@ -38,7 +38,7 @@
 		caladdClick();
 		
 		//섹션영역에 캘린더 썸네일 안에있는 three_dots 버튼 클릭시 발생하는 이벤트 
-		/* sensorBtnClick(); */
+		calInfoModifyClick();
 		
 		
     });
