@@ -302,8 +302,8 @@ public class CustomerController {
 	
 	@RequestMapping(value="/kakaoexit")
 	public void kakaologout(@RequestParam(value="code", required=false) String code, HttpSession session, Model model) throws FindException, AddException {
-		
-		String access_Token = service.getExitAccessToken(code);
+		String redirect_uri = "http://localhost:9998/recoBOOTJPA/kakaoexit";
+		String access_Token = service.getAccessToken(code, redirect_uri);
 		 HashMap<String, Object> userInfo = service.disconnectUserInfo(access_Token);
 		 session.removeAttribute("loginInfo"); 
 		 session.removeAttribute("myPage"); 
@@ -320,8 +320,9 @@ public class CustomerController {
 		session.removeAttribute("myPage");
 		 
 		System.out.println("code : " + code);
-	
-        String access_Token = service.getAccessToken(code);
+		
+		String redirect_uri = "http://localhost:9998/recoBOOTJPA/kakaologin";
+        String access_Token = service.getAccessToken(code, redirect_uri);
         System.out.println("controller access_token : " + access_Token);
         HashMap<String, Object> userInfo = service.getUserInfo(access_Token);
         System.out.println("kakaologin Controller : " + userInfo);
