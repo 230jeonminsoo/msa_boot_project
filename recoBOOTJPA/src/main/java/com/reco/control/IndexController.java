@@ -104,18 +104,17 @@ public class IndexController {
 		
 		@GetMapping("/pwdcheck")
 		public String pwdcheck(HttpSession session) {
-//			if(session.getAttribute("myPage") == null) {
+			if(session.getAttribute("myPage") == null) {
 				return "pwdcheck.jsp";
-//			}else {
-//				return "mycallist.jsp";
-//			}
+			}else {
+				return "myprivate.jsp";
+			}
 		}
 		
 		//마이페이지 접속 후 첫화면
 		//마이캘린더 보는 컨트롤러 
 		@GetMapping("/mycallist")
 		public Object mycallist(HttpSession session, Model model) {
-			session.setAttribute("myPage", session);
 			
 			Customer c = (Customer)session.getAttribute("loginInfo");
 			int uIdx = c.getUIdx();
@@ -130,7 +129,7 @@ public class IndexController {
 				List<CalInfo> list = Calendarservice.findCalsByUIdx(uIdx);
 				mnv.addObject("list", list);
 				mnv.addObject("calinfo", calinfo);
-				mnv.setViewName("mycallist.jsp");
+				
 				
 				if(list.size()==0) {
 					mnv.addObject("msg", "생성된 캘린더가 없습니다");
@@ -141,6 +140,7 @@ public class IndexController {
 				e.printStackTrace();
 				mnv.addObject("msg", e.getMessage());
 				mnv.addObject("list", new ArrayList<CalInfo>());
+				mnv.setViewName("mycallist.jsp");
 			}
 			
 			return mnv;
@@ -210,7 +210,8 @@ public class IndexController {
 		}
 		
 		@GetMapping("/myprivate")
-		public String myprivate() {
+		public String myprivate(HttpSession session) {
+			session.setAttribute("myPage", session);
 			return "myprivate.jsp";
 		}
 		@GetMapping("/findEmailPage")

@@ -36,7 +36,7 @@ for(int i=list.size(); i<5; i++){
 	<ul class="myinfotab">
 		<li><a href="mycallist">캘린더 관리</a></li>
 		<li><a href="mycommunity">커뮤니티 글관리</a></li>
-		<li><a href="myprivate">개인정보 관리</a></li>
+		<li><a href="pwdcheck">개인정보 관리</a></li>
 	</ul>
 <%
 }
