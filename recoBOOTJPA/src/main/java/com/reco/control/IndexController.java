@@ -129,7 +129,7 @@ public class IndexController {
 				List<CalInfo> list = Calendarservice.findCalsByUIdx(uIdx);
 				mnv.addObject("list", list);
 				mnv.addObject("calinfo", calinfo);
-				mnv.setViewName("mycallist.jsp");
+				
 				
 				if(list.size()==0) {
 					mnv.addObject("msg", "생성된 캘린더가 없습니다");
@@ -140,6 +140,7 @@ public class IndexController {
 				e.printStackTrace();
 				mnv.addObject("msg", e.getMessage());
 				mnv.addObject("list", new ArrayList<CalInfo>());
+				mnv.setViewName("mycallist.jsp");
 			}
 			
 			return mnv;
