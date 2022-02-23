@@ -90,9 +90,6 @@ function signupClick(){
 			case 'mycallist':
                 ajaxUrl = menuHref;
                 $('section>div.articles').load(ajaxUrl, function(responseText, textStatus, jqXHR){
-                    $('div.tab>ul.communitytab').css('display','none');
-					$('div.tab>ul.caltab').css('display','none');
-					$('div.tab>ul.myinfotab').css('display','none');
 					if(jqXHR.status != 200){
                         alert('응답실패:' + jqXHR.status);            
                     }    
