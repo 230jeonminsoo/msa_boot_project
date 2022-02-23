@@ -344,13 +344,13 @@ public class CustomerService {
 		}
 
 	  
-	  public Customer kakaoEmailDupChk(String uEmail) throws FindException{
-			return dao.kakaoEmailDupChk(uEmail);
-		}
-		
-	  public Customer kakaonickdupchk(String uNickName) throws FindException{
-			return dao.findByKakaoNick(uNickName);
-		}
+//	  public Customer kakaoEmailDupChk(String uEmail) throws FindException{
+//			return dao.kakaoEmailDupChk(uEmail);
+//		}
+//		
+//	  public Customer kakaonickdupchk(String uNickName) throws FindException{
+//			return dao.findByKakaoNick(uNickName);
+//		}
 	  public void findAndDeleteCustomerByPwd(String uPwd) throws FindException{
 		  dao.findAndDeleteCustomerByPwd(uPwd);
 	  }

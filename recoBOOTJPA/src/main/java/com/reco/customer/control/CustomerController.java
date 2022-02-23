@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.reco.customer.dao.CustomerDAOInterface;
 import com.reco.customer.service.CustomerService;
 import com.reco.customer.vo.Customer;
 import com.reco.exception.AddException;
@@ -35,6 +36,8 @@ public class CustomerController {
 	@Autowired
 	private CustomerService service;
 	
+	@Autowired
+	private CustomerDAOInterface dao;
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 
@@ -331,32 +334,60 @@ public class CustomerController {
     	String idString = Integer.toString(id);
     	
     	Customer c = new Customer();
-    	c = service.kakaoEmailDupChk(uEmail);
-    	System.out.println("c값" + c);
-		if(c == null) { //가입이 안된 경우
-		
-	    	Customer NickExist = service.kakaonickdupchk(uNickName);//닉네임 중복확인	    	
-	    	
-	    	if(NickExist == null) { //닉네임중복 아닌경우
-	    		Customer c2 = new Customer();
-	    		c2.setUEmail(uEmail);
-	    		c2.setUPwd(idString); 
-	    		c2.setUNickName(uNickName);
-	    		service.signup(c2); //회원가입 서비스 호출
-	    		
-	    	}else { // 닉네임중복인 경우
+//    	c = service.kakaoEmailDupChk(uEmail);
+//    	System.out.println("c값" + c);
+//		if(c == null) { //가입이 안된 경우
+//		
+//	    	Customer NickExist = service.kakaonickdupchk(uNickName);//닉네임 중복확인	    	
+//	    	
+//	    	if(NickExist == null) { //닉네임중복 아닌경우
+//	    		Customer c2 = new Customer();
+//	    		c2.setUEmail(uEmail);
+//	    		c2.setUPwd(idString); 
+//	    		c2.setUNickName(uNickName);
+//	    		service.signup(c2); //회원가입 서비스 호출
+//	    		
+//	    	}else { // 닉네임중복인 경우
+//	    		model.addAttribute("email", uEmail);
+//	    		model.addAttribute("pwd", idString);
+//	    		model.addAttribute("code", code);
+//	    		
+//	    		return "index.jsp";
+//	    	}	    	
+//		}else {//가입이 이미 된경우
+//			String nickname = c.getUNickName();
+//			c.setUEmail(uEmail);
+//			c.setUPwd(idString); 
+//			c.setUNickName(nickname);
+//		}
+    	
+    	try {//찾은경우 = 가입이 된경우 로그인 인포세션에 넣기
+    		service.emaildupchk(uEmail);
+    		String nickname = dao.findByEmail(uEmail).getUNickName();
+			c.setUEmail(uEmail);
+			c.setUPwd(idString); 
+			c.setUNickName(nickname);
+    	}catch(FindException e) {//못 찾은 경우 가입시키기
+	    	    		
+	    	try { //가입 시키기 전 닉네임중복인 경우
+	    		service.nickdupchk(uNickName);//닉네임 중복확인	
 	    		model.addAttribute("email", uEmail);
 	    		model.addAttribute("pwd", idString);
 	    		model.addAttribute("code", code);
 	    		
 	    		return "index.jsp";
-	    	}	    	
-		}else {//가입이 이미 된경우
-			String nickname = c.getUNickName();
-			c.setUEmail(uEmail);
-			c.setUPwd(idString); 
-			c.setUNickName(nickname);
-		}
+	    	}catch(FindException e2){ // 닉네임중복인 아닌 경우	
+	    		Customer c2 = new Customer();
+	    		c2.setUEmail(uEmail);
+	    		c2.setUPwd(idString); 
+	    		c2.setUNickName(uNickName);
+	    		logger.info("닉넴 중복 아닌경우 : "+idString);
+	    		logger.info("닉넴 중복 아닌경우 : "+uEmail);
+	    		service.signup(c2); //회원가입 서비스 호출 	
+	    		session.setAttribute("loginInfo", c2);
+	    	    session.setAttribute("myPage", session); 
+	    	}	
+    	}
 		
         session.setAttribute("loginInfo", c);
         session.setAttribute("myPage", session); 

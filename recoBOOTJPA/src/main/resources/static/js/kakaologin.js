@@ -5,15 +5,14 @@ function kakaoSignUpClick(){
 	let $submitBtObj = $('div.signup>form>button[type=submit]');
 	let $nicknameObj = $('div.signup>form>input[name=nickname]');
 
-	
 	let $code = $('#code').html().trim();
-	console.log($code);
+	console.log("js에서 코드 "+$code);
 	
-	let $email = $('#email').html().trim();
-	console.log($email);
+	let $email = $('#email').html();
+	console.log("js에서 이메일 "+$email);
 		
-	let $pwd = $('#pwd').html().trim();
-	console.log($pwd);
+	let $pwd = $('#pwd').html();
+	console.log("js에서 비번 "+$pwd);
 	
 	
 	

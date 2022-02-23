@@ -88,7 +88,7 @@ function signupClick(){
 
             //menu에서 마이페이지가 클릭되었을때
 			case 'pwdcheck':
-                ajaxUrl = menuHref;
+                ajaxUrl = 'mycallist';
                 $('section>div.articles').load(ajaxUrl, function(responseText, textStatus, jqXHR){
                     $('div.tab>ul.communitytab').css('display','none');
 					$('div.tab>ul.caltab').css('display','none');
