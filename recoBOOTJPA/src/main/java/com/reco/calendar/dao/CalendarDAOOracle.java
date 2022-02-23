@@ -163,11 +163,11 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 			map.put("calIdx", calIdx);
 			int deleteCalInfoRow = session.delete("com.reco.calendar.CalendarMapper.deleteCal", map);
 
-			System.out.println("removeCal함수 : uIdx=" + uIdx + ", calIdx =" + calIdx);
+			System.out.println("removeCal함수 : uIdx=" + uIdx + ", calIdx =" + map.get("calIdx"));
 			//----------------------------------------------------------------------
 
 			//CAL_POST_uIdx값_calIdx값 이름의 테이블 삭제
-			String dropCalInfoSQL = "drop table Cal_post_" + uIdx + "_" + calIdx;
+			String dropCalInfoSQL = "drop table Cal_post_" + uIdx + "_" + map.get("calIdx");
 			
 			HashMap<String, String> hashmap = new HashMap<String, String>();
 			hashmap.put("dropCalInfoSQL", dropCalInfoSQL);

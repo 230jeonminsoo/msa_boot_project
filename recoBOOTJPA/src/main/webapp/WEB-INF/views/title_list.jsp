@@ -15,7 +15,7 @@ $(function(){
 	/*---두번째 div에서  모든 img태그 보여주기 START--*/
 	let $img = $('div.calIdx img');
 	$img.each(function(i, element){
-		let imgId = $(element).attr('id'); <%-- <%=imageFileName %>값 = "s_cal_post_" + uIdx  + "_" + calIdx + ".jpg"; --%>	
+		let imgId = $(element).attr('id');
 		$.ajax({
 			url: './calendardownloadimage?imageFileName='+imgId,
 			
