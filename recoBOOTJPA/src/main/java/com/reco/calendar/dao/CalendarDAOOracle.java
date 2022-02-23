@@ -68,23 +68,29 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 				 CALCREATEAT*/
 
 				int uIdx = calinfo.getCustomer().getUIdx();
-				//---다음캘린더 글번호 얻기//--cal_info테이블에 추가
+				
 				int calIdx = calinfo.getCalIdx();
 				String calCategory = calinfo.getCalCategory();
 				String calThumbnail = calinfo.getCalThumbnail();
-
+				
+//				System.out.println("addCal함수1 : uIdx=" + uIdx + ", calIdx =" + calIdx); //calIdx = 0
 
 				Map<String, Object> map = new HashMap<>();
 				map.put("uIdx", uIdx);
-				map.put("calIdx", -1);
+//				map.put("calIdx", calIdx);  
 				map.put("calCategory", calCategory);
 				map.put("calThumbnail", calThumbnail);
-
+				
+				
+				//---다음캘린더 글번호 얻기//--cal_info테이블에 추가
 				session.insert("com.reco.calendar.CalendarMapper.addCal",map);
 				session.commit();
-
-				System.out.println("addCal함수 : uIdx=" + uIdx + ", calIdx =" + map.get("calIdx"));
-
+				
+//				System.out.println("addCal함수2 : uIdx=" + uIdx + ", calIdx =" + calIdx); //calIdx = 0
+				System.out.println("addCal함수3 : uIdx=" + uIdx + ", calIdx =" + map.get("calIdx")); //calIdx = 2
+				
+				calIdx = (int) map.get("calIdx"); //컨트롤러에서 calIdx 값 꺼낼 수 있게 넣어줌
+				calinfo.setCalIdx(calIdx);
 				//----------------------------------------------------------------------
 				//CAL_POST_uIdx값_calIdx값 이름의 테이블 생성
 				String postTableName = "cal_post_" + uIdx + "_"  + map.get("calIdx");

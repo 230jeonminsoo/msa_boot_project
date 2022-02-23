@@ -68,10 +68,8 @@ public class CalendarController {
 			e.printStackTrace();
 			model.addAttribute("msg", e.getMessage());
 			model.addAttribute("list", new ArrayList<CalInfo>());
-			return "callistresult.jsp";
 		}
-		
-
+		return "callistresult.jsp";
 	}
 	
 	
@@ -100,7 +98,7 @@ public class CalendarController {
 			List<CalInfo> list = service.findCalsByUIdx(uIdx);	
 			mnv.addObject("list", list);
 			
-			int calIdx = list.size();
+			int calIdx = calinfo.getCalIdx(); //calIdx값 받아오기 성공!
 			logger.info("컨트롤러 caladd1= calIdx" + calIdx + ",calCategory=" +calinfo.getCalCategory() + ", calThumbnail=" + calinfo.getCalThumbnail());
 			
 			//파일 경로생성
