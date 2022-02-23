@@ -153,7 +153,7 @@ function tabMenuClick(uNickname){
 				return false;
 			//indexcontroller
 			//tab에서 개인정보 관리를 클릭되었을때
-			case 'myprivate':
+			case 'pwdcheck':
 				ajaxUrl = menuHref;
 	            $('section>div.articles').empty();
 	            $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){

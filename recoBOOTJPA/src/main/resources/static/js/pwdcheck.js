@@ -8,7 +8,7 @@ function checkBtClick(pwd){
 		console.log($pwd);
 		if(pwd == $pwd){
 			console.log($pwd);
-			ajaxUrl = 'mycallist';
+			ajaxUrl = 'myprivate';
             $('section>div.articles').empty();
             $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){
             	if(jqXHR.status != 200){

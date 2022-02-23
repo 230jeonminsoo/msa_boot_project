@@ -104,18 +104,17 @@ public class IndexController {
 		
 		@GetMapping("/pwdcheck")
 		public String pwdcheck(HttpSession session) {
-//			if(session.getAttribute("myPage") == null) {
+			if(session.getAttribute("myPage") == null) {
 				return "pwdcheck.jsp";
-//			}else {
-//				return "mycallist.jsp";
-//			}
+			}else {
+				return "myprivate.jsp";
+			}
 		}
 		
 		//마이페이지 접속 후 첫화면
 		//마이캘린더 보는 컨트롤러 
 		@GetMapping("/mycallist")
 		public Object mycallist(HttpSession session, Model model) {
-			session.setAttribute("myPage", session);
 			
 			Customer c = (Customer)session.getAttribute("loginInfo");
 			int uIdx = c.getUIdx();
@@ -210,7 +209,8 @@ public class IndexController {
 		}
 		
 		@GetMapping("/myprivate")
-		public String myprivate() {
+		public String myprivate(HttpSession session) {
+			session.setAttribute("myPage", session);
 			return "myprivate.jsp";
 		}
 		@GetMapping("/findEmailPage")
