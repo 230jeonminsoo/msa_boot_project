@@ -140,17 +140,26 @@ function tabMenuClick(uNickname){
 			//indexcontroller	
 			//tab에서 커뮤니티 글관리이 클릭되었을때
 			case 'mycommunity':
-			console.log(uNickname);
+				ajaxUrl = './mycommunity/'+uNickname;
+               	$('section>div.articles').empty();
+                $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){
+                    if(jqXHR.status != 200){
+                        alert('응답실패:' + jqXHR.status);
+                    }
+                });
+				return false;
+			/*case 'mycommunity':
+				console.log(uNickname);
+	            let $articlesObj = $('section>div.articles');
+	            $articlesObj.empty();
 				$.ajax({
-			        url: './mycommunity/'+uNickname,
+			        url: './test',
 			        success:function(responseData){
-			            let $articlesObj = $('section>div.articles');
-			            $articlesObj.empty();
 			            $articlesObj.html(responseData);
 						window.scrollTo(0, 0);
 			        } 		
 				});
-				return false;
+				return false;*/
 			//indexcontroller
 			//tab에서 개인정보 관리를 클릭되었을때
 			case 'pwdcheck':

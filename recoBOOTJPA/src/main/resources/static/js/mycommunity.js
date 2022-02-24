@@ -30,7 +30,7 @@ function noticeDetail(option){
 				window.scrollTo(150, 150);							
             }
         }); 
-       
+       return false;
     });	
 }
 
@@ -137,7 +137,7 @@ function boardDetail(option){
 				window.scrollTo(900, 900);							
             }
         }); 
-       
+       return false;
     });	
 }
 
