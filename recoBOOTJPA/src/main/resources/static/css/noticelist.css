@@ -82,17 +82,34 @@ div.container>div.ntc_list>ul.ntc_top{
 }
 
 /* 공지사항 상단 내부*/
-div.container>div.ntc_list>ul.ntc_top>li>span{
+div.container>div.ntc_list>ul.ntc_top>li span{
 	margin-left:13px;
 	margin-right:10px;
 	text-align:center;
 	display: inline-block;
-	width:200px;
+	/* width:200px; */
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
 	font-weight: bold;
 }
+
+div.container>div.ntc_list>ul.ntc_top>li>span.ntc{
+	width:200px;	
+}
+div.container>div.ntc_list>ul.ntc_top>li>span.title{
+	width:550px;	
+}
+div.container>div.ntc_list>ul.ntc_top>li>span.nick{
+	width:180px;
+}
+div.container>div.ntc_list>ul.ntc_top>li>span.view{
+	width:180px;
+}
+div.container>div.ntc_list>ul.ntc_top>li>span.date{
+	width:180px;	
+}
+
 /*공지사항 각 리스트*/
 div.container>div.ntc_list>div>ul{
   border:1px solid gray;
@@ -111,11 +128,28 @@ div.container>div.ntc_list>div>ul>li span{
 	margin-right:10px;
 	text-align:center;
 	display: inline-block;
-	width:200px;
+	/* width:200px; */
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
 }
+
+div.container>div.ntc_list>div>ul>li>span.ntcIdx{
+	width:200px;	
+}
+div.container>div.ntc_list>div>ul>li>span.ntcTitle{
+	width:550px;	
+}
+div.container>div.ntc_list>div>ul>li>span.ntcuNickName{
+	width:180px;
+}
+div.container>div.ntc_list>div>ul>li>span.ntcViews{
+	width:180px;
+}
+div.container>div.ntc_list>div>ul>li>span.ntcCrt{
+	width:180px;	
+}
+
 /*글 없을시 글자*/
 div.container>div.ntc_list>span.noNtc{
 	margin:100px;

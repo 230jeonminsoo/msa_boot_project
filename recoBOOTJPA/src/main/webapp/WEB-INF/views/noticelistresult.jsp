@@ -82,11 +82,11 @@ list = pageDTO.getList();
 
 	<ul class="ntc_top">
 		<li>
-			<span>글번호</span>
-			<span>제목</span>
-			<span>닉네임</span>
-			<span>조회수</span>
-			<span>작성일</span>
+			<span class="ntc">글번호</span>
+			<span class="title">제목</span>
+			<span class="nick">닉네임</span>
+			<span class="view">조회수</span>
+			<span class="date">작성일</span>
 		</li>
 	</ul>
 <%if (pageDTO  == null) {%>
@@ -107,11 +107,11 @@ list = pageDTO.getList();
 	<div class ="noticelist" id="<%=ntcIdx%>"> 
 		 <ul>
 		    <li>
-			 <span><%=ntcIdx%></span>
-			 <span><%=ntcTitle%><%if(ntcAttachment != null){ %><img src="./images/클립.png"><%} %></span>
-			 <span><%=ntcuNickName%></span>
-			 <span><%=ntcViews%></span>
-			 <span><%=ntcCrt%></span>
+			 <span class="ntcIdx"><%=ntcIdx%></span>
+			 <span class="ntcTitle"><%=ntcTitle%><%if(ntcAttachment != null){ %><img src="./images/클립.png"><%} %></span>
+			 <span class="ntcuNickName"><%=ntcuNickName%></span>
+			 <span class="ntcViews"><%=ntcViews%></span>
+			 <span class="ntcCrt"><%=ntcCrt%></span>
 			 
 			 </li> 
 		  </ul>
