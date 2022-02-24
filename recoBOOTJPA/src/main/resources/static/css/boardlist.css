@@ -79,11 +79,32 @@ a{
 	margin-right:10px;
 	text-align:center;
 	display: inline-block;
-	width:200px;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
 	font-weight: bold;
+}
+/*자유게시판 컬럼 각 컨텐츠 크기 */
+.brd_list>ul.brd_top>li>span.brd{
+width:120px;
+}
+.brd_list>ul.brd_top>li>span.type{
+width:100px;
+}
+.brd_list>ul.brd_top>li>span.title{
+width:380px;
+}
+.brd_list>ul.brd_top>li>span.nick{
+width:150px;
+}
+.brd_list>ul.brd_top>li>span.view{
+width:100px;
+}
+.brd_list>ul.brd_top>li>span.comments{
+width:100px;
+}
+.brd_list>ul.brd_top>li>span.date{
+width:200px;
 }
 
 /*자유게시판 각 리스트*/
@@ -105,11 +126,40 @@ a{
 	margin-right:10px;
 	text-align:center;
 	display: inline-block;
-	width:200px;
+/* 	width:140px; */
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
 }
+
+
+.brd_list>div>ul>li>span.brdIdx{
+width:120px;
+}
+.brd_list>div>ul>li>span.brdType{
+width:100px;
+}
+.brd_list>div>ul>li>span.brdTitle{
+width:380px;
+}
+.brd_list>div>ul>li>span.BrdUNickName{
+width:150px;
+}
+.brd_list>div>ul>li>span.brdViews{
+width:100px;
+}
+.brd_list>div>ul>li>span.cmtCount{
+width:100px;
+}
+.brd_list>div>ul>li>span.brdCrt{
+width:200px;
+}
+/* */
+.brd_list>div>ul>li>span.title{
+	width:200px
+}
+
+
 
 /*글 없을시 글자*/
 div.container>div.brd_list>span.noBrd{

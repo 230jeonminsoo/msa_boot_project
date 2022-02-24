@@ -95,13 +95,13 @@ $(function(){
 <div class="brd_list">
 	<ul class="brd_top">
 		<li>
-			<span>글번호</span>
-			<span>분류</span>
-			<span>제목</span>
-			<span>닉네임</span>
-			<span>조회수</span>
-			<span>댓글수</span>
-			<span>작성일</span>
+			<span class="brd">글번호</span>
+			<span class="type">분류</span>
+			<span class="title">제목</span>
+			<span class="nick">닉네임</span>
+			<span class="view">조회수</span>
+			<span class="comments">댓글수</span>
+			<span class="date">작성일</span>
 		</li>
 	</ul> 
  
@@ -124,19 +124,19 @@ $(function(){
 <div class="boardlist" id="<%=brdIdx%>"> 
 	<ul>
 	    <li>
-		    <span><%=brdIdx%></span>
-		    <span> <% if(brdType == 0){%>
+		    <span class="brdIdx"><%=brdIdx%></span>
+		    <span class="brdType"> <% if(brdType == 0){%>
 		    <%="잡담"%>&nbsp;
 		    <% }%><% else if(brdType == 1){%>
 		    <%="정보"%>&nbsp;
 		    <% }%><% else{ brdType =2;%>
 		    <%="기타" %>
 		    <%} %></span>
-		    <span><%=brdTitle%> <%if(brdAttachment != null){ %><img src="./images/클립.png"><%} %></span>
-		    <span><%=BrdUNickName%></span>
-		    <span><%=brdViews%></span>
-		    <span><%=cmtCount%></span>
-		     <span><%=brdCrt%></span>
+		    <span class="brdTitle"><%=brdTitle%> <%if(brdAttachment != null){ %><img src="./images/클립.png"><%} %></span>
+		    <span class="BrdUNickName"><%=BrdUNickName%></span>
+		    <span class="brdViews"><%=brdViews%></span>
+		    <span class="cmtCount"><%=cmtCount%></span>
+		     <span class="brdCrt"><%=brdCrt%></span>
 	    </li>
 	  </ul>
 </div>
