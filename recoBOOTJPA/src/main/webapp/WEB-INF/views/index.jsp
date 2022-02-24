@@ -13,9 +13,18 @@ Customer c = (Customer)session.getAttribute("loginInfo");%>
 	<link rel="stylesheet" href="./css/footer.css">
 
 	<style>
-		header, section,footer{
-	    	width:100%;
-	    }
+	
+	    html, body {
+		  margin: 0;
+		  padding: 0;
+		}
+		
+		#wrap {
+		  min-height: 100vh;
+		  position: relative;
+		  width: 100%; 
+		}
+		
 	</style>
 
 <%
@@ -72,9 +81,10 @@ String code = (String)request.getAttribute("code");
 
 
 <body>
+	
 	 <header>
-	      <h1 class="logo">
-	      	<a href="./">RECO</a>
+	 	  <h1 class ="logo" >
+		      	<a href="./" >RECO</a>
 		  </h1>
 
 	      <nav>
@@ -82,20 +92,20 @@ String code = (String)request.getAttribute("code");
 	      </nav>
      </header>
 
-
-	<section>
-		<div class="articles0">
-		<%--로그인 성공시 callistresult가 이곳에 나타남--%>
+	<div id="wrap">
+		<section>
+			<div class="articles0">
+			<%--로그인 성공시 callistresult가 이곳에 나타남--%>
+			</div>
+		</section>
+	
+		<div style="position:fixed; bottom:40px; right:50px;">
+			<a href="#"><img style="width:70px ;height:70px" src="./images/navi_top.png" title="위로 가기"></a>
 		</div>
-	</section>
-
-	<div style="position:fixed; bottom:40px; right:50px;">
-		<a href="#"><img style="width:70px ;height:70px" src="./images/navi_top.png" title="위로 가기"></a>
+		<hr>
+		<footer>
+		     	<%@include file="./footer.jsp" %>     <!--맺음말-->
+		</footer>
 	</div>
-	<hr>
-	<footer>
-	     	<%@include file="./footer.jsp" %>     <!--맺음말-->
-	</footer>
-
 </body>
 </html>
