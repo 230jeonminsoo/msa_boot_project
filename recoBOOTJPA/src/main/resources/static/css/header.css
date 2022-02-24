@@ -20,20 +20,9 @@ header{
    height: 110px;
 }
 
-/* div.logo{
-	display:inline;
-  display: inline;
-  margin: 1em;
-  font-size: 35px;
-  margin-left:45%;
-  width:100%;
-  text-align: center;
-  margin-top: 5px;
-} */
-
-
 
  header>h1.logo{
+ 	font-size:40px;
 	margin-top: 36px;
     width: 200px;
     /* height: 66px; */
