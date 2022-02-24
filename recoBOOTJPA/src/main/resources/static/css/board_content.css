@@ -123,3 +123,11 @@ div.pagegroup>span:hover {
 div.pagegroup>span.active{
 	text-decoration: underline;
 }
+
+div.brdAttachment{
+	padding:10px;
+}
+
+div.brdAttachment:hover{
+	cursor:pointer;
+}
