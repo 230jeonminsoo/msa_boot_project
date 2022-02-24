@@ -10,7 +10,7 @@ div.brdDetail{
 	display: block;
 	/* border-left: 5px dotted orange;
   	border-right: 5px dotted orange;	 */
-	height: 100%;
+	height: 53%;
 }
 
 h1{
@@ -36,7 +36,7 @@ ul.brdDetail{
  /* 작성자 작성일 조회수 */
 .brdUNickname, .brdCreateAt, .brdViews{
 	float: left;
-	padding-right: 10px;
+	padding-right: 25px;
 
 }
 /*제목 부분 */
@@ -92,6 +92,9 @@ div.community_comment>span.cmt{
 	visibility:hidden;
 }
 
+div.cmt{
+	height:29px;
+}
 .commentwrap{
 	width:64%;
 	margin: 0 auto;

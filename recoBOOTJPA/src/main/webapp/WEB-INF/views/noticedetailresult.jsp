@@ -1,11 +1,14 @@
 
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.reco.customer.vo.Customer"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.Date"%>
 <%@page import="com.reco.notice.vo.Notice"%>
 <%
+Date nowTime = new Date();
+SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 Notice n= (Notice)request.getAttribute("n");
 int ntcIdx = n.getNtcIdx();
 String ntcTitle = n.getNtcTitle();
@@ -68,7 +71,7 @@ int ntcViews = n.getNtcViews();
 			<hr>
 			<div class="ntcTitle"><strong>제목:<span id="ntcTitle"> <%=ntcTitle%></span></strong></div>
 			<div class="ntcUNickname">작성자:<span> <%=ntcUNickname %></span></div>
-			<div class="ntcCreateA">작성일: <span> <%=ntcCreateAt %></span></div>
+			<div class="ntcCreateA">작성일: <span> <%=sf.format(ntcCreateAt) %></span></div>
 			<div class="ntcViews">조회수:<span id="ntcViews"> <%=ntcViews %></span></div><br>
 			<hr>
 			<div class="image"><img style="width:500px; height:500px;"></div>

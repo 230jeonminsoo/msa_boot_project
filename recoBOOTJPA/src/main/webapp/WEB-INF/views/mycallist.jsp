@@ -55,7 +55,7 @@
 <div class="articles" >
 	 <div class="rm_title">	
 	 	<p class="mycalRM" style="font-size: 20px;"><b> &lt;나의 캘린더 목록&gt; </b></p>
-	 	<button class="mycalRM" >글 삭제</button>
+	 	<button class="mycalRM" >캘린더 삭제</button>
 	 </div>
 	 <ul class="title_list">
 		<%

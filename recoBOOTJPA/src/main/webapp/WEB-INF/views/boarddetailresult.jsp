@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.reco.dto.PageDTO2"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.reco.customer.vo.Customer"%>
@@ -16,6 +17,8 @@
 
  
 <%
+Date nowTime = new Date();
+SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 //Board b = (Board)request.getAttribute("b");
 //List<Comment> comments = b.getComments();
 PageDTO2<Board> pageDTO2 = (PageDTO2)request.getAttribute("PageDTO2");
@@ -135,7 +138,7 @@ $(function(){
 		     
 		     <div class="brdCreateAt">작성일:     
 		            <span >
-		             <%=brdCreateAt %>
+		             <%=sf.format(brdCreateAt)%>
 		            </span>
 	          </div>
 	         
@@ -238,27 +241,27 @@ String uNickName = c.getUNickName();
 	         	<div class="commentwrap2">
 	         	<div class="community_comment" id="<%=cmtIdx%>">
 
-	         		   		<span class="cmt" id="cmtIdx"><%=cmtIdx %></span><strong><div class="cmt"><%=cmtUNickName %></div><div class="cmt"><%=cmtCreateAt %></div></strong> 
+	         		   		<span class="cmt" id="cmtIdx"><%=cmtIdx %></span><strong><div class="cmt"><%=cmtUNickName %></div></strong> 
 								<div class="cmt"><%=cmtContent %></div> 
-							
+								<div class="cmt"><%=sf.format(cmtCreateAt) %></div>
 							<div class="community_comment_button">
 								<%if(! c.getUNickName().equals(cmtUNickName)) {%> 
-									<button class="comment_comment_add" id="<%=cmtIdx %>">대댓글 달기</button>
+									<button class="comment_comment_add" id="<%=cmtIdx %>">댓글 달기</button>
 								<%} %> 	
 		         				 <%if(c.getUNickName().equals(cmtUNickName)) {%> 
-			         				<button class="comment_modify" id="<%=cmtIdx %>">대댓글 수정</button>
-									<button class="comment_remove" id="<%=cmtIdx %>">대댓글 삭제</button>
+			         				<button class="comment_modify" id="<%=cmtIdx %>">수정</button>
+									<button class="comment_remove" id="<%=cmtIdx %>">삭제</button>
 								 <%} %> 
 	         				</div>
 
 							<div class="comment_modify_input" id="<%=cmtIdx%>">
 								<input style="resize:none;" name="cmtContent" id="<%=cmtIdx %>" value="<%=cmtContent%>" required>
-								<button class="comment_modify_complete">대댓글 수정</button>	
+								<button class="comment_modify_complete">수정</button>	
 							</div>
 							<form method="post" action="./cmtadd" autocomplete="off">
 								<div class="comment_comment_input" id="<%=cmtIdx%>">
 							   		 <div class="textarea"><textarea rows="2" cols="50" style="resize:none;" name="cmtContent" placeholder="당신의 소중한 댓글을 적어주세요."></textarea></div>
-							   			 <button class="comment_comment_add_complete" >대댓글 등록</button>
+							   			 <button class="comment_comment_add_complete" >등록</button>
 							   		<input class="cmtParentIdx" name="cmtParentIdx" value=<%=cmtIdx%>>	
 								</div>
 							</form>
@@ -274,25 +277,26 @@ String uNickName = c.getUNickName();
 	         	<%} else{%>   
 	         			 <div class="community_comment"id="<%=cmtIdx%>">
 	         			 
-	         			 <span class="cmt" id="cmtIdx"><%=cmtIdx %></span><strong><div class="cmt"><%=cmtUNickName %></div> <div class="cmt"><%=cmtCreateAt %></div></strong> 
+	         			 <span class="cmt" id="cmtIdx"><%=cmtIdx %></span><strong><div class="cmt"><%=cmtUNickName %></div></strong> 
 	         		   <div class="cmt"><%=cmtContent %></div>
+	         		   <div class="cmt"><%=sf.format(cmtCreateAt) %></div>
 	         		   	<div class="community_comment_button">
 	         		   	<%if(! c.getUNickName().equals(cmtUNickName)) {%> 
 	         		   		<button class="comment_comment_add" id="<%=cmtIdx %>">대댓글 달기</button>   
 	         		   	<%} %>	
 	         		   		<%if(c.getUNickName().equals(cmtUNickName)) {%> 
-		         		   		<button class="comment_modify" id="<%=cmtIdx %>">댓글 수정</button>
-			         		 	<button class="comment_remove" id="<%=cmtIdx %>">댓글 삭제</button>
+		         		   		<button class="comment_modify" id="<%=cmtIdx %>">수정</button>
+			         		 	<button class="comment_remove" id="<%=cmtIdx %>">삭제</button>
 		         		 	 <%} %> 
 		         		 </div>
 		         		 	<div class="comment_modify_input" id="<%=cmtIdx%>">
 								<input style="width:300px;height:30px; resize:none;" name="cmtContent" id="<%=cmtIdx %>" value="<%=cmtContent%>" required>
-								<button class="comment_modify_complete">댓글 수정</button>
+								<button class="comment_modify_complete">수정</button>
 							</div>
 							<form method="post" action="./cmtadd" autocomplete="off">
 								<div class="comment_comment_input" id="<%=cmtIdx%>">
 							   		 <div class="textarea"><textarea rows="2" cols="50" style="resize:none;" name="cmtContent" placeholder="당신의 소중한 댓글을 적어주세요."></textarea></div>
-							   			 <button class="comment_comment_add_complete" >대댓글 등록</button>
+							   			 <button class="comment_comment_add_complete" >등록</button>
 							   		<input class="cmtParentIdx" name="cmtParentIdx" value=<%=cmtIdx%>>	
 								</div>
 							</form>
