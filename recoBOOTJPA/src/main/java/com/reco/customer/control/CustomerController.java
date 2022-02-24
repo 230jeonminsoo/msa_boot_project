@@ -365,6 +365,7 @@ public class CustomerController {
     	try {//찾은경우 = 가입이 된경우 로그인 인포세션에 넣기
     		service.emaildupchk(uEmail);
     		String nickname = dao.findByEmail(uEmail).getUNickName();
+    		c.setUIdx(dao.findByEmail(uEmail).getUIdx());
 			c.setUEmail(uEmail);
 			c.setUPwd(idString); 
 			c.setUNickName(nickname);
@@ -384,7 +385,8 @@ public class CustomerController {
 	    		c2.setUNickName(uNickName);
 	    		logger.info("닉넴 중복 아닌경우 : "+idString);
 	    		logger.info("닉넴 중복 아닌경우 : "+uEmail);
-	    		service.signup(c2); //회원가입 서비스 호출 	
+	    		service.signup(c2); //회원가입 서비스 호출 
+	    		c2.setUIdx(dao.findByEmail(uEmail).getUIdx());
 	    		session.setAttribute("loginInfo", c2);
 	    	    session.setAttribute("myPage", session); 
 	    	}	
