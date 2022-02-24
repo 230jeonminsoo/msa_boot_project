@@ -138,6 +138,7 @@ public class CustomerController {
 		int status = 0;
 		try {
 			service.signup(c);
+			c.setUIdx(dao.findByEmail(email).getUIdx());
 			status = 1;
 			resultMsg = "가입성공";	
 			session.setAttribute("loginInfo", c);
@@ -145,6 +146,8 @@ public class CustomerController {
 		}catch (AddException e) {
 			e.printStackTrace();
 			resultMsg = e.getMessage();
+		} catch (FindException e) {
+			e.printStackTrace();
 		}
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("code",code);
