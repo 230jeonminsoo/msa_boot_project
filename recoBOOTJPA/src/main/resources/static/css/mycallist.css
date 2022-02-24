@@ -62,13 +62,21 @@ button.mycalRM:hover {
 
 }
 
+input.checkbox {
+  position: absolute;
+  top: 10px;
+  right : 10px; 
+  border-radius: 50%;
+    -webkit-transition-duration: 0.4s; /* Safari */
+
+  transition-duration: 0.4s;
+}
+
 
 /* 각 앨범 그림 있는 부분을 감싸는 링크 */
 .title_wrap{
   position: relative;
 }
-
-
 
 
 #title5{
@@ -104,23 +112,6 @@ img{
   display: block; margin: 0 auto;
 }
 
-input.btn1 {
-  position: absolute;
-  top: 10px;
-  right : 10px; 
-  border-radius: 50%;
-    -webkit-transition-duration: 0.4s; /* Safari */
-
-  transition-duration: 0.4s;
-}
-
-input.btn1[type=image]:hover ,
-input.btn1[type=image]:active,
-input.btn1[type=image]:focus {
-  background-image: url(./images/navi.png);
-  background: gray; 
-  color: white;
-}
 
 /* 그림에 커서가 놓일 때 hover되는 것 */
 .title_wrap:hover .hidden_title{

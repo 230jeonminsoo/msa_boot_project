@@ -1,14 +1,30 @@
 @charset "UTF-8";
+@font-face {
+    font-family: 'DesignHouse';
+    font-weight: 700;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/designhouse/DesignHouseBold.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/designhouse/DesignHouseBold.eot?#iefix') format('embedded-opentype'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/designhouse/DesignHouseBold.woff2') format('woff2'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/designhouse/DesignHouseBold.woff') format('woff'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/designhouse/DesignHouseBold.ttf') format("truetype");
+    font-display: swap;
+}  
 
+div {
+	font-family: 'DesignHouse';
+}
 
 div.tab{
 	background-color: rgb(244, 244, 244);
     display:block;
-}
+    height:100%;
+} 
 
 div.tab>ul{
-	width:100%;
-	height:35px;
+	background-color: rgb(244, 244, 244);
+	width:60%;
+	margin-left: 20%;
 	margin-top:0px;
     display: table;
   	table-layout:fixed;
@@ -29,6 +45,7 @@ div.tab>ul>li>a{
   	border: 1px none;
   	font-size: 30px;
     text-decoration: none;
+    
 }
 div.tab>ul>li>a:hover{
     font-weight:bolder;

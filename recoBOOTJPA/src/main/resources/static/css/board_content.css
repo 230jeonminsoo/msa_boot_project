@@ -16,7 +16,7 @@ div.brdDetail{
 h1{
 	font-size: 30px;
 	margin-left: 205px;
-	margin-top: 40px;
+	/* margin-top: 40px; 이거 주면 탭이 두꺼워져요!*/
 }
 
 ul.brdDetail{

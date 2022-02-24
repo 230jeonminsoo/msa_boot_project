@@ -1,33 +1,49 @@
 @charset "UTF-8";
 @import url("base.css");
+@font-face {
+    font-family: 'DesignHouse';
+    font-weight: 700;
+    font-style: normal;
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/designhouse/DesignHouseBold.eot');
+    src: url('https://cdn.jsdelivr.net/gh/webfontworld/designhouse/DesignHouseBold.eot?#iefix') format('embedded-opentype'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/designhouse/DesignHouseBold.woff2') format('woff2'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/designhouse/DesignHouseBold.woff') format('woff'),
+         url('https://cdn.jsdelivr.net/gh/webfontworld/designhouse/DesignHouseBold.ttf') format("truetype");
+    font-display: swap;
+}    
 
 header{
+   font-family: 'DesignHouse';
    background-color:rgb(253, 205, 81); 
    border-bottom: 1px solid #e5e5e5;
-   height: 150px;
+   height: 110px;
 }
 
-header>h1{
+header>h1.logo{
+	/* margin-top: 5px; */
     width: 200px;
-    height: 100px;
+    height: 66px;
     float:left;
-    display:block;
+/*     display:block; */
     margin-left: 45%;
 }
 
-header>h1.logo>a{
-	background-image: url(../images/logo-removebg-preview.png);
-	background-repeat: no-repeat;
+header>h1>a{
+	/* background-image: url(../images/logo-removebg-preview.png);  */
+	margin-top: 20px;
+	text-align: center;
+	text-decoration: none;
 	display:block;
 	width: 100%;
-    height: 100%;
-    overflow: hidden;  
-    text-indent: -20000px;
+    /* height: 80%; */
+    overflow: hidden;   
+    /* text-indent: -20000px; */
 }
-  
+ 
+
   
 header>nav{
-    margin: 0px auto;
+    margin: 5px auto;
     padding-right:1%;
     float:right;
     font-weight: bolder;

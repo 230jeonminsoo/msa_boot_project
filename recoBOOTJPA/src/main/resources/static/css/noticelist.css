@@ -8,17 +8,16 @@
   margin: 0 auto;
 
 } */
-.container{
+/* .container{
    
   height: 100%;
-  /* border-left: 5px dotted orange;
-  border-right: 5px dotted orange; */
+  border-left: 5px dotted orange;
+  border-right: 5px dotted orange;
   width: 90%;
   margin: 0 auto;
-  
-      
 }
-
+ */
+ 
 /* 공지사항 이라고 글자*/
 div.container>h1{
   text-align: center;
@@ -65,10 +64,11 @@ div.container>div.write_button{
 	
 }
 
-a{
+/* a{
 	text-decoration:none;
 	font-weight:bold;
-}
+} */
+
 /* 공지사항 상단 */
 div.container>div.ntc_list>ul.ntc_top{
  border:1px solid gray;
