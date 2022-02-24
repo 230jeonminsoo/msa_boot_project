@@ -1,55 +1,18 @@
 @charset "UTF-8";
 
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Hahmlet:wght@500&display=swap');
+
 /* 캘린더 부분  start*/
 .calCategory{
+	font-family: 'Gowun Dodum', sans-serif;
 	font-size: 30px;
 }
 
-.container{
- 
-  display: block;
-  width: 90%;
-  padding-top: 60px;
-  margin: 0 auto;
- 
-  position: relative;
-  height: 110vh; /*수정*/
- 
-}
-
-.container:after{
-    display: block;
-    clear: both;
-    content: '';
-    
-    position: absolute;
-    top: 100px;
-    bottom: 100px;
-    right: 100px;
-}  
-
-
-* { /*수정:추가한부분*/
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  box-sizing: border-box;
-}
-
-.body {
-  /* display: flex; */
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh; /*수정*/
-  
-}
-
-/*
 .body:after{
   width: 10px;
   background-color: orange;
   content: '';
-}*/
+}
 
 .calendar {
     width: 1000px; /*달력 폭*/
