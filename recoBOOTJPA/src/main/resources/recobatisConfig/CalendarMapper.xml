@@ -45,7 +45,7 @@
 
 	<!-- cal_info 컬럼삭제 -->
 	<delete id="deleteCal" parameterType="int">
-		delete from CalInfo where u_Idx=${uIdx} and cal_Idx=${calIdx}
+		delete from cal_info where u_Idx=${uIdx} and cal_Idx=${calIdx}
 	</delete>
 
 	<!-- cal_post 테이블 삭제 -->

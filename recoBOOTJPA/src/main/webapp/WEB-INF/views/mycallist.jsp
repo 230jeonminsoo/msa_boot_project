@@ -19,7 +19,7 @@
 		/*---두번째 div에서  모든 img태그 보여주기 START--*/
 		let $img = $('div.calIdx img');
 		$img.each(function(i, element){
-			let imgId = $(element).attr('id'); <%-- <%=imageFileName %>값 = "s_cal_post_" + uIdx  + "_" + calIdx + ".jpg"; --%>	
+			let imgId = $(element).attr('id'); 	
 			$.ajax({
 				url: './calendardownloadimage?imageFileName='+imgId,
 				
@@ -39,8 +39,13 @@
 		});//end each
 		/*---두번째 div에서  모든 img태그 보여주기 END--*/
 		
+	
+		
+		//캘린더 클릭시 해당 달력 옆에 보여줌
+		mycalThumbnailClick("mycalendar");
+		
 		//캘린더 삭제버튼 클릭시 발생하는 이벤트
-		/* removeBtnClick(); */
+		removeBtnClick();
 	
    });
 </script>
@@ -49,7 +54,7 @@
 <section><!--callist.js -->
 <div class="articles" >
 	 <div class="rm_title">	
-	 	<p class="mycalRM" style="font-size: 30px;"><b> <캘린더 관리> </b></p>
+	 	<p class="mycalRM" style="font-size: 20px;"><b> &lt;나의 캘린더 목록&gt; </b></p>
 	 	<button class="mycalRM" >글 삭제</button>
 	 </div>
 	 <ul class="title_list">
@@ -68,6 +73,10 @@
 				List<CalInfo> list = (List)request.getAttribute("list");
 				int uIdx = c.getUIdx();
 				
+				//String calCategory = request.getParameter("calCategory");
+				//CalInfo ci = (CalInfo)request.getAttribute("calinfo");
+				//int calIdx = Integer.parseInt(request.getParameter("calIdx"));
+				
 				String saveDirectory = "C:\\reco\\calendar";
 				File dir = new File(saveDirectory);
 				File[] files = dir.listFiles();
@@ -84,14 +93,15 @@
 				    <a href="#"> <!-- 썸네일 -->
 				     	<img id="<%=thumbnailName %>" alt="thumbnailName" title="thumbnailName">
 				    </a>
-				  </div>
-				  
-				  <div class="title_info">
-				   	 <p class="title_front">
-				   	 	<input type='checkbox'
+				    <input class="checkbox"
+				    	   type='checkbox'
 				    	   style='width:25px; height:25px'	
 					       name='calIdx' 
 					       value=<%=calIdx%> />
+				  </div>
+				  
+				  <div class="title_info" >
+				   	 <p class="title_front">
 				   	 	<%=ci.getCalCategory() %>
 				   	 </p>
 				  </div>
@@ -105,7 +115,9 @@
 		<%
 		}
 		%>
-
 	 </ul>
+	 
+	 <div class="calendardetail">
+ 	 </div> 
  </div>
 </section>

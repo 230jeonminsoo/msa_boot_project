@@ -43,6 +43,10 @@ public class CalendarService {
 		return dao.modifyCal(calinfo);
 	}
 	
+	public CalInfo removeCal(CalInfo calinfo) throws RemoveException {
+		return dao.removeCal(calinfo);
+	}
+	
 	public CalPost addCalPost(CalPost calpost) throws AddException {
 			return dao.addCalPost(calpost);
 	}
@@ -60,6 +64,8 @@ public class CalendarService {
 	public void removeCalPost(String calDate) throws RemoveException{
 		dao.removeCalPost(calDate);
 	}
+
+
 
 
 	

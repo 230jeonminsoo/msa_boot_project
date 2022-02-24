@@ -40,7 +40,7 @@ public interface CalendarDAOInterface {
 	
 	
 	/**
-	 * 고객의 캘린더 기본정보(카테고리, 썸네일)를 삭제한다 
+	 * 고객의 캘린더를 삭제한다 
 	 * @param calinfo
 	 * @throws RemoveException
 	 */

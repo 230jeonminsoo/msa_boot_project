@@ -1,13 +1,20 @@
 /* calInfowrite.html */
 /*--캘린더 수정버튼이 클릭되었을때 START--*/
-function calInfomodifyBtClick($formObj){
+//function calInfomodifyBtClick($formObj){
 	//	alert("in addCalSubmit");
-	let $calInfomodifyBt = $('fieldset>form>button[type=submit]');
+/*	let $calInfomodifyBt = $('fieldset>form>button[type=submit]');
     $calInfomodifyBt.click(function(){
 		let formData = new FormData(this);
+		
+		let $inputfile = $('div.input_image>input[type=file]');
+		let existfile = $(div.calIdx>img).attr('id');
+		if($inputfile == null){
+			formData.append(calThumbnail, existfile);
+		}
 		formData.forEach(function (value, key) {
 			console.log(key + ":" + value);
 		});		
+		
 		 let ajaxUrl = './calInfomodify'; 
 	        
 			$.ajax({
@@ -29,7 +36,7 @@ function calInfomodifyBtClick($formObj){
         }); 
 		return false;
 	});
-}
+}*/
 
 
 /* --수정전 팝업창--

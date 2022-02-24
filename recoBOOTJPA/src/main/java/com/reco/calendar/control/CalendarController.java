@@ -35,9 +35,12 @@ import com.reco.calendar.service.CalendarService;
 import com.reco.calendar.vo.CalInfo;
 import com.reco.calendar.vo.CalPost;
 import com.reco.customer.vo.Customer;
+import com.reco.dto.PageDTO;
 import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
+import com.reco.exception.RemoveException;
+import com.reco.notice.vo.Notice;
 
 import net.coobird.thumbnailator.Thumbnailator;
 
@@ -159,7 +162,7 @@ public class CalendarController {
 		} catch (AddException e) {
 			e.printStackTrace();
 			model.addAttribute("msg", e.getMessage());
-			mnv.setViewName("failresult.jsp");
+			mnv.setViewName("index.jsp");
 		} catch (FindException e) {
 			e.printStackTrace();
 			model.addAttribute("msg", e.getMessage());
@@ -171,10 +174,10 @@ public class CalendarController {
 
 
 
-
+//캘린더 제목과 썸네일 사진을 수정하는 컨트롤러
 @PostMapping("calInfomodify")
-public Object calInfoModify(@RequestParam(value = "calIdx")int calIdx,
-							@RequestParam(value = "calCategory", required=false) String calCategory
+public Object calInfoModify(@RequestParam(value = "calIdx") int calIdx,
+							@RequestParam(value = "calCategory" ) String calCategory
 						   ,@RequestParam(value = "calThumbnail") MultipartFile multipartFile
 						   , HttpSession session, Model model )  { 
 		logger.info("calInfoModify컨트롤러 multipartFile.getSize()=" + multipartFile.getSize() + ", multipartFile.getOriginalFileName()=" + multipartFile.getOriginalFilename());
@@ -185,8 +188,8 @@ public Object calInfoModify(@RequestParam(value = "calIdx")int calIdx,
 		CalInfo ci = new CalInfo();
 		ci.setCustomer(c); //calinfo의 고객정보는 로그인된 Customer타입의 c로 채워줌
 		ci.setCalCategory(calCategory);
-		ci.setCalThumbnail(multipartFile.getOriginalFilename());
 		ci.setCalIdx(calIdx);
+		ci.setCalThumbnail(multipartFile.getOriginalFilename());
 		
 		ModelAndView mnv = new ModelAndView();
 		try {
@@ -268,7 +271,35 @@ public Object calInfoModify(@RequestParam(value = "calIdx")int calIdx,
 		return mnv;
 }
 
-
+//캘린더를 삭제하는 컨트롤러
+@GetMapping("calendarRemove")
+public String noticeRemove(int calIdx, HttpSession session, Model model) {
+	
+	Customer c = (Customer)session.getAttribute("loginInfo");
+	int uIdx = c.getUIdx();
+	
+	CalInfo calinfo = new CalInfo();
+	calinfo.setCustomer(c);
+	calinfo.setCalIdx(calIdx);
+	
+	try {
+			CalInfo ci = service.removeCal(calinfo);
+			
+			List<CalInfo> list = service.findCalsByUIdx(uIdx);
+			model.addAttribute("list", list);
+			model.addAttribute("ci", ci);
+			
+			return "mycallist.jsp";
+	} catch (RemoveException e) {
+		System.out.println(e.getMessage());
+		model.addAttribute("msg", e.getMessage());
+		return "mycallist.jsp";
+	} catch (FindException e) {
+		e.printStackTrace();
+		model.addAttribute("msg", e.getMessage());
+		return "mycallist.jsp";
+	} 
+}
 
 
 //캘린더 달력을 보는 컨트롤러 
@@ -283,10 +314,6 @@ public String CalPostList (@RequestParam(value = "calIdx")int calIdx,
 	calinfo.setCustomer(c);
 	calinfo.setCalIdx(calIdx);
 	
-	
-	//String calIdx =  request.getParameter("calIdx");
-	
-
 	//요청전달데이터로 년/월정보가 없으면 오늘날짜기준의 년/월값으로 설정한다
 	//String calDate = request.getParameter("dateValue");  
 	if(calDate == null ||calDate.equals("")) {

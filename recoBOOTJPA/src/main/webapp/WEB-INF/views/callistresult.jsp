@@ -3,15 +3,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%Customer c = (Customer)session.getAttribute("loginInfo"); %>
-<%-- <%
-	Date nowTime = new Date();
-	SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM");
-	String dateValue = sf.format(nowTime);
-%> --%>
-<script src="./js/callist.js"></script>
 
+<%Customer c = (Customer)session.getAttribute("loginInfo"); %>
+
+<script src="./js/callist.js"></script>
+<!-- <link rel="stylesheet" href="./css/tab.css"> -->
+<link rel="stylesheet" href="./css/callist.css">
 
 <script>
     $(function(){
@@ -49,13 +46,9 @@
 </div>
 
 <section><!--callist.js -->
-<div class="articles"><!-- 오늘 날짜값 넣기-->
-	 <%-- <div class="nowdate" style="display:none">
-	 	<%=sf.format(nowTime)%>
-	 </div> --%>
+<div class="articles">
 	 <ul class="title_list">
 	  	<jsp:include page="./title_list.jsp"/>
-
 	 </ul>
  </div>
 </section>
