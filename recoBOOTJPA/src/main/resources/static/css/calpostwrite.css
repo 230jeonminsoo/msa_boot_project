@@ -7,7 +7,7 @@ section{
 .container{
    
   display: block;
-  width: 90%;
+  width: 400px;
   
   margin: 0 auto;
   
@@ -34,7 +34,7 @@ section{
 
 fieldset{
  
-  width: 1000px;
+  width: 400px;
   /* margin: 0 auto; */
   margin-top: 40;
   margin-left: auto;

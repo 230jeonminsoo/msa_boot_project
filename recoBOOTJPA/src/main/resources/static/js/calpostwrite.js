@@ -24,6 +24,8 @@ function addCalPostClick(){
 		}
 		let calIdx = $(this).find('input[name=calIdx]');
 		let ajaxUrl = './calpostAdd';
+		alert ("캘린더 글이 저장되었습니다");
+		self.close();
 		
 		let formData = new FormData($(this)[0]);
 		$.ajax({
@@ -34,14 +36,33 @@ function addCalPostClick(){
 				//data:{calIdx:calIdx}, //formData:formData,
 				data:formData,
 	            success:function(responseData){
+					//opener.parent.location.reload(); //jsp새로고침
 	                let $articlesObj = $('section>div.articles');
-	                $articlesObj.empty();
+	                $articlesObj.empty(); //선택한 요소의 하위요소를 제거합니다
 	                $articlesObj.html(responseData);
 		            }
 	        });
 	        return false;
 		});
 }
+
+const state = {
+    event: initEvent(),
+    events: [],
+    dialog: false,
+};
+
+function initEvent(){
+    return {
+        startDate: '',
+        startTime: '',
+        endDate: '',
+        endTime: '',
+        content: '',
+        title: '',
+}
+}
+
 
 /*-calpostwrite화면에서 calmainimg 미리보기-*/
 	function readImage(input) {
