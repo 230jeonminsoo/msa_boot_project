@@ -10,7 +10,7 @@ pwd = c.getUPwd();
 }
 %>
 
-<link rel="stylesheet" href="./css/tab.css">
+<link rel="stylesheet" href="./css/pwdcheck.css">
 <script src="./js/pwdcheck.js"></script>
 
 
