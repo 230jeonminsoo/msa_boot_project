@@ -22,7 +22,9 @@
 	<update id="modifyStatus" parameterType="int">
 		update customer set u_status = 0 where u_idx=#{uIdx}
 	</update>
-	
+	<update id="restoreStatus" parameterType="int">
+		update customer set u_status = 1 where u_idx=#{uIdx}
+	</update>
 	<update id="modifyPwd" parameterType="Customer">
 		update customer set u_pwd=#{uPwd} where u_idx=#{uIdx}
 	</update>
