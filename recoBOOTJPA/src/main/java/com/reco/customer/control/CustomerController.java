@@ -143,6 +143,7 @@ public class CustomerController {
 			resultMsg = "가입성공";	
 			session.setAttribute("loginInfo", c);
 		    session.setAttribute("myPage", session); 
+		    session.setAttribute("kakaoAccountRemove", code);
 		}catch (AddException e) {
 			e.printStackTrace();
 			resultMsg = e.getMessage();
@@ -313,8 +314,6 @@ public class CustomerController {
 		 int pwdInt = (int)userInfo.get("pwd");
 		 String uPwd = Integer.toString(pwdInt);
 		 service.findAndDeleteCustomerByPwd(uPwd);
-		
-		 
 	}
 	
 	@RequestMapping(value="/kakaologin")
@@ -391,12 +390,14 @@ public class CustomerController {
 	    		service.signup(c2); //회원가입 서비스 호출 
 	    		c2.setUIdx(dao.findByEmail(uEmail).getUIdx());
 	    		session.setAttribute("loginInfo", c2);
-	    	    session.setAttribute("myPage", session); 
+	    	    session.setAttribute("myPage", session);
+	    	    session.setAttribute("kakaoAccountRemove", code);
 	    	}	
     	}
 		
         session.setAttribute("loginInfo", c);
         session.setAttribute("myPage", session); 
+        session.setAttribute("kakaoAccountRemove", code);
         //session.setAttribute("access_Token", access_Token);//세션 loginInfo로 사용해서 필요없을 듯
     	
         return "index.jsp";
