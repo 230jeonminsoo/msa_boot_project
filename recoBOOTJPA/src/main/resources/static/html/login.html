@@ -29,32 +29,35 @@
 		/* kakaoLogin() */
     });
 	</script>
-  	
-    	<div class="login">  
-            <form method="post" action="./login" target="/login" autocomplete="off">
-                         
-                <div class="login_form">
-	                <h1>RECO</h1>
-	                <h3>로그인</h3>
+  		<div class="container">
+	    	<div class="login">  
+	            <form method="post" action="./login" target="/login" autocomplete="off">
+	                         
+	                <div class="login_form" style="line-height:180%;" >
+		                <h1>RECO</h1>
+		                <h3>로그인</h3>
+		                
+		                <input type="text" name="email" id="email" required placeholder="이메일">
+		                <br>
+		                <input type="password" name="pwd" id="pwd" required placeholder="비밀번호"> 
+		                <br>
+		                <button class="loginBt">로그인</button><br><br>
+	                </div>
 	                
-	                <input type="text" name="email" id="email" required placeholder="이메일">
-	                <br>
-	                <input type="password" name="pwd" id="pwd" required placeholder="비밀번호"> 
-	                <br>
-	                <button>로그인</button><br><br>
-                </div>
-                
-               
-              </form>   
-              
-                <div class="login_other">
-                	이메일를 잊어버리셨나요? <button class="findEmailPage">이메일찾기</button><br><br>
-	                비밀번호를 잊어버리셨나요? <button class="findPwdPage">비밀번호찾기</button><br><br>
-	                회원이 아니신가요? <button class="beforeSignup">회원가입</button>
-                </div>
-              
-         
-               <a href="https://kauth.kakao.com/oauth/authorize?client_id=2177f6a7b4ac54c3449ddca01ead7def&redirect_uri=http://localhost:9998/recoBOOTJPA/kakaologin&response_type=code">
-               <img src="./images/kakao_login_medium_narrow.png"></a>
-          </div>     
+	               
+	              </form>   
+	              
+	                <div class="login_other" style="line-height:180%;" >
+	                	이메일를 잊어버리셨나요? &nbsp;<button class="findEmailPage">이메일찾기</button><br><br>
+		                비밀번호를 잊어버리셨나요? &nbsp;<button class="findPwdPage">비밀번호찾기</button><br><br>
+		                회원이 아니신가요? &nbsp;<button class="beforeSignup">회원가입</button>
+	                </div>
+	              
+	         	   <div class="login_kakao" style="line-height:180%;">
+		               <a href="https://kauth.kakao.com/oauth/authorize?client_id=2177f6a7b4ac54c3449ddca01ead7def&redirect_uri=http://localhost:9998/recoBOOTJPA/kakaologin&response_type=code">
+		               <br>
+		               <img src="./images/kakao_login_medium_narrow.png"></a>
+	               </div>
+	        </div>
+        </div>     
 
