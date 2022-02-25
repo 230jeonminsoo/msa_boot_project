@@ -100,22 +100,26 @@ File[] files = dir.listFiles();
           </div>
 
 	<script>
-			//
             var dateChange = () => {
             var date_input = document.getElementById("date");
             //var text_input = document.getElementById("text");
             text_input.value = date_input.value;
             }; 
             
-               		
+            var popupWindow = null;   		
     		//달력에서 캘린더글등록 클릭시 발생하는 이벤트
-    		function calpostWrite() {  	 	 
-            //화면기준 팝업 가운데 정렬
-    		var w = (window.screen.width/2) -100;
-    		var h = (window.screen.height/2) -100;
-    		var url = "calpostwrite?uIdx=<%=uIdx%>&calIdx=<%=calIdx%>&<%=calCategory %>";
-    		window.open(url, "calpostwrite", "width = 800, height=800,left="+w+", top="+h); 
-    	}
+    		function calpostWrite() {  
+	    		var data = "<%=calCategory %>";
+	            //화면기준 팝업 가운데 정렬
+	    		var w = (window.screen.width/2) -100;
+	    		var h = (window.screen.height/2) -100;
+	    		var url = "calpostwrite?uIdx=<%=uIdx%>&calIdx=<%=calIdx%>&calCategory=<%=calCategory %>";
+	    		popupWindow = window.open(url, "calpostwrite", "width = 800, height=800,left="+w+", top="+h, data);
+    		}
+    		
+   		    function submitToPopUp(){
+   	    		popupWindow.document.all.zipcode1.value = document.all.zipcode1.value;
+   	    	} 
      </script>
      
 

@@ -74,7 +74,7 @@ th,td {
 
 <body>
 
-	<h2 align="center">&nbsp;캘린더 글 작성</h2>
+	<h2 align="center"><%=calCategory %>&nbsp;캘린더 글 작성</h2>
 	<form name="writeFrm" method="post" enctype="multipart/form-data">
 	     <input type="hidden" name="calIdx" value="<%=calIdx %>">
 	     <input type="hidden" name="calCategory" value="<%=calCategory %>">
