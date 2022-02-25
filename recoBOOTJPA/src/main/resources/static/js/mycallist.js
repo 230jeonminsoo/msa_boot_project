@@ -66,7 +66,8 @@ function removeBtnClick(){
 				let $articlesObj = $('section>div.articles');//callistresutl.jsp의 섹션
 				$articlesObj.empty();
                 $articlesObj.html(responseData);
-				history.go(-1); 
+				//history.go(-1);
+				location.reload(); 
 
 		    }
         }); 

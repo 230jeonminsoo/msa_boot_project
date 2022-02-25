@@ -31,11 +31,10 @@ function calThumbnailClick(){
 	}
 
 
-/*-callistresult화면에서 캘린더 add 클릭했을때-*/	
+// url 바로 이동하기 : callistresult화면에서 캘린더 add 클릭했을때	
 function caladdClick(){
 	$('section>div.articles>ul>li>div.title_add>a>img').click(function(){
 		let menuHref = $(this).attr('href'); 
-		/*let ajaxUrl = './html/calInfowrite.html';*/  
 		let ajaxUrl = './html/calInfowrite.html';
         
 		$.ajax({
@@ -52,6 +51,29 @@ function caladdClick(){
 		return false;
 	});
 }
+
+/*-팝업창 열기 : callistresult화면에서 캘린더 add 이미지 클릭했을때-*/
+/*function caladdClick(){
+	let $caladdObj = $('section>div.articles>ul>li>div.title_add>a>img');
+	$caladdObj.click(function(){
+      
+			let url = './html/calInfowrite.html';
+	        let target = 'category+Thbumbnail';
+	
+	        let _width = '500';
+			let _height = '400';
+			
+			let _top = Math.ceil((window.screen.height - _height)/2);
+			let _left = Math.ceil((window.screen.width - _width)/2);
+			
+			let features = ('width='+ _width + ',height='+ _height +',left='+ _left + ',top='+ _top);
+	        window.open(url, target, features);
+			return false;	
+    });
+}*/
+	        
+			
+
 
 /*--callistresult화면에서 캘린더 썸네일 안에있는 three_dots 버튼 클릭했을때 = calInfo 수정페이지 이동*/
 function calInfoModifyClick(){
@@ -80,38 +102,3 @@ function calInfoModifyClick(){
 	
 }
 
-/*-팝업창 : callistresult화면에서 캘린더 add 클릭했을때-*/
-/*function caladdClick(){
-	let $caladdObj = $('section>div.articles>ul>li>div.title_add>a>img');
- 
-	$caladdObj.click(function(){
-        let menuHref = $(this).attr('src'); 
-        let ajaxUrl = ""; 
-        
-			$.ajax({
-            url: ajaxUrl,
-            method : 'get',
-            success:function(responseData){
-                let $articlesObj = $('section>div.articles');
-                $articlesObj.empty();
-                $articlesObj.html(responseData);
-			
-				
-				/*let url = './html/calInfowrite.html';
-		        let target = 'category+Thbumbnail';
-		
-		        let _width = '400';
-				let _height = '200';
-				
-				let _top = Math.ceil((window.screen.height - _height)/2);
-				let _left = Math.ceil((window.screen.width - _width)/2);
-				
-				let features = ('width='+ _width + ',height='+ _height +',left='+ _left + ',top='+ _top);
-		        window.open(url, target, features);
-				
-	            }
-        }); 
-	        return false;
-			
-	});
-}*/

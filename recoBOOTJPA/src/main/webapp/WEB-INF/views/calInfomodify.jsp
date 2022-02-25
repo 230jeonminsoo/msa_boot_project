@@ -14,12 +14,9 @@
 	<link href="./css/calInfomodify.css" rel=stylesheet>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="./js/calInfomodify.js"></script>
-</head>
-
 <script>
 $(function(){		
 	let $formObj = $('fieldset>form');
-     
 		/*---두번째 div에서  모든 img태그 보여주기 START--*/
 		let $img = $('div.calIdx img');
 		$img.each(function(i, element){
@@ -43,7 +40,7 @@ $(function(){
 		});//end each
 	
      /*--캘린더 수정 버튼이 클릭되었을때 START--*/
-     //calInfomodifyBtClick();
+     calInfomodifyBtClick();
 	/*--캘린더 수정 버튼이 클릭되었을때 END--*/
    });
 </script>
@@ -51,13 +48,14 @@ $(function(){
 
 <%
 Customer c = (Customer)session.getAttribute("loginInfo"); 
-String calCategory = request.getParameter("calCategory");
 CalInfo ci = (CalInfo)request.getAttribute("calinfo");
-int uIdx  = c.getUIdx();
-/* String calIdx = request.getParameter("calIdx"); */
-/* int calIdx = ci.getCalIdx();   */
-int calIdx = Integer.parseInt(request.getParameter("calIdx"));
 
+String calCategory = request.getParameter("calCategory");
+int uIdx  = c.getUIdx();
+int calIdx = Integer.parseInt(request.getParameter("calIdx"));
+String calThumbnail = request.getParameter("originCalThum");
+
+//String calThumbnail = ci.getCalCategory(); //섬네일 원본이름 
 
 String saveDirectory = "C:\\reco\\calendar";
 File dir = new File(saveDirectory);
@@ -66,9 +64,11 @@ File[] files = dir.listFiles();
 String imageFileName = "cal_post_" + uIdx  + "_" + calIdx + ".jpg";
 String thumbnailName = "s_"+ imageFileName;
 %>	            
-<fieldset>
-    <form  method="post" action="./calInfomodify" autocomplete="off" enctype="multipart/form-data">
+
+<fieldset> <!-- action="./calInfomodify" -->
+    <form  method="post" autocomplete="off" enctype="multipart/form-data">
         <input type="hidden" name="calIdx" value="<%=calIdx %>">
+        <input type="hidden" name="originCalThum" value="<%=calThumbnail %>">
         <div id="<%=calIdx %>" class="calIdx" style="display:show">
 		    <a> <!-- 수정페이지 이미지 띄우기 -->
 		     	<img id="<%=thumbnailName %>" alt="thumbnail"
@@ -95,7 +95,7 @@ String thumbnailName = "s_"+ imageFileName;
         
 		<div class="bt">
 	        <button type="submit" >수정</button>
-	        <button type="button" value="Back" onClick="history.go(-1)" >취소</button> <!-- 뒤로가기 처리 -->
+	        <button type="button" value="Back" onClick="history.go(0)" >취소</button> <!-- 뒤로가기 처리 -->
 		</div>
     </form>
 </fieldset>
