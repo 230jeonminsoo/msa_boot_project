@@ -2,7 +2,6 @@ package com.reco.calendar.control;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
@@ -35,12 +34,10 @@ import com.reco.calendar.service.CalendarService;
 import com.reco.calendar.vo.CalInfo;
 import com.reco.calendar.vo.CalPost;
 import com.reco.customer.vo.Customer;
-import com.reco.dto.PageDTO;
 import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
 import com.reco.exception.RemoveException;
-import com.reco.notice.vo.Notice;
 
 import net.coobird.thumbnailator.Thumbnailator;
 
@@ -179,7 +176,8 @@ public class CalendarController {
 public Object calInfoModify(@RequestParam(value = "calIdx") int calIdx,
 							@RequestParam(value = "calCategory" ) String calCategory
 						   ,@RequestParam(value = "calThumbnail") MultipartFile multipartFile
-						   , HttpSession session, Model model )  { 
+						   ,@RequestParam(value = "originCalThum") String calThumbnail
+						   ,HttpSession session, Model model )  { 
 		logger.info("calInfoModify컨트롤러 multipartFile.getSize()=" + multipartFile.getSize() + ", multipartFile.getOriginalFileName()=" + multipartFile.getOriginalFilename());
 	
 		Customer c = (Customer)session.getAttribute("loginInfo");
@@ -189,7 +187,15 @@ public Object calInfoModify(@RequestParam(value = "calIdx") int calIdx,
 		ci.setCustomer(c); //calinfo의 고객정보는 로그인된 Customer타입의 c로 채워줌
 		ci.setCalCategory(calCategory);
 		ci.setCalIdx(calIdx);
-		ci.setCalThumbnail(multipartFile.getOriginalFilename());
+		
+		String originalCalThumbnail = calThumbnail;
+		
+		if(multipartFile.getOriginalFilename() == "") { //새로운 MultipartFile calThumbnail 없으면
+			ci.setCalThumbnail(multipartFile.getOriginalFilename());
+			logger.info("컨트롤러 오리지널 파일 네임"+ multipartFile.getOriginalFilename());
+		}else { //calThumbnail 있으면 
+			ci.setCalThumbnail(originalCalThumbnail);
+		}
 		
 		ModelAndView mnv = new ModelAndView();
 		try {
@@ -309,7 +315,7 @@ public String CalPostList (@RequestParam(value = "calIdx")int calIdx,
 		                   String calDate,
 		                   HttpSession session, Model model) {
 	Customer c = (Customer)session.getAttribute("loginInfo");
-
+	
 	CalInfo calinfo = new CalInfo();
 	calinfo.setCustomer(c);
 	calinfo.setCalIdx(calIdx);

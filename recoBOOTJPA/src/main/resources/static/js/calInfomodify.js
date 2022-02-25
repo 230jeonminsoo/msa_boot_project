@@ -1,21 +1,26 @@
 /* calInfowrite.html */
 /*--캘린더 수정버튼이 클릭되었을때 START--*/
-//function calInfomodifyBtClick($formObj){
-	//	alert("in addCalSubmit");
-/*	let $calInfomodifyBt = $('fieldset>form>button[type=submit]');
-    $calInfomodifyBt.click(function(){
-		let formData = new FormData(this);
-		
-		let $inputfile = $('div.input_image>input[type=file]');
-		let existfile = $(div.calIdx>img).attr('id');
-		if($inputfile == null){
-			formData.append(calThumbnail, existfile);
-		}
-		formData.forEach(function (value, key) {
-			console.log(key + ":" + value);
-		});		
-		
-		 let ajaxUrl = './calInfomodify'; 
+function calInfomodifyBtClick(){
+		console.log("calInfomodifyBtClick");
+	let $calInfomodifyBt = $('form');
+    $calInfomodifyBt.submit(function(){
+
+			alert("캘린더 썸네일과 이름을 수정하시겠습니까?");
+			self.close();
+			
+			let calIdx = $(this).find('input[name=calIdx]');
+			let ajaxUrl = './calInfomodify'; 
+			
+			//let $inputfile = $('div.input_image>input[type=file]');
+			//let existfile = $(div.calIdx>img).attr('id');
+			//if($inputfile == null){
+			//	formData.append(calThumbnail, existfile);
+			//}
+			//formData.forEach(function (value, key) {
+			//	console.log(key + ":" + value);
+			//});		
+			
+			let formData = new FormData($(this)[0]);
 	        
 			$.ajax({
 	            url: ajaxUrl,
@@ -24,10 +29,12 @@
 				contentType: false, //파일업로드용 설정
 				data:formData,
 	            success:function(responseData){
+					alert("캘린더가 수정 되었습니다!");
+		     		self.close();
 					console.log(responseData);
 	                let $articlesObj = $('section>div.articles');
 	                $articlesObj.empty();
-	                $articlesObj.html(response);
+	                $articlesObj.html(responseData);
 	            }
 				,error: function (jqXHR)
 	           {
@@ -36,20 +43,16 @@
         }); 
 		return false;
 	});
-}*/
+}
 
 
-/* --수정전 팝업창--
-function addCalSubmit($formObj){
-	//	alert("in addCalSubmit");
+ //--수정전 팝업창--
+/*function calInfomodifyBtClick($formObj){
     $formObj.submit(function(){
-	//	alert("calwrite.js-1");
 		let ajaxUrl = $(this).attr('action');
-			//alert("calwrite.js-2");
    		let ajaxMethod = $(this).attr('method');
-	//alert("calwrite.js-3");
 		let formData = new FormData(this);
-	//alert("calwrite.js-4");
+
          $.ajax({
            url:ajaxUrl
            , type : "POST"
