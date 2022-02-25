@@ -84,13 +84,13 @@ if(c != null){
 %> 
 <li>
 	  <div class="title_add" id="title">
-	    <a href="./html/calInfowrite.html"> <!-- 캘린더 생성안된 add -->
+	    <a href="#"> <!-- 캘린더 생성안된 add -->
 		      <img src="./images/add.png" alt="ADD" title="ADD">
-		      <div class="hidden_title">
+		      <!-- <div class="hidden_title">
 			      <div class="title_detail">
 			      	<p class="title_name">+</p>
 			      </div>
-		   	  </div>
+		   	  </div> -->
 	    </a>
 	  </div>
 	  

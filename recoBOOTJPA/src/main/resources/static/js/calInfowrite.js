@@ -1,69 +1,40 @@
 /* calInfowrite.html */
 /*--캘린더 등록버튼이 클릭되었을때 START--*/
-function addCalSubmit($formObj){
-	//	alert("in addCalSubmit");
-	let $submitBtObj = $('fieldset>form>button[type=submit]');
-    $submitBtObj.click(function(){
-		let formData = new FormData(this);
-		/*let formData = new FormData($formObj[0]);
-		formData.forEach(function (value, key) {
-			console.log(key + ":" + value);
-		});*/
+function addCalSubmit(){
+	console.log("in addCalSubmit");
+	let $submitBtObj =  $('form');
+	//alert("in addCalSubmit1");
+    $submitBtObj.submit(function(){
 		
-		 let ajaxUrl = './caladd'; 
-	        
-			$.ajax({
-	            url: ajaxUrl,
-	            method : 'post',
-				processData: false, //파일업로드용 설정
-				contentType: false, //파일업로드용 설정
-				data:formData,
-				
-	            success:function(responseData){
-					console.log(responseData);
-	                let $articlesObj = $('section>div.articles');
-	                $articlesObj.empty();
-	                $articlesObj.html(response);
-	            }
-				,error: function (jqXHR)
-	           {
-	               alert(jqXHR.responseText);
-	           }
+		alert("캘린더를 생성하시겠습니까?");
+		self.close();
+
+		 let ajaxUrl = './caladd';
+		 //let ajaxUrl = '../caladd'; //팝업창일때
+		 let formData = new FormData($(this)[0]);
+		 
+		 $.ajax({
+            url: ajaxUrl,
+            method : 'post',
+			processData: false, //파일업로드용 설정
+			contentType: false, //파일업로드용 설정
+			data:formData,
+			
+            success:function(responseData){
+			 alert("캘린더가 생성 되었습니다!");
+		     self.close();
+			 let $articlesObj = $('section>div.articles');
+                 $articlesObj.empty();
+                 $articlesObj.html(responseData);
+				 //window.Close();
+            }
+			,error: function (jqXHR)
+           {
+               alert(jqXHR.responseText);
+           }
         }); 
+		
 		return false;
 	});
 }
 
-
-/* --수정전 팝업창--
-function addCalSubmit($formObj){
-	//	alert("in addCalSubmit");
-    $formObj.submit(function(){
-	//	alert("calwrite.js-1");
-		let ajaxUrl = $(this).attr('action');
-			//alert("calwrite.js-2");
-   		let ajaxMethod = $(this).attr('method');
-	//alert("calwrite.js-3");
-		let formData = new FormData(this);
-	//alert("calwrite.js-4");
-         $.ajax({
-           url:ajaxUrl
-           , type : "POST"
-           , processData : false
-           , contentType : false
-           , data : formData
-           , success:function(response) {
-               console.log(response);
-				$(opener.document).find("section>div.articles0").html(response);
-				self.close();
-
-           }
-           ,error: function (jqXHR)
-           {
-               alert(jqXHR.responseText);
-           }
-    	});
-	//alert("calwrite.js-5");
-		return false;
-	});
-}*/

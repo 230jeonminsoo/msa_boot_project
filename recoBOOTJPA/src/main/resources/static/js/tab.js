@@ -1,6 +1,5 @@
 //callistresult.jsp -> tab.jsp
-
-//탭메뉴에서 add 클릭했을때 
+//url 바로 이동하기 : 탭메뉴에서 add 클릭했을때 
 function tabaddClick(){
 	let $tabadd = $('div.tab>ul>li>a[id=clickadd]');
 	console.log($tabadd);
@@ -18,27 +17,28 @@ function tabaddClick(){
 		            }
 	        }); 
 		return false;
-		
-		/*let url = './html/calInfowrite.html';*/
-		/*let url = 'calInfowrite.jsp';*/
-        /*let target = 'category+Thbumbnail';
-
-		let _width = '400';
-		let _height = '200';
-		
-		let _top = Math.ceil((window.screen.height - _height)/2);
-		let _left = Math.ceil((window.screen.width - _width)/2);
-		
-		let features = ('width='+ _width + ',height='+ _height +',left='+ _left + ',top='+ _top);
-        window.open(url, target, features);*/
-	
-		
-        //let menuHref = $(this).attr('id="1"'); 
-        
 	});
 }
 
 
+//팝업창 열기 : 탭메뉴에서 add 클릭했을때 
+/*function tabaddClick(){
+	$('div.tab>ul>li>a[id=clickadd]').click(function(){
+		let url = './html/calInfowrite.html';
+        let target = 'category+Thbumbnail';
+        let features = 'top=300, left=500, width=500px, height=500px';
+
+		let _width = '500';
+		let _height = '400';
+		
+		let _top = Math.ceil((window.screen.height - _height)/2);
+		let _left = Math.ceil((window.screen.width - _width)/2);
+		
+		features = ('width='+ _width + ',height='+ _height +',left='+ _left + ',top='+ _top);
+        window.open(url, target, features);
+		return false;
+	});
+}*/
 
 
 //캘린더 생성 후 캘린더 메뉴탭 클릭했을때 
