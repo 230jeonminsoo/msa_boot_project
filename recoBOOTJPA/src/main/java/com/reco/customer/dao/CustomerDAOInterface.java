@@ -37,6 +37,11 @@ public interface CustomerDAOInterface {
 	 */
 	public void modifyStatus(int uIdx) throws ModifyException;
 	
+	/**
+	 * 회원상태를 변경한다(복구)
+	 * @param uIdx
+	 * @throws ModifyException
+	 */
 	public void restoreStatus(int uIdx) throws ModifyException;
 	
 	/**
