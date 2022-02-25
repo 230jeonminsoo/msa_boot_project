@@ -1,4 +1,9 @@
 @charset "UTF-8";
+
+div.findEmail{
+	margin: 30px;
+}
+
 div.CNSend{
 	margin:10px;
 	display:none;
