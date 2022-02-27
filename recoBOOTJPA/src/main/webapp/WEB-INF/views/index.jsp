@@ -39,7 +39,9 @@ String code = (String)request.getAttribute("code");
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="./js/menu.js"></script><!-- menu.jsp 이벤트-->
 	<script src="./js/index.js"></script><!-- index.jsp 이벤트 -->
+	<link rel="icon" type="image/x-icon" href="https://storage.googleapis.com/cdn.appres.org/premium/fe6cdbcd5479b6c3a9132c49c0590bbfe1f07863/icons/favicon.ico"/>
 
+	
 
 	<script>
 	$(function(){
