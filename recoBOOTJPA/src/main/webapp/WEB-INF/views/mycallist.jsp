@@ -8,7 +8,15 @@
 
 <script src="./js/mycallist.js"></script>
 <link rel="stylesheet" href="./css/mycallist.css">
-
+<%
+	Customer c = (Customer)session.getAttribute("loginInfo"); 
+	if(c == null){ //로그인 안된 경우
+%>
+	
+	<script>location.href="./";</script>
+<%
+}
+%> 
 
 <script>
    $(function(){
@@ -39,13 +47,12 @@
 		});//end each
 		/*---두번째 div에서  모든 img태그 보여주기 END--*/
 		
-	
 		
 		//캘린더 클릭시 해당 달력 옆에 보여줌
 		//mycalThumbnailClick("mycalendar");
 		
 		//캘린더 삭제버튼 클릭시 발생하는 이벤트
-		removeBtnClick();
+		//removeBtnClick();
 	
    });
 </script>
@@ -55,28 +62,15 @@
 <div class="articles" >
 	 <div class="rm_title">	
 	 	<p class="mycalRM" style="font-size: 20px;"><b> &lt;나의 캘린더 목록&gt; </b></p>
-	 	<button class="mycalRM" >캘린더 삭제</button>
+	 	<button class="mycalRM" onclick="removeBtnClick()">캘린더 삭제</button>
 	 </div>
 	 <ul class="title_list">
-		<%
-		Customer c = (Customer)session.getAttribute("loginInfo"); 
-		if(c == null){ //로그인 안된 경우
-		%>
-		
-		<%
-		}
-		%> 
 			
 		<%
 		if(c != null){
-			
-				List<CalInfo> list = (List)request.getAttribute("list");
+			%>	
+			<%	List<CalInfo> list = (List)request.getAttribute("list");
 				int uIdx = c.getUIdx();
-				
-				//String calCategory = request.getParameter("calCategory");
-				//CalInfo ci = (CalInfo)request.getAttribute("calinfo");
-				//int calIdx = Integer.parseInt(request.getParameter("calIdx"));
-				
 				String saveDirectory = "C:\\reco\\calendar";
 				File dir = new File(saveDirectory);
 				File[] files = dir.listFiles();
@@ -108,13 +102,8 @@
 				</div>
 			</li>
 			
-			<%} //end for 
-				/* for(int i=list.size(); i<5; i++){ */
-			%> 
-			
-		<%
-		}
-		%>
+			<%} %> <!-- end for --> 
+	<%} %>		 
 	 </ul>
 	 
 	 <div class="calendardetail">
