@@ -52,7 +52,7 @@ public class CalendarController {
 	private Logger log = LoggerFactory.getLogger(CalendarService.class.getName()); 
 	
 	
-	//캘린더 썸네일리스트를 보는 컨트롤러 ㅇㅇ ㅇㅇㅇㅇ
+	//캘린더 썸네일리스트를 보는 컨트롤러 ㅇ
 	@GetMapping("callist") 
 	public Object calInfoList(
 							  HttpSession session, Model model) {
@@ -279,7 +279,7 @@ public Object calInfoModify(@RequestParam(value = "calIdx") int calIdx,
 		return mnv;
 }
 
-//캘린더를 삭제하는 컨트롤러
+//캘린더를 삭제하는 컨트롤러ㅇㅇㅇ
 @GetMapping("calendarRemove")
 public String noticeRemove(int calIdx, HttpSession session, Model model) {
 	
@@ -350,12 +350,12 @@ public String CalPostList (@RequestParam(value = "calIdx")int calIdx,
 			return "calpostlistresult.jsp";	
 		}
 	}
-	return "index.jsp";
+	return "calpostlistresult.jsp";
 }
 
 
 
-//캘린더 글 작성 추가하는 컨트롤러 
+//캘린더 글 작성 추가하는 컨트롤러 ㅁㅁdddd
 @PostMapping("calpostAdd") //calpost작성url
 public Object calpostAdd(
 						 @RequestParam(value = "calMemo") String calMemo, 
