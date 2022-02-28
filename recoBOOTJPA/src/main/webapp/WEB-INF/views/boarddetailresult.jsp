@@ -241,7 +241,7 @@ String uNickName = c.getUNickName();
 	         	<div class="commentwrap2">
 	         	<div class="community_comment" id="<%=cmtIdx%>">
 
-	         		   		<span class="cmt" id="cmtIdx"><%=cmtIdx %></span><strong><div class="cmt"><%=cmtUNickName %></div></strong> 
+	         		   		<span class="cmt" id="cmtIdx"><%=cmtIdx %></span><strong><div class="cmt"><%=cmtUNickName %><span class="mywrite"><%if(brdUNickname.equals(cmtUNickName)){ %>글쓴이<%} %></span></div></strong>
 								<div class="cmt"><%=cmtContent %></div> 
 								<div class="cmt"><%=sf.format(cmtCreateAt) %></div>
 							<div class="community_comment_button">
@@ -277,7 +277,7 @@ String uNickName = c.getUNickName();
 	         	<%} else{%>   
 	         			 <div class="community_comment"id="<%=cmtIdx%>">
 	         			 
-	         			 <span class="cmt" id="cmtIdx"><%=cmtIdx %></span><strong><div class="cmt"><%=cmtUNickName %></div></strong> 
+	         			 <span class="cmt" id="cmtIdx"><%=cmtIdx %></span><strong><div class="cmt"><%=cmtUNickName %><span class="mywrite"><%if(brdUNickname.equals(cmtUNickName)){ %>글쓴이<%} %></span></div></strong> 
 	         		   <div class="cmt"><%=cmtContent %></div>
 	         		   <div class="cmt"><%=sf.format(cmtCreateAt) %></div>
 	         		   	<div class="community_comment_button">

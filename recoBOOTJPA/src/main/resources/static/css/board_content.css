@@ -134,3 +134,9 @@ div.brdAttachment{
 div.brdAttachment:hover{
 	cursor:pointer;
 }
+
+span.mywrite{
+	border-radius: 50%;
+	background-color : lightpink;
+	margin-left: 20px;
+}
