@@ -30,7 +30,9 @@ function addCalSubmit(){
             }
 			,error: function (jqXHR)
            {
-               alert(jqXHR.responseText);
+			   location.href="./";
+               //alert(jqXHR.responseText);
+			   
            }
         }); 
 		
