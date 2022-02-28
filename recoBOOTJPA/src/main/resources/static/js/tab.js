@@ -14,8 +14,12 @@ function tabaddClick(){
                 let $articlesObj = $('section>div.articles');
                 $articlesObj.empty();
                 $articlesObj.html(responseData);
-		            }
-	        }); 
+		        },
+				error:function(xhr){
+					alert("응답실패"+xhr.status);
+					//location.href="./";
+			}
+	    }); 
 		return false;
 	});
 }
@@ -69,7 +73,8 @@ function calMenuClick(){ //callistresult.jsp
                     if(jqXHR.status != 200){
                         alert('응답실패:' + jqXHR.status);
                     }else{
-						//alert(responseText);
+						alert("응답실패"+xhr.status);
+						//location.href="./";
 					}
                 });
 				return false;

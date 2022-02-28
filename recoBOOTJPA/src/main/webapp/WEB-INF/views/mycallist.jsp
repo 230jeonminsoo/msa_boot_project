@@ -51,15 +51,9 @@ if(c == null){ //로그인 안된 경우
 		//캘린더 클릭시 해당 달력 옆에 보여줌
 		//mycalThumbnailClick("mycalendar");
 		
-		//캘린더 삭제버튼 클릭시 발생하는 이벤트
-		removeBtnClick();
-	
    });
 </script>
     
- <%
-if(c != null){
-%>	   
 <section><!--callist.js -->
 <div class="articles" >
 	 <div class="rm_title">	
@@ -103,7 +97,6 @@ if(c != null){
 			</li>
 			
 			<%} //end for %> 
-	<%} //end if %>		 
 	 </ul>
 	 
 	 <div class="calendardetail">

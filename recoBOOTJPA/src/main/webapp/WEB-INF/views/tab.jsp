@@ -16,9 +16,7 @@ if(c == null){ //로그인 안된 경우
 }else{
 %> 
 
-<%
-if(c != null){
-%>
+
 <ul class="caltab">
 <%	List<CalInfo> list = (List)request.getAttribute("list");
 	
@@ -28,7 +26,7 @@ for(CalInfo ci : list){
 <%} //end for 
 for(int i=list.size(); i<5; i++){
 %>
-	 <li><a href="#" id = "clickadd" >ADD+</a></li>
+	 <li><a href="./html/calInfowrite.html" id = "clickadd" >ADD+</a></li>
 <%}//end for
 %>
 </ul> 
@@ -43,8 +41,5 @@ for(int i=list.size(); i<5; i++){
 		<li><a href="mycommunity">커뮤니티 글관리</a></li>
 		<li><a href="pwdcheck">개인정보 관리</a></li>
 	</ul>
-<%
-}   //end if( c != null)
-%>
 
 <%} //end if(c == null) %>

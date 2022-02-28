@@ -50,9 +50,8 @@ $(function(){
 </script>
 
  
-<%
-if(c != null){
-	
+
+<%	
 	List<CalInfo> list = (List)request.getAttribute("list");
 	int uIdx = c.getUIdx();
 
@@ -107,8 +106,5 @@ if(c != null){
 <%     }//end for (int i=list.size(); i<5; i++){
 %>    
      	
-<%
-	} //end if( c != null)
-%>
 
 <%} //end if(c == null) %>
