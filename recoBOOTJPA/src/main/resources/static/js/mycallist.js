@@ -32,8 +32,10 @@ $('button.mycalRM').click(function(){
                 $articlesObj.html(responseData);
 				//history.go(-1);
 				location.reload(); 
+		    },error:function(xhr){
+				location.href="./";
+			 }
 
-		    }
         }); 
 		
         return false;
