@@ -1,13 +1,11 @@
 package com.reco.customer.control;
 
-import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
-import javax.swing.DesktopManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,18 +15,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.reco.board.dao.BoardDAOInterface;
+import com.reco.board.vo.Board;
+import com.reco.calendar.dao.CalendarDAOInterface;
+import com.reco.calendar.vo.CalInfo;
 import com.reco.customer.dao.CustomerDAOInterface;
 import com.reco.customer.service.CustomerService;
 import com.reco.customer.vo.Customer;
 import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
+import com.reco.exception.RemoveException;
+import com.reco.notice.dao.NoticeDAOInterface;
+import com.reco.notice.vo.Notice;
 
 @Controller
 public class CustomerController {
@@ -39,7 +43,9 @@ public class CustomerController {
 	@Autowired
 	private CustomerDAOInterface dao;
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+	private CalendarDAOInterface daoCal;
+	private BoardDAOInterface daoBrd;
+	private NoticeDAOInterface daoNtc;
 
 	
 	@PostMapping("/login")
@@ -305,19 +311,49 @@ public class CustomerController {
 //	}
 	
 	@RequestMapping(value="/kakaoexit")
-	public void kakaologout(@RequestParam(value="code", required=false) String code, HttpSession session, Model model) throws FindException, AddException {
+	public void kakaologout(@RequestParam(value="code", required=false) String code, HttpSession session, Model model) throws FindException, AddException, ModifyException, RemoveException {
 		String redirect_uri = "http://localhost:9998/recoBOOTJPA/kakaoexit";
+		int carIdx=0;
 		String access_Token = service.getAccessToken(code, redirect_uri);
-		 HashMap<String, Object> userInfo = service.disconnectUserInfo(access_Token);
+		Customer c = (Customer)session.getAttribute("loginInfo");
+		String uNickName = c.getUNickName();
+		System.out.println("uNickName값" + uNickName);
+		
+		daoBrd.removeCmtAllFromDB(uNickName);
+		daoBrd.removeBrdAllFromDB(uNickName);
+		if(c.getUAuthCode() == 0) {
+		daoNtc.removeNtcAllFromDB(uNickName);
+		}
+		//int uIdx = c.getUIdx();
+		CalInfo calinfo = new CalInfo();
+		calinfo.setCustomer(c);
+		 for(carIdx=0; carIdx<5; carIdx++) {
+			 calinfo.setCalIdx(carIdx);
+			 daoCal.removeCal(calinfo);
+		 }
+		 
+		
+		 
+		 HashMap<String, Object> userInfo = service.getUserInfo(access_Token);
+		 String uEmail = (String)userInfo.get("email");
+		 int uIdx = dao.findByEmail(uEmail).getUIdx();
+		 service.withdraw(uIdx);
+		 
+		 service.disconnectUserInfo(access_Token);
+		 
 		 session.removeAttribute("loginInfo"); 
 		 session.removeAttribute("myPage"); 
-		 int pwdInt = (int)userInfo.get("pwd");
-		 String uPwd = Integer.toString(pwdInt);
-		 service.findAndDeleteCustomerByPwd(uPwd);
+		 session.removeAttribute("kakaoAccountRemove"); 
+		 
+		
+		 //int pwdInt = (int)userInfoPwd.get("pwd");
+		 //String uPwd = Integer.toString(pwdInt);
+		 //service.findAndDeleteCustomerByPwd(uPwd);
 	}
 	
+	
 	@RequestMapping(value="/kakaologin")
-	public String kakaologin(@RequestParam(value="code", required=false) String code, HttpSession session, Model model) throws FindException, AddException {
+	public String kakaologin(@RequestParam(value="code", required=false) String code, HttpSession session, Model model) throws FindException, AddException, ModifyException {
 		session.removeAttribute("loginInfo"); 
 		session.removeAttribute("myPage");
 		 
@@ -335,6 +371,7 @@ public class CustomerController {
     	String uNickName = (String)userInfo.get("nickname");
     	int id = (int)userInfo.get("id"); // 어떻게 활용할지 고민중
     	String idString = Integer.toString(id);
+    	int uAuthCode = 1;
     	
     	Customer c = new Customer();
 //    	c = service.kakaoEmailDupChk(uEmail);
@@ -367,10 +404,13 @@ public class CustomerController {
     	try {//찾은경우 = 가입이 된경우 로그인 인포세션에 넣기
     		service.emaildupchk(uEmail);
     		String nickname = dao.findByEmail(uEmail).getUNickName();
-    		c.setUIdx(dao.findByEmail(uEmail).getUIdx());
+    		int uIdx = dao.findByEmail(uEmail).getUIdx();
+    		c.setUIdx(uIdx);
 			c.setUEmail(uEmail);
 			c.setUPwd(idString); 
 			c.setUNickName(nickname);
+			c.setUAuthCode(uAuthCode);
+			dao.restoreStatus(uIdx);
     	}catch(FindException e) {//못 찾은 경우 가입시키기
 	    	    		
 	    	try { //가입 시키기 전 닉네임중복인 경우

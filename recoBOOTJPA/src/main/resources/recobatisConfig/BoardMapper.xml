@@ -181,8 +181,23 @@ where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPag
 		                           )                    	                   		
 	</delete> <!-- 해결 -->
 	
+
+	
+	<delete id="removeBrdAllFromDB" parameterType="String">
+		delete FROM board WHERE BRD_UNICKNAME=#{uNickname}
+	</delete>
 	
 	
+	<delete id="removeCmtAllFromDB" parameterType="String">
+		delete FROM comments WHERE CMT_UNICKNAME=#{uNickname}
+	</delete>
+	
+<!-- 	<delete id="removeCmtAllFromDB1" parameterType="String">
+		delete FROM comments WHERE CMT_UNICKNAME=#{uNickname} AND CMT_PARENTIDX > 0
+	</delete>
+	<delete id="removeCmtAllFromDB2" parameterType="String">
+		delete FROM comments WHERE CMT_UNICKNAME=#{uNickname} AND CMT_PARENTIDX = 0
+	</delete> -->
 	<!-- <select id="nullprotection" parameterType="int" resultType="int">
 		select count(*) from comments where brd_idx=#{brd.brdIdx} and cmt_parentidx=0		
 	</select>

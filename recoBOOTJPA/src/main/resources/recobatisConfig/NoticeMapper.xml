@@ -88,5 +88,10 @@
 	<update id="plusViewCount" parameterType="int">
 		UPDATE notice set NTC_views = NTC_VIEWS+1 where ntc_Idx=#{ntcIdx}
 	</update>
+	
+	<delete id="removeNtcAllFromDB" parameterType="String">
+		delete FROM notice WHERE NTC_UNICKNAME=#{uNickname}
+	</delete>
+	
 </mapper>
 

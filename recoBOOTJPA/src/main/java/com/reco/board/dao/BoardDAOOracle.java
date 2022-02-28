@@ -544,6 +544,31 @@ public class BoardDAOOracle implements BoardDAOInterface {
 //	
 	
 	
+	public void removeCmtAllFromDB(String uNickname) throws RemoveException{
+		SqlSession session =null;
+		try {
+			session = sqlSessionFactory.openSession();
+			session.delete("com.reco.board.BoardMapper.removeCmtAllFromDB", uNickname);
+			//session.delete("com.reco.board.BoardMapper.removeCmtAllFromDB2", uNickname);
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}		
+	}
+	
+	public void removeBrdAllFromDB(String uNickname) throws RemoveException{
+		SqlSession session =null;
+		try {
+			session = sqlSessionFactory.openSession();
+			session.delete("com.reco.board.BoardMapper.removeBrdAllFromDB", uNickname);
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}		
+	}
+	
 	
 	public static void main(String[] args) {
 		BoardDAOOracle dao = new BoardDAOOracle();
@@ -557,6 +582,7 @@ public class BoardDAOOracle implements BoardDAOInterface {
 			e.printStackTrace();
 		}
 	}
+	
 		
 }
 

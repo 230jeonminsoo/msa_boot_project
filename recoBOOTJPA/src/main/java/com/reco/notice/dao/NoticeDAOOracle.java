@@ -286,7 +286,20 @@ public class NoticeDAOOracle implements NoticeDAOInterface {
 		session = sqlSessionFactory.openSession();
 		session.update("com.reco.notice.NoticeMapper.plusViewCount",ntcIdx);
 	}
-
+	
+	
+	public void removeNtcAllFromDB(String uNickname) throws RemoveException{
+		SqlSession session =null;
+		try {
+			session = sqlSessionFactory.openSession();
+			session.delete("com.reco.notice.NoticeMapper.removeNtcAllFromDB", uNickname);
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}	
+	}
+	
 	public static void main(String[] args) {
 	System.out.println();
 }	

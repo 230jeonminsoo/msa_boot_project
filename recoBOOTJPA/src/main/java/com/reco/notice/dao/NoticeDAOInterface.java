@@ -124,5 +124,8 @@ public interface NoticeDAOInterface {
 	 */
 	public int findCountTitle(String word) throws FindException;
 	
-	
+	/**
+	 * 탈퇴시 닉네임에 해당하는 게시글 모두 삭제
+	 */
+	public void removeNtcAllFromDB(String uNickname) throws RemoveException;
 }

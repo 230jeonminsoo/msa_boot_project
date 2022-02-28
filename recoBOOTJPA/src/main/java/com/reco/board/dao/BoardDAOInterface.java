@@ -207,5 +207,18 @@ public interface BoardDAOInterface {
 	 * @throws FindException
 	 */
 	public int findCountUNickNameMy(String uNickname) throws FindException;
-
+	
+	/**
+	 * 탈퇴시 닉네임에 해당하는 댓글 모두 삭제
+	 * @param uNickname
+	 * @throws RemoveException
+	 */
+	public void removeCmtAllFromDB(String uNickname) throws RemoveException;
+	
+	/**
+	 * 탈퇴시 닉네임에 해당하는 게시글 모두 삭제
+	 */
+	public void removeBrdAllFromDB(String uNickname) throws RemoveException;
+	
+	
 }

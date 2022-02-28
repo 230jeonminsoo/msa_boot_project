@@ -189,8 +189,8 @@ public class CustomerService {
 	  
 
 	  
-	  public HashMap<String, Object> disconnectUserInfo (String access_Token) {
-		   HashMap<String, Object> userInfo = new HashMap<>();
+	  public void disconnectUserInfo (String access_Token) {
+		  // HashMap<String, Object> userInfo = new HashMap<>();
 		  String reqURL = "https://kapi.kakao.com/v1/user/unlink";
 		  try {
 		        URL url = new URL(reqURL);
@@ -218,13 +218,13 @@ public class CustomerService {
 		        
 		        JSONParser parser = new JSONParser(); // 파싱 작업을 하기 위한 객체 생성
 		        JSONObject jsonObj = (JSONObject) parser.parse(result);
-		        Long pwdLong = (Long)jsonObj.get("id");
-		        int pwd = pwdLong.intValue();
-		        userInfo.put("pwd", pwd);
+//		        Long pwdLong = (Long)jsonObj.get("id");
+//		        int pwd = pwdLong.intValue();
+//		        userInfo.put("pwd", pwd);
 		  }catch (Exception e) {
 		        e.printStackTrace();
 		  }
-		  return userInfo;
+//		  return userInfo;
 	  }
 	  
 	  public HashMap<String, Object> getUserInfo (String access_Token) {
