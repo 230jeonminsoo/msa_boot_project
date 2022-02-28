@@ -71,7 +71,8 @@ function calMenuClick(){ //callistresult.jsp
                 $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){
 					//console.log(responseText);
                     if(jqXHR.status != 200){
-                        alert('응답실패:' + jqXHR.status);
+                        //alert('응답실패:' + jqXHR.status);
+						location.href="./";
                     }else{
 						alert("응답실패"+xhr.status);
 						//location.href="./";
