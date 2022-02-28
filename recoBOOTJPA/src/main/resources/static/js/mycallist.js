@@ -1,6 +1,6 @@
+//캘린더 삭제버튼 클릭시 발생하는 이벤트
 $('button.mycalRM').click(function(){
-		//$removeBtnObj.click(function(){
-		console.log("removeBtnClick()");
+		console.log("캘린더 삭제 버튼 클릭");
 		if(confirm("해당 캘린더를 삭제하시겠습니까?")==true){ //확인
 
 		}else{ //취소 
@@ -32,14 +32,14 @@ $('button.mycalRM').click(function(){
                 $articlesObj.html(responseData);
 				//history.go(-1);
 				location.reload(); 
+		    },error:function(xhr){
+				location.href="./";
+			}
 
-		    }
         }); 
-		
-        return false;
-			
-	});
-
+		return false;
+});			
+	
 
 /*--mycallist.jsp화면에서 캘린더 썸네일 클릭했을때--*/
 /*function mycalThumbnailClick(option){

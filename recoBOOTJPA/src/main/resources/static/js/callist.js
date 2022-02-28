@@ -15,17 +15,17 @@ function calThumbnailClick(){
 			let ajaxUrl = "./calpostlist";	 
 			    
 			$.ajax({
-	            url: ajaxUrl,
-	            method : 'get',
-				data:{calIdx:calIdx, calCategory: calCategory},
-	            success:function(responseData){
-					let $articlesObj = $('section>div.articles');//callistresutl.jsp의 섹션
-	                $articlesObj.empty();
-	                $articlesObj.html(responseData);
-			     	window.scrollTo(0, 0);
-			    },error:function(xhr){
-				alert("응답실패"+xhr.status);
-				}
+		            url: ajaxUrl,
+		            method : 'get',
+					data:{calIdx:calIdx, calCategory: calCategory},
+		            success:function(responseData){
+						let $articlesObj = $('section>div.articles');//callistresutl.jsp의 섹션
+		                $articlesObj.empty();
+		                $articlesObj.html(responseData);
+				     	window.scrollTo(0, 0);
+				    },error:function(xhr){
+					location.href="./";
+				 }
 	        }); 
 	        return false;
 				

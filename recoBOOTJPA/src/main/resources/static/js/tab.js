@@ -14,8 +14,12 @@ function tabaddClick(){
                 let $articlesObj = $('section>div.articles');
                 $articlesObj.empty();
                 $articlesObj.html(responseData);
-		            }
-	        }); 
+		        },
+				error:function(xhr){
+					alert("응답실패"+xhr.status);
+					//location.href="./";
+			}
+	    }); 
 		return false;
 	});
 }
@@ -67,9 +71,11 @@ function calMenuClick(){ //callistresult.jsp
                 $('section>div.articles').load(ajaxUrl,function(responseText, textStatus, jqXHR){
 					//console.log(responseText);
                     if(jqXHR.status != 200){
-                        alert('응답실패:' + jqXHR.status);
+                        //alert('응답실패:' + jqXHR.status);
+						location.href="./";
                     }else{
-						//alert(responseText);
+						alert("응답실패"+xhr.status);
+						//location.href="./";
 					}
                 });
 				return false;

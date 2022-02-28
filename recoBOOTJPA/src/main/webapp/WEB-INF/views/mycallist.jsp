@@ -51,24 +51,18 @@ if(c == null){ //로그인 안된 경우
 		//캘린더 클릭시 해당 달력 옆에 보여줌
 		//mycalThumbnailClick("mycalendar");
 		
-		//캘린더 삭제버튼 클릭시 발생하는 이벤트
-		//removeBtnClick();
-	
    });
 </script>
-    
     
 <section><!--callist.js -->
 <div class="articles" >
 	 <div class="rm_title">	
 	 	<p class="mycalRM" style="font-size: 20px;"><b> &lt;나의 캘린더 목록&gt; </b></p>
-	 	<button class="mycalRM" onclick="removeBtnClick()">캘린더 삭제</button>
+	 	<button class="mycalRM" >캘린더 삭제</button>
 	 </div>
 	 <ul class="title_list">
 			
-		<%
-		if(c != null){
-			%>	
+		
 			<%	List<CalInfo> list = (List)request.getAttribute("list");
 				int uIdx = c.getUIdx();
 				String saveDirectory = "C:\\reco\\calendar";
@@ -103,7 +97,6 @@ if(c == null){ //로그인 안된 경우
 			</li>
 			
 			<%} //end for %> 
-	<%} //end if %>		 
 	 </ul>
 	 
 	 <div class="calendardetail">

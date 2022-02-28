@@ -12,15 +12,10 @@
 
 <%
 Customer c = (Customer)session.getAttribute("loginInfo"); 
-if(c == null){ //로그인 안된 경우
 %>
-	<script>location.href="./";</script>
 <%
-	return;
-}else{
-
-if(c != null){
-%> 
+if (session.getAttribute("loginInfo") != null) { 
+%>
 <script>
     $(function(){
 		uNickname = "<%=c.getUNickName()%>"
@@ -62,9 +57,8 @@ if(c != null){
 	  	<jsp:include page="./title_list.jsp"/>
 	 </ul>
  </div>
- 
- <%
-	} //end if( c != null)
-%>
+	<%} else{%>
+		<script>location.href="./";</script>
+	<%} %><!--if (session.getAttribute("loginInfo") 끝  -->
+
 </section>
-<%} //end if(c == null) %>
