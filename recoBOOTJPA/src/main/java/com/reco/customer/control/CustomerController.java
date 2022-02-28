@@ -43,8 +43,11 @@ public class CustomerController {
 	@Autowired
 	private CustomerDAOInterface dao;
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	@Autowired
 	private CalendarDAOInterface daoCal;
+	@Autowired
 	private BoardDAOInterface daoBrd;
+	@Autowired
 	private NoticeDAOInterface daoNtc;
 
 	
