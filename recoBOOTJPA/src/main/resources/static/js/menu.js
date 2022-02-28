@@ -59,7 +59,16 @@ function signupClick(){
 	            $('section>div.articles0').empty();
 	            $('section>div.articles0').load(ajaxurl,function(responsetext,textstatus,jqxhr){
 	            });
-	            return false;					
+	            return false;	
+
+			case 'index.html':
+	            ajaxurl = 'C:\230\msa_boot_project\recoBOOTJPA\src\main\webapp\reactjs\recoreact\public/index.html';
+	            ajaxmethod = "get";	
+	            $('section>div.articles0').empty();
+	            $('section>div.articles0').load(ajaxurl,function(responsetext,textstatus,jqxhr){
+	            });
+	            return false;	
+								
 			//로그아웃
 			case 'logout':
 				ajaxUrl = menuHref;

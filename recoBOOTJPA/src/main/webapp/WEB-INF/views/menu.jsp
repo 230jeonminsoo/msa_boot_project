@@ -14,6 +14,7 @@ if(c == null){ //로그인 안된 경우
     <li><a href="login.html" id="login">로그인</a></li>
     <li><a href="signup.html" id="signup">회원가입</a></li>
     <li><a href="login.html" id="community">커뮤니티</a></li>
+    <li><a href="index.html">리액트 테스트</a></li>
 <%
 }else{
 %>  <% if(c.getUAuthCode() == 1){
