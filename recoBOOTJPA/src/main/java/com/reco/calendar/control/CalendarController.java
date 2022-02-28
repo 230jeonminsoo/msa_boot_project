@@ -52,24 +52,29 @@ public class CalendarController {
 	private Logger log = LoggerFactory.getLogger(CalendarService.class.getName()); 
 	
 	
-	
-	//캘린더 썸네일리스트를 보는 컨트롤러 
-	@GetMapping("callist")
-	public String calInfoList(
+	//캘린더 썸네일리스트를 보는 컨트롤러 ㅇㅇ ㅇㅇㅇㅇ
+	@GetMapping("callist") 
+	public Object calInfoList(
 							  HttpSession session, Model model) {
-		Customer c = (Customer)session.getAttribute("loginInfo");
-		int uIdx = c.getUIdx();
+		ModelAndView mnv = new ModelAndView();
 		
-		try {
-			List<CalInfo> list = service.findCalsByUIdx(uIdx);
-			model.addAttribute("list", list);
-			return "callistresult.jsp";
-		} catch (FindException e) {
-			e.printStackTrace();
-			model.addAttribute("msg", e.getMessage());
-			model.addAttribute("list", new ArrayList<CalInfo>());
+		Customer c = (Customer)session.getAttribute("loginInfo");
+		if(c != null){
+			
+			int uIdx = c.getUIdx();
+			
+			try {
+				List<CalInfo> list = service.findCalsByUIdx(uIdx);
+				mnv.addObject("list", list);
+				//mnv.setViewName("callistresult.jsp");
+			} catch (FindException e) {
+				e.printStackTrace();
+				mnv.addObject("msg", e.getMessage());
+				mnv.addObject("list", new ArrayList<CalInfo>());
+			}
 		}
-		return "callistresult.jsp";
+		mnv.setViewName("callistresult.jsp");
+		return mnv;
 	}
 	
 	
@@ -190,6 +195,7 @@ public Object calInfoModify(@RequestParam(value = "calIdx") int calIdx,
 		
 		String originalCalThumbnail = calThumbnail;
 		
+		//썸네일이 바뀌면 새로운 썸네일 보내주고, 썸네일 파일 없으면 기존 썸네일 넣어주기 
 		if(multipartFile.getOriginalFilename() == "") { //새로운 MultipartFile calThumbnail 없으면
 			ci.setCalThumbnail(multipartFile.getOriginalFilename());
 			logger.info("컨트롤러 오리지널 파일 네임"+ multipartFile.getOriginalFilename());
@@ -205,8 +211,6 @@ public Object calInfoModify(@RequestParam(value = "calIdx") int calIdx,
 			List<CalInfo> list = service.findCalsByUIdx(uIdx);	
 			mnv.addObject("list", list);			
 			
-//			model.addAttribute("msg", "수정 성공");
-//			model.addAttribute("status", 1);
 			logger.info("컨트롤러 calInfoModify1= calIdx" + calIdx + ",calCategory=" +calinfo.getCalCategory() + ", calThumbnail=" + calinfo.getCalThumbnail());
 			
 			//파일 경로생성
@@ -266,13 +270,11 @@ public Object calInfoModify(@RequestParam(value = "calIdx") int calIdx,
 			mnv.setViewName("index.jsp");
 		} catch (ModifyException e) {
 			e.printStackTrace();
-//			model.addAttribute("status", 0);
-//			model.addAttribute("msg", "수정 실패");
-			mnv.setViewName("failresult.jsp");
+			mnv.setViewName("callistresult.jsp");
 		} catch (FindException e) {
 			e.printStackTrace();
 			model.addAttribute("msg", e.getMessage());
-			mnv.setViewName("failresult.jsp");
+			mnv.setViewName("callistresult.jsp");
 		}
 		return mnv;
 }
@@ -307,36 +309,48 @@ public String noticeRemove(int calIdx, HttpSession session, Model model) {
 	} 
 }
 
-
+//
 //캘린더 달력을 보는 컨트롤러 
 @GetMapping("calpostlist")
 public String CalPostList (@RequestParam(value = "calIdx")int calIdx,
 						   @RequestParam(value="calCategory")String calCategory,
-		                   String calDate,
+						   String calDate,String calMainImg,String calMemo,
 		                   HttpSession session, Model model) {
+	System.out.println("CalPostList Controller = calDate= " + calDate); //null
+	
 	Customer c = (Customer)session.getAttribute("loginInfo");
-	
-	CalInfo calinfo = new CalInfo();
-	calinfo.setCustomer(c);
-	calinfo.setCalIdx(calIdx);
-	
-	//요청전달데이터로 년/월정보가 없으면 오늘날짜기준의 년/월값으로 설정한다
-	//String calDate = request.getParameter("dateValue");  
-	if(calDate == null ||calDate.equals("")) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM");
-		calDate = sdf.format(new Date());
+	if(c != null){
+		CalInfo calinfo = new CalInfo();
+		calinfo.setCustomer(c);
+		calinfo.setCalIdx(calIdx);
+		
+		//요청전달데이터로 년/월정보가 없으면 오늘날짜기준의 년/월값으로 설정한다
+		if(calDate == null ||calDate.equals("")) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+			calDate = sdf.format(new Date());
+		}
+		
+		CalPost calpost = new CalPost();
+		calpost.setCalDate(calDate);
+		System.out.println("CalPostList Controller1 = calDate: " + calDate + ", calMainImg: " + calMainImg + ", calMemo: "+ calMemo);
+		
+		
+		try {
+			List<CalPost> list = service.findCalsByDate(calinfo,calpost);
+			
+			System.out.println("CalPostList Controller2 = calDate: " + calDate);
+			
+			model.addAttribute("list", list);	
+			model.addAttribute("calinfo",calinfo);
+			model.addAttribute("calpost",calpost);
+			return "calpostlistresult.jsp";	
+		} catch (FindException e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.getMessage());
+			return "calpostlistresult.jsp";	
+		}
 	}
-	try {
-		List<CalPost> list = service.findCalsByDate(calinfo,calDate);
-		model.addAttribute("list", list);	
-		model.addAttribute("calinfo",calinfo);
-		return "calpostlistresult.jsp";
-	} catch (FindException e) {
-		e.printStackTrace();
-		model.addAttribute("msg", e.getMessage());
-		return "calpostlistresult.jsp";	
-	}
-
+	return "index.jsp";
 }
 
 
@@ -351,6 +365,7 @@ public Object calpostAdd(
 						 @RequestPart (required = false) MultipartFile letterFiles,
 						 @RequestPart (required = false) MultipartFile imageFile,
 						 HttpSession session, Model model) {
+	System.out.println("calpostadd컨트롤러 calDate= " + calDate);
 	
 	String filenameString= StringUtils.cleanPath(multipartFile.getOriginalFilename());
 	//logger.info("imageFile.getSize()=" + imageFile.getSize() + ", imageFile.getOriginalFileName()=" + imageFile.getOriginalFilename());
@@ -371,13 +386,15 @@ public Object calpostAdd(
 	cp.setCalinfo(calinfo);
 	logger.info("요청전달데이터 calIdx=" + calIdx + ", calMemo=" + calMemo + ",calDate=" + calDate + ", calMainImg=" + filenameString);
 	
+	
 	ModelAndView mnv = new ModelAndView();
+	
 	//게시글내용 DB에 저장
 	try {
 		CalPost calpost = service.addCalPost(cp);
 		model.addAttribute("cp", calpost);
 	
-		List<CalPost> list = service.findCalsByDate(calinfo,calDate);
+		List<CalPost> list = service.findCalsByDate(calinfo,calpost);
 		mnv.addObject("list", list);
 
 		//파일 경로 생성
@@ -397,7 +414,9 @@ public Object calpostAdd(
 
 			//저장할 파일이름을 지정한다 ex) 저장파일명 : cal_(UIdx)_(CalIdx)_(CalDate)
 			String imageFileName = "cal_"+ uIdx  + "_" + calIdx + "_" + calDate + ".jpg" ; //파일이름("선택날짜.확장자") 
-
+			logger.info("calpostadd 컨트롤러 calDate값 :" + calDate);
+			logger.info("calpostadd 컨트롤러 이미지 파일이름:" + imageFileName);
+			
 			//이미지파일생성
 			File savedImageFile = new File(saveDirectory, imageFileName);	
 			try {
@@ -489,7 +508,7 @@ public Object calpostmodify(
           CalPost calpost = service.addCalPost(cp);
           model.addAttribute("cp", calpost);
 
-          List<CalPost> list = service.findCalsByDate(calinfo,calDate);
+          List<CalPost> list = service.findCalsByDate(calinfo,calpost);
           mnv.addObject("list", list);
 
     //파일 경로 생성
