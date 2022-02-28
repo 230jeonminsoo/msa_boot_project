@@ -23,7 +23,9 @@ function calThumbnailClick(){
 	                $articlesObj.empty();
 	                $articlesObj.html(responseData);
 			     	window.scrollTo(0, 0);
-			    }
+			    },error:function(xhr){
+				alert("응답실패"+xhr.status);
+				}
 	        }); 
 	        return false;
 				
@@ -95,7 +97,9 @@ function calInfoModifyClick(){
                 let $articlesObj = $('section>div.articles');
                 $articlesObj.empty();
                 $articlesObj.html(responseData);
-	            }
+	         },error:function(xhr){
+				alert("응답실패"+xhr.status);
+			 }
         });
 			
 	});

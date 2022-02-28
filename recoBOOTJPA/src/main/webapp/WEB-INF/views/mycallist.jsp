@@ -9,13 +9,13 @@
 <script src="./js/mycallist.js"></script>
 <link rel="stylesheet" href="./css/mycallist.css">
 <%
-	Customer c = (Customer)session.getAttribute("loginInfo"); 
-	if(c == null){ //로그인 안된 경우
+Customer c = (Customer)session.getAttribute("loginInfo"); 
+if(c == null){ //로그인 안된 경우
 %>
-	
 	<script>location.href="./";</script>
 <%
-}
+	return;
+}else{ 
 %> 
 
 <script>
@@ -102,11 +102,12 @@
 				</div>
 			</li>
 			
-			<%} %> <!-- end for --> 
-	<%} %>		 
+			<%} //end for %> 
+	<%} //end if %>		 
 	 </ul>
 	 
 	 <div class="calendardetail">
  	 </div> 
  </div>
 </section>
+<%} //end if(c == null) %>

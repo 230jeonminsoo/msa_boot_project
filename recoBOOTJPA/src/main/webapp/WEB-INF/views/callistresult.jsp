@@ -4,12 +4,23 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.Date" %>
 
-<%Customer c = (Customer)session.getAttribute("loginInfo"); %>
-
+ 
 <script src="./js/callist.js"></script>
 <!-- <link rel="stylesheet" href="./css/tab.css"> -->
 <link rel="stylesheet" href="./css/callist.css">
 
+
+<%
+Customer c = (Customer)session.getAttribute("loginInfo"); 
+if(c == null){ //로그인 안된 경우
+%>
+	<script>location.href="./";</script>
+<%
+	return;
+}else{
+
+if(c != null){
+%> 
 <script>
     $(function(){
 		uNickname = "<%=c.getUNickName()%>"
@@ -51,5 +62,9 @@
 	  	<jsp:include page="./title_list.jsp"/>
 	 </ul>
  </div>
+ 
+ <%
+	} //end if( c != null)
+%>
 </section>
-
+<%} //end if(c == null) %>

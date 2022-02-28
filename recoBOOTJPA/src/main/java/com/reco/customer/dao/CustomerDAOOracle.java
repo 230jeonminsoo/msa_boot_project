@@ -32,7 +32,7 @@ import com.reco.exception.ModifyException;
 
 @Repository
 public class CustomerDAOOracle implements CustomerDAOInterface {
-
+//dd
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	

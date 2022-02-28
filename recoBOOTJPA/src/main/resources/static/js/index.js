@@ -20,7 +20,10 @@ function loadBeforeAfter(){
 	    $('section>div.articles0').load(ajaxUrl,function(responseText, textStatus, jqXHR){
 	 		if(jqXHR.status != 200){
 				alert('응답실패:' + jqXHR.status);
-	        }
+	        }else{
+			//alert(responseText);
+			}
 	    });
+		return false;
 	}
 }

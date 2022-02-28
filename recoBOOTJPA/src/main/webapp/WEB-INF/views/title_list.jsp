@@ -10,6 +10,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="./js/callist.js"></script>
 
+<%
+Customer c = (Customer)session.getAttribute("loginInfo"); 
+if(c == null){ //로그인 안된 경우
+%>
+	<script>location.href="./";</script>
+<%
+	return;
+}else{
+%> 
+
+
 <script>
 $(function(){
 	/*---두번째 div에서  모든 img태그 보여주기 START--*/
@@ -38,13 +49,7 @@ $(function(){
 });
 </script>
 
-<%
-Customer c = (Customer)session.getAttribute("loginInfo"); 
-if(c == null){ //로그인 안된 경우
-%>
-<%
-}
-%> 
+ 
 <%
 if(c != null){
 	
@@ -79,8 +84,8 @@ if(c != null){
 	</div>
 </li>
 
-<%} //end for 
-	for(int i=list.size(); i<5; i++){
+<%   } //end for 
+		for(int i=list.size(); i<5; i++){
 %> 
 <li>
 	  <div class="title_add" id="title">
@@ -99,10 +104,11 @@ if(c != null){
 	  </div>
 </li>
 
-<%}//end for
+<%     }//end for (int i=list.size(); i<5; i++){
 %>    
-     
-	
+     	
 <%
-} //end if
+	} //end if( c != null)
 %>
+
+<%} //end if(c == null) %>

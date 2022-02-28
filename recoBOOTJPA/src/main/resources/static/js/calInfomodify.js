@@ -11,15 +11,6 @@ function calInfomodifyBtClick(){
 			let calIdx = $(this).find('input[name=calIdx]');
 			let ajaxUrl = './calInfomodify'; 
 			
-			//let $inputfile = $('div.input_image>input[type=file]');
-			//let existfile = $(div.calIdx>img).attr('id');
-			//if($inputfile == null){
-			//	formData.append(calThumbnail, existfile);
-			//}
-			//formData.forEach(function (value, key) {
-			//	console.log(key + ":" + value);
-			//});		
-			
 			let formData = new FormData($(this)[0]);
 	        
 			$.ajax({

@@ -193,7 +193,39 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 		}
 		return calinfo;	
 	}
+	
+    
+	@Override
+	public List<CalPost> findCalsByDate (CalInfo calinfo, CalPost calpost) throws FindException{
+		SqlSession session = null;
+		int uIdx = calinfo.getCustomer().getUIdx();
+		int calIdx = calinfo.getCalIdx();
+		String calDate = calpost.getCalDate();
+		
+		try {
+			session = sqlSessionFactory.openSession();
 
+			Map<String, Object> map = new HashMap<>(); // Map<Key형, Value형> mapName = new HashMap<>();
+			map.put("calInfo", calinfo); // calinfo map에 넣는다
+			map.put("calDate",  calDate);
+			map.put("calIdx", calIdx);
+			map.put("uIdx", uIdx);
+			
+			System.out.println("1. findCalsByDate의 calDate=" + calDate );
+			List<CalPost> list = session.selectList("com.reco.calendar.CalendarMapper.findCalsByDate",map);
+			
+			System.out.println("2. findCalsByDate의 calDate=" + map.get("calDate"));
+			
+			return list;
+		}catch(Exception e) {
+			throw new FindException(e.getMessage());
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}
+
+	}
 
 	@Override
 	public CalPost addCalPost(CalPost calpost) throws AddException{
@@ -229,32 +261,6 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 
 
 
-	@Override
-	public List<CalPost> findCalsByDate (CalInfo calinfo, String calDate) throws FindException{
-		SqlSession session = null;
-		int uIdx = calinfo.getCustomer().getUIdx();
-		int calIdx = calinfo.getCalIdx();
-
-		try {
-			session = sqlSessionFactory.openSession();
-
-			Map<String, Object> map = new HashMap<>(); // Map<Key형, Value형> mapName = new HashMap<>();
-			map.put("calInfo", calinfo); // calinfo map에 넣는다
-			map.put("calDate",  calDate);
-			map.put("calIdx", calIdx);
-			map.put("uIdx", uIdx);
-
-			List<CalPost> list = session.selectList("com.reco.calendar.CalendarMapper.findCalsByDate",map);
-			return list;
-		}catch(Exception e) {
-			throw new FindException(e.getMessage());
-		}finally {
-			if(session != null) {
-				session.close();
-			}
-		}
-
-	}
 
 
 

@@ -68,6 +68,7 @@ String thumbnailName = "s_"+ imageFileName;
 <fieldset> <!-- action="./calInfomodify" -->
     <form  method="post" autocomplete="off" enctype="multipart/form-data">
         <input type="hidden" name="calIdx" value="<%=calIdx %>">
+        <!-- 수정할때 파일 새로 안넣어주면, 기존 썸네일 이름 보내주기 -->
         <input type="hidden" name="originCalThum" value="<%=calThumbnail %>">
         <div id="<%=calIdx %>" class="calIdx" style="display:show">
 		    <a> <!-- 수정페이지 이미지 띄우기 -->

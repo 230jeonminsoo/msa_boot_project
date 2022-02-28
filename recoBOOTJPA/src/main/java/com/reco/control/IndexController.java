@@ -115,33 +115,28 @@ public class IndexController {
 		//마이캘린더 보는 컨트롤러 
 		@GetMapping("/mycallist")
 		public Object mycallist(HttpSession session, Model model) {
-			
-			Customer c = (Customer)session.getAttribute("loginInfo");
-			int uIdx = c.getUIdx();
-			
-			CalInfo calinfo = new CalInfo();
-			calinfo.setCustomer(c);
-			
 			ModelAndView mnv = new ModelAndView();
 			
-			try {
-				//생성된 캘린더 리스트 가져오기 
-				List<CalInfo> list = Calendarservice.findCalsByUIdx(uIdx);
-				mnv.addObject("list", list);
-				mnv.addObject("calinfo", calinfo);
+			//test12
+			Customer c = (Customer)session.getAttribute("loginInfo");
+			if(c != null){
+				CalInfo calinfo = new CalInfo();
+				calinfo.setCustomer(c);
 				
-//				if(list.size()==0) {
-//					mnv.addObject("msg", "생성된 캘린더가 없습니다");
-//				}
-				
-				mnv.setViewName("mycallist.jsp");
-			} catch (FindException e) {
-				e.printStackTrace();
-				mnv.addObject("msg", e.getMessage());
-				mnv.addObject("list", new ArrayList<CalInfo>());
-				mnv.setViewName("mycallist.jsp");
+				try {
+					//생성된 캘린더 리스트 가져오기 
+					List<CalInfo> list = Calendarservice.findCalsByUIdx( c.getUIdx());
+					mnv.addObject("list", list);
+					mnv.addObject("calinfo", calinfo);
+					//mnv.setViewName("mycallist.jsp");
+				} catch (FindException e) {
+					e.printStackTrace();
+					mnv.addObject("msg", e.getMessage());
+					mnv.addObject("list", new ArrayList<CalInfo>());
+					//mnv.setViewName("mycallist.jsp");
+				}
 			}
-			
+			mnv.setViewName("mycallist.jsp");
 			return mnv;
 		}	
 				

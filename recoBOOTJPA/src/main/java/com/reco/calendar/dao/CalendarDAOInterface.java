@@ -66,7 +66,7 @@ public interface CalendarDAOInterface {
 	 * @return
 	 * @throws FindException
 	 */
-	public List<CalPost> findCalsByDate(CalInfo calinfo, String calDate) throws FindException;
+	public List<CalPost> findCalsByDate(CalInfo calinfo, CalPost calpost) throws FindException;
 	
 
 	/**

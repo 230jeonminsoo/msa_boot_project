@@ -10,9 +10,14 @@
 Customer c = (Customer)session.getAttribute("loginInfo"); 
 if(c == null){ //로그인 안된 경우
 %>
+	<script>location.href="./";</script>
+<%
+	return;
+}else{
+%> 
 
 <%
-}else if(c != null){
+if(c != null){
 %>
 <ul class="caltab">
 <%	List<CalInfo> list = (List)request.getAttribute("list");
@@ -39,5 +44,7 @@ for(int i=list.size(); i<5; i++){
 		<li><a href="pwdcheck">개인정보 관리</a></li>
 	</ul>
 <%
-}
+}   //end if( c != null)
 %>
+
+<%} //end if(c == null) %>

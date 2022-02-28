@@ -75,7 +75,6 @@ String code = (String)request.getAttribute("code");
 		//communityClick();
 		//로그인,회원가입 제외 각메뉴 클릭시 발생하는 이벤트
 	    menuClick();
-
 	  });
 	</script>
 
