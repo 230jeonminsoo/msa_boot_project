@@ -54,7 +54,7 @@
 	</select>
 
     <select id = "findCalsByDate" parameterType = "map" resultType = "CalPost">
-	   SELECT to_char(cal_Date) calDate, cal_Main_Img, cal_Memo
+	   SELECT to_char(cal_Date, 'yyyy-mm-dd') calDate, cal_Main_Img, cal_Memo
 	   FROM cal_post_${uIdx}_${calIdx}
 	   WHERE to_char(cal_Date,'YYYY-MM') = #{calDate}
 	   ORDER BY to_char(cal_Date,'YYYY-MM')  asc
