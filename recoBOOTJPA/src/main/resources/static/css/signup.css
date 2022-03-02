@@ -4,7 +4,38 @@ div.signup>form>button[type=submit]{
       display: none; 
 }
 
-body{
-	background-color: #f2f2f2;
+
+div.signup{
+  background-color: #f2f2f2;
+  height: 500px;
+  width: 400px;
+  border:rgb(192, 192, 192) 2px solid;
+  margin-top: 30px; 
+  text-align:center;
+  margin-left:38%;
 }
 
+input{
+	margin: 5px;
+}
+
+/* 가입 버튼과 clear버튼 */
+div.signup>form>button{
+	border: rgb(192, 192, 192) 1px solid;
+	border-radius: 3px;
+	font-size: 15px;
+  	color: white;
+  	width: 80px;
+  	margin:10px;
+	background-color:  rgb(91, 173, 255);
+}
+
+button.beforeLogin{
+	border: rgb(192, 192, 192) 1px solid;
+	border-radius: 3px;
+	font-size: 15px;
+  	color: white;
+  	margin:10px;
+  	width: 200px;
+	background-color:  rgb(91, 173, 255);
+}
