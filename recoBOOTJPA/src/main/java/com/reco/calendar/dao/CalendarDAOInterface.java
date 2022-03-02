@@ -72,9 +72,10 @@ public interface CalendarDAOInterface {
 	/**
 	 * 고객의 캘린더글을 수정한다
 	 * @param calpost
+	 * @return 
 	 * @throws ModifyException
 	 */
-	public void modifyCalPost(CalPost calpost) throws ModifyException;
+	public CalPost modifyCalPost(CalPost calpost) throws ModifyException;
 	
 	
 	/**
@@ -82,7 +83,9 @@ public interface CalendarDAOInterface {
 	 * @param calDate
 	 * @throws RemoveException
 	 */
-	public void removeCalPost(String calDate) throws RemoveException;
+	public CalPost removeCalPost(String calDate) throws RemoveException;
+
+
 
 
 	

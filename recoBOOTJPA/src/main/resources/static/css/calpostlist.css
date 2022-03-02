@@ -1,0 +1,40 @@
+
+body {
+	font-size : 20pt;
+	color: #555555;
+}
+/* body>div.caption {
+	display: inline-block;
+	margin-bottom:10px;
+	font-size:30px;
+	margin-left:10%;
+	text-align:center; 
+} */
+div>button{
+	margin-left:30%;
+}
+
+table {
+	border-collapse:collapse;
+	text-align:center; 
+	width: 60%;
+	height :50%;
+	margin-left:15%;
+}
+
+th, td {
+	border : 1px solid #cccccc;
+	width : 200px;
+	height : 100px;
+	text-align:center; 
+}
+
+td>a.calpostWR>img.calMainImg {
+ width: 80px; 
+ height: 80px;
+}
+
+caption {
+	margin-bottom:10px;
+	font-size:30px;
+}
