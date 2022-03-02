@@ -22,6 +22,7 @@ import com.reco.board.service.BoardService;
 import com.reco.board.vo.Board;
 import com.reco.calendar.service.CalendarService;
 import com.reco.calendar.vo.CalInfo;
+import com.reco.calendar.vo.CalPost;
 import com.reco.customer.vo.Customer;
 import com.reco.dto.PageDTO;
 import com.reco.dto.PageDTO2;
@@ -208,6 +209,7 @@ public class IndexController {
 			session.setAttribute("myPage", session);
 			return "myprivate.jsp";
 		}
+		
 		@GetMapping("/findEmailPage")
 		public String findEmailPage() {
 			return "findEmail.jsp";
@@ -219,7 +221,17 @@ public class IndexController {
 			return "calpostwrite.jsp";
 		}
 		
+		@GetMapping("/calpostmodify")
+		public String calpostmodify() {
+			return "calpostmodify.jsp";
+		}
 		
+		
+		
+		
+		
+		
+	
 		@Controller
 		public class CustomErrorController implements ErrorController {
 

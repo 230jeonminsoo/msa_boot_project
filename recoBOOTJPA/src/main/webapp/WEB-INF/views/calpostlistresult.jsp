@@ -157,8 +157,8 @@ if ( n_m == 13) {
   function my_function(v) {
 	 var w = (window.screen.width/2) -100;
 	 var h = (window.screen.height/2) -100;
-	 var url = "calpostview?uIdx=<%=uIdx%>&calIdx=<%=calIdx%>&calDate="+v;
-	  window.open(url, "calpostwrite", "width = 800, height=800,left="+w+", top="+h);   
+	 var url = "calpostmodify?uIdx=<%=uIdx%>&calIdx=<%=calIdx%>&calDate="+v;
+	  window.open(url, "calpostmodify", "width = 800, height=800,left="+w+", top="+h);   
   } 
     
  </script> 

@@ -73,10 +73,15 @@
 
 	</insert>
 
-	<update id="modifyCalPost" parameterType = "calPost">
-	UPDATE cal_post set cal_Memo=#{calMemo},cal_Main_Img=#{calMaimImg}
-	WHERE cal_date=#{calDate}
+	<update id="modifyCalPost" parameterType = "Hashmap">
+	UPDATE cal_post_${uIdx}_${calIdx}
+	<set>
+	 cal_Memo=#{calMemo}, cal_Main_Img=#{calMainImg}
+	</set>
+	WHERE to_char(cal_Date, 'yyyy-fmmm-dd') = #{calDate}
 	</update>
+
+
 
 	<delete id = "removeCalPost" parameterType = "String">
 	DELETE FROM cal_post_${uIdx}_${calIdx}

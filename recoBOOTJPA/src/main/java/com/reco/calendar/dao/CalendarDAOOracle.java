@@ -264,32 +264,60 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 
 
 
-//	@Override
-	public void modifyCalPost(CalPost calpost) throws ModifyException{
-//		SqlSession session = null;
-//		int uIdx = calpost.getCalinfo().getCustomer().getUIdx();
-//		int calIdx = calpost.getCalinfo().getCalIdx();
-//
-//
-//			try {
-//				session = sqlSessionFactory.openSession();
-//				session.update("com.reco.notice.CalendarMapper.modifyNtc",n)
-//				List<CalPost> list = findCalsByDate(caldate);
-//			} catch (FindException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//
-//		}catch(SQLException e) {
-//			e.getStackTrace();
-//		}finally {
-//			MyConnection.close(pstmt, con);
-//		}
-//	}
-}
+	@Override
+	public CalPost modifyCalPost(CalPost calpost) throws ModifyException{
+		SqlSession session = null;
+		
+
+		try {
+				session = sqlSessionFactory.openSession();
+				CalInfo calinfo = calpost.getCalinfo();
+				int uIdx = calpost.getCalinfo().getCustomer().getUIdx();
+				int calIdx = calpost.getCalinfo().getCalIdx();
+				String calDate = calpost.getCalDate();
+				String calMainImg = calpost.getCalMainImg();
+				String calMemo = calpost.getCalMemo();
+				
+				List<CalPost> list = findCalsByDate(calinfo,calpost);
+						
+				Map<String, Object> map = new HashMap<>();
+				map.put("uIdx", uIdx);
+				map.put("calIdx", calIdx);
+				map.put("calDate", calpost.getCalDate());
+				map.put("calMainImg", calpost.getCalMainImg());
+				map.put("calMemo", calpost.getCalMemo());
+				
+				session.update("com.reco.calendar.CalendarMapper.modifyCalPost",map);
+				session.commit();
+				
+				System.out.println("modifyCalpost함수 : calmemo=" + calMemo + ", calMainimg =" + calMainImg);
+				
+		} catch (FindException e) {
+			throw new ModifyException(e.getMessage());
+		}catch(Exception e) {
+			throw new ModifyException(e.getMessage());
+		}finally {
+			if(session != null) {
+				session.close();
+			}
+		}
+		return calpost;
+
+	}
+
+
+	@Override
+	public CalPost removeCalPost(String calDate) throws RemoveException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+
+
+
 
 //	@Override
-	public void removeCalPost(String calDate) throws RemoveException{
+//	public CalPost removeCalPost(String calDate) throws RemoveException{
 //		//" delete from Cal_post_1_1 where cal_Date = ? ";
 //
 //		Connection con = null;
@@ -360,7 +388,7 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 //			e.printStackTrace();
 //		}
 //	}
-}
+//}
 
 
 //	//테이블 삭제
