@@ -64,6 +64,7 @@ div.brdDetail>div.BoardDetailButton>button{
 	 border: 2px solid #77af9c;
 	 padding:10px;
 	 margin:10px;
+	 margin-bottom: 50px;
 	 position: relative;
 	 left: 153px;
 }
@@ -80,6 +81,11 @@ div.brdDetail>div.BoardDetailButton>button:hover{
 	visibility:hidden;
 }
 
+div.size {
+    font-family: 'DesignHouse';
+    padding: 12px 8px 22px 8px;
+    background: #f4f4f2;
+}
 .community_comment{
 	
 }
@@ -91,13 +97,16 @@ div.brdDetail>div.BoardDetailButton>button:hover{
 .commentwrap2{
 	width:100%;
 	padding: 12px 8px 22px 8px;
-    border-bottom: 1px solid #f1f1f1;
+    border-bottom: 1px solid #e7e5e5;
   
 }
 .commentwrap3{
 	background: #f4f4f2;
+	margin-top:-20px
 }
-
+.commentwrap4{
+	background: #f4f4f2;
+}
 div.community_comment>div.comment_modify_input{
 	display:none;
 }

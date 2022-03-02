@@ -207,7 +207,7 @@ String uNickName = c.getUNickName();
        
 <div class="commentwrap">       
    <!-- 게시글에 달린 댓글 갯수 -->   
-<div class="size">댓글 <%=pageDTO2.getTotalCnt()%> </div><br>
+<div class="size">댓글 <%=pageDTO2.getTotalCnt()%> </div>
    <!-- 게시글에 달린 댓글 갯수 end-->   
 
 
@@ -288,6 +288,7 @@ String uNickName = c.getUNickName();
 	         	<!-- 대댓글 끝 -->
 	         	<!-- 댓글 시작 -->
 	         	<%} else{%>   
+	         			<div class="commentwrap4">
 	         			<div class="commentwrap2">
 	         			 <div class="community_comment"id="<%=cmtIdx%>" >
 	         			 
@@ -317,7 +318,7 @@ String uNickName = c.getUNickName();
 							</form>
 	         		   </div>
 	        		</div>
-	         		   
+	            </div> 
 	         		   
 	         		   
 	         	<%
