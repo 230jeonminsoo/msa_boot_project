@@ -42,7 +42,7 @@ import com.reco.exception.RemoveException;
 import net.coobird.thumbnailator.Thumbnailator;
 
 @Controller
-public class CalendarController {
+public class CalendarController {  
 
 	@Autowired
 	private CalendarService service;
@@ -52,7 +52,7 @@ public class CalendarController {
 	private Logger log = LoggerFactory.getLogger(CalendarService.class.getName()); 
 	
 	
-	//캘린더 썸네일리스트를 보는 컨트롤러 ㅇ
+	//캘린더 썸네일리스트를 보는 컨트롤러
 	@GetMapping("callist") 
 	public Object calInfoList(
 							  HttpSession session, Model model) {
@@ -279,7 +279,7 @@ public Object calInfoModify(@RequestParam(value = "calIdx") int calIdx,
 		return mnv;
 }
 
-//캘린더를 삭제하는 컨트롤러ㅇㅇㅇ
+//캘린더를 삭제하는 컨트롤러
 @GetMapping("calendarRemove")
 public String noticeRemove(int calIdx, HttpSession session, Model model) {
 	
@@ -343,6 +343,8 @@ public String CalPostList (@RequestParam(value = "calIdx")int calIdx,
 			model.addAttribute("list", list);	
 			model.addAttribute("calinfo",calinfo);
 			model.addAttribute("calpost",calpost);
+			
+			
 			return "calpostlistresult.jsp";	
 		} catch (FindException e) {
 			e.printStackTrace();
@@ -355,7 +357,7 @@ public String CalPostList (@RequestParam(value = "calIdx")int calIdx,
 
 
 
-//캘린더 글 작성 추가하는 컨트롤러 ㅁㅁdddd
+//캘린더 글 작성 추가하는 컨트롤러
 @PostMapping("calpostAdd") //calpost작성url
 public Object calpostAdd(
 						 @RequestParam(value = "calMemo") String calMemo, 
@@ -396,7 +398,7 @@ public Object calpostAdd(
 	
 		List<CalPost> list = service.findCalsByDate(calinfo,calpost);
 		mnv.addObject("list", list);
-
+		
 		//파일 경로 생성
 		String saveDirectory = "c:\\reco\\calendar"; // d:\\files\\calendar
 		if ( ! new File(saveDirectory).exists()) {
@@ -411,6 +413,9 @@ public Object calpostAdd(
 			//이미지파일 저장하기
 			String imageOrignFileName = multipartFile.getOriginalFilename(); //이미지파일원본이름얻기
 			logger.info("이미지 파일이름:" + imageOrignFileName +", 파일크기: " + multipartFile.getSize());
+			
+			String sDate = calDate.substring(8,10);
+			System.out.println("sDate= " + sDate);
 
 			//저장할 파일이름을 지정한다 ex) 저장파일명 : cal_(UIdx)_(CalIdx)_(CalDate)
 			String imageFileName = "cal_"+ uIdx  + "_" + calIdx + "_" + calDate + ".jpg" ; //파일이름("선택날짜.확장자") 

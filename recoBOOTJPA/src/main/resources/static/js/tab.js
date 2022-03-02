@@ -74,7 +74,7 @@ function calMenuClick(){ //callistresult.jsp
                         //alert('응답실패:' + jqXHR.status);
 						location.href="./";
                     }else{
-						alert("응답실패"+xhr.status);
+						//alert("응답실패");
 						//location.href="./";
 					}
                 });
