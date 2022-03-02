@@ -203,19 +203,19 @@ if (session.getAttribute("loginInfo") != null) {
 				    	   style='width:25px; height:25px'	
 					       name='brdIdx' 
 					       value=<%=brdIdx%> />	  
-		    <span id="brdIdx"><%=brdIdx%></span>
-		    <span> <% if(brdType == 0){%>
+		    <span id="<%=brdIdx%>"><%=brdIdx%></span>
+		    <span id="<%=brdIdx%>"> <% if(brdType == 0){%>
 		    <%="잡담"%>&nbsp;
 		    <% }%><% else if(brdType == 1){%>
 		    <%="정보"%>&nbsp;
 		    <% }%><% else{ brdType =2;%>
 		    <%="기타" %>
 		    <%} %></span>
-		    <span><%=brdTitle%> <%if(brdAttachment != null){ %><img src="./images/클립.png"><%} %></span>
-		    <span><%=BrdUNickName%></span>
-		    <span><%=brdViews%></span>
-		    <span><%=cmtCount%></span>
-		     <span><%=brdCrt%></span>
+		    <span id="<%=brdIdx%>"><%=brdTitle%> <%if(brdAttachment != null){ %><img src="./images/클립.png"><%} %></span>
+		    <span id="<%=brdIdx%>"><%=BrdUNickName%></span>
+		    <span id="<%=brdIdx%>"><%=brdViews%></span>
+		    <span id="<%=brdIdx%>"><%=cmtCount%></span>
+		     <span id="<%=brdIdx%>"><%=brdCrt%></span>
 	    </li>
 	  </ul>
 </div>
@@ -315,10 +315,10 @@ if (session.getAttribute("loginInfo") != null) {
 		   
 		    	
 		  
-		  	<span id="brdIdxMy" style="display:none;"><%=brdIdxMy%></span>  		     	    	    
-		    <span><%=cmtContentMy%> </span>
-		    <span><%=cmtCreateAtMyCrt%></span>	    		    	    	
-		    <span><%=brdTitleMy %></span>
+		  	<span id="<%=brdIdxMy%>" style="display:none;"><%=brdIdxMy%></span>  		     	    	    
+		    <span id="<%=brdIdxMy%>"><%=cmtContentMy%> </span>
+		    <span id="<%=brdIdxMy%>"><%=cmtCreateAtMyCrt%></span>	    		    	    	
+		    <span id="<%=brdIdxMy%>"><%=brdTitleMy %></span>
 		  	
 		    <%-- <span><%=cmtCount%></span> --%>
 	    </li>

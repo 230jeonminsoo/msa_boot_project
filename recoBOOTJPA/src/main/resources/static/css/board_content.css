@@ -47,7 +47,7 @@ div.brdDetail>ul.brdDetail>li>div.brdTitle{
 /*내용 부분 */
 div.brdDetail>ul.brdDetail>li>div.brdContent{
 	
-	height:400px;
+	height:200px;
 	font-size: 30px;
 	position: relative;
 	top: 30px;	

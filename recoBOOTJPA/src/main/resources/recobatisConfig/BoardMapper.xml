@@ -107,7 +107,13 @@ where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPag
    where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPage},#{cntperpage})
 	</select>
 	
-	
+	<select id="findBrdByUNickNameMy" parameterType="String" resultType="Board">
+		select *
+    FROM(SELECT rownum r, d.*  
+  FROM(SELECT b.brd_Idx, b.brd_attachment, b.brd_UNickName,b.brd_Type,b.brd_Title,b.brd_Views,b.brd_ThumbUp,b.brd_CreateAt,(SELECT count(*) FROM comments c WHERE c.brd_idx = b.brd_idx) as cmt_count
+		FROM board b WHERE brd_UNickName=#{uNickname} ORDER BY b.brd_Idx DESC) d
+   )
+	</select>
 	<select id="findCmtByUNickName" parameterType="map" resultType="Comment">
    select *
     FROM( SELECT rownum r, d.*    
@@ -183,10 +189,10 @@ where r between start_row(#{currentPage},#{cntperpage}) and end_row(#{currentPag
 	
 
 	
-	<delete id="removeBrdAllFromDB" parameterType="String">
+<!-- 	<delete id="removeBrdAllFromDB" parameterType="String">
 		delete FROM board WHERE BRD_UNICKNAME=#{uNickname}
 	</delete>
-	
+	 -->
 	
 	<delete id="removeCmtAllFromDB" parameterType="String">
 		delete FROM comments WHERE CMT_UNICKNAME=#{uNickname}

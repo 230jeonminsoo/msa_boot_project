@@ -323,11 +323,18 @@ public class CustomerController {
 		System.out.println("uNickName값" + uNickName);
 		
 		daoBrd.removeCmtAllFromDB(uNickName);
-		daoBrd.removeBrdAllFromDB(uNickName);
+		
+		List<Board> boards = daoBrd.findBrdByUNickNameMy(uNickName);
+		for(Board board : boards) {
+			daoBrd.removeBrd(board.getBrdIdx());
+		}
+		//daoBrd.removeBrdAllFromDB(uNickName);
+		
 		if(c.getUAuthCode() == 0) {
 		daoNtc.removeNtcAllFromDB(uNickName);
 		}
 		//int uIdx = c.getUIdx();
+		
 		CalInfo calinfo = new CalInfo();
 		calinfo.setCustomer(c);
 		 for(carIdx=0; carIdx<5; carIdx++) {

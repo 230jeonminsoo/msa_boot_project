@@ -397,6 +397,26 @@ public class BoardDAOOracle implements BoardDAOInterface {
 	}
 	
 	
+	@Override
+	public List<Board> findBrdByUNickNameMy(String uNickname) throws FindException {
+		SqlSession session =null;		
+		try {
+			session = sqlSessionFactory.openSession();
+			List<Board> list = session.selectList("com.reco.board.BoardMapper.findBrdByUNickNameMy",uNickname);
+//			if(list.size() == 0) {
+//				throw new FindException("단어를 포함하는 글이 없습니다.");
+//			}
+			return list;		
+		} catch (Exception e) {
+			throw new FindException(e.getMessage());
+		} finally {
+			if(session != null) {
+				session.close();
+			}
+		}
+	}
+	
+	
 	//마이페이지 내가 쓴 댓글들만 찾아오기
 	public List<Comment> findCmtByUNickName(String uNickname, int currentPage, int cntperpage) throws FindException{
 		SqlSession session =null;		
@@ -423,7 +443,9 @@ public class BoardDAOOracle implements BoardDAOInterface {
 	}
 
 	
-		
+
+
+	
 	@Override
 	public void addCmt(Comment comment) throws AddException {
 		SqlSession session =null;

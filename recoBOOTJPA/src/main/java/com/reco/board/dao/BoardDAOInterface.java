@@ -220,5 +220,11 @@ public interface BoardDAOInterface {
 	 */
 	public void removeBrdAllFromDB(String uNickname) throws RemoveException;
 	
-	
+	/**
+	 * 카카오 탈퇴시 board삭제하려고 게시글 모두 찾아옴
+	 * @param uNickname
+	 * @return
+	 * @throws FindException
+	 */
+	public List<Board> findBrdByUNickNameMy(String uNickname) throws FindException;
 }

@@ -121,14 +121,15 @@ function boardDetail(option){
 	
     let $boardObj = $('div.boardlist>ul>li>span');
     $boardObj.click(function(){
-        //let brdIdx = $(this).attr('id');	
-		let $brdIdx = $('#brdIdx').html().trim();
+        let brdIdx = $(this).attr('id');	
+		//let $brdIdx = $('#brdIdx').html().trim();
+		console.log(brdIdx);
         let ajaxUrl = './brddetail';
 		/*window.open(window.location.href);*/
         $.ajax({
             url: ajaxUrl,
             method : 'get',
-            data : {brdIdx: $brdIdx},
+            data : {brdIdx: brdIdx},
             success:function(responseData){
 				console.log(responseData);
                // let $articlesObj = $('section>div.articles');
@@ -231,14 +232,15 @@ function commentDetail(){
     let $commentObj = $('div.cmt_list>div.commentlist>ul>li>span');
     $commentObj.click(function(){
 		if (confirm("해당 게시글로 이동하시겠습니까?") == true){
-        //let brdIdx = $(this).attr('id');	
-		let $brdIdx = $('#brdIdxMy').html().trim();
+        let brdIdx = $(this).attr('id');	
+		//let $brdIdx = $('#brdIdxMy').html().trim();
+		console.log(brdIdx);
         let ajaxUrl = './brddetail';
 		/*window.open(window.location.href);*/
         $.ajax({
             url: ajaxUrl,
             method : 'get',
-            data : {brdIdx: $brdIdx},
+            data : {brdIdx: brdIdx},
             success:function(responseData){
 				console.log(responseData);
 				
