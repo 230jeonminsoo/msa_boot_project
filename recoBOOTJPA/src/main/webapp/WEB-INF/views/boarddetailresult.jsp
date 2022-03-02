@@ -239,21 +239,22 @@ String uNickName = c.getUNickName();
 	         	%>    
 	         	<!-- 대댓글 시작 -->
 	         	<%if(cmtParentIdx != 0) {%> &emsp;&emsp;
+	         	
+	         	<div class="commentwrap3">
 	         	<div class="commentwrap2">
+	         	<div class="commentwrap1" style="left:<%=level * 60%>px;">
 	         	<div class="community_comment" id="<%=cmtIdx%>">
-						<%
+					<%-- 	<%
 						for(int i=1; i<=level; i++){%>
 										
 							&#8594;	
 						<%}
-						%>
-	         		   		<span class="cmt" id="cmtIdx"><%=cmtIdx %></span><strong><div class="cmt"><%=cmtUNickName %><span class="mywrite"><%if(brdUNickname.equals(cmtUNickName)){ %>글쓴이<%} %></span></div></strong>
-								<%-- 
-								<div class="cmthide" id="cmtUNickName" style="display:none"><%=cmtUNickName %></div> --%>
-								<div class="cmt"><span id="cmtUNickNameReply"></span><%=cmtContent %></div> 
+						%> --%>
+	         		   		<span class="cmt1" id="cmtIdx"><%=cmtIdx %></span>
+	         		   		<strong><div class="cmt"><%=cmtUNickName %> &nbsp;<span class="cmt"><%=sf.format(cmtCreateAt) %></span><span class="mywrite"><%if(brdUNickname.equals(cmtUNickName)){ %>글쓴이<%} %></span> </div></strong>
 								
-								<div class="cmt"><%=sf.format(cmtCreateAt) %></div>
-								
+								<span class="cmt"><%=cmtContent %></span> 
+													
 								
 							<div class="community_comment_button">
 								<%if(! c.getUNickName().equals(cmtUNickName)) {%> 
@@ -277,8 +278,9 @@ String uNickName = c.getUNickName();
 								</div>
 							</form>
 							</div>
+							</div>
 						</div>
-	         
+	         		</div>
 	         	
 	         	
 					         	
@@ -286,17 +288,16 @@ String uNickName = c.getUNickName();
 	         	<!-- 대댓글 끝 -->
 	         	<!-- 댓글 시작 -->
 	         	<%} else{%>   
-	         			 <div class="community_comment"id="<%=cmtIdx%>">
+	         			<div class="commentwrap2">
+	         			 <div class="community_comment"id="<%=cmtIdx%>" >
 	         			 
-	         			 <span class="cmt" id="cmtIdx"><%=cmtIdx %></span><strong><div class="cmt"><%=cmtUNickName %><span class="mywrite"><%if(brdUNickname.equals(cmtUNickName)){ %>글쓴이<%} %></span></div></strong> 
+	         			 <span class="cmt1" id="cmtIdx"><%=cmtIdx %></span><strong><div class="cmt"><%=cmtUNickName %> &nbsp;<span class="cmt"><%=sf.format(cmtCreateAt) %></span><span class="mywrite"><%if(brdUNickname.equals(cmtUNickName)){ %>글쓴이<%} %></span></div></strong> 
 	         		  
+	         		   <span class="cmt"><%=cmtContent %></span>
 	         		  
-	         		  
-	         		   <div class="cmt"><%=cmtContent %></div>
-	         		   <div class="cmt"><%=sf.format(cmtCreateAt) %></div>
 	         		   	<div class="community_comment_button">
 	         		   	<%if(! c.getUNickName().equals(cmtUNickName)) {%> 
-	         		   		<button class="comment_comment_add" id="<%=cmtIdx %>">대댓글 달기</button>   
+	         		   		<button class="comment_comment_add" id="<%=cmtIdx %>">댓글 달기</button>   
 	         		   	<%} %>	
 	         		   		<%if(c.getUNickName().equals(cmtUNickName)) {%> 
 		         		   		<button class="comment_modify" id="<%=cmtIdx %>">수정</button>
@@ -315,7 +316,7 @@ String uNickName = c.getUNickName();
 								</div>
 							</form>
 	         		   </div>
-	        	
+	        		</div>
 	         		   
 	         		   
 	         		   
