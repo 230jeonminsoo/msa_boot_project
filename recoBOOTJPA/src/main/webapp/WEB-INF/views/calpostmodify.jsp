@@ -32,7 +32,7 @@ String thumbnailName = "s_"+ imageFileName;
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
 
-	<title>캘린더글 수정페이지</title>
+	<title>캘린더글수정페이지</title>
 	   <style>
         .dellink{
           display: none;
@@ -64,23 +64,23 @@ $(function(){
         }
       </style>
 
-	<link href="./css/calpostmodify.css" rel=stylesheet>
 	<script src="./js/calpostmodify.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <style>
 body {
-	font-size : 9pt;
+	font-size : 8pt;
 	font - family : 맑은고딕;
 	color : #3333333;
 }
 table {
-	width : 300px;
+	width : 200px;
 	border-collapse:collapse; /*셀간격을없앰*/
 }
 th,td {
 	border : 3px solid #cccccc;
-	padding : 5px;
+	padding : 10px;
+	width : 100px;
 }
 
 </style>
@@ -106,7 +106,7 @@ th,td {
 		    <tr>
 		        <td>리뷰/메모수정</td>
 		         <td>
-		            <textarea name="calMemo" cols="150" rows="20" placeholder="500자까지 자유작성/필수입력사항/캘린더에 작성하는 내용은 본인만 볼수 있다." ></textarea>
+		            <textarea name="calMemo" cols="100" rows="15" placeholder="500자까지 자유작성/필수입력사항/캘린더에 작성하는 내용은 본인만 볼수 있다." ></textarea>
 		        </td>
 		    </tr>
 		    
