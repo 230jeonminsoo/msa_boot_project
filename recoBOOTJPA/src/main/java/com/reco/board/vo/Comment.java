@@ -10,7 +10,16 @@ private Board brd;
 	private int cmtParentIdx;
 	private Date cmtCreateAt;
 	private String cmtUNickName;
+	private int level;
 	
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
 	//멤버변수들의 접근제어자를 private으로 하면 setter, getter 메소드들이 필요하고 생성자를 통해서 초기화하는 작업도 필요하다.
 	 //매개변수없는 생성자 만듬
 	public Comment() {	  

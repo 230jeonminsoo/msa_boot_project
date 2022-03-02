@@ -66,10 +66,10 @@
 	<select id="findBrdByIdx" parameterType="map" resultMap="boardResultMap">
 		select *
    FROM (SELECT rownum r, d.* 
-    FROM(SELECT *  FROM (SELECT b.brd_idx,cmt_idx, cmt_content, nvl(c.cmt_parentidx, 0) cmt_parentidx,  cmt_createat, cmt_unickname,
+    FROM(SELECT level, a.*  FROM (SELECT b.brd_idx,cmt_idx, cmt_content, nvl(c.cmt_parentidx, 0) cmt_parentidx,  cmt_createat, cmt_unickname,
             brd_type, brd_title, brd_content, brd_attachment, brd_createat, brd_thumbup, brd_unickname, brd_views
             FROM comments c RIGHT JOIN  board b ON b.brd_Idx = c.brd_Idx
-            WHERE  b.brd_idx=#{brdIdx})
+            WHERE  b.brd_idx=#{brdIdx}) a
             START WITH  cmt_parentidx = 0
             CONNECT BY PRIOR cmt_idx = cmt_parentidx) d
         )

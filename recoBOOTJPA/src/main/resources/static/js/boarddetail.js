@@ -168,10 +168,11 @@ function commentRemoveClick(){
 function comment2AddBtClick(){
 	$('button.comment_comment_add').click(function(){
 		let $cmtIdx = $(this).parent().parent().children('span').html();
+		let $cmtUNickName = $(this).parent().parent().children('div.cmthide').html();
+		console.log($cmtUNickName);
 		/*let cmtUNickName = $('#cmtUNickName').html().trim();
 		 console.log(cmtUNickName);
-		$("#cmtUNickName").text(cmtUNickName); 
-		$("#cmtUNickName").css('display','inline');*/
+		$("#"cmtUNickNameReply"").text($cmtUNickName);*/
 		$('div.community_comment>form>div.comment_comment_input[id='+$cmtIdx+']').css('display','inline');
 	/*	$('textarea[name=cmtContent]').attr('value',cmtUNickName);*/
 	});
@@ -180,9 +181,12 @@ function comment2AddBtClick(){
 function comment2AddClick(){
 	let $formObj = $('div.community_comment>form'); //form객체 찾음
 		let $cmtIdx = $(this).parent().parent().children('span').html();
-		let cmtUNickName = $('#cmtUNickName').html().trim();
-		 console.log(cmtUNickName);
-		$("#cmtUNickNameReply").text(cmtUNickName); 
+		
+		let $cmtUNickName = $(this).parent().parent().parent().children('div.cmthide').html();
+		console.log($cmtUNickName);
+		
+
+
 	$formObj.submit(function(){
 		let ajaxUrl = $(this).attr('action');	
 		console.log(ajaxUrl);	
@@ -190,6 +194,7 @@ function comment2AddClick(){
 		console.log(ajaxMethod);
 		let sendData= $(this).serialize();
 		let $cmtIdx = $(this).parent().parent().children('span').html();
+		
 		sendData += "&brdIdx="+$('#brdIdx').html().trim()
 		console.log(sendData);
 				
@@ -202,7 +207,8 @@ function comment2AddClick(){
 					let $articlesObj = $('section>div.articles');
                		$articlesObj.empty();
                  	$articlesObj.html(responseData);
-$("#cmtUNickNameReply").css('display','inline');
+					 $("#cmtUNickNameReply").text($cmtUNickName);
+					
 	
 			}
 		});
