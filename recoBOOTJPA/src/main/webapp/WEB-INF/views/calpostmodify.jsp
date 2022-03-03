@@ -22,7 +22,7 @@ String saveDirectory = "C:\\reco\\calendar";
 File dir = new File(saveDirectory);
 File[] files = dir.listFiles();
 
-String imageFileName = "cal_post_" + uIdx  + "_" + calIdx + ".jpg";
+String imageFileName = "cal_" + uIdx  + "_" + calIdx + "_" + calDate + ".jpg";
 String thumbnailName = "s_"+ imageFileName;
 %>	
 
