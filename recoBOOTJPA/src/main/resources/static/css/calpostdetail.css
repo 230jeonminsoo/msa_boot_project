@@ -1,8 +1,23 @@
+div.calpostdetail{
+	 height: 600px;
+	 width: 700px;
+	 border:rgb(192, 192, 192) 2px solid;
+	 margin-top: 30px; 
+	 text-align:center;
+	 margin-left:30%;
+}
+
+div.thumbnail{
+	font-size: 14px;
+}
+
 div.thumbnail>img.MainImg {
 	width: 300px;
 	height: 300px;
+	margin-top:20px;
+	margin-bottom:20px;
 }
 
 div.inputBT>button[id=modifyBt]{
-	width:100px;
+	margin-top:60px;	
 }
