@@ -36,13 +36,13 @@
         <input type="number" name="RRN" required placeholder="-없이 주민등록번호를 입력해주세요" value="4444444444444">
         <br>    
         <br>
-        <button class="RRN"> 주민번호 본인인증 </button><br> <br>          
+        <button class="RRN"> 주민번호 본인인증 </button><br><br><br>          
         <div class="CNSend">
        		<input type="text" name="phoneNumber" required placeholder="-없이 핸드폰번호를 입력해주세요"><br><br>
-       		<button class="RRN"> 휴대폰 본인인증 </button><br>
+       		<button class="RRN"> 휴대폰 본인인증 </button><br><br><br>
        		
        		<input type="text" name="CN" required placeholder="인증번호를 입력해주세요"><br><br>
-       		<button class="CN">확인</button><br>
+       		<button class="CN">확인</button><br><br><br>
        		이메일 : <input type="text" name="email" value="" readonly="readonly">
         	
      
