@@ -17,7 +17,7 @@ String code = (String)request.getAttribute("code");
 
    
     <script>
-    
+     
       $(function(){
     	 
     	 /* let $nicknameObj = $('div.signup>form>input[name=nickname]'); */
@@ -34,7 +34,7 @@ String code = (String)request.getAttribute("code");
     
   <div class="signup"> 
 	<form>       
-		<h3>카카오 간편회원가입</h3>
+		<h3 style="color:#c3c326; padding-top: 50px;">카카오 간편회원가입</h3>
 		<!-- 카카오가입시 name은 사용안함 -->
 		
 		<input type="text" name="nickname" id="nickname" required placeholder="닉네임을 입력해주세요">		
