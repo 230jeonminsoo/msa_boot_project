@@ -114,12 +114,25 @@ div.detail{
   display: inline-block; /* 추가 */
 }
 
-
+/* div.brddetail{
+	height:0px;
+} */
 div.NoticeDetailButton{
 	display:none;
 }  
+/* ul.brdDetail {
+   height:736px;
+}
+ul.brdDetail>li{
+   height:780px;
+} */
 
-
+/* div.brdDetail > ul.brdDetail > li > div.brdContent {
+    height: 100px;
+    font-size: 30px;
+    position: relative;
+    top: 30px;
+} */
 fieldset>div.ntc_list>button.myNoticerm{
 	background-color:white;
 	 border: 2px solid #77af9c;
@@ -149,7 +162,7 @@ fieldset>div.ntc_list>button.myNoticerm:hover{
 .brd_list{
 	width:50%;
 	/* margin-left: 15%; */
-	padding-top: 60px;
+	/* padding-top: 60px; */
   margin: 0 auto;
    display: inline-block; /* 추가 */
 }
@@ -270,7 +283,7 @@ div.brddetail{
 	/* margin-left: 15%;
 	margin-top: 5%; */
 	margin-right:1%;
-  padding-top: 60px;
+ /*  padding-top: 60px; */
   margin: 0 auto;
   display: inline-block; /* 추가 */
 }

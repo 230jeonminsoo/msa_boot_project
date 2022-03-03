@@ -9,7 +9,7 @@ spring:
       jdbc-url: jdbc:log4jdbc:oracle:thin:@localhost:1521:xe
       username: cal
       password: cal
-      maximum-pool-size: 100
+      maximum-pool-size: 150
       minimum-idle: 2 
   mvc:
     view:

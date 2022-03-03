@@ -23,7 +23,7 @@ ul.brdDetail{
      list-style-type: none;
      /* padding-left: 0px; */
      border:1px #77af9c solid;
-     width:70%;
+     width:64%;
 	 margin: 0 auto;
 	
  }
@@ -55,7 +55,7 @@ div.brdDetail>ul.brdDetail>li>div.brdContent{
 }
 
 div.brdDetail>div.BoardDetailButton{
-	margin-left: 55%;
+	margin-left: 61%;
 }
 
 

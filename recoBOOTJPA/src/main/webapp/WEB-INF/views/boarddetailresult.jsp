@@ -156,7 +156,7 @@ $(function(){
 	             --%>
 	         
 	         <hr>
-	         <div class="image"><img style="width:500px; height:500px;"></div>
+	         <div class="image"><img style="width:500px; height:300px;"></div>
 	         <div class="brdContent"><span id="brdContent"> 
 					<%=brdContent %></span></div>			
 		     <hr>

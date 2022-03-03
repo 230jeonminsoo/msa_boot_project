@@ -135,7 +135,7 @@ function boardDetail(option){
                // let $articlesObj = $('section>div.articles');
                 $articlesObj.empty();
                 $articlesObj.html(responseData);
-				window.scrollTo(900, 900);							
+				window.scrollTo(200, 200);							
             }
         }); 
        return false;
