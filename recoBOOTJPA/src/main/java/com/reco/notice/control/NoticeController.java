@@ -34,6 +34,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.reco.board.service.BoardService;
 import com.reco.board.vo.Board;
+import com.reco.customer.control.CustomerController;
+import com.reco.customer.service.CustomerService;
 import com.reco.customer.vo.Customer;
 import com.reco.dto.PageDTO;
 import com.reco.dto.PageDTO2;
@@ -54,7 +56,7 @@ public class NoticeController {
 	
 	@Autowired
 	private BoardService BoardService;
-	
+		
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private Logger log = LoggerFactory.getLogger(NoticeService.class.getName());
@@ -65,7 +67,9 @@ public class NoticeController {
 							,@RequestPart (required = false) MultipartFile imageFile
 							,String ntcTitle,String ntcContent,String ntcAttachment,HttpSession session, Model model) {
 		Customer c = (Customer)session.getAttribute("loginInfo");
-		
+		if(c == null) {		
+			return "callistresult.jsp";		
+		}
 		String ntcUNickName = c.getUNickName();
 		Notice n = new Notice();
 		n.setNtcTitle(ntcTitle);
@@ -119,8 +123,8 @@ public class NoticeController {
 							FileOutputStream thumbnailOS;
 							thumbnailOS = new FileOutputStream(thumbnailFile);
 							InputStream imageFileIS = imageFile.getInputStream();
-							int width = 300;
-							int height = 300;
+							int width = 100;
+							int height = 100;
 							Thumbnailator.createThumbnail(imageFileIS, thumbnailOS, width, height);
 						} catch (IOException e) {
 							e.printStackTrace();
