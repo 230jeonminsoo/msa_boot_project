@@ -35,39 +35,91 @@ String imageFileName = "s_cal_"+uIdx+"_"+calIdx+"_"+calDate+".jpg"; //썸네일 
 	
 <script>
 $(function(){
-	$('div.calpostdetail>form.f').submit(functio(){
-		let ajaUrl = 'calpostmodifypage';
-		let calIdx = <%=request.getParameter("calIdx")%>;
-		let calMemo = $("input[name=calMemo]").val();
-		
-		let data = {calIdx : calIdx,
-				calIdx:calIdx,
-				calMemo:calMemo
-		}
-		$.ajax({
-			url : ajaUrl,
-			method : post,
-			data: data, // formdata
-			success: function(res){
-				 let $articlesObj = $('section>div.articles');
-	              $articlesObj.empty();
-	              $articlesObj.html(responseData);
+	   /*이미지 태그 보여주기*/
+	   let $img = $('div.calpostdetail>form.f>div.thumnail>img.calMainImg');
+	   $img.each(function(i, element){
+	      let imgId = $(element).attr('id');   
+	      $.ajax({
+	         url: './calendardownloadimage?imageFileName='+imgId,
+	          cache:false,
+	            xhrFields:{
+	               responseType: 'blob'
+	           }, 
+	           success: function(responseData, textStatus, jqXhr){
+	              let contentType = jqXhr.getResponseHeader("content-type");
+	              let contentDisposition = decodeURI(jqXhr.getResponseHeader("content-disposition"));
+	                var url = URL.createObjectURL(responseData);
+	                $(element).attr('src', url); 
+	           },
+	           error:function(){
+	           }
+	      }); //end $.ajax
+	   });//end each
+	   /*이미지 보여주기 */
+	  });
+
+
+$(function(){
+		$('div.calpostdetail>form.f').submit(function(){
+			console.log("수정하기버튼클릭!");
+			let ajaxUrl = 'calpostmodifypage';
+			let calIdx = <%=request.getParameter("calIdx")%>;
+			let calMemo = $("input[name=calMemo]").val();
+			
+			let data = {calIdx : calIdx,
+					calMemo:calMemo
 			}
+			$.ajax({
+				url : ajaxUrl,
+				method : 'post',
+				data: formdata,
+				success: function(responseData){
+					 let $articlesObj = $('section>div.articles');
+		              $articlesObj.empty();
+		              $articlesObj.html(responseData);
+				}
+			});
+			return false;
 		});
-		return false;
-	});
-	
-});
-</script>
-<div class="calpostdetail">
-	<form class="f">
-		<input type="text" name="calMemo" value="<%=calpost.getCalMemo() %>">
-		<input type="submit" value="수정하기">
 		
-		<div>
-			<p><%=imageFileName %></p>
-			<img id="<%=imageFileName %>" class="calMainImg" title="calMainImg" >
-		</div>
+	});
+		
+		//캘린더 삭제하기 버튼 클릭했을때
+		 removeCalPostClick();
+			 
+   });
+</script>
+
+
+<div class="calpostdetail">
+   <h2>캘린더<%=calIdx %> 글 상세보기</h2>
+   <p align="left" >글등록날짜 : <%=calDate %></p>
+   
+	<form class="f">
+	<input type="hidden" name="calIdx" value="<%=calIdx %>">
+	<div class="thumnail">
+         <%-- <p>현재 캘린더 : <%=calCategory %></p> --%>
+         <p>현재 등록된 이미지 : <%=imageFileName %></p>
+         <img id="<%=imageFileName %>" class="calMainImg" title="calMainImg" width="300" height="300">
+      </div>
+	
+		<ul>
+			
+			<li>
+			<lable for = "calMemo">리뷰/메모</lable>
+			<textarea cols="40" rows="4" name="calMemo" placeholder="<%=calpost.getCalMemo() %>"></textarea>
+			</li>
+			
+			<li>
+			<lable for = "calMainImg">메인이미지</lable>
+			<input class="calMemo" value="<%=imageFileName %>">
+			</li>
+		
+		</ul>
+		
+		      <button type="submit">수정하기</button>
+		      <button type="button">삭제하기</button>
+				
 	</form>
 </div>
 
