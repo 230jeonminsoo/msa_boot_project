@@ -46,22 +46,6 @@ function addCalPostClick(){
 		});
 }
 
-const state = {
-    event: initEvent(),
-    events: [],
-    dialog: false,
-};
-
-function initEvent(){
-    return {
-        startDate: '',
-        startTime: '',
-        endDate: '',
-        endTime: '',
-        content: '',
-        title: '',
-}
-}
 
 
 /*-calpostwrite화면에서 calmainimg 미리보기-*/

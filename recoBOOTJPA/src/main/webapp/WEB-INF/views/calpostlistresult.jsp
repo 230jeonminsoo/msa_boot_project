@@ -154,13 +154,45 @@ if ( n_m == 13) {
   	} 
    
  
-  function my_function(v) {
-	 var w = (window.screen.width/2) -100;
-	 var h = (window.screen.height/2) -100;
-	 var url = "calpostmodify?uIdx=<%=uIdx%>&calIdx=<%=calIdx%>&calDate="+v;
-	  window.open(url, "calpostmodify", "width = 800, height=800,left="+w+", top="+h);   
-  } 
-    
+  function my_function(calDate) {
+	  let calIdx = <%=calIdx%>;//3
+	  let ajaxUrl = 'calpostdetail'; //2022-3-5
+	  $.ajax({
+          url: ajaxUrl,
+          method : 'get',
+			  data:{calIdx:calIdx, calDate: calDate},
+          success:function(responseData){
+              let $articlesObj = $('section>div.articles');
+              $articlesObj.empty();
+              $articlesObj.html(responseData);
+         }
+		});
+		
+	 	return false;
+	  	<%-- $('.date').on("click",function(){
+	
+	  		let calIdx = <%=calIdx%> //$(this).attr('id'); 
+ 	  		let calCategory = $(this).attr('href');
+	  		
+	  		let ajaxUrl = 'calpostmodify'; //index controller에서 calpostmodify.jsp 처리
+	  		console.log ("date버튼클릭" + calIdx +"," + calCategory)        
+	  		$.ajax({
+	              url: ajaxUrl,
+	              method : 'get',
+	  			  data:{calIdx:calIdx, calCategory: calCategory},
+	              success:function(responseData){
+	                  let $articlesObj = $('section>div.articles');
+	                  $articlesObj.empty();
+	                  $articlesObj.html(responseData);
+	             }
+	  		});
+	  		
+	  	 	return false;
+	  	}); --%>
+	  }
+  
+
+ 
  </script> 
 
 

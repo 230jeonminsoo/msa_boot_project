@@ -11,8 +11,13 @@
 <%
 Customer c = (Customer)session.getAttribute("loginInfo"); 
 CalInfo ci = (CalInfo)request.getAttribute("calinfo");
+CalPost cp = (CalPost)request.getAttribute("cp");
+
 String calDate = request.getParameter("calDate");
-String calMainImg = request.getParameter("calMainImg");
+String calMainImg = request.getParameter("originalcalMainImg");
+
+//String calMainImg1 = cp.getCalMainImg(); //메인이미지 원본이름 
+
 String calMemo = request.getParameter("calMemo");
 String calCategory = request.getParameter("calCategory");
 int uIdx  = c.getUIdx();
@@ -22,9 +27,9 @@ String saveDirectory = "C:\\reco\\calendar";
 File dir = new File(saveDirectory);
 File[] files = dir.listFiles();
 
-String imageFileName = "cal_" + uIdx  + "_" + calIdx + "_" + calDate + ".jpg";
+String imageFileName = "cal_" + uIdx  + "_" + calIdx + "_" +calDate +".jpg";
 String thumbnailName = "s_"+ imageFileName;
-%>	
+%>
 
 <!DOCTYPE html>
 <html>

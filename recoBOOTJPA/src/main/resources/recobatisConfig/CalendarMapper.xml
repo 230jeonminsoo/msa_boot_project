@@ -81,7 +81,13 @@
 	WHERE to_char(cal_Date, 'yyyy-fmmm-dd') = #{calDate}
 	</update>
 
-
+   <!-- 캘린더글 상세보기 -->
+	<select id = "findByDate" parameterType = "map" resultType="CalPost">
+	SELECT * 
+    FROM cal_post_${uIdx}_${calIdx}
+    WHERE TO_CHAR(cal_date, 'yyyy-fMMM-dd') = #{calDate}
+	
+	</select>
 
 	<delete id = "removeCalPost" parameterType = "String">
 	DELETE FROM cal_post_${uIdx}_${calIdx}

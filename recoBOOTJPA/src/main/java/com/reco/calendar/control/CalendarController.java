@@ -478,6 +478,27 @@ public Object calpostAdd(
 }
 
 
+//캘린더메인이미지와 리뷰/메모 상세보기 컨트롤러
+@GetMapping("calpostdetail")
+public String calpostdetail(int calIdx, 
+		String calDate, 
+		HttpSession session,
+		Model model) {
+	 Customer c = (Customer)session.getAttribute("loginInfo");
+	 int uIdx = c.getUIdx();
+
+	try {
+		CalPost calpost = service.findByDate(uIdx, calIdx, calDate);
+		model.addAttribute("calpost", calpost);
+		
+	} catch (FindException e) {
+		e.printStackTrace();
+	}
+	return "calpostdetail.jsp";
+}
+
+
+
 //캘린더메인이미지와 리뷰/메모를 수정하는 컨트롤러
 @PostMapping("calpostmodify") 
 public Object calpostmodify(
@@ -591,7 +612,7 @@ public Object calpostmodify(
           mnv.setViewName("failresult.jsp");
              }
            }
-          mnv.setViewName("calpostlistresult.jsp");
+          mnv.setViewName("calpostmodify.jsp");
           } catch (ModifyException e) {
             e.printStackTrace();
             model.addAttribute("msg", e.getMessage());

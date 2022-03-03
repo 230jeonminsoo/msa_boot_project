@@ -1,5 +1,6 @@
 package com.reco.calendar.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.reco.calendar.vo.CalInfo;
@@ -8,7 +9,6 @@ import com.reco.exception.AddException;
 import com.reco.exception.FindException;
 import com.reco.exception.ModifyException;
 import com.reco.exception.RemoveException;
-import com.reco.notice.vo.Notice;
 
 public interface CalendarDAOInterface {
 	/**
@@ -86,8 +86,19 @@ public interface CalendarDAOInterface {
 	public CalPost removeCalPost(String calDate) throws RemoveException;
 
 
-
-
+	/**
+	 * 날짜에 해당하는 캘린더 글 검색한다 
+	 * @param uidx
+	 * @param calIdx
+	 * @param dt 날짝값 : '2022-3-5'
+	 * @return
+	 * @throws FindException
+	 */
+	public CalPost findByDate(int uidx, int calIdx, String dt) throws FindException;
+	
+	
+	public CalPost findByDate(int uidx, int calIdx, Date dt) throws FindException;
+	
 	
 
 

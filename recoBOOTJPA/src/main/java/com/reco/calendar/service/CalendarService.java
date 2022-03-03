@@ -64,6 +64,10 @@ public class CalendarService {
 		return dao.removeCalPost(calDate);
 	}
 	
+	public CalPost findByDate(int uIdx, int calIdx, String calDate) throws FindException  {
+		return dao.findByDate(uIdx, calIdx, calDate);
+	}
+	
 	
 
 
