@@ -26,6 +26,8 @@ function cerRRN(){
 	                console.log(responseObj.email);
 					$articlesObj.val(responseObj.email);
 					$('div.CNSend').css('display','inline-block');
+					$('div.findEmail>input[name=myName]').prop('readonly',true);
+					$('div.findEmail>input[name=RRN]').prop('readonly',true);
 				}
 			},
 			error: function(xhr){
@@ -37,10 +39,10 @@ function cerRRN(){
 }
 
 function CNSend(){
-  $('div.CNSend>button.RRN').click(function(){
-    let phoneNumber = $('div.CNSend>input[name=phoneNumber]').val();
+  $('div.CNSend>fieldset>button.RRN').click(function(){
+    let phoneNumber = $('div.CNSend>fieldset>input[name=phoneNumber]').val();
     alert('인증번호 발송 완료!');
-	
+	console.log();
     $.ajax({
         type: "GET",
         url: "./check/sendSMS",
@@ -55,9 +57,9 @@ function CNSend(){
 }
 
 function CNSendCheck(res){
-	$('div.CNSend>button.CN').click(function(){
-		console.log(res);
-	    if($.trim(res) ==$('div.CNSend>input[name=CN]').val()){
+	$('div.CNSend>fieldset>button.CN').click(function(){
+		console.log("폰인증번호"+res);
+	    if($.trim(res) ==$('div.CNSend>fieldset>input[name=CN]').val()){
 	        alert('인증성공!');
 			$('div.findEmail>div.CNSend>input[name=email]').css('display','inline-block');
 			

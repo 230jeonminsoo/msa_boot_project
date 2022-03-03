@@ -8,6 +8,7 @@
 <%@page import="com.reco.customer.vo.Customer"%>
 <%@page import="java.util.List"%>
 
+
 <%
 Customer c = (Customer)session.getAttribute("loginInfo"); 
 CalInfo ci = (CalInfo)request.getAttribute("calinfo");
@@ -31,14 +32,12 @@ String imageFileName = "cal_" + uIdx  + "_" + calIdx + "_" +calDate +".jpg";
 String thumbnailName = "s_"+ imageFileName;
 %>
 
-<!DOCTYPE html>
-<html>
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
 
 	<title>캘린더글수정페이지</title>
-	   <style>
+	  <style>
         .dellink{
           display: none;
         }
@@ -51,7 +50,7 @@ String thumbnailName = "s_"+ imageFileName;
 <script>
 $(function(){		
 
-		//캘린더 수정 버튼 클릭되었을때
+		//캘린더 수정완료 버튼 클릭되었을때
 		 modifyCalPostClick();
    });
 </script>
@@ -68,42 +67,32 @@ $(function(){
           display: none;
         }
       </style>
-
+	
+	<link rel="stylesheet" href="./css/calpostmodify.css"> 
 	<script src="./js/calpostmodify.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <style>
-body {
-	font-size : 8pt;
-	font - family : 맑은고딕;
-	color : #3333333;
-}
-table {
-	width : 200px;
-	border-collapse:collapse; /*셀간격을없앰*/
-}
-th,td {
-	border : 3px solid #cccccc;
-	padding : 10px;
-	width : 100px;
-}
+
 
 </style>
 
 
-	<h2 align="center"><%=calCategory %>&nbsp;캘린더 글 수정</h2>
+	
 	<form name="writeFrm" method="post" enctype="multipart/form-data">
+		<h2 align="center"><%=calCategory %>&nbsp;캘린더 글 수정</h2>
+		
 	     <input type="hidden" name="calIdx" value="<%=calIdx %>">
 	     <input type="hidden" name="calCategory" value="<%=calCategory %>">
 	     <input type="hidden" name="originalcalMainImg" value="<%=calMainImg %>">
-	      <input type="hidden" name="calDate" value="<%=calDate%>">
+	      <%-- <input type="hidden" name="calDate" value="<%=calDate%>"> --%>
 	   	<table>
-		 	    <tr>
+		   <tr>
 		        <td width = "50%">대표이미지수정</td>
 		        <td width = "50%">
 		             
 		             <div class="image-container">
-                       <input style="display: block;" type="file" name="calMainImg" id="input-image"accept="image/jpeg, image/jpg, image/png"  >
+                       <input style="display: block;" type="file" name="calMainImg" id="input-image"accept="image/*"  >
                      </div>   
 		        </td>
 		    </tr>

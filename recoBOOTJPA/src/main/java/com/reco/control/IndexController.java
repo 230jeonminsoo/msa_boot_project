@@ -216,12 +216,12 @@ public class IndexController {
 		}
 		
 
-		@GetMapping("/calpostwrite")
+		@GetMapping("/calpostwritepage")
 		public String calpostwrite() {
 			return "calpostwrite.jsp";
 		}
 		
-		@GetMapping("/calpostmodify")
+		@GetMapping("/calpostmodifypage")
 		public String calpostmodify() {
 			return "calpostmodify.jsp";
 		}

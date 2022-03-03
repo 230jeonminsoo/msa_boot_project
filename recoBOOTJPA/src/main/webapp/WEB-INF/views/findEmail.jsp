@@ -33,16 +33,20 @@
         <br>
         <!-- 먼저 주민번호로 회원확인후 2단계로 휴대폰 본인인증 -->
         <input type="text" name="myName" required placeholder="이름">
-        <input type="number" name="RRN" required placeholder="-없이 주민등록번호를 입력해주세요" value="4444444444444">
+        <input type="password" name="RRN" required placeholder="-없이 주민등록번호를 입력해주세요" value="4444444444444">
         <br>    
         <br>
-        <button class="RRN"> 주민번호 본인인증 </button><br><br><br>          
+        <button class="RRN"> 주민번호 본인인증 </button><br><br><br><br>         
         <div class="CNSend">
+        	<fieldset>
+        	<span>자신의 휴대폰 번호를 적어주세요.</span><br> 
        		<input type="text" name="phoneNumber" required placeholder="-없이 핸드폰번호를 입력해주세요"><br><br>
-       		<button class="RRN"> 휴대폰 본인인증 </button><br><br><br>
+       		<button class="RRN"> 휴대폰 본인인증 </button><br><br><br><br>
        		
-       		<input type="text" name="CN" required placeholder="인증번호를 입력해주세요"><br><br>
-       		<button class="CN">확인</button><br><br><br>
+       		인증번호 : <input type="text" name="CN" required placeholder="인증번호를 입력해주세요"><br><br>
+       		<button class="CN">확인</button><br>
+       		</fieldset>
+       		<br>
        		이메일 : <input type="text" name="email" value="" readonly="readonly">
         	
      

@@ -7,7 +7,6 @@
 <%@page import="java.util.List"%>
 <% System.out.println("in calInfomodify.jsp -- 0"); %> 
  
-<head>
     <meta charset="UTF-8"> <!--html에서 없으면 글씨 깨짐   -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>calInfowrite.html</title>

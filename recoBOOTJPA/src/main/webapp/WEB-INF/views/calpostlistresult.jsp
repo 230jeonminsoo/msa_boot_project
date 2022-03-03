@@ -7,8 +7,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.sql.*"%>
 <link rel="stylesheet" href="./css/calpostlist.css"> 
-<script src="./js/calpostwrite.js"></script>     
+<!-- <script src="./js/calpostwrite.js"></script>   -->
+<script src="./js/calpostlist.js"></script>     
 
+<head>
+	<meta charset="UTF-8">
+	<title>calpostlistresult.jsp</title>
+</head>
     
 <%
 Customer c = (Customer)session.getAttribute("loginInfo"); 
@@ -25,7 +30,7 @@ String msg = (String)request.getAttribute("msg");
 String calCategory = request.getParameter("calCategory");
 CalInfo ci = (CalInfo)request.getAttribute("calinfo");
 CalPost calpost = (CalPost)request.getAttribute("calpost");
-String calDate = calpost.getCalDate(); //값있음 null 아님
+//String calDate = calpost.getCalDate()  //값있음 null 아님
 //String calDate = request.getParameter("calDate"); //얘가 null
 String calMemo = request.getParameter("calMemo");
 String calMainImg = request.getParameter("calMainImg");
@@ -37,6 +42,74 @@ File dir = new File(saveDirectory);
 File[] files = dir.listFiles(); 
 
 %>
+
+<script> 
+ 
+  $(function(){
+	/*이미지 태그 보여주기*/
+	let $img = $('td>a.calpostWR>img.calMainImg');
+	$img.each(function(i, element){
+		let imgId = $(element).attr('id');	
+		$.ajax({
+			url: './calendardownloadimage?imageFileName='+imgId,
+			 cache:false,
+	         xhrFields:{
+	            responseType: 'blob'
+	        }, 
+	        success: function(responseData, textStatus, jqXhr){
+	        	let contentType = jqXhr.getResponseHeader("content-type");
+	        	let contentDisposition = decodeURI(jqXhr.getResponseHeader("content-disposition"));
+	       		var url = URL.createObjectURL(responseData);
+	       		$(element).attr('src', url); 
+	        },
+	        error:function(){
+	        }
+		}); //end $.ajax
+	});//end each
+	/*이미지 보여주기 */
+  });
+  
+	var popupWindow = null;   		
+	//달력에서 팝업창 캘린더글등록 클릭시 발생하는 이벤트
+	function calpostWrite() {  
+		var data = "<%=calCategory %>";
+	      //화면기준 팝업 가운데 정렬
+	var w = (window.screen.width/2) -100;
+	var h = (window.screen.height/2) -100;
+	var url = "calpostwritepage?uIdx=<%=uIdx%>&calIdx=<%=calIdx%>&calCategory=<%=calCategory %>";
+		popupWindow = window.open(url, "calpostwritepage", "width = 800, height=800,left="+w+", top="+h, data);
+	}
+	
+   function submitToPopUp(){
+  		popupWindow.document.all.zipcode1.value = document.all.zipcode1.value;
+  	} 
+   
+	//캘린더 글작성페이지로 이동하는 이벤트 
+	dateClick(); /* calpostlist.js */
+	
+	function my_function(calDate) {
+			
+     	  alert("글 상세보기 버튼 클릭");  
+
+		  let calIdx = <%=calIdx%>;//3
+		  let calCategory = $(this).attr('id'); 
+		  let ajaxUrl = 'calpostdetail'; //2022-3-5
+		  
+		  $.ajax({
+	          url: ajaxUrl,
+	          method : 'get',
+		      data:{calIdx:calIdx, calDate: calDate, calCategory:calCategory}, //calCategory:calCategory
+	          success:function(responseData){
+	              let $articlesObj = $('section>div.articles');
+	              $articlesObj.empty();
+	              $articlesObj.html(responseData);
+	         }
+		});
+		
+ 	return false;
+  }
+	
+</script> 
 
  <%
    //데이터베이스를 연결하는 관련 변수를 선언한다
@@ -101,236 +174,128 @@ if ( n_m == 13) {
     
     
 <!-- 캘린더 출력 -->   
-<head>
-	<meta charset="UTF-8">
-	<title>calpostlistresult.jsp</title>
-</head>
-
-<style>
-
-</style>
-
- <script> 
- 
-  $(function(){
-	/*이미지 태그 보여주기*/
-	let $img = $('td>a.calpostWR>img.calMainImg');
-	$img.each(function(i, element){
-		let imgId = $(element).attr('id');	
-		$.ajax({
-			url: './calendardownloadimage?imageFileName='+imgId,
-			 cache:false,
-	         xhrFields:{
-	            responseType: 'blob'
-	        }, 
-	        success: function(responseData, textStatus, jqXhr){
-	        	let contentType = jqXhr.getResponseHeader("content-type");
-	        	let contentDisposition = decodeURI(jqXhr.getResponseHeader("content-disposition"));
-	       		var url = URL.createObjectURL(responseData);
-	       		$(element).attr('src', url); 
-	        },
-	        error:function(){
-	        }
-		}); //end $.ajax
-	});//end each
-	/*이미지 보여주기 */
-  });
-  
-
-  
-	var popupWindow = null;   		
-	//달력에서 팝업창 캘린더글등록 클릭시 발생하는 이벤트
-	function calpostWrite() {  
-		var data = "<%=calCategory %>";
-	      //화면기준 팝업 가운데 정렬
-	var w = (window.screen.width/2) -100;
-	var h = (window.screen.height/2) -100;
-	var url = "calpostwrite?uIdx=<%=uIdx%>&calIdx=<%=calIdx%>&calCategory=<%=calCategory %>";
-		popupWindow = window.open(url, "calpostwrite", "width = 800, height=800,left="+w+", top="+h, data);
-	}
-	
-   function submitToPopUp(){
-  		popupWindow.document.all.zipcode1.value = document.all.zipcode1.value;
-  	} 
-   
- 
-  function my_function(calDate) {
-	  let calIdx = <%=calIdx%>;//3
-	  let ajaxUrl = 'calpostdetail'; //2022-3-5
-	  $.ajax({
-          url: ajaxUrl,
-          method : 'get',
-			  data:{calIdx:calIdx, calDate: calDate},
-          success:function(responseData){
-              let $articlesObj = $('section>div.articles');
-              $articlesObj.empty();
-              $articlesObj.html(responseData);
-         }
-		});
-		
-	 	return false;
-	  	<%-- $('.date').on("click",function(){
-	
-	  		let calIdx = <%=calIdx%> //$(this).attr('id'); 
- 	  		let calCategory = $(this).attr('href');
-	  		
-	  		let ajaxUrl = 'calpostmodify'; //index controller에서 calpostmodify.jsp 처리
-	  		console.log ("date버튼클릭" + calIdx +"," + calCategory)        
-	  		$.ajax({
-	              url: ajaxUrl,
-	              method : 'get',
-	  			  data:{calIdx:calIdx, calCategory: calCategory},
-	              success:function(responseData){
-	                  let $articlesObj = $('section>div.articles');
-	                  $articlesObj.empty();
-	                  $articlesObj.html(responseData);
-	             }
-	  		});
-	  		
-	  	 	return false;
-	  	}); --%>
-	  }
-  
-
- 
- </script> 
-
-
-
 
 <body>
+<%-- <body>
 	<form name = "frm" method="get" action="calpostlistresult.jsp"> 
-	<input type="hidden" name="calIdx" value="<%=calIdx %>">
-	<input type="hidden" name="calCategory" value="<%=calCategory %>">
+		<input type="hidden" name="calIdx" value="<%=calIdx %>">
+		<input type="hidden" name="calCategory" value="<%=calCategory %>">
 	<!-- <input type = "submit" value="캘린더보기"> -->
 	</form>
-</body>
+</body> --%>
 
 <body>
 
 	<div class="calCategory"> 
 		<%-- <br><p align="center">-&nbsp;<%=calCategory %>&nbsp;캘린더&nbsp;-</p>  --%>
-		<%-- <p><%=calIdx %></p> --%>
-		<p>값테스트 : <%=calDate %></p>
+		<%-- <p>값테스트 : <%=calDate %></p> --%>
 	</div>
 
-<%-- <%
-	List<CalPost> list = (List)request.getAttribute("list");
-             		
-    if( list != null) {
-	        for(CalPost cp : list){
-			String Date = cp.getCalDate();
-			String calMemo = cp.getCalMemo();
-			String calMainImg = cp.getCalMainImg();
-	        }
-	} %>
+	<table class="container">
+	<!-- 월은 0 부터 시작해서 +1 처리 -->
+		<caption>
+			<div class="category" style = "float:left; width:30%;">
+			  <p id="<%=calCategory %>" align="center" >-&nbsp;<%=calCategory %>&nbsp;캘린더&nbsp;-</p>
+			</div>
+			<div style = "float:left; width:30%;">
+			  <p> <%=y%>년 <%=m+1%>월 </p><br>
+			</div>
+			<div class="button" style = "float:left; width:30%; text-align:right;"> 
+			  	<br><br><button type = "button" onclick="calpostWrite()"> 캘린더 글등록 </button>
+			</div>
+			<%-- <button type = "button" onclick="location='calpostlistresult.jsp?year=<%=b_y%>&month=<%=b_m%>' "> 이전</button> 
+			<button type = "button" onclick="location='calpostlistresult.jsp?year=<%=n_y%>&month=<%=n_m%>' " > 다음</button> --%> 
+		</caption>
+			
+		
+		    <tr>
+			    <th>일</th>
+				<th>월</th>
+			    <th>화</th>
+			    <th>수</th>
+			    <th>목</th>
+			    <th>금</th>
+			    <th>토</th>	
+		    </tr>
+		    
+			<tr class="date">
+				
+				<%
+				int count = 0;
+				
+				//1일을 출력하기 전 빈칸을 출력하는 for문
+				for(int s = 1; s<dayOfweek; s++) {
+					out.print("<td></td>");
+					count++;
+				}
+				
+				//날짜 출력하는 설정 (td를 출력하기위한)
+				for( int d= 1; d<= lastday; d++){
+					count++;
+					String color = "#555555";
+					if ( count == 7 ) {
+						color = " blue ";
+					} else if (count == 1) {
+						color = "red";
+					}
+				//calpost글이 있는곳 링크표시
+				
+				int z = m+1; // 현재월(m+1)을 변수에 넣기 
+				String f_date = y + "-" + (m+1) + "-" + d; //선택한날짜 //2022-2-1 이런 형식이라 안됨. 2022-02-01 같은 형식이여야 이미지 불러오기가능!(이 형식으로 사진저장하기때문)
+				
+				String mon = String.format("%02d",z); //(1-9)월을 두자리수로 변환 (01,02...08,09월)
+				String dday = String.format("%02d",d); //(1-9)일을 두자리수로 변환 (01,02...08,09일)
+				
+				String rDate = y + "-" + mon + "-" + dday; //입력하는 진짜 날짜, 2022-03-02의 형식 
+				String imageFileName = "s_cal_"+uIdx+"_"+calIdx+"_"+rDate+".jpg"; //썸네일 불러오는 파일명 지정.
+				
+				//글작성한 날짜 찾아주는 쿼리 
+				String f_sql = "select count(*) cnt from cal_post_"+uIdx+"_"+calIdx+"";
+					   f_sql += " where cal_date = '"+f_date+"'";
+			    pstmt= conn.prepareStatement(f_sql);
+				ResultSet f_rs = pstmt.executeQuery(f_sql);
+				f_rs.next();
+				
+				
+			    
+				int f_cnt = f_rs.getInt("cnt");	
+				if(f_cnt == 1) {
+					color = "rgb(197, 104, 250)";
+				%>
+					<td class="calimage" style = "color: <%=color %>">
+						<span ><%=d %></span> <!-- 작성한 글리스트 보여줌 -->
+						<a class="calpostWR" id="<%=calCategory %>" href="javascript:my_function('<%=f_date%>')">
+								<img id="<%=imageFileName %>" class="calMainImg" title="calMainImg" >
+						</a>
+					</td>
 					
-	<%if( list == null){ %>
-		<a href="calpostlistresult.jsp"></a>
-	<%} %> --%>
-<table class="container">
-<!-- 월은 0 부터 시작해서 +1 처리 -->
-	<caption>
-		<div style = "float:left; width:30%;">
-		  <p align="center">-&nbsp;<%=calCategory %>&nbsp;캘린더&nbsp;-</p>
-		</div>
-		<div style = "float:left; width:30%;">
-		  <p> <%=y%>년 <%=m+1%>월 </p><br>
-		</div>
-		<div style = "float:left; width:30%; text-align:right;"> 
-		  <br><br><button type = "button" onclick="calpostWrite()"> 캘린더글등록 </button>
-		</div>
-	<%-- 	<button type = "button" onclick="location='calpostlistresult.jsp?year=<%=b_y%>&month=<%=b_m%>' "> 이전</button>  --%>
-	<%-- 	<button type = "button" onclick="location='calpostlistresult.jsp?year=<%=n_y%>&month=<%=n_m%>' " > 다음</button>  --%>
-	</caption>
-	
-	    <tr>
-		    <th>일</th>
-			<th>월</th>
-		    <th>화</th>
-		    <th>수</th>
-		    <th>목</th>
-		    <th>금</th>
-		    <th>토</th>	
-	    </tr>
-	    
-		<tr class="date">
-			
-		<%
-		int count = 0;
-		
-		//1일을 출력하기 전 빈칸을 출력하는 for문
-		for(int s = 1; s<dayOfweek; s++) {
-			out.print("<td></td>");
-			count++;
-		}
-		
-		//날짜 출력하는 설정 (td를 출력하기위한)
-		for( int d= 1; d<= lastday; d++){
-			count++;
-			String color = "#555555";
-			if ( count == 7 ) {
-				color = " blue ";
-			} else if (count == 1) {
-				color = "red";
-			}
-		//calpost글이 있는곳 링크표시
-		
-		int z = m+1; // 현재월(m+1)을 변수에 넣기 
-		String f_date = y + "-" + (m+1) + "-" + d; //선택한날짜 //2022-2-1 이런 형식이라 안됨. 2022-02-01 같은 형식이여야 이미지 불러오기가능!(이 형식으로 사진저장하기때문)
-		
-		String mon = String.format("%02d",z); //(1-9)월을 두자리수로 변환 (01,02...08,09월)
-		String dday = String.format("%02d",d); //(1-9)일을 두자리수로 변환 (01,02...08,09일)
-		
-		String rDate = y + "-" + mon + "-" + dday; //입력하는 진짜 날짜, 2022-03-02의 형식 
-		String imageFileName = "s_cal_"+uIdx+"_"+calIdx+"_"+rDate+".jpg"; //썸네일 불러오는 파일명 지정.
-		
-		//글작성한 날짜 찾아주는 쿼리 
-		String f_sql = "select count(*) cnt from cal_post_"+uIdx+"_"+calIdx+"";
-			   f_sql += " where cal_date = '"+f_date+"'";
-	    pstmt= conn.prepareStatement(f_sql);
-		ResultSet f_rs = pstmt.executeQuery(f_sql);
-		f_rs.next();
-		
-	    
-		int f_cnt = f_rs.getInt("cnt");	
-		if(f_cnt == 1) {
-			color = "pink";
-		%>
-			<td style = "color: <%=color %>">
-				<a href="javascript:my_function('<%=f_date%>')"><%=d %></a> <!-- 작성한 글리스트 보여줌 -->
-				<a class="calpostWR" href="#">
-					<img id="<%=imageFileName %>" class="calMainImg" title="calMainImg" >
-				</a> 
-			</td>
-			
-		<% 
-		} else {
-		%> 
-			<td class="blockcp" style = "color: <%=color %>;">
-				 <!-- <a href="calpostWrite" style="text-decoration:none;" > -->
-			  		<%=d %>
-			 	<!-- </a> -->
-			</td>
-		<% 
-		     }
-		// 한줄에 7개 찍어내기
-			if( count % 7 == 0 ) {
-				out.print("</tr><tr>");
-			    count = 0; // 변수 초기화
-				} 	
-		}
-		// 마지막주 빈공간 찍히기
-		while( count < 7) {
-			out.print("<td></td>");
-			count++;
-		}
-		%>
-		</tr>
-</table>
+				<% 
+				} else {
+				%> 
+					<td class="cp" style = "color: <%=color %>;">
+					  		<%=d %>
+					  	  <a class="add"  href ="<%=calCategory%>" id="<%=calIdx%>" style="font-size: 20px; text-decoration:none; color:none;">
+						  	<br><br><button class="cpbt" type = "button" width="30px"> add </button>
+						  </a>
+					</td>
+				<% 
+				     }
+				// 한줄에 7개 찍어내기
+					if( count % 7 == 0 ) {
+						out.print("</tr><tr>");
+					    count = 0; // 변수 초기화
+						} 	
+				}
+				// 마지막주 빈공간 찍히기
+				while( count < 7) {
+					out.print("<td></td>");
+					count++;
+				}
+				%>
+			</tr>
+	</table>
 </body>
 
 <%} //end if(c == null) %>
-</html>
 
 

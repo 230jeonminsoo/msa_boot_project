@@ -318,14 +318,13 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 	public CalPost findByDate(int uIdx, int calIdx, String calDate) throws FindException  {
 		SqlSession session = null;
 
-
 		try {
 			session = sqlSessionFactory.openSession();
 			Map<String, Object> map = new HashMap<>();
 			map.put("uIdx", uIdx);
 			map.put("calIdx", calIdx);
 			map.put("calDate", calDate);
-		logger.info("map=" + map);
+			logger.info("map=" + map);
 			CalPost calPost = session.selectOne("com.reco.calendar.CalendarMapper.findByDate" , map);
 			return calPost;
 		}catch(Exception e) {
