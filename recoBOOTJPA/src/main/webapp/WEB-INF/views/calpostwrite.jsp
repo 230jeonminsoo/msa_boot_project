@@ -54,19 +54,6 @@ int calIdx = Integer.parseInt(request.getParameter("calIdx"));
 
 
 <style>
-body {
-	font-size : 9pt;
-	font - family : 맑은고딕;
-	color : #3333333;
-}
-table {
-	width : 300px;
-	border-collapse:collapse; /*셀간격을없앰*/
-}
-th,td {
-	border : 3px solid #cccccc;
-	padding : 5px;
-}
 
 </style>
 

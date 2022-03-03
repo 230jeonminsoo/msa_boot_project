@@ -78,7 +78,7 @@
 	<set>
 	 cal_Memo=#{calMemo}, cal_Main_Img=#{calMainImg}
 	</set>
-	WHERE to_char(cal_Date, 'yyyy-fmmm-dd') = #{calDate}
+	WHERE to_char(cal_Date, 'yyyy-mm-dd') = #{calDate}
 	</update>
 
     <!-- 캘린더글 상세보기 -->
