@@ -478,7 +478,7 @@ public Object calpostAdd(
 }
 
 
-//캘린더메인이미지와 리뷰/메모 상세보기 컨트롤러 dd
+//캘린더메인이미지와 리뷰/메모 상세보기 컨트롤러 
 @GetMapping("calpostdetail")
 public String calpostdetail(
 		int calIdx, 
