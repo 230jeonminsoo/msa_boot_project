@@ -1,0 +1,8 @@
+div.thumbnail>img.MainImg {
+	width: 300px;
+	height: 300px;
+}
+
+div.inputBT>button[id=modifyBt]{
+	width:100px;
+}

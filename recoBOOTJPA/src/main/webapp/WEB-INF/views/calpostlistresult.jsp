@@ -260,7 +260,7 @@ if ( n_m == 13) {
 			    
 				int f_cnt = f_rs.getInt("cnt");	
 				if(f_cnt == 1) {
-					color = "rgb(255, 101, 173)";
+					color = "rgb(197, 104, 250)";
 				%>
 					<td class="calimage" style = "color: <%=color %>">
 						<span ><%=d %></span> <!-- 작성한 글리스트 보여줌 -->
