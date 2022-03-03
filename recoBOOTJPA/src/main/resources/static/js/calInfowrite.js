@@ -31,9 +31,7 @@ function addCalSubmit(){
             }
 			,error: function (jqXHR)
            {
-			   location.href="calpostlistresult.jsp";
-               //alert(jqXHR.responseText);
-			   
+			   location.href="callistresult.jsp";
            }
         }); 
 		
