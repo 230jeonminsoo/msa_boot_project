@@ -33,6 +33,7 @@ String calIdx = request.getParameter("calIdx");
 int uIdx  = c.getUIdx();
 String calDate = calpost.getCalDate();
 String calMainImg = calpost.getCalMainImg();
+String calMemo = calpost.getCalMemo();
 
 String imageFileName = "s_cal_"+uIdx+"_"+calIdx+"_"+calDate+".jpg"; //썸네일 불러오는 파일명 지정.
 %>
@@ -65,24 +66,25 @@ $(function(){
 
 
 $(function(){
-		$('form').submit(function(){
-			console.log("수정하기버튼클릭!");		
-			console.log("캘린더 수정 버튼 클릭");
+		$('div.inputBT>button.modifycalpost').click(function(){
+			console.log("수정페이지로 이동");		
+			alert("수정페이지로 이동");
+			/* console.log("수정페이지로 이동");
 			if(confirm("해당 캘린더를 수정하시겠습니까?")==true){ //확인
 
 			}else{ //취소 
 				return false;
-			}
+			} */
 			
 			let ajaxUrl = 'calpostmodifypage';
-			
+			alert("수정페이지로 이동1");
 			let calIdx = <%=request.getParameter("calIdx")%>;
 			let calMemo = $("input[name=calMemo]").val();
 			
 			let data = {calIdx : calIdx, calMemo:calMemo }
 			$.ajax({
 				url : ajaxUrl,
-				method : 'post',
+				method : 'get',
 				processData: false, //파일업로드용 설정
 				contentType: false, //파일업로드용 설정
 				data: formdata,
@@ -110,7 +112,6 @@ $(function(){
     <h2>캘린더<%=calIdx %> 글 상세보기</h2>
     <p align="left" >글등록날짜 : <%=calDate %></p>
 	
-	<form class="f">
 		
 		<input type="hidden" name="calIdx" value="<%=calIdx %>">
 		<div class="thumbnail">
@@ -122,23 +123,20 @@ $(function(){
 		
 		<ul>
 			<li>
-				<lable for = "calMemo">리뷰/메모</lable>
-				<textarea cols="40" rows="4" name="calMemo" placeholder="<%=calpost.getCalMemo() %>"></textarea>
-			</li>
-			
-			<li>
-				<lable for = "calMainImg">메인이미지</lable>
-				<input class="calMemo" value="<%=imageFileName %>">
+				<div class="calDate"> 작성날짜 : <span><%=calDate %></span></div>
+				<div class="calMemo">리뷰/메모 : <span><%=calMemo %></span></lable>
+				<%-- <textarea cols="40" rows="4" name="calMemo" placeholder="<%=calpost.getCalMemo() %>"></textarea> --%>
+				<!-- <div class="calMainImg">메인이미지</lable> -->
+				<%-- <input class="calMemo" value="<%=imageFileName %>"> --%>
 			</li>
 		
 		</ul>
 		
 		<div class="inputBT">
-	      <button id="modifyBt" type="submit">수정하기</button>
-	      <button id="removeBt" type="button">삭제하기</button>
+	      <button class="modifycalpost" id="modifyBt" type="button">수정하기</button>
+	      <button class="removecalpost" id="removeBt" type="button">삭제하기</button>
 	    </div>
 					
-	</form>
 </div>
 
 <%} //end if(c == null) %>

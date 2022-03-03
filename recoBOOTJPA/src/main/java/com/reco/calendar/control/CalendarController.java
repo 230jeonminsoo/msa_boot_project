@@ -464,7 +464,7 @@ public Object calpostAdd(
 				mnv.setViewName("failresult.jsp");
 			}
 		}
-		mnv.setViewName("calpostlistresult.jsp");
+		mnv.setViewName("calpostdetail.jsp");
 	} catch (AddException e) {
 		e.printStackTrace();
 		model.addAttribute("msg", e.getMessage());
@@ -478,13 +478,10 @@ public Object calpostAdd(
 }
 
 
-//캘린더메인이미지와 리뷰/메모 상세보기 컨트롤러 
+//캘린더 메인이미지와 리뷰/메모 상세보기 컨트롤러 
 @GetMapping("calpostdetail")
-public String calpostdetail(
-		int calIdx, 
-		String calDate, 
-		HttpSession session,
-		Model model) {
+public String calpostdetail( int calIdx, String calDate, 
+		HttpSession session, Model model) {
 	Customer c = (Customer)session.getAttribute("loginInfo");
 	if(c != null){ 
 		int uIdx = c.getUIdx();
@@ -495,6 +492,8 @@ public String calpostdetail(
 			
 		} catch (FindException e) {
 			e.printStackTrace();
+			model.addAttribute("msg", e.getMessage());
+			return "failresult.jsp";
 		}
 		
 	}return "calpostdetail.jsp";
@@ -506,10 +505,9 @@ public String calpostdetail(
 public Object calpostmodify(
 		 @RequestParam(value = "calMemo") String calMemo, 
 		 @RequestParam(value = "calDate") String calDate,
-		 @RequestParam(value = "calCategory") String calCategory,
 		 @RequestParam(value = "calMainImg") MultipartFile multipartFile,
 		 @RequestParam(value = "originalcalMainImg") String calMainImg,
-		 @RequestParam(value = "calIdx") Integer calIdx,
+		 @RequestParam(value = "calIdx") int calIdx,
 		 @RequestPart (required = false) MultipartFile imageFile,
 		 HttpSession session, Model model) {
 
@@ -523,7 +521,7 @@ public Object calpostmodify(
   CalInfo calinfo = new CalInfo();
   calinfo.setCustomer(c);
   calinfo.setCalIdx(calIdx);
-  calinfo.setCalCategory(calCategory);
+//  calinfo.setCalCategory(calCategory);
 
   CalPost cp = new CalPost();
   cp.setCalMemo(calMemo);
