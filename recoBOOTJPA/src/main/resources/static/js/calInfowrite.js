@@ -6,8 +6,8 @@ function addCalSubmit(){
 	//alert("in addCalSubmit1");
     $submitBtObj.submit(function(){
 		
-		alert("캘린더를 생성하시겠습니까?");
-		self.close();
+		/*alert("캘린더를 생성하시겠습니까?");
+		self.close();*/
 
 		 let ajaxUrl = './caladd';
 		 //let ajaxUrl = '../caladd'; //팝업창일때
@@ -21,8 +21,8 @@ function addCalSubmit(){
 			data:formData,
 			
             success:function(responseData){
-			 alert("캘린더가 생성 되었습니다!");
-		     self.close();
+			 /*alert("캘린더가 생성 되었습니다!");
+		     self.close();*/
 
 			 let $articlesObj = $('section>div.articles');
                  $articlesObj.empty();
