@@ -118,6 +118,7 @@ $(function(){
 		<div class="thumbnail">
 			 <div class="calIdx" id="<%=calIdx %>" style="display:none;"><%=calIdx %></div>
 			 <div class="calDate" id="<%=calDate %>"> 등록일 : <span><%=calDate %></span></div>
+			 <div class="calMainImg" id="<%=calMainImg %>" style="display:none;"><%=calMainImg %></div>
 			 <hr>
 	         <img id="<%=imageFileName %>" class="MainImg" title="calMainImg" > 
 	    	 <hr>
@@ -126,7 +127,7 @@ $(function(){
 		<ul>
 			<li style="list-style:none;">
 				
-				<div class="calMemo" id="<%=calIdx %>">리뷰/메모 : <span><%=calMemo %></span></div>
+				<div class="calMemo" id="<%=calMemo %>">리뷰/메모 : <span><%=calMemo %></span></div>
 			</li>
 		
 		</ul>

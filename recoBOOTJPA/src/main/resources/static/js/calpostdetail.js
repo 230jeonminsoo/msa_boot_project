@@ -6,13 +6,18 @@ function calpostModiPageClick() {
 		console.log("calpostModifyClick()");
 		let ajaxUrl = 'calpostmodifypage';	
 		
+		let calDate = $('div.thumbnail>div.calDate').attr('id');
+		let calIdx = $('div.thumbnail>div.calIdx').attr('id');
+		let calMainImg = $('div.thumbnail>div.calMainImg').attr('id');
+		let calMemo = $('div.calMemo').attr('id');
+		
 	
 		$.ajax({
 			url : ajaxUrl,
 			method : 'get',
 			//processData: false, //파일업로드용 설정
 			//contentType: false, //파일업로드용 설정
-			//data: formdata,
+			data: {calDate:calDate, calIdx:calIdx, calMainImg:calMainImg, calMemo:calMemo },
 			success: function(responseData){
 				 let $articlesObj = $('section>div.articles');
 	              $articlesObj.empty();

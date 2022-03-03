@@ -53,11 +53,6 @@ int calIdx = Integer.parseInt(request.getParameter("calIdx"));
 </head>
 
 
-<style>
-
-</style>
-
-
 
 <body>
 
