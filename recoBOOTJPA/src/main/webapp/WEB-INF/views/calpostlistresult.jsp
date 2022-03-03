@@ -88,14 +88,17 @@ File[] files = dir.listFiles();
 	dateClick(); /* calpostlist.js */
 	
 	function my_function(calDate) {
+			
+     	  alert("글 상세보기 버튼 클릭");  
+
 		  let calIdx = <%=calIdx%>;//3
-		  let rDate = $('div.rDate').attr('id');
-		  let imageFileName = $('td.calimage>calpostWR>img').attr('id');
+		  let calCategory = $(this).attr('id'); 
 		  let ajaxUrl = 'calpostdetail'; //2022-3-5
+		  
 		  $.ajax({
 	          url: ajaxUrl,
 	          method : 'get',
-				  data:{calIdx:calIdx, calDate: calDate, imageFileName: imageFileName, rData : rDate },
+		      data:{calIdx:calIdx, calDate: calDate, calCategory:calCategory}, //calCategory:calCategory
 	          success:function(responseData){
 	              let $articlesObj = $('section>div.articles');
 	              $articlesObj.empty();
@@ -103,8 +106,8 @@ File[] files = dir.listFiles();
 	         }
 		});
 		
-	 	return false;
-	  }
+ 	return false;
+  }
 	
 </script> 
 
@@ -191,8 +194,8 @@ if ( n_m == 13) {
 	<table class="container">
 	<!-- 월은 0 부터 시작해서 +1 처리 -->
 		<caption>
-			<div style = "float:left; width:30%;">
-			  <p align="center" >-&nbsp;<%=calCategory %>&nbsp;캘린더&nbsp;-</p>
+			<div class="category" style = "float:left; width:30%;">
+			  <p id="<%=calCategory %>" align="center" >-&nbsp;<%=calCategory %>&nbsp;캘린더&nbsp;-</p>
 			</div>
 			<div style = "float:left; width:30%;">
 			  <p> <%=y%>년 <%=m+1%>월 </p><br>
@@ -259,10 +262,9 @@ if ( n_m == 13) {
 				if(f_cnt == 1) {
 					color = "rgb(255, 101, 173)";
 				%>
-					<div class="rDate" style="diplay:none" id ="<%=rDate%>"> </div> <!-- rDate값 상세페이지로 넘겨주기위해 작성 -->
 					<td class="calimage" style = "color: <%=color %>">
 						<span ><%=d %></span> <!-- 작성한 글리스트 보여줌 -->
-						<a class="calpostWR" href="javascript:my_function('<%=f_date%>')">
+						<a class="calpostWR" id="<%=calCategory %>" href="javascript:my_function('<%=f_date%>')">
 								<img id="<%=imageFileName %>" class="calMainImg" title="calMainImg" >
 						</a>
 					</td>
