@@ -7,6 +7,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.Date" %>
 <link rel="stylesheet" href="./css/calpostdetail.css">
+<script src="./js/calpostdetail.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <%
 Customer c = (Customer)session.getAttribute("loginInfo"); 
@@ -65,7 +66,7 @@ $(function(){
   });
 
 
-$(function(){
+<%-- $(function(){
 		$('div.inputBT>button.modifycalpost').click(function(){
 			console.log("수정페이지로 이동");		
 			alert("수정페이지로 이동");
@@ -77,33 +78,35 @@ $(function(){
 			} */
 			
 			let ajaxUrl = 'calpostmodifypage';
-			alert("수정페이지로 이동1");
+			//alert("수정페이지로 이동1");
 			let calIdx = <%=request.getParameter("calIdx")%>;
-			let calMemo = $("input[name=calMemo]").val();
+			//let calMemo = $("input[name=calMemo]").val();
 			
-			let data = {calIdx : calIdx, calMemo:calMemo }
+			//let data = {calIdx : calIdx, calMemo:calMemo }
 			$.ajax({
 				url : ajaxUrl,
 				method : 'get',
-				processData: false, //파일업로드용 설정
-				contentType: false, //파일업로드용 설정
-				data: formdata,
+				//processData: false, //파일업로드용 설정
+				//contentType: false, //파일업로드용 설정
+				//data: formdata,
 				success: function(responseData){
 					 let $articlesObj = $('section>div.articles');
 		              $articlesObj.empty();
 		              $articlesObj.html(responseData);
 				},error:function(jqXHR){
-					location.href="calpostlistresult.jsp";
+					//location.href="calpostlistresult.jsp";
 				}
 				
 			});
 			return false;
 	});
 	
-});
-		
+}); --%>
+	//캘린더 수정페이지로 이동하는 이벤트 
+	 calpostModiPageClick();
+
 	 //캘린더 삭제하기 버튼 클릭했을때
-	 removeCalPostClick();
+	 //removeCalPostClick();
 			 
 </script>
 

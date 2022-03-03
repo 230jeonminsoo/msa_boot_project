@@ -1,27 +1,29 @@
-/*
-function calpostmodifyClick() {  
-	let $calpostmodifyObj = $('td.calimage>input.modifyBt');
-	console.log("calpostmodifyClick()");
-	$calpostmodifyObj.click(function(){
+function calpostModiPageClick() {
+	let $calpostModifyObj = $('button.modifycalpost');
+	console.log("calpostModifyClick()");
+	$calpostModifyObj.click(function(){
+		alert("calpostModifyClick()");
+		let ajaxUrl = 'calpostmodifypage';	
 		
-		let ajaxUrl = 'calpostmodifypage';
-		
-		//let calIdx = $(this).attr('name'); 
-		//let calCategory = $(this).attr('id');
-		        
-		$.ajax({
-            url: ajaxUrl,
-            method : 'get',
-			//data:{calIdx:calIdx, calCategory: calCategory},
-            success:function(responseData){
-                let $articlesObj = $('section>div.articles');
-                $articlesObj.empty();
-                $articlesObj.html(responseData);
-	         },error:function(xhr){
-				alert("응답실패"+xhr.status);
-			 }
-        });
-			
-	});
 	
-}*/
+		$.ajax({
+			url : ajaxUrl,
+			method : 'get',
+			//processData: false, //파일업로드용 설정
+			//contentType: false, //파일업로드용 설정
+			//data: formdata,
+			success: function(responseData){
+				 let $articlesObj = $('section>div.articles');
+	              $articlesObj.empty();
+	              $articlesObj.html(responseData);
+			},error:function(jqXHR){
+				//location.href="calpostlistresult.jsp";
+			}
+			
+		});	
+			
+		return false;	
+		});
+}
+	
+
