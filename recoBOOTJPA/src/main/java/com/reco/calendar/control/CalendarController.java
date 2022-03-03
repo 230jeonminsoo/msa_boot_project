@@ -468,7 +468,7 @@ public Object calpostAdd(
 	} catch (AddException e) {
 		e.printStackTrace();
 		model.addAttribute("msg", e.getMessage());
-		mnv.setViewName("failresult.jsp");
+		mnv.setViewName("calpostlistresult.jsp");
 	} catch (FindException e) {
 		e.printStackTrace();
 		model.addAttribute("msg", e.getMessage());

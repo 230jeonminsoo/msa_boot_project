@@ -23,6 +23,7 @@ function addCalSubmit(){
             success:function(responseData){
 			 alert("캘린더가 생성 되었습니다!");
 		     self.close();
+
 			 let $articlesObj = $('section>div.articles');
                  $articlesObj.empty();
                  $articlesObj.html(responseData);
@@ -30,7 +31,7 @@ function addCalSubmit(){
             }
 			,error: function (jqXHR)
            {
-			   location.href="./";
+			   location.href="calpostlistresult.jsp";
                //alert(jqXHR.responseText);
 			   
            }
