@@ -108,7 +108,7 @@ $(function(){
 <body>
 	<h2 align="center">&nbsp;캘린더 글 수정</h2>
 	<form name="modifyFrm" method="post" enctype="multipart/form-data">
-		<div class="test"><%=calIdx %>,<%=calDate %>,<%=pastcalMainImg %>, <%=calMemo %></div>
+		<div class="test"><%-- <%=calIdx %>,<%=calDate %>,<%=pastcalMainImg %>, <%=calMemo %> --%></div>
 		     <input type="hidden" name="calIdx" value="<%=calIdx %>">
 		     <%--  <input type="hidden" name="calCategory" value="<%=calCategory %>"> --%>
 		     <input type="hidden" name="originalcalMain" value="<%=pastcalMainImg %>">
