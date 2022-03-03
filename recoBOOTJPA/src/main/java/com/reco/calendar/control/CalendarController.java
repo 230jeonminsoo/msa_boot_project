@@ -281,7 +281,7 @@ public Object calInfoModify(@RequestParam(value = "calIdx") int calIdx,
 
 //캘린더를 삭제하는 컨트롤러
 @GetMapping("calendarRemove")
-public String noticeRemove(int calIdx, HttpSession session, Model model) {
+public String calendarRemove(int calIdx, HttpSession session, Model model) {
 	
 	Customer c = (Customer)session.getAttribute("loginInfo");
 	int uIdx = c.getUIdx();
@@ -365,8 +365,6 @@ public Object calpostAdd(
 						 @RequestParam(value = "calDate") String calDate,
 						 @RequestParam(value = "calMainImg") MultipartFile multipartFile,
 						 @RequestParam(value = "calIdx") Integer calIdx,
-						 @RequestPart (required = false) MultipartFile letterFiles,
-						 @RequestPart (required = false) MultipartFile imageFile,
 						 HttpSession session, Model model) {
 	System.out.println("calpostadd컨트롤러 calDate= " + calDate);
 	
@@ -464,7 +462,7 @@ public Object calpostAdd(
 				mnv.setViewName("failresult.jsp");
 			}
 		}
-		mnv.setViewName("calpostdetail.jsp");
+		mnv.setViewName("calpostlistresult.jsp");
 	} catch (AddException e) {
 		e.printStackTrace();
 		model.addAttribute("msg", e.getMessage());
@@ -621,15 +619,34 @@ public Object calpostmodify(
             e.printStackTrace();
             model.addAttribute("msg", e.getMessage());
             mnv.setViewName("failresult.jsp");
-            }
-           return mnv;
-            }
+        }
+     return mnv;
+    }
 
 
 
-////캘린더 글 작성 삭제하는 컨트롤러
-//@GetMapping("")
-
+//캘린더 글 작성 삭제하는 컨트롤러
+@GetMapping("calpostremove")
+public String calpostremove(@RequestParam(value = "calIdx") int calIdx, 
+		String calDate, HttpSession session, Model model) {
+	
+	Customer c = (Customer)session.getAttribute("loginInfo");
+	int uIdx = c.getUIdx();
+	
+	CalPost calpost = new CalPost();
+	calpost.setCalDate(calDate);
+	
+	try {
+			service.removeCalPost(uIdx,calIdx, calDate);
+			//model.addAttribute("calpost", calpost);
+			
+			return "calpostlistresult.jsp";
+	} catch (RemoveException e) {
+		System.out.println(e.getMessage());
+		model.addAttribute("msg", e.getMessage());
+		return "failresult.jsp";
+	}
+}
 
 
 @GetMapping("/calendardownloadimage")

@@ -73,7 +73,7 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 			String calCategory = calinfo.getCalCategory();
 			String calThumbnail = calinfo.getCalThumbnail();
 
-			//				System.out.println("addCal함수1 : uIdx=" + uIdx + ", calIdx =" + calIdx); //calIdx = 0
+			//System.out.println("addCal함수1 : uIdx=" + uIdx + ", calIdx =" + calIdx); //calIdx = 0
 
 			Map<String, Object> map = new HashMap<>();
 			map.put("uIdx", uIdx);
@@ -103,7 +103,7 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 			HashMap<String, String> hashmap = new HashMap<String, String>();
 			hashmap.put("createCalPostSQL", createCalPostSQL);
 			session.update("CreateTable",hashmap);
-			session.commit();
+			//session.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AddException(e.getMessage());
@@ -235,7 +235,7 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 			session = sqlSessionFactory.openSession();
 			int uIdx = calpost.getCalinfo().getCustomer().getUIdx();
 			int calIdx = calpost.getCalinfo().getCalIdx();
-
+			
 			Map<String, Object> map = new HashMap<>();
 			map.put("uIdx", uIdx);
 			map.put("calIdx", calIdx);
@@ -277,7 +277,10 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 			String calDate = calpost.getCalDate();
 			String calMainImg = calpost.getCalMainImg();
 			String calMemo = calpost.getCalMemo();
-
+			
+			System.out.println("modifyCalPost함수1= uIdx:" + uIdx + ", calIdx:" + calIdx + 
+									", calDate:" + calDate + ", calMainImg:" + calMainImg + ", calMemo:" + calMemo);
+			
 			List<CalPost> list = findCalsByDate(calinfo,calpost);
 
 			Map<String, Object> map = new HashMap<>();
@@ -290,8 +293,12 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 			session.update("com.reco.calendar.CalendarMapper.modifyCalPost",map);
 			session.commit();
 
-			System.out.println("modifyCalpost함수 : calmemo=" + calMemo + ", calMainimg =" + calMainImg);
-
+			calIdx = (int) map.get("calIdx");  
+			calDate = (String) map.get("calDate");
+			calMainImg = (String) map.get("calMainImg");
+			calMemo = (String) map.get("calMemo");
+			
+			System.out.println("modifyCalpost함수2 : calmemo=" + calMemo + ", calMainimg =" + calMainImg);
 		} catch (FindException e) {
 			throw new ModifyException(e.getMessage());
 		}catch(Exception e) {
@@ -305,12 +312,6 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 
 	}
 
-
-	@Override
-	public CalPost removeCalPost(String calDate) throws RemoveException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	
 
@@ -346,54 +347,43 @@ public class CalendarDAOOracle implements CalendarDAOInterface {
 
 
 
-		//	@Override
-		//	public CalPost removeCalPost(String calDate) throws RemoveException{
-		//		//" delete from Cal_post_1_1 where cal_Date = ? ";
-		//
-		//		Connection con = null;
-		//		PreparedStatement pstmt = null;
-		//		//ResultSet rs = null;
-		//		try {
-		//			con = MyConnection.getConnection();
-		//			con.setAutoCommit(false);
-		//			/*
-		//			 CALDATE
-		//			 CALMEMO
-		//			 CALMAINIMG
-		//			 CALIMG1
-		//			 CALIMG2
-		//			 CALIMG3
-		//			 CALPOSTCREATEAT
-		//			 */
-		//
-		//			CalInfo calinfo = null;
-		//			int uIdx = calinfo.getCustomer().getUIdx();
-		//			int calIdx = calinfo.getCalIdx();
-		//			//---다음캘린더 글번호 얻기
-		//
-		//			System.out.println("uIdx=" + uIdx + ", calIdx =" + calIdx);
-		//			//----------------------------------------------------------------------
-		//
-		//			//Cal_Post 행삭제
-		//			String deledtCalPostSQL = "delete from Cal_post_" + uIdx + "_" + calIdx + " where cal_Date = ?";
-		//			pstmt = con.prepareStatement(deledtCalPostSQL);
-		//			pstmt.setInt(1, uIdx);
-		//			pstmt.setInt(2, calIdx);
-		//			pstmt.setString(3, calDate);
-		//			pstmt.executeUpdate();
-		//
-		//			int deleterow = pstmt.executeUpdate();
-		//			if(deleterow == 0) {
-		//				System.out.println("해당 캘린더글이 존재하지 않습니다.");
-		//			}
-		//		} catch (SQLException e) {
-		//			e.printStackTrace();
-		//		}finally {
-		//			MyConnection.close(pstmt, con);
-		//		}
+		@Override
+		public void removeCalPost(int uIdx, int calIdx, String calDate) throws RemoveException{
+			SqlSession session = null;
+			try {
+				session = sqlSessionFactory.openSession();
+				
+				Map<String, Object> map = new HashMap<>();
+				map.put("uIdx", uIdx);
+				map.put("calIdx", calIdx);
+				map.put("calDate", calDate);
+				logger.info("map=" + map);
+				
+				System.out.println("uIdx=" + uIdx + ", calIdx =" + calIdx + ", calDate =" + calDate);
+				//----------------------------------------------------------------------
+				
+				int deleteCalPostRow = session.delete("com.reco.calendar.CalendarMapper.removeCalPost" , map);
+	
+				if(deleteCalPostRow == 0) {
+					System.out.println("해당 캘린더글이 존재하지 않습니다.");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				if(session != null) {
+					session.close();
+				}
+			}
 	}
 
 
+		@Override
+		public CalPost removeCalPost(String calDate) throws RemoveException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+}
 
 
 	//테이블 생성

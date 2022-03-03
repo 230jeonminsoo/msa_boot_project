@@ -60,8 +60,8 @@ public class CalendarService {
 		return dao.modifyCalPost( calpost);
 	}
 	
-	public CalPost removeCalPost(String calDate) throws RemoveException{
-		return dao.removeCalPost(calDate);
+	public void removeCalPost(int uIdx, int calIdx, String calDate) throws RemoveException{
+		  dao.removeCalPost(uIdx,calIdx, calDate);
 	}
 	
 	public CalPost findByDate(int uIdx, int calIdx, String calDate) throws FindException  {

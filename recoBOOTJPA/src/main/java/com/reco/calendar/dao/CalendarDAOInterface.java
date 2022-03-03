@@ -98,6 +98,9 @@ public interface CalendarDAOInterface {
 	
 	
 	public CalPost findByDate(int uidx, int calIdx, Date dt) throws FindException;
+
+
+	public void removeCalPost(int uIdx, int calIdx, String calDate) throws RemoveException;
 	
 	
 
