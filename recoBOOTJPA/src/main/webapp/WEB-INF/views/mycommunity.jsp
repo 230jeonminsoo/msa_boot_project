@@ -257,7 +257,7 @@ if (session.getAttribute("loginInfo") != null) {
 <!-- 내가 작성한 댓글. 누를시 새탭에 띄울예정-->
 <fieldset>	
 
-
+  
 
 <!------------ 댓글 시작 ---------->	
 	<%

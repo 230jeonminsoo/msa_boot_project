@@ -328,7 +328,7 @@ public class CustomerController {
 		for(Board board : boards) {
 			daoBrd.removeBrd(board.getBrdIdx());
 		}
-		//daoBrd.removeBrdAllFromDB(uNickName);
+		
 		
 		if(c.getUAuthCode() == 0) {
 		daoNtc.removeNtcAllFromDB(uNickName);
@@ -428,8 +428,8 @@ public class CustomerController {
 	    		model.addAttribute("email", uEmail);
 	    		model.addAttribute("pwd", idString);
 	    		model.addAttribute("code", code);
-	    		
 	    		return "index.jsp";
+	    		
 	    	}catch(FindException e2){ // 닉네임중복인 아닌 경우	
 	    		Customer c2 = new Customer();
 	    		c2.setUEmail(uEmail);
