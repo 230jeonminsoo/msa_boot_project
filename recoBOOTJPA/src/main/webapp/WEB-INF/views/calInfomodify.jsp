@@ -49,10 +49,10 @@ $(function(){
 Customer c = (Customer)session.getAttribute("loginInfo"); 
 CalInfo ci = (CalInfo)request.getAttribute("calinfo");
 
-String calCategory = request.getParameter("calCategory");
+String calCategory = request.getParameter("calCategory"); //callistresult.jsp에서 수정클릭했을때 보내줌 
 int uIdx  = c.getUIdx();
-int calIdx = Integer.parseInt(request.getParameter("calIdx"));
-String calThumbnail = request.getParameter("originCalThum");
+int calIdx = Integer.parseInt(request.getParameter("calIdx"));//callistresult.jsp에서 수정클릭했을때 보내줌 
+String calThumbnail = request.getParameter("originCalThum"); //기존 썸네일명?
 
 //String calThumbnail = ci.getCalCategory(); //섬네일 원본이름 
 

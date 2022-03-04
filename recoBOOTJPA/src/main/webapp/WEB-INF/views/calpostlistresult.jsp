@@ -89,7 +89,7 @@ File[] files = dir.listFiles();
 	
 	function my_function(calDate) {
 			
-     	  alert("글 상세보기 버튼 클릭");  
+     	  console.log("글 상세보기 버튼 클릭");  
 
 		  let calIdx = <%=calIdx%>;//3
 		  let calCategory = $(this).attr('id'); 

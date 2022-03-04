@@ -29,8 +29,10 @@ if(calpost == null){ //컨트롤러에서 실패된 경우
 
 
 String msg = (String)request.getAttribute("msg");
-String calIdx = request.getParameter("calIdx");
+//String calIdx = request.getParameter("calIdx");
 //String calCategory = request.getParameter("calCategory");
+
+int calIdx = Integer.parseInt(request.getParameter("calIdx"));
 int uIdx  = c.getUIdx();
 String calDate = calpost.getCalDate();
 String calMainImg = calpost.getCalMainImg();
@@ -64,7 +66,6 @@ $(function(){
    });//end each
    /*이미지 보여주기 */
   });
-
 
 <%-- $(function(){
 		$('div.inputBT>button.modifycalpost').click(function(){
@@ -105,32 +106,28 @@ $(function(){
 	//캘린더 수정페이지로 이동하는 이벤트 
 	 calpostModiPageClick();
 
-	 //캘린더 삭제하기 버튼 클릭했을때
-	 //removeCalPostClick();
 			 
 </script>
 
 
 <div class="calpostdetail">
-    <h2>캘린더<%=calIdx %> 글 상세보기</h2>
-    <p align="left" >글등록날짜 : <%=calDate %></p>
-	
+    <h2 class="title">캘린더<%=calIdx %> 글 상세보기</h2>
+   
 		
-		<input type="hidden" name="calIdx" value="<%=calIdx %>">
+		
 		<div class="thumbnail">
-	         <%-- <p>현재 캘린더 : <%=calCategory %></p> --%>
-	         <p>(테스트)현재 등록된 이미지 : <%=imageFileName %></p>
-			 <p>(테스트)현재 등록된 사진명 : <%=calMainImg %></p>
+			 <div class="calIdx" id="<%=calIdx %>" style="display:none;"><%=calIdx %></div>
+			 <div class="calDate" id="<%=calDate %>"> 등록일 : <span><%=calDate %></span></div>
+			 <div class="calMainImg" id="<%=calMainImg %>" style="display:none;"><%=calMainImg %></div>
+			 <hr>
 	         <img id="<%=imageFileName %>" class="MainImg" title="calMainImg" > 
+	    	 <hr>
 	    </div>
 		
 		<ul>
-			<li>
-				<div class="calDate"> 작성날짜 : <span><%=calDate %></span></div>
-				<div class="calMemo">리뷰/메모 : <span><%=calMemo %></span></lable>
-				<%-- <textarea cols="40" rows="4" name="calMemo" placeholder="<%=calpost.getCalMemo() %>"></textarea> --%>
-				<!-- <div class="calMainImg">메인이미지</lable> -->
-				<%-- <input class="calMemo" value="<%=imageFileName %>"> --%>
+			<li style="list-style:none;">
+				
+				<div class="calMemo" id="<%=calMemo %>">리뷰/메모 : <span><%=calMemo %></span></div>
 			</li>
 		
 		</ul>

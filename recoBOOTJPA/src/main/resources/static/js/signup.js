@@ -41,6 +41,10 @@ function emailDupchk($emailObj, $submitBtObj){
 		let ajaxMethod = 'get'; 
 		let emailValue =  $emailObj.val().trim();
 		var e_RegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		if(!e_RegExp.test(emailValue)) {   
+          alert('이메일 형식으로 입력해주세요!');
+		  return false;     
+     	}       
 		console.log(emailValue);
 		$.ajax({
 			url: ajaxUrl,
