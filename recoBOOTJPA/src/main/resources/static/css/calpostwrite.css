@@ -17,9 +17,10 @@ body {
 }
 
 table {
+	margin-left:auto; 
+    margin-right:auto;
 	width : 200px;
 	border-collapse:collapse; /*셀간격을없앰*/
-	margin-left:25%;
 }
 th,td {
 	border : 3px solid #cccccc;
